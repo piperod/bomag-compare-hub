@@ -251,9 +251,10 @@ const htrMachines = [
   },
 ];
 
+const base = import.meta.env.BASE_URL;
 const getImagePath = (model: string, line: string) => {
   const folder = line === 'sdr' ? 'SDR' : line === 'ltr' ? 'LTR' : line === 'htr' ? 'HTR' : '';
-  if (!folder) return placeholder;
+  if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
       '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','BW211_D5_SL.jpg'
@@ -268,7 +269,7 @@ const getImagePath = (model: string, line: string) => {
   const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
   const modelNorm = norm(model);
   const match = images[folder].find(img => norm(img).includes(modelNorm));
-  return match ? `/images/${folder}/${match}` : placeholder;
+  return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
 };
 
 const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {

@@ -9,26 +9,27 @@ interface ProductLineSelectorProps {
 const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelectorProps) => {
   const { t } = useLanguage();
 
+  const base = import.meta.env.BASE_URL;
   const productLines = [
     {
       id: 'sdr',
       title: t('sdr'),
       description: t('sdrDesc'),
-      icon: '/sdricon.png',
+      icon: `${base}sdricon.png`,
       alt: 'Single Drum Roller Icon'
     },
     {
       id: 'ltr',
       title: t('ltr'),
       description: t('ltrDesc'),
-      icon: '/ltricon.webp',
+      icon: `${base}ltricon.webp`,
       alt: 'Light Tandem Roller Icon'
     },
     {
       id: 'htr',
       title: t('htr'),
       description: t('htrDesc'),
-      icon: '/htricon.webp',
+      icon: `${base}htricon.webp`,
       alt: 'Heavy Tandem Roller Icon'
     }
   ];

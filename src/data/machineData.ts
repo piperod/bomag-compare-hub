@@ -7,20 +7,23 @@ export interface MachineSpec {
   power: number;
   amplitude: string;
   staticLinearLoad: number;
-  gradeability: number;
+  gradeability?: number;
   origin: string;
   compactionAssistant: string;
-  telemetry: string;
+  telemetry?: string;
   innovations: string;
   usp: string;
-  maxCompactionDepth: number;
-  compactionPerformance: string;
+  maxCompactionDepth?: number;
+  compactionPerformance?: string;
   fuelConsumption: number;
   price: number;
   preventiveMaintenance: number;
   correctiveMaintenance: number;
   usageTime: number;
   tco: number;
+  // LTR specific fields
+  compactionSystem?: string;
+  waterTankCapacity?: number;
 }
 
 export const sdrMachines: MachineSpec[] = [
@@ -143,6 +146,163 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 160200.00
+  }
+];
+
+export const ltrMachines: MachineSpec[] = [
+  {
+    brand: "BOMAG",
+    model: "BW120 AD 5",
+    weight: 2700,
+    engine: "Kubota D1703",
+    compactionWidth: 1.2,
+    power: 32.6,
+    amplitude: "0.5",
+    staticLinearLoad: 11.3,
+    origin: "Germany/China",
+    compactionAssistant: "Economizer - Sensor de rigidez del suelo",
+    innovations: "Bajos TCO (Servicio/Matenimiento/Reparación/confiabilidad)",
+    usp: "Fácil y seguro de operar. Economizer (Opción) Incluye indicador de temperatura",
+    fuelConsumption: 2.6,
+    price: 28000.00,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 1.3,
+    usageTime: 3500,
+    tco: 49700.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 205
+  },
+  {
+    brand: "CATERPILLAR",
+    model: "CB2.7GC",
+    weight: 2698,
+    engine: "CAT C1.7T",
+    compactionWidth: 1.3,
+    power: 24.6,
+    amplitude: "0.52",
+    staticLinearLoad: 13.7,
+    origin: "China",
+    compactionAssistant: "CMV (Compaction Meter Value)",
+    innovations: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
+    usp: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
+    fuelConsumption: 2.3,
+    price: 29630.00,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3500,
+    tco: 52205.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 200
+  },
+  {
+    brand: "HAMM",
+    model: "HD12 VV",
+    weight: 2695,
+    engine: "Kubota D1503",
+    compactionWidth: 1.25,
+    power: 30.7,
+    amplitude: "0.52",
+    staticLinearLoad: 11.2,
+    origin: "Czech",
+    compactionAssistant: "HAMM Compaction Meter: Sensor de aceleración / frecuencia",
+    innovations: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
+    usp: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
+    fuelConsumption: 2.8,
+    price: 29580.00,
+    preventiveMaintenance: 1.5,
+    correctiveMaintenance: 1,
+    usageTime: 3500,
+    tco: 53030.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 180
+  },
+  {
+    brand: "DYNAPAC",
+    model: "CC1200",
+    weight: 2600,
+    engine: "Kubota D1703-M",
+    compactionWidth: 1.2,
+    power: 35,
+    amplitude: "0.508",
+    staticLinearLoad: 10.5,
+    origin: "Brasil",
+    compactionAssistant: "DCA-A Sensor de aceleración / amplitud",
+    innovations: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
+    usp: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
+    fuelConsumption: 2.7,
+    price: 26783.00,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 1.4,
+    usageTime: 3500,
+    tco: 49358.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 159
+  },
+  {
+    brand: "AMMANN",
+    model: "ARX 26",
+    weight: 2460,
+    engine: "Yanmar 3TNV88F",
+    compactionWidth: 1.2,
+    power: 27.3,
+    amplitude: "0.6",
+    staticLinearLoad: 10.3,
+    origin: "Switzerland",
+    compactionAssistant: "ACEforce: Sensor de rigidez dinámica",
+    innovations: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
+    usp: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
+    fuelConsumption: 3.2,
+    price: 25500.00,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 1.3,
+    usageTime: 3500,
+    tco: 50350.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 110
+  },
+  {
+    brand: "JCB",
+    model: "CT260",
+    weight: 2740,
+    engine: "Kubota D1703-M",
+    compactionWidth: 1.2,
+    power: 24.4,
+    amplitude: "0.51",
+    staticLinearLoad: 10.5,
+    origin: "India",
+    compactionAssistant: "No aplica",
+    innovations: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    usp: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    fuelConsumption: 2.7,
+    price: 23500.00,
+    preventiveMaintenance: 1.5,
+    correctiveMaintenance: 2,
+    usageTime: 3500,
+    tco: 49925.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 197
+  },
+  {
+    brand: "WACKER NEUSON",
+    model: "RD27",
+    weight: 2695,
+    engine: "Kubota D1903-M",
+    compactionWidth: 1.2,
+    power: 30.7,
+    amplitude: "0.51",
+    staticLinearLoad: 10.5,
+    origin: "Germany",
+    compactionAssistant: "No aplica",
+    innovations: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    usp: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    fuelConsumption: 2.7,
+    price: 23500.00,
+    preventiveMaintenance: 1.5,
+    correctiveMaintenance: 2,
+    usageTime: 3500,
+    tco: 49925.00,
+    compactionSystem: "Vibratory",
+    waterTankCapacity: 197
   }
 ];
 

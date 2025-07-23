@@ -48,7 +48,10 @@ const translations = {
     mixedSoil: 'Suelo mixto',
     clay: 'Limo, arcilla',
     compactionHeight: 'Altura de capa compactada según tipo de suelo y peso operativo',
-    compactionOutput: 'Rendimiento de compactación según tipo de suelo y peso operativo'
+    compactionOutput: 'Rendimiento de compactación según tipo de suelo y peso operativo',
+    compactionSystem: 'Sistema de compactación',
+    waterTankCapacity: 'Capacidad tanque agua',
+    compactionControlAssistants: 'Asistentes de control de compactación'
   },
   en: {
     title: 'BOMAG Product Comparator',
@@ -89,7 +92,10 @@ const translations = {
     mixedSoil: 'Mixed soil',
     clay: 'Silt, clay',
     compactionHeight: 'Compacted layer height by soil type and operating weight',
-    compactionOutput: 'Compaction output by soil type and operating weight'
+    compactionOutput: 'Compaction output by soil type and operating weight',
+    compactionSystem: 'Compaction System',
+    waterTankCapacity: 'Water Tank Capacity',
+    compactionControlAssistants: 'Compaction Control Assistants'
   },
   de: {
     title: 'BOMAG Produktvergleich',
@@ -130,7 +136,10 @@ const translations = {
     mixedSoil: 'Mischboden',
     clay: 'Schluff, Ton',
     compactionHeight: 'Verdichtete Schichthöhe nach Bodenart und Betriebsgewicht',
-    compactionOutput: 'Verdichtungsleistung nach Bodenart und Betriebsgewicht'
+    compactionOutput: 'Verdichtungsleistung nach Bodenart und Betriebsgewicht',
+    compactionSystem: 'Verdichtungssystem',
+    waterTankCapacity: 'Wassertankkapazität',
+    compactionControlAssistants: 'Verdichtungskontrollassistenten'
   }
 };
 

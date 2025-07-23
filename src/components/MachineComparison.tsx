@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { sdrMachines, MachineSpec } from '@/data/machineData';
+import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -15,7 +15,12 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const { t } = useLanguage();
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   
-  const machines = selectedLine === 'sdr' ? sdrMachines : [];
+  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : [];
+
+  // Reset selected machines when product line changes
+  useEffect(() => {
+    setSelectedMachines([]);
+  }, [selectedLine]);
 
   const toggleMachineSelection = (machineId: string) => {
     setSelectedMachines(prev => 
@@ -41,14 +46,15 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const getBrandColor = (brand: string) => {
     const colors = {
       'BOMAG': 'bg-bomag-orange',
-      'HAMM': 'bg-bomag-blue',
+      'HAMM': 'bg-bomag-blue', 
       'DYNAPAC': 'bg-yellow-500',
       'CATERPILLAR': 'bg-yellow-400',
       'NEW HOLLAND': 'bg-blue-600',
       'SANY': 'bg-red-500',
       'XCMG': 'bg-orange-500',
       'AMMANN': 'bg-green-600',
-      'JCB': 'bg-yellow-600'
+      'JCB': 'bg-yellow-600',
+      'WACKER NEUSON': 'bg-red-600'
     };
     return colors[brand as keyof typeof colors] || 'bg-gray-500';
   };
@@ -129,30 +135,47 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                       </tr>
                     </thead>
                     <tbody>
-                       {[
-                         { key: 'weight', label: t('weight'), unit: 'kg' },
-                         { key: 'engine', label: t('engine'), unit: '' },
-                         { key: 'compactionWidth', label: t('compactionWidth'), unit: 'm' },
-                         { key: 'power', label: t('power'), unit: 'HP' },
-                         { key: 'amplitude', label: t('amplitude'), unit: 'mm' },
-                         { key: 'staticLinearLoad', label: t('staticLinearLoad'), unit: 'Kg/cm' },
-                         { key: 'gradeability', label: t('gradeability'), unit: '%' },
-                         { key: 'origin', label: t('origin'), unit: '' }
-                       ].map((spec) => (
-                         <tr key={spec.key} className="hover:bg-gray-50">
-                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                             {spec.label} {spec.unit && `(${spec.unit})`}
-                           </td>
-                           {getSelectedMachineData().map((machine, index) => (
-                             <td key={index} className="border border-gray-300 p-2 text-center">
-                               {spec.key === 'weight' 
-                                 ? (machine.weight as number).toLocaleString()
-                                 : String(machine[spec.key as keyof MachineSpec])
-                               }
-                             </td>
-                           ))}
-                         </tr>
-                       ))}
+                        {(() => {
+                          // Basic specs for all machines
+                          const basicSpecs = [
+                            { key: 'weight', label: t('weight'), unit: 'kg' },
+                            { key: 'engine', label: t('engine'), unit: '' },
+                            { key: 'compactionWidth', label: t('compactionWidth'), unit: 'm' },
+                            { key: 'power', label: t('power'), unit: 'HP' },
+                            { key: 'amplitude', label: t('amplitude'), unit: 'mm' },
+                            { key: 'staticLinearLoad', label: t('staticLinearLoad'), unit: 'Kg/cm' },
+                            { key: 'origin', label: t('origin'), unit: '' }
+                          ];
+                          
+                          // Add gradeability only for SDR machines
+                          if (selectedLine === 'sdr') {
+                            basicSpecs.splice(6, 0, { key: 'gradeability', label: t('gradeability'), unit: '%' });
+                          }
+                          
+                          // Add LTR-specific fields
+                          if (selectedLine === 'ltr') {
+                            basicSpecs.push(
+                              { key: 'compactionSystem', label: 'Sistema de compactación', unit: '' },
+                              { key: 'waterTankCapacity', label: 'Capacidad tanque agua', unit: 'L' }
+                            );
+                          }
+                          
+                          return basicSpecs;
+                        })().map((spec) => (
+                          <tr key={spec.key} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {spec.label} {spec.unit && `(${spec.unit})`}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center">
+                                {spec.key === 'weight' 
+                                  ? (machine.weight as number).toLocaleString()
+                                  : String(machine[spec.key as keyof MachineSpec] || '-')
+                                }
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -173,18 +196,29 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        { key: 'maxCompactionDepth', label: t('maxCompactionDepth'), unit: 'cm' },
-                        { key: 'compactionPerformance', label: t('compactionPerformance'), unit: 'm³/h' },
-                        { key: 'fuelConsumption', label: t('fuelConsumption'), unit: 'L/h' }
-                      ].map((spec) => (
+                      {(() => {
+                        // Performance specs vary by product line
+                        const performanceSpecs = [
+                          { key: 'fuelConsumption', label: t('fuelConsumption'), unit: 'L/h' }
+                        ];
+                        
+                        // SDR-specific performance fields
+                        if (selectedLine === 'sdr') {
+                          performanceSpecs.unshift(
+                            { key: 'maxCompactionDepth', label: t('maxCompactionDepth'), unit: 'cm' },
+                            { key: 'compactionPerformance', label: t('compactionPerformance'), unit: 'm³/h' }
+                          );
+                        }
+                        
+                        return performanceSpecs;
+                      })().map((spec) => (
                         <tr key={spec.key} className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
                             {spec.label} ({spec.unit})
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
                             <td key={index} className="border border-gray-300 p-2 text-center">
-                              {machine[spec.key as keyof MachineSpec]}
+                              {machine[spec.key as keyof MachineSpec] || '-'}
                             </td>
                           ))}
                         </tr>

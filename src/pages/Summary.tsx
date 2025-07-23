@@ -60,6 +60,29 @@ function getImagePath(model: string, line: string) {
   return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
 }
 
+function getPriceColor(value: number, min: number, max: number) {
+  if (min === max) return '#fde047'; // yellow if all equal
+  const percent = (value - min) / (max - min);
+  if (percent <= 0.5) {
+    // Green to Yellow
+    const ratio = percent / 0.5;
+    return `rgb(${76 + (253-76)*ratio}, ${222 + (224-222)*ratio}, ${128 + (71-128)*ratio})`;
+  } else {
+    // Yellow to Red
+    const ratio = (percent - 0.5) / 0.5;
+    return `rgb(${253 + (248-253)*ratio}, ${224 + (113-224)*ratio}, ${71 + (113-71)*ratio})`;
+  }
+}
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
 export default function SummaryPage() {
   return (
     <LanguageProvider>
@@ -153,6 +176,55 @@ function Summary() {
             </table>
           </div>
         </Card>
+        {/* TCO Timeline Table */}
+        {safeVisibleMachines.length > 0 && machines.some(m => m.tcoTimeline) && (
+          <Card className="p-4 mt-8">
+            <h3 className="text-lg font-bold mb-2">{t('tcoTimeline') || 'TCO Timeline'}</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 text-xs">
+                <thead>
+                  <tr className="bg-bomag-light-gray">
+                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">Horas</th>
+                    {safeVisibleMachines.map(idx => (
+                      <th key={idx} className="border border-gray-300 p-2 text-center min-w-40">
+                        <div className="font-bold">{machines[idx].brand}</div>
+                        <div className="text-xs">{machines[idx].model}</div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
+                    // Gather all prices for this row
+                    const prices = safeVisibleMachines.map(idx => machines[idx].tcoTimeline?.find(e => e.hours === hours)?.price ?? null).filter(v => v !== null) as number[];
+                    const min = prices.length ? Math.min(...prices) : 0;
+                    const max = prices.length ? Math.max(...prices) : 0;
+                    return (
+                      <tr key={hours} className="hover:bg-gray-50">
+                        <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">{hours}</td>
+                        {safeVisibleMachines.map(idx => {
+                          const entry = machines[idx].tcoTimeline?.find(e => e.hours === hours);
+                          return (
+                            <td key={idx} className="border border-gray-300 p-2 text-center">
+                              {entry ? (
+                                <div>
+                                  <div style={{ background: entry.price !== null ? getPriceColor(entry.price, min, max) : undefined, borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
+                                    {t('price') || 'Precio'}: {entry.price !== null ? formatCurrency(entry.price) : '-'}
+                                  </div>
+                                  <div>{t('tco') || 'TCO'}: {entry.tco !== null ? formatCurrency(entry.tco) : '-'}</div>
+                                </div>
+                              ) : '-'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

@@ -52,7 +52,7 @@ const translations = {
     compactionSystem: 'Sistema de compactación',
     waterTankCapacity: 'Capacidad tanque agua',
     compactionControlAssistants: 'Asistentes de control de compactación',
-    sdrDesc: 'Rodillos de un solo tambor para compactación de suelos y asfalto',
+    sdrDesc: 'Rodillos de un solo tambor para compactación de suelos',
     ltrDesc: 'Rodillos tandem ligeros para trabajos de compactación versátiles',
     htrDesc: 'Rodillos tandem pesados para proyectos de gran escala',
     globalSummary: 'Resumen Global',

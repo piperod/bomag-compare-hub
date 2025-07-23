@@ -1,13 +1,42 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import Header from '@/components/Header';
+import ProductLineSelector from '@/components/ProductLineSelector';
+import MachineComparison from '@/components/MachineComparison';
+import PerformanceCalculator from '@/components/PerformanceCalculator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
+  const [selectedLine, setSelectedLine] = useState<string>('sdr');
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <LanguageProvider>
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <ProductLineSelector 
+            selectedLine={selectedLine} 
+            onLineSelect={setSelectedLine} 
+          />
+          
+          <Tabs defaultValue="comparison" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="comparison">Comparación de Máquinas</TabsTrigger>
+              <TabsTrigger value="calculator">Calculadora de Rendimiento</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="comparison">
+              <MachineComparison selectedLine={selectedLine} />
+            </TabsContent>
+            
+            <TabsContent value="calculator">
+              <PerformanceCalculator />
+            </TabsContent>
+          </Tabs>
+        </main>
       </div>
-    </div>
+    </LanguageProvider>
   );
 };
 

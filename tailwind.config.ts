@@ -26,7 +26,14 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					dark: 'hsl(var(--primary-dark))'
+				},
+				bomag: {
+					orange: 'hsl(var(--bomag-orange))',
+					blue: 'hsl(var(--bomag-blue))',
+					gray: 'hsl(var(--bomag-gray))',
+					'light-gray': 'hsl(var(--bomag-light-gray))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',

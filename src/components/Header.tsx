@@ -1,37 +1,33 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
+import { Link, useLocation } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
   const base = import.meta.env.BASE_URL;
 
   return (
-    <header className="bg-bomag-yellow shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <div className="flex items-center space-x-4">
-            {/* Remove the BOMAG text div and keep only the logo image */}
-            <img src={`${base}bomag-logo.png`} alt="BOMAG Logo" className="h-10 w-auto" />
-            <h1 className="font-oswald text-black text-xl font-semibold">
-              {t('title')}
-            </h1>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Select value={language} onValueChange={(value: Language) => setLanguage(value)}>
-              <SelectTrigger className="w-32 bg-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="es">Español</SelectItem>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="de">Deutsch</SelectItem>
-                <SelectItem value="pt">Português</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+    <header className="bg-bomag-yellow flex items-center justify-between px-4 py-2 shadow">
+      <div className="flex items-center gap-4">
+        <img src={`${base}bomag-logo.png`} alt="BOMAG Logo" className="h-10" />
+        <span className="font-oswald text-2xl tracking-widest text-bomag-gray">BOMAG Compare Hub</span>
       </div>
+      <nav className="flex gap-4 items-center">
+        <Link to="/" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/' ? 'bg-white' : ''} text-black`}>{t('detailComparison')}</Link>
+        <Link to="/summary" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/summary' ? 'bg-white' : ''} text-black`}>{t('globalSummary')}</Link>
+        <Select value={language} onValueChange={(value: Language) => setLanguage(value)}>
+          <SelectTrigger className="w-32 bg-white ml-4 text-black border border-gray-300">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="es">Español</SelectItem>
+            <SelectItem value="en">English</SelectItem>
+            <SelectItem value="de">Deutsch</SelectItem>
+            <SelectItem value="pt">Português</SelectItem>
+          </SelectContent>
+        </Select>
+      </nav>
     </header>
   );
 };

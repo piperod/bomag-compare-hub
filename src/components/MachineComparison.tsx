@@ -339,7 +339,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold text-bomag-gray">
-          {selectedLine.toUpperCase()} - {t('specifications')}
+          {selectedLine.toUpperCase()} - {t('detailComparison')}
         </h3>
         <div className="text-sm text-gray-600">
           {selectedMachines.length} máquinas seleccionadas para comparar

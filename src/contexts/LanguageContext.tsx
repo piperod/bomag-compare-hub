@@ -54,7 +54,10 @@ const translations = {
     compactionControlAssistants: 'Asistentes de control de compactación',
     sdrDesc: 'Rodillos de un solo tambor para compactación de suelos y asfalto',
     ltrDesc: 'Rodillos tandem ligeros para trabajos de compactación versátiles',
-    htrDesc: 'Rodillos tandem pesados para proyectos de gran escala'
+    htrDesc: 'Rodillos tandem pesados para proyectos de gran escala',
+    globalSummary: 'Resumen Global',
+    detailComparison: 'Comparación Detallada',
+    restoreAll: 'Restaurar Todo',
   },
   en: {
     title: 'BOMAG Product Comparator',
@@ -101,7 +104,10 @@ const translations = {
     compactionControlAssistants: 'Compaction Control Assistants',
     sdrDesc: 'Single drum rollers for soil and asphalt compaction',
     ltrDesc: 'Light tandem rollers for versatile compaction jobs',
-    htrDesc: 'Heavy tandem rollers for large-scale projects'
+    htrDesc: 'Heavy tandem rollers for large-scale projects',
+    globalSummary: 'Global Summary',
+    detailComparison: 'Detail Comparison',
+    restoreAll: 'Restore All',
   },
   de: {
     title: 'BOMAG Produktvergleich',
@@ -148,7 +154,10 @@ const translations = {
     compactionControlAssistants: 'Verdichtungskontrollassistenten',
     sdrDesc: 'Einzeltrommelwalzen für die Verdichtung von Boden und Asphalt',
     ltrDesc: 'Leichte Tandemwalzen für vielseitige Verdichtungsarbeiten',
-    htrDesc: 'Schwere Tandemwalzen für Großprojekte'
+    htrDesc: 'Schwere Tandemwalzen für Großprojekte',
+    globalSummary: 'Globale Übersicht',
+    detailComparison: 'Detailvergleich',
+    restoreAll: 'Alles wiederherstellen',
   },
   pt: {
     title: 'Comparador de Produtos BOMAG',
@@ -195,7 +204,10 @@ const translations = {
     compactionControlAssistants: 'Assistentes de controle de compactação',
     sdrDesc: 'Rolos de tambor único para compactação de solo e asfalto',
     ltrDesc: 'Rolos tandem leves para trabalhos de compactação versáteis',
-    htrDesc: 'Rolos tandem pesados para projetos de grande escala'
+    htrDesc: 'Rolos tandem pesados para projetos de grande escala',
+    globalSummary: 'Resumo Global',
+    detailComparison: 'Comparação Detalhada',
+    restoreAll: 'Restaurar Tudo',
   }
 };
 

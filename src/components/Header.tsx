@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
+  const base = import.meta.env.BASE_URL;
 
   return (
     <header className="bg-bomag-yellow shadow-lg">
@@ -10,7 +11,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
             {/* Remove the BOMAG text div and keep only the logo image */}
-            <img src="/bomag-logo.png" alt="BOMAG Logo" className="h-10 w-auto" />
+            <img src={`${base}bomag-logo.png`} alt="BOMAG Logo" className="h-10 w-auto" />
             <h1 className="font-oswald text-black text-xl font-semibold">
               {t('title')}
             </h1>

@@ -21,6 +21,7 @@ export interface MachineSpec {
   correctiveMaintenance: number;
   usageTime: number;
   tco: number;
+  tcoTimeline?: Array<{ hours: number; price: number | null; tco: number | null }>;
   // LTR specific fields
   compactionSystem?: string;
   waterTankCapacity?: number;
@@ -29,6 +30,8 @@ export interface MachineSpec {
   efficientCompaction?: { es: string; en: string; de: string; pt: string };
   aceTechnology?: { es: string; en: string; de: string; pt: string };
   easyMaintenance?: { es: string; en: string; de: string; pt: string };
+  // Add staticTco to MachineSpec
+  staticTco?: number;
 }
 
 export const sdrMachines: MachineSpec[] = [
@@ -70,11 +73,20 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 119692.78,
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 119692.78 },
+      { hours: 1000, price: 42800, tco: 119692.78 },
+      { hours: 1500, price: 50200, tco: 119692.78 },
+      { hours: 2000, price: 57600, tco: 119692.78 },
+      { hours: 2500, price: 65000, tco: 119692.78 },
+      { hours: 3000, price: 72400, tco: 119692.78 }
+    ],
     articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 119692.78
   },
   {
     brand: "BOMAG",
@@ -114,11 +126,20 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 121474.00,
+    tcoTimeline: [
+      { hours: 0, price: 29630, tco: 121474.00 },
+      { hours: 1000, price: 44430, tco: 121474.00 },
+      { hours: 1500, price: 51830, tco: 121474.00 },
+      { hours: 2000, price: 59230, tco: 121474.00 },
+      { hours: 2500, price: 66630, tco: 121474.00 },
+      { hours: 3000, price: 74030, tco: 121474.00 }
+    ],
     articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 121474.00
   },
   {
     brand: "BOMAG",
@@ -158,11 +179,20 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 128330.18,
+    tcoTimeline: [
+      { hours: 0, price: 29580, tco: 128330.18 },
+      { hours: 1000, price: 44980, tco: 128330.18 },
+      { hours: 1500, price: 52680, tco: 128330.18 },
+      { hours: 2000, price: 60380, tco: 128330.18 },
+      { hours: 2500, price: 68080, tco: 128330.18 },
+      { hours: 3000, price: 75780, tco: 128330.18 }
+    ],
     articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 128330.18
   },
   {
     brand: "HAMM",
@@ -202,11 +232,20 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 162045.10,
+    tcoTimeline: [
+      { hours: 0, price: 26783, tco: 162045.10 },
+      { hours: 1000, price: 43383, tco: 162045.10 },
+      { hours: 1500, price: 51683, tco: 162045.10 },
+      { hours: 2000, price: 59983, tco: 162045.10 },
+      { hours: 2500, price: 68283, tco: 162045.10 },
+      { hours: 3000, price: 76583, tco: 162045.10 }
+    ],
     articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 162045.10
   },
   {
     brand: "DYNAPAC",
@@ -246,11 +285,20 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 160200.00,
+    tcoTimeline: [
+      { hours: 0, price: 25500, tco: 160200.00 },
+      { hours: 1000, price: 42100, tco: 160200.00 },
+      { hours: 1500, price: 50400, tco: 160200.00 },
+      { hours: 2000, price: 58700, tco: 160200.00 },
+      { hours: 2500, price: 67000, tco: 160200.00 },
+      { hours: 3000, price: 75300, tco: 160200.00 }
+    ],
     articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 160200.00
   },
   {
     brand: "CATERPILLAR",
@@ -275,6 +323,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 41000, tco: 179548.85 },
+      { hours: 1500, price: 49750, tco: 179548.85 },
+      { hours: 2000, price: 58500, tco: 179548.85 },
+      { hours: 2500, price: 67250, tco: 179548.85 },
+      { hours: 3000, price: 76000, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -304,6 +360,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 41800, tco: 179548.85 },
+      { hours: 1500, price: 50950, tco: 179548.85 },
+      { hours: 2000, price: 60100, tco: 179548.85 },
+      { hours: 2500, price: 69250, tco: 179548.85 },
+      { hours: 3000, price: 78400, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -333,6 +397,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 41800, tco: 179548.85 },
+      { hours: 1500, price: 50950, tco: 179548.85 },
+      { hours: 2000, price: 60100, tco: 179548.85 },
+      { hours: 2500, price: 69250, tco: 179548.85 },
+      { hours: 3000, price: 78400, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -362,6 +434,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 40100, tco: 179548.85 },
+      { hours: 1500, price: 48400, tco: 179548.85 },
+      { hours: 2000, price: 56700, tco: 179548.85 },
+      { hours: 2500, price: 65000, tco: 179548.85 },
+      { hours: 3000, price: 73300, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -391,6 +471,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 42800, tco: 179548.85 },
+      { hours: 1500, price: 52450, tco: 179548.85 },
+      { hours: 2000, price: 62100, tco: 179548.85 },
+      { hours: 2500, price: 71750, tco: 179548.85 },
+      { hours: 3000, price: 81400, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -420,6 +508,14 @@ export const sdrMachines: MachineSpec[] = [
     correctiveMaintenance: 2,
     usageTime: 3000,
     tco: 179548.85,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 179548.85 },
+      { hours: 1000, price: 42800, tco: 179548.85 },
+      { hours: 1500, price: 52450, tco: 179548.85 },
+      { hours: 2000, price: 62100, tco: 179548.85 },
+      { hours: 2500, price: 71750, tco: 179548.85 },
+      { hours: 3000, price: 81400, tco: 179548.85 }
+    ],
     articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
     comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
     efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
@@ -469,7 +565,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 49700.00,
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 49700.00 },
+      { hours: 1000, price: 32900, tco: 49700.00 },
+      { hours: 1500, price: 35350, tco: 49700.00 },
+      { hours: 2000, price: 37800, tco: 49700.00 },
+      { hours: 2500, price: 40250, tco: 49700.00 },
+      { hours: 3000, price: 42700, tco: 49700.00 },
+    ],
   },
   {
     brand: "CATERPILLAR",
@@ -511,7 +616,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 52205.00,
+    tcoTimeline: [
+      { hours: 0, price: 29630, tco: 52205.00 },
+      { hours: 1000, price: 34930, tco: 52205.00 },
+      { hours: 1500, price: 37580, tco: 52205.00 },
+      { hours: 2000, price: 40230, tco: 52205.00 },
+      { hours: 2500, price: 42880, tco: 52205.00 },
+      { hours: 3000, price: 45530, tco: 52205.00 },
+    ],
   },
   {
     brand: "HAMM",
@@ -553,7 +667,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 53030.00,
+    tcoTimeline: [
+      { hours: 0, price: 29580, tco: 53030.00 },
+      { hours: 1000, price: 34880, tco: 53030.00 },
+      { hours: 1500, price: 37480, tco: 53030.00 },
+      { hours: 2000, price: 40080, tco: 53030.00 },
+      { hours: 2500, price: 42680, tco: 53030.00 },
+      { hours: 3000, price: 45280, tco: 53030.00 },
+    ],
   },
   {
     brand: "DYNAPAC",
@@ -595,7 +718,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 49358.00,
+    tcoTimeline: [
+      { hours: 0, price: 26783, tco: 49358.00 },
+      { hours: 1000, price: 31783, tco: 49358.00 },
+      { hours: 1500, price: 34283, tco: 49358.00 },
+      { hours: 2000, price: 36783, tco: 49358.00 },
+      { hours: 2500, price: 39283, tco: 49358.00 },
+      { hours: 3000, price: 41783, tco: 49358.00 },
+    ],
   },
   {
     brand: "AMMANN",
@@ -637,7 +769,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 50350.00,
+    tcoTimeline: [
+      { hours: 0, price: 25500, tco: 50350.00 },
+      { hours: 1000, price: 29500, tco: 50350.00 },
+      { hours: 1500, price: 31500, tco: 50350.00 },
+      { hours: 2000, price: 33500, tco: 50350.00 },
+      { hours: 2500, price: 35500, tco: 50350.00 },
+      { hours: 3000, price: 37500, tco: 50350.00 },
+    ],
   },
   {
     brand: "JCB",
@@ -679,7 +820,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 49925.00,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 49925.00 },
+      { hours: 1000, price: 27500, tco: 49925.00 },
+      { hours: 1500, price: 29500, tco: 49925.00 },
+      { hours: 2000, price: 31500, tco: 49925.00 },
+      { hours: 2500, price: 33500, tco: 49925.00 },
+      { hours: 3000, price: 35500, tco: 49925.00 },
+    ],
   },
   {
     brand: "WACKER NEUSON",
@@ -721,7 +871,16 @@ export const ltrMachines: MachineSpec[] = [
     comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
     efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
     aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
-    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" },
+    staticTco: 49925.00,
+    tcoTimeline: [
+      { hours: 0, price: 23500, tco: 49925.00 },
+      { hours: 1000, price: 27500, tco: 49925.00 },
+      { hours: 1500, price: 29500, tco: 49925.00 },
+      { hours: 2000, price: 31500, tco: 49925.00 },
+      { hours: 2500, price: 33500, tco: 49925.00 },
+      { hours: 3000, price: 35500, tco: 49925.00 },
+    ],
   }
 ];
 

@@ -272,6 +272,21 @@ const getImagePath = (model: string, line: string) => {
   return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
 };
 
+// Add a helper to interpolate color
+function getPriceColor(value: number, min: number, max: number) {
+  if (min === max) return '#fde047'; // yellow if all equal
+  const percent = (value - min) / (max - min);
+  if (percent <= 0.5) {
+    // Green to Yellow
+    const ratio = percent / 0.5;
+    return `rgb(${76 + (253-76)*ratio}, ${222 + (224-222)*ratio}, ${128 + (71-128)*ratio})`;
+  } else {
+    // Yellow to Red
+    const ratio = (percent - 0.5) / 0.5;
+    return `rgb(${253 + (248-253)*ratio}, ${224 + (113-224)*ratio}, ${71 + (113-71)*ratio})`;
+  }
+}
+
 const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const { t, language } = useLanguage();
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
@@ -378,10 +393,13 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="basic">Básico</TabsTrigger>
                 <TabsTrigger value="performance">{t('performance')}</TabsTrigger>
                 <TabsTrigger value="costs">Costos</TabsTrigger>
+                {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (
+                  <TabsTrigger value="tco-timeline">TCO Progresivo</TabsTrigger>
+                )}
               </TabsList>
               
               <TabsContent value="basic" className="mt-4">
@@ -542,6 +560,54 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                   </table>
                 </div>
               </TabsContent>
+
+              {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (
+                <TabsContent value="tco-timeline" className="mt-4">
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left">Horas</th>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
+                          // Gather all prices for this row
+                          const prices = getSelectedMachineData().map(machine => machine.tcoTimeline?.find(e => e.hours === hours)?.price ?? null).filter(v => v !== null) as number[];
+                          const min = Math.min(...prices);
+                          const max = Math.max(...prices);
+                          return (
+                            <tr key={hours} className="hover:bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">{hours}</td>
+                              {getSelectedMachineData().map((machine, index) => {
+                                const entry = machine.tcoTimeline?.find(e => e.hours === hours);
+                                return (
+                                  <td key={index} className="border border-gray-300 p-2 text-center">
+                                    {entry ? (
+                                      <div>
+                                        <div style={{ background: entry.price !== null ? getPriceColor(entry.price, min, max) : undefined, borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
+                                          Precio: {entry.price !== null ? formatCurrency(entry.price) : '-'}
+                                        </div>
+                                        <div>TCO: {entry.tco !== null ? formatCurrency(entry.tco) : '-'}</div>
+                                      </div>
+                                    ) : '-'}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </TabsContent>
+              )}
             </Tabs>
           </CardContent>
         </Card>

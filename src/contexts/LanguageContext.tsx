@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type Language = 'es' | 'en' | 'de';
+export type Language = 'es' | 'en' | 'de' | 'pt';
 
 interface LanguageContextType {
   language: Language;
@@ -51,7 +51,10 @@ const translations = {
     compactionOutput: 'Rendimiento de compactación según tipo de suelo y peso operativo',
     compactionSystem: 'Sistema de compactación',
     waterTankCapacity: 'Capacidad tanque agua',
-    compactionControlAssistants: 'Asistentes de control de compactación'
+    compactionControlAssistants: 'Asistentes de control de compactación',
+    sdrDesc: 'Rodillos de un solo tambor para compactación de suelos y asfalto',
+    ltrDesc: 'Rodillos tandem ligeros para trabajos de compactación versátiles',
+    htrDesc: 'Rodillos tandem pesados para proyectos de gran escala'
   },
   en: {
     title: 'BOMAG Product Comparator',
@@ -95,7 +98,10 @@ const translations = {
     compactionOutput: 'Compaction output by soil type and operating weight',
     compactionSystem: 'Compaction System',
     waterTankCapacity: 'Water Tank Capacity',
-    compactionControlAssistants: 'Compaction Control Assistants'
+    compactionControlAssistants: 'Compaction Control Assistants',
+    sdrDesc: 'Single drum rollers for soil and asphalt compaction',
+    ltrDesc: 'Light tandem rollers for versatile compaction jobs',
+    htrDesc: 'Heavy tandem rollers for large-scale projects'
   },
   de: {
     title: 'BOMAG Produktvergleich',
@@ -139,7 +145,57 @@ const translations = {
     compactionOutput: 'Verdichtungsleistung nach Bodenart und Betriebsgewicht',
     compactionSystem: 'Verdichtungssystem',
     waterTankCapacity: 'Wassertankkapazität',
-    compactionControlAssistants: 'Verdichtungskontrollassistenten'
+    compactionControlAssistants: 'Verdichtungskontrollassistenten',
+    sdrDesc: 'Einzeltrommelwalzen für die Verdichtung von Boden und Asphalt',
+    ltrDesc: 'Leichte Tandemwalzen für vielseitige Verdichtungsarbeiten',
+    htrDesc: 'Schwere Tandemwalzen für Großprojekte'
+  },
+  pt: {
+    title: 'Comparador de Produtos BOMAG',
+    productLines: 'Linhas de Produtos',
+    sdr: 'SDR - Rolo de Tambor Único',
+    ltr: 'LTR - Rolo Tandem Leve',
+    htr: 'HTR - Rolo Tandem Pesado',
+    compare: 'Comparar',
+    specifications: 'Especificações',
+    performance: 'Desempenho',
+    calculator: 'Calculadora de Desempenho',
+    brand: 'Marca',
+    model: 'Modelo',
+    weight: 'Peso (Kg)',
+    engine: 'Motor',
+    compactionWidth: 'Largura de compactação (m)',
+    power: 'Potência (HP)',
+    amplitude: 'Amplitude (mm)',
+    staticLinearLoad: 'Carga Linear Estática (Kg/cm)',
+    gradeability: 'Rampabilidade (%)',
+    origin: 'País de origem',
+    compactionAssistant: 'Assistente de compactação',
+    telemetry: 'Telemetria',
+    innovations: 'Tecnologias Inovadoras',
+    usp: 'USP',
+    maxCompactionDepth: 'Profundidade máxima de compactação (cm)',
+    compactionPerformance: 'Desempenho de compactação (m³/h)',
+    fuelConsumption: 'Consumo de combustível (L/h)',
+    price: 'Preço CIF (USD)',
+    preventiveMaintenance: 'Manutenção preventiva (USD/h)',
+    correctiveMaintenance: 'Manutenção corretiva (USD/h)',
+    usageTime: 'Tempo de uso (h)',
+    tco: 'TCO (USD)',
+    soilType: 'Tipo de Solo',
+    operatingWeight: 'Peso Operacional (t)',
+    rock: 'Rocha',
+    gravel: 'Cascalho, areia',
+    mixedSoil: 'Solo misto',
+    clay: 'Silte, argila',
+    compactionHeight: 'Altura da camada compactada por tipo de solo e peso operacional',
+    compactionOutput: 'Desempenho de compactação por tipo de solo e peso operacional',
+    compactionSystem: 'Sistema de compactação',
+    waterTankCapacity: 'Capacidade do tanque de água',
+    compactionControlAssistants: 'Assistentes de controle de compactação',
+    sdrDesc: 'Rolos de tambor único para compactação de solo e asfalto',
+    ltrDesc: 'Rolos tandem leves para trabalhos de compactação versáteis',
+    htrDesc: 'Rolos tandem pesados para projetos de grande escala'
   }
 };
 

@@ -8,11 +8,11 @@ export interface MachineSpec {
   amplitude: string;
   staticLinearLoad: number;
   gradeability?: number;
-  origin: string;
-  compactionAssistant: string;
-  telemetry?: string;
-  innovations: string;
-  usp: string;
+  origin: { es: string; en: string; de: string; pt: string };
+  compactionAssistant: { es: string; en: string; de: string; pt: string };
+  telemetry?: { es: string; en: string; de: string; pt: string };
+  innovations: { es: string; en: string; de: string; pt: string };
+  usp: { es: string; en: string; de: string; pt: string };
   maxCompactionDepth?: number;
   compactionPerformance?: string;
   fuelConsumption: number;
@@ -24,6 +24,11 @@ export interface MachineSpec {
   // LTR specific fields
   compactionSystem?: string;
   waterTankCapacity?: number;
+  articulationJoint?: { es: string; en: string; de: string; pt: string };
+  comfortSafety?: { es: string; en: string; de: string; pt: string };
+  efficientCompaction?: { es: string; en: string; de: string; pt: string };
+  aceTechnology?: { es: string; en: string; de: string; pt: string };
+  easyMaintenance?: { es: string; en: string; de: string; pt: string };
 }
 
 export const sdrMachines: MachineSpec[] = [
@@ -37,11 +42,26 @@ export const sdrMachines: MachineSpec[] = [
     amplitude: "1,80 / 0,95",
     staticLinearLoad: 28.4,
     gradeability: 45,
-    origin: "India",
-    compactionAssistant: "BOMAG ECONOMIZER - Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
-    telemetry: "Telematics",
-    innovations: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
-    usp: "Operación Intuitiva - Un switch para cada función - Símbolos intuitivos facilitan la operación",
+    origin: { es: "India", en: "India", de: "Indien", pt: "Índia" },
+    compactionAssistant: {
+      es: "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
+      en: "BOMAG ECONOMIZER\nVisual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction. (Standard)",
+      de: "BOMAG ECONOMIZER\nVisuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden. (Standard)",
+      pt: "BOMAG ECONOMIZER\nSistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação. (Padrão)"
+    },
+    telemetry: { es: "Telematics", en: "Telematics", de: "Telematik", pt: "Telemática" },
+    innovations: {
+      es: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      en: "Economizer, TERRAMETER (Real Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      de: "Economizer, TERRAMETER (Echtes Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      pt: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    usp: {
+      es: "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      en: "Intuitive Operation\n* One switch for each function\n* Intuitive symbols make operation easy",
+      de: "Intuitive Bedienung\n* Ein Schalter für jede Funktion\n* Intuitive Symbole erleichtern die Bedienung",
+      pt: "Operação intuitiva\n* Um interruptor para cada função\n* Símbolos intuitivos facilitam a operação"
+    },
     maxCompactionDepth: 60,
     compactionPerformance: "270 - 540",
     fuelConsumption: 11.8,
@@ -49,7 +69,12 @@ export const sdrMachines: MachineSpec[] = [
     preventiveMaintenance: 1,
     correctiveMaintenance: 2,
     usageTime: 3000,
-    tco: 119692.78
+    tco: 119692.78,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "BOMAG",
@@ -61,11 +86,26 @@ export const sdrMachines: MachineSpec[] = [
     amplitude: "1,80 / 0,95",
     staticLinearLoad: 28.4,
     gradeability: 45,
-    origin: "India",
-    compactionAssistant: "BOMAG ECONOMIZER - Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
-    telemetry: "Telematics",
-    innovations: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
-    usp: "Operación Intuitiva - Un switch para cada función - Símbolos intuitivos facilitan la operación",
+    origin: { es: "India", en: "India", de: "Indien", pt: "Índia" },
+    compactionAssistant: {
+      es: "BOMAG ECONOMIZER - Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
+      en: "BOMAG ECONOMIZER - Visual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction. (Standard)",
+      de: "BOMAG ECONOMIZER - Visuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden. (Standard)",
+      pt: "BOMAG ECONOMIZER - Sistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação. (Padrão)"
+    },
+    telemetry: { es: "Telematics", en: "Telematics", de: "Telematik", pt: "Telemática" },
+    innovations: {
+      es: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      en: "Economizer, TERRAMETER (Real Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      de: "Economizer, TERRAMETER (Echtes Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      pt: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    usp: {
+      es: "Operación Intuitiva - Un switch para cada función - Símbolos intuitivos facilitan la operación",
+      en: "Intuitive Operation - One switch for each function - Intuitive symbols make operation easy",
+      de: "Intuitive Bedienung - Ein Schalter für jede Funktion - Intuitive Symbole erleichtern die Bedienung",
+      pt: "Operação intuitiva - Um interruptor para cada função - Símbolos intuitivos facilitam a operação"
+    },
     maxCompactionDepth: 60,
     compactionPerformance: "270 - 540",
     fuelConsumption: 11.8,
@@ -73,7 +113,12 @@ export const sdrMachines: MachineSpec[] = [
     preventiveMaintenance: 1,
     correctiveMaintenance: 2,
     usageTime: 3000,
-    tco: 121474.00
+    tco: 121474.00,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "BOMAG",
@@ -85,11 +130,26 @@ export const sdrMachines: MachineSpec[] = [
     amplitude: "1,80 / 0,95",
     staticLinearLoad: 28.4,
     gradeability: 45,
-    origin: "China",
-    compactionAssistant: "BOMAG ECONOMIZER - Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
-    telemetry: "Telematics",
-    innovations: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
-    usp: "Operación Intuitiva - Un switch para cada función - Símbolos intuitivos facilitan la operación",
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: {
+      es: "BOMAG ECONOMIZER - Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompactación o subcompactación. (Estandar)",
+      en: "BOMAG ECONOMIZER - Visual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction. (Standard)",
+      de: "BOMAG ECONOMIZER - Visuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden. (Standard)",
+      pt: "BOMAG ECONOMIZER - Sistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação. (Padrão)"
+    },
+    telemetry: { es: "Telematics", en: "Telematics", de: "Telematik", pt: "Telemática" },
+    innovations: {
+      es: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      en: "Economizer, TERRAMETER (Real Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      de: "Economizer, TERRAMETER (Echtes Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      pt: "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    usp: {
+      es: "Operación Intuitiva - Un switch para cada función - Símbolos intuitivos facilitan la operación",
+      en: "Intuitive Operation - One switch for each function - Intuitive symbols make operation easy",
+      de: "Intuitive Bedienung - Ein Schalter für jede Funktion - Intuitive Symbole erleichtern die Bedienung",
+      pt: "Operação intuitiva - Um interruptor para cada função - Símbolos intuitivos facilitam a operação"
+    },
     maxCompactionDepth: 60,
     compactionPerformance: "270 - 540",
     fuelConsumption: 12.4,
@@ -97,7 +157,12 @@ export const sdrMachines: MachineSpec[] = [
     preventiveMaintenance: 1,
     correctiveMaintenance: 2,
     usageTime: 3000,
-    tco: 128330.18
+    tco: 128330.18,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "HAMM",
@@ -109,11 +174,26 @@ export const sdrMachines: MachineSpec[] = [
     amplitude: "1,95/0,85",
     staticLinearLoad: 29.81,
     gradeability: 58,
-    origin: "Germany",
-    compactionAssistant: "No aplica",
-    telemetry: "Smart Doc",
-    innovations: "EcoStop, SmartCompaction, vibración adaptativa",
-    usp: "Conducción y maniobrabilidad - Bloqueo integrado de la articulación pendular - Control de tracción para una óptima transmisión de potencia",
+    origin: { es: "Germany", en: "Germany", de: "Deutschland", pt: "Alemanha" },
+    compactionAssistant: {
+      es: "No aplica",
+      en: "No aplica",
+      de: "Keine Anwendung",
+      pt: "Não aplicável"
+    },
+    telemetry: { es: "Smart Doc", en: "Smart Doc", de: "Smart Doc", pt: "Smart Doc" },
+    innovations: {
+      es: "EcoStop, SmartCompaction, vibración adaptativa",
+      en: "EcoStop, SmartCompaction, adaptive vibration",
+      de: "EcoStop, SmartCompaction, adaptive Vibration",
+      pt: "EcoStop, SmartCompaction, vibração adaptativa"
+    },
+    usp: {
+      es: "Conducción y maniobrabilidad - Bloqueo integrado de la articulación pendular - Control de tracción para una óptima transmisión de potencia",
+      en: "Conducción y maniobrabilidad - Bloqueo integrado de la articulación pendular - Control de tracción para una óptima transmisión de potencia",
+      de: "Conducción y maniobrabilidad - Integrierter Pendelgelenkblock - Kontrolle der Antriebsleistung für optimale Übertragung",
+      pt: "Condução e maniabilidade - Bloqueio integrado da articulação pendular - Controlo da tração para uma óptima transmissão de potência"
+    },
     maxCompactionDepth: 60,
     compactionPerformance: "250 - 400",
     fuelConsumption: 13.6,
@@ -121,7 +201,12 @@ export const sdrMachines: MachineSpec[] = [
     preventiveMaintenance: 1,
     correctiveMaintenance: 2,
     usageTime: 3000,
-    tco: 162045.10
+    tco: 162045.10,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "DYNAPAC",
@@ -133,11 +218,26 @@ export const sdrMachines: MachineSpec[] = [
     amplitude: "1,8/0,9",
     staticLinearLoad: 26,
     gradeability: 65,
-    origin: "Sweden/ Brazil/ China",
-    compactionAssistant: "No aplica",
-    telemetry: "Dyn@lizer",
-    innovations: "Dynapac Compaction meter (DCM), Dyn@lyzer",
-    usp: "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+    origin: { es: "Sweden/ Brazil/ China", en: "Sweden/ Brazil/ China", de: "Schweden/ Brasilien/ China", pt: "Suécia/ Brasil/ China" },
+    compactionAssistant: {
+      es: "No aplica",
+      en: "No aplica",
+      de: "Keine Anwendung",
+      pt: "Não aplicável"
+    },
+    telemetry: { es: "Dyn@lizer", en: "Dyn@lizer", de: "Dyn@lizer", pt: "Dyn@lizer" },
+    innovations: {
+      es: "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      en: "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      de: "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      pt: "Dynapac Compaction meter (DCM), Dyn@lyzer"
+    },
+    usp: {
+      es: "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      en: "Intuitive controls: Simple levers and instrument panel with clear indicators, easy to operate even by personnel with little experience.",
+      de: "Intuitive Steuerung: Einfache Hebel und Instrumentenleiste mit klaren Indikatoren, die auch mit wenig Erfahrung bedient werden können.",
+      pt: "Controles intuitivos: Palancas simples e painel de instrumentos com indicadores claros, fáceis de operar mesmo por pessoal com pouca experiência."
+    },
     maxCompactionDepth: 55,
     compactionPerformance: "220 - 350",
     fuelConsumption: 13.6,
@@ -145,7 +245,186 @@ export const sdrMachines: MachineSpec[] = [
     preventiveMaintenance: 1,
     correctiveMaintenance: 2,
     usageTime: 3000,
-    tco: 160200.00
+    tco: 160200.00,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
+  },
+  {
+    brand: "CATERPILLAR",
+    model: "CS11GC",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)", en: "CAT Machine Drive Power (MDP)\nThis system measures ground resistance during compaction, providing real-time data on equipment work capacity and soil conditions. Allows adjustment of compaction intensity to avoid engine overload and improve efficiency. (Optional)", de: "CAT Machine Drive Power (MDP)\nDieses System misst den Widerstand des Bodens während der Verdichtung und liefert Echtzeitdaten über die Arbeitskapazität der Ausrüstung und die Bodenbedingungen. Ermöglicht die Anpassung der Verdichtungsintensität, um eine Überlastung des Motors zu vermeiden und die Effizienz zu verbessern. (Optional)", pt: "CAT Machine Drive Power (MDP)\nEste sistema mede a resistência do solo durante a compactação, fornecendo dados em tempo real sobre a capacidade de trabalho do equipamento e as condições do solo. Permite ajustar a intensidade da compactação para evitar sobrecarga do motor e melhorar a eficiência. (Opcional)" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
+  },
+  {
+    brand: "CATERPILLAR",
+    model: "V110",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
+  },
+  {
+    brand: "HAMM",
+    model: "SSR120C-10S",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
+  },
+  {
+    brand: "DYNAPAC",
+    model: "XS123",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
+  },
+  {
+    brand: "DYNAPAC",
+    model: "ASC110",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
+  },
+  {
+    brand: "DYNAPAC",
+    model: "116D",
+    weight: 11235,
+    engine: "Cat C4.4",
+    compactionWidth: 2.13,
+    power: 83.4,
+    amplitude: "2,0/1,0",
+    staticLinearLoad: 28.9,
+    gradeability: 55,
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    telemetry: { es: "Vision Link", en: "Vision Link", de: "Vision Link", pt: "Vision Link" },
+    innovations: { es: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", en: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", de: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link", pt: "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link" },
+    usp: { es: "Controles ergonómicos y simples:\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.", en: "Ergonomic and simple controls:\n* Single control lever for forward, vibration, and steering.\n* Easy-to-read digital instrumentation.", de: "Ergonomische und einfache Steuerung:\n* Ein einziger Steuerhebel für Vorwärtsfahrt, Vibration und Lenkung.\n* Leicht ablesbare digitale Instrumentierung.", pt: "Controles ergonômicos e simples:\n* Alavanca de controle única para avanço, vibração e direção.\n* Instrumentação digital de fácil leitura." },
+    maxCompactionDepth: 60,
+    compactionPerformance: "200",
+    fuelConsumption: 14.5,
+    price: 105298.85,
+    preventiveMaintenance: 1,
+    correctiveMaintenance: 2,
+    usageTime: 3000,
+    tco: 179548.85,
+    articulationJoint: { es: "Junta de articulación libre de mantenimiento", en: "Maintenance-free articulation joint", de: "Wartungsfreie Knickgelenke", pt: "Articulação livre de manutenção" },
+    comfortSafety: { es: "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces", en: "Platform with adjustable seat, controls at hand, and excellent 360° visibility.\n\nAutomatic vibration (Auto Vibe): The system can automatically activate/deactivate vibration depending on roller speed or if stopped, improving process control.", de: "Plattform mit verstellbarem Sitz, Bedienelementen zur Hand und ausgezeichneter 360°-Sicht.\n\nAutomatische Vibration (Auto Vibe): Das System kann die Vibration je nach Walzengeschwindigkeit oder Stillstand automatisch aktivieren/deaktivieren und so die Prozesskontrolle verbessern.", pt: "Plataforma com assento ajustável, controles à mão e excelente visibilidade de 360°.\n\nVibração automática (Auto Vibe): O sistema pode ativar/desativar a vibração automaticamente dependendo da velocidade do rolo ou se estiver parado, melhorando o controle do processo." },
+    efficientCompaction: { es: "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).", en: "* Highest amplitude on the market\n* Exclusive CAT MDP: Measures drum rolling resistance as a direct indicator of compaction level (key advantage over traditional models).", de: "* Höchste Amplitude auf dem Markt\n* Exklusives CAT MDP: Misst den Widerstand der Walze als direkten Indikator für das Verdichtungsniveau (Schlüsselvorteil gegenüber traditionellen Modellen).", pt: "* Maior amplitude do mercado\n* MDP exclusivo da CAT: Mede a resistência ao avanço do tambor como um indicador direto do nível de compactação (vantagem chave em relação aos modelos tradicionais)." },
+    aceTechnology: { es: "No aplica", en: "No aplica", de: "Keine Anwendung", pt: "Não aplicável" },
+    easyMaintenance: { es: "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.", en: "Maintenance and Service\nDesign oriented to low maintenance:\n* Extended maintenance intervals.\n* Reduced lubrication points thanks to sealed components.", de: "Wartung und Service\nWartungsarmes Design:\n* Verlängerte Wartungsintervalle.\n* Reduzierte Schmierstellen dank abgedichteter Komponenten.", pt: "Manutenção e Serviço\nDesign orientado para baixa manutenção:\n* Intervalos de manutenção estendidos.\n* Redução dos pontos de lubrificação graças ao uso de componentes selados." }
   }
 ];
 
@@ -159,10 +438,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 32.6,
     amplitude: "0.5",
     staticLinearLoad: 11.3,
-    origin: "Germany/China",
-    compactionAssistant: "Economizer - Sensor de rigidez del suelo",
-    innovations: "Bajos TCO (Servicio/Matenimiento/Reparación/confiabilidad)",
-    usp: "Fácil y seguro de operar. Economizer (Opción) Incluye indicador de temperatura",
+    origin: { es: "Germany/China", en: "Germany/China", de: "Deutschland/China", pt: "Alemanha/China" },
+    compactionAssistant: {
+      es: "Economizer - Sensor de rigidez del suelo",
+      en: "Economizer - Soil stiffness sensor",
+      de: "Economizer - Bodensteifigkeitssensor",
+      pt: "Economizer - Sensor de rigidez do solo"
+    },
+    innovations: {
+      es: "Bajos TCO (Servicio/Matenimiento/Reparación/confiabilidad)",
+      en: "Low TCO (Service/Maintenance/Repair/Reliability)",
+      de: "Niedrige TCO (Service/Wartung/Reparatur/Zuverlässigkeit)",
+      pt: "Baixo TCO (Serviço/Manutenção/Reparo/Confiabilidade)"
+    },
+    usp: {
+      es: "Fácil y seguro de operar. Economizer (Opción) Incluye indicador de temperatura",
+      en: "Easy and safe to operate. Economizer (Option) Includes temperature indicator",
+      de: "Einfach und sicher zu bedienen. Economizer (Option) Enthält Temperaturanzeige",
+      pt: "Fácil e seguro de operar. Economizer (Opção) Inclui indicador de temperatura"
+    },
     fuelConsumption: 2.6,
     price: 28000.00,
     preventiveMaintenance: 1,
@@ -170,7 +464,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 49700.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 205
+    waterTankCapacity: 205,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "CATERPILLAR",
@@ -181,10 +480,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 24.6,
     amplitude: "0.52",
     staticLinearLoad: 13.7,
-    origin: "China",
-    compactionAssistant: "CMV (Compaction Meter Value)",
-    innovations: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
-    usp: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
+    origin: { es: "China", en: "China", de: "China", pt: "China" },
+    compactionAssistant: {
+      es: "CMV (Compaction Meter Value)",
+      en: "CMV (Compaction Meter Value)",
+      de: "CMV (Compaction Meter Value)",
+      pt: "CMV (Valor do Medidor de Compactação)"
+    },
+    innovations: {
+      es: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
+      en: "Low-cost operational roller, ideal for rental fleets or works where mechanical simplicity and reliability are priority.",
+      de: "Günstiger Betriebsroller, ideal für Mietflotten oder Arbeiten, bei denen mechanische Einfachheit und Zuverlässigkeit Priorität haben.",
+      pt: "Rolador de baixo custo operacional, ideal para frotas de aluguer ou trabalhos onde a simplicidade e confiabilidade mecânica são prioridade."
+    },
+    usp: {
+      es: "Rodillo de bajo costo operativo, ideal para flotas de alquiler o trabajos donde la simplicidad y confiabilidad mecánica son prioridad.",
+      en: "Low-cost operational roller, ideal for rental fleets or works where mechanical simplicity and reliability are priority.",
+      de: "Günstiger Betriebsroller, ideal für Mietflotten oder Arbeiten, bei denen mechanische Einfachheit und Zuverlässigkeit Priorität haben.",
+      pt: "Rolador de baixo custo operacional, ideal para frotas de aluguer ou trabalhos onde a simplicidade e confiabilidade mecânica são prioridade."
+    },
     fuelConsumption: 2.3,
     price: 29630.00,
     preventiveMaintenance: 1,
@@ -192,7 +506,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 52205.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 200
+    waterTankCapacity: 200,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "HAMM",
@@ -203,10 +522,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 30.7,
     amplitude: "0.52",
     staticLinearLoad: 11.2,
-    origin: "Czech",
-    compactionAssistant: "HAMM Compaction Meter: Sensor de aceleración / frecuencia",
-    innovations: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
-    usp: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
+    origin: { es: "Czech", en: "Czech", de: "Tschechien", pt: "República Tcheca" },
+    compactionAssistant: {
+      es: "HAMM Compaction Meter: Sensor de aceleración / frecuencia",
+      en: "HAMM Compaction Meter: Acceleration / frequency sensor",
+      de: "HAMM Compaction Meter: Beschleunigungssensor / Frequenz",
+      pt: "HAMM Compaction Meter: Sensor de aceleração / frequência"
+    },
+    innovations: {
+      es: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
+      en: "Maximum maneuverability with double vibratory drum and configuration option for narrow urban areas",
+      de: "Maximale Manövrierfähigkeit mit doppeltem Vibrationsbagger und Konfigurationsoption für engste Stadtzonen",
+      pt: "Máxima maniabilidade com dois tambor vibratório e opção de configuração para áreas urbanas estreitas"
+    },
+    usp: {
+      es: "Máxima maniobrabilidad con doble tambor vibratorio y opción de configuración para zonas urbanas estrechas",
+      en: "Maximum maneuverability with double vibratory drum and configuration option for narrow urban areas",
+      de: "Maximale Manövrierfähigkeit mit doppeltem Vibrationsbagger und Konfigurationsoption für engste Stadtzonen",
+      pt: "Máxima maniabilidade com dois tambor vibratório e opção de configuração para áreas urbanas estreitas"
+    },
     fuelConsumption: 2.8,
     price: 29580.00,
     preventiveMaintenance: 1.5,
@@ -214,7 +548,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 53030.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 180
+    waterTankCapacity: 180,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "DYNAPAC",
@@ -225,10 +564,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 35,
     amplitude: "0.508",
     staticLinearLoad: 10.5,
-    origin: "Brasil",
-    compactionAssistant: "DCA-A Sensor de aceleración / amplitud",
-    innovations: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
-    usp: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
+    origin: { es: "Brasil", en: "Brasil", de: "Brasil", pt: "Brasil" },
+    compactionAssistant: {
+      es: "DCA-A Sensor de aceleración / amplitud",
+      en: "DCA-A Acceleration / amplitude sensor",
+      de: "DCA-A Beschleunigungssensor / Amplitude",
+      pt: "DCA-A Sensor de aceleração / amplitude"
+    },
+    innovations: {
+      es: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
+      en: "Compact chassis with tandem design and DCA system for traceability by zones (in superior models).",
+      de: "Kompaktes Fahrgestell mit Tandem-Design und DCA-System für Nachverfolgbarkeit nach Zonen (in höheren Modellen).",
+      pt: "Chassis compacto com design em tandem e sistema DCA para rastreabilidade por zonas (em modelos superiores)."
+    },
+    usp: {
+      es: "Chasis compacto con diseño en tándem y opción de sistema DCA para trazabilidad por zonas (en modelos superiores).",
+      en: "Compact chassis with tandem design and DCA system for traceability by zones (in superior models).",
+      de: "Kompaktes Fahrgestell mit Tandem-Design und DCA-System für Nachverfolgbarkeit nach Zonen (in höheren Modellen).",
+      pt: "Chassis compacto com design em tandem e sistema DCA para rastreabilidade por zonas (em modelos superiores)."
+    },
     fuelConsumption: 2.7,
     price: 26783.00,
     preventiveMaintenance: 1,
@@ -236,7 +590,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 49358.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 159
+    waterTankCapacity: 159,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "AMMANN",
@@ -247,10 +606,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 27.3,
     amplitude: "0.6",
     staticLinearLoad: 10.3,
-    origin: "Switzerland",
-    compactionAssistant: "ACEforce: Sensor de rigidez dinámica",
-    innovations: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
-    usp: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
+    origin: { es: "Switzerland", en: "Switzerland", de: "Schweiz", pt: "Suíça" },
+    compactionAssistant: {
+      es: "ACEforce: Sensor de rigidez dinámica",
+      en: "ACEforce: Dynamic stiffness sensor",
+      de: "ACEforce: Dynamischer Steifigkeitssensor",
+      pt: "ACEforce: Sensor de rigidez dinâmica"
+    },
+    innovations: {
+      es: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
+      en: "Active compaction technology that automatically adjusts the vibration according to the soil stiffness to optimize the number of passes.",
+      de: "Aktive Verdichtungstechnologie, die die Vibration automatisch an die Bodensteifigkeit anpasst, um die Anzahl der Durchläufe zu optimieren.",
+      pt: "Tecnologia de compactação ativa que ajusta automaticamente a vibração de acordo com a rigidez do solo para otimizar o número de passadas."
+    },
+    usp: {
+      es: "Tecnología de compactación activa que ajusta automáticamente la vibración según la rigidez del suelo para optimizar el número de pasadas.",
+      en: "Active compaction technology that automatically adjusts the vibration according to the soil stiffness to optimize the number of passes.",
+      de: "Aktive Verdichtungstechnologie, die die Vibration automatisch an die Bodensteifigkeit anpasst, um die Anzahl der Durchläufe zu optimieren.",
+      pt: "Tecnologia de compactação ativa que ajusta automaticamente a vibração de acordo com a rigidez do solo para otimizar o número de passadas."
+    },
     fuelConsumption: 3.2,
     price: 25500.00,
     preventiveMaintenance: 1,
@@ -258,7 +632,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 50350.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 110
+    waterTankCapacity: 110,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "JCB",
@@ -269,10 +648,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 24.4,
     amplitude: "0.51",
     staticLinearLoad: 10.5,
-    origin: "India",
-    compactionAssistant: "No aplica",
-    innovations: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
-    usp: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    origin: { es: "India", en: "India", de: "Indien", pt: "Índia" },
+    compactionAssistant: {
+      es: "No aplica",
+      en: "No aplica",
+      de: "Keine Anwendung",
+      pt: "Não aplicável"
+    },
+    innovations: {
+      es: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      en: "Robust design, excellent access to maintenance and standardized components for maximum availability in the field.",
+      de: "Robustes Design, hervorragender Zugang zum Wartungs- und Standardisierungskomponenten für maximale Verfügbarkeit im Feld.",
+      pt: "Design robusto, excelente acesso a manutenção e componentes padronizados para máxima disponibilidade em campo."
+    },
+    usp: {
+      es: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      en: "Robust design, excellent access to maintenance and standardized components for maximum availability in the field.",
+      de: "Robustes Design, hervorragender Zugang zum Wartungs- und Standardisierungskomponenten für maximale Verfügbarkeit im Feld.",
+      pt: "Design robusto, excelente acesso a manutenção e componentes padronizados para máxima disponibilidade em campo."
+    },
     fuelConsumption: 2.7,
     price: 23500.00,
     preventiveMaintenance: 1.5,
@@ -280,7 +674,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 49925.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 197
+    waterTankCapacity: 197,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   },
   {
     brand: "WACKER NEUSON",
@@ -291,10 +690,25 @@ export const ltrMachines: MachineSpec[] = [
     power: 30.7,
     amplitude: "0.51",
     staticLinearLoad: 10.5,
-    origin: "Germany",
-    compactionAssistant: "No aplica",
-    innovations: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
-    usp: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+    origin: { es: "Germany", en: "Germany", de: "Deutschland", pt: "Alemanha" },
+    compactionAssistant: {
+      es: "No aplica",
+      en: "No aplica",
+      de: "Keine Anwendung",
+      pt: "Não aplicável"
+    },
+    innovations: {
+      es: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      en: "Robust design, excellent access to maintenance and standardized components for maximum availability in the field.",
+      de: "Robustes Design, hervorragender Zugang zum Wartungs- und Standardisierungskomponenten für maximale Verfügbarkeit im Feld.",
+      pt: "Design robusto, excelente acesso a manutenção e componentes padronizados para máxima disponibilidade em campo."
+    },
+    usp: {
+      es: "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      en: "Robust design, excellent access to maintenance and standardized components for maximum availability in the field.",
+      de: "Robustes Design, hervorragender Zugang zum Wartungs- und Standardisierungskomponenten für maximale Verfügbarkeit im Feld.",
+      pt: "Design robusto, excelente acesso a manutenção e componentes padronizados para máxima disponibilidade em campo."
+    },
     fuelConsumption: 2.7,
     price: 23500.00,
     preventiveMaintenance: 1.5,
@@ -302,7 +716,12 @@ export const ltrMachines: MachineSpec[] = [
     usageTime: 3500,
     tco: 49925.00,
     compactionSystem: "Vibratory",
-    waterTankCapacity: 197
+    waterTankCapacity: 197,
+    articulationJoint: { es: "Articulación de la rueda", en: "Articulation of the wheel", de: "Kurbelwelle", pt: "Articulação da roda" },
+    comfortSafety: { es: "Confort y seguridad", en: "Comfort and safety", de: "Komfort und Sicherheit", pt: "Conforto e segurança" },
+    efficientCompaction: { es: "Compactación eficiente", en: "Efficient compaction", de: "Effiziente Verdichtung", pt: "Compactação eficiente" },
+    aceTechnology: { es: "Tecnología ACE", en: "ACE Technology", de: "ACE-Technologie", pt: "Tecnologia ACE" },
+    easyMaintenance: { es: "Mantenimiento fácil", en: "Easy maintenance", de: "Einfache Wartung", pt: "Manutenção fácil" }
   }
 ];
 

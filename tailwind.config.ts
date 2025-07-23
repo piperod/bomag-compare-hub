@@ -33,7 +33,8 @@ export default {
 					orange: 'hsl(var(--bomag-orange))',
 					blue: 'hsl(var(--bomag-blue))',
 					gray: 'hsl(var(--bomag-gray))',
-					'light-gray': 'hsl(var(--bomag-light-gray))'
+					'light-gray': 'hsl(var(--bomag-light-gray))',
+					yellow: 'rgb(244, 216, 79)', // Updated BOMAG brand yellow
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -69,6 +70,9 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			fontFamily: {
+				oswald: ['Oswald', 'Arial', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -5,14 +5,13 @@ const Header = () => {
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <header className="bg-bomag-orange shadow-lg">
+    <header className="bg-bomag-yellow shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
-            <div className="text-white font-bold text-2xl">
-              BOMAG
-            </div>
-            <h1 className="text-white text-xl font-semibold">
+            {/* Remove the BOMAG text div and keep only the logo image */}
+            <img src="/bomag-logo.png" alt="BOMAG Logo" className="h-10 w-auto" />
+            <h1 className="font-oswald text-black text-xl font-semibold">
               {t('title')}
             </h1>
           </div>
@@ -26,6 +25,7 @@ const Header = () => {
                 <SelectItem value="es">Español</SelectItem>
                 <SelectItem value="en">English</SelectItem>
                 <SelectItem value="de">Deutsch</SelectItem>
+                <SelectItem value="pt">Português</SelectItem>
               </SelectContent>
             </Select>
           </div>

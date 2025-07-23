@@ -13,20 +13,23 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
     {
       id: 'sdr',
       title: t('sdr'),
-      description: 'Rodillos de un solo tambor para compactación de suelos y asfalto',
-      icon: '🛞'
+      description: t('sdrDesc'),
+      icon: '/sdricon.png',
+      alt: 'Single Drum Roller Icon'
     },
     {
       id: 'ltr',
       title: t('ltr'),
-      description: 'Rodillos tandem ligeros para trabajos de compactación versátiles',
-      icon: '🚜'
+      description: t('ltrDesc'),
+      icon: '/ltricon.webp',
+      alt: 'Light Tandem Roller Icon'
     },
     {
       id: 'htr',
       title: t('htr'),
-      description: 'Rodillos tandem pesados para proyectos de gran escala',
-      icon: '🚛'
+      description: t('htrDesc'),
+      icon: '/htricon.webp',
+      alt: 'Heavy Tandem Roller Icon'
     }
   ];
 
@@ -45,7 +48,7 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
             onClick={() => onLineSelect(line.id)}
           >
             <CardHeader className="text-center">
-              <div className="text-4xl mb-2">{line.icon}</div>
+              <img src={line.icon} alt={line.alt} className="w-auto h-16 max-w-[80px] mx-auto mb-2 object-contain" />
               <CardTitle className="text-bomag-gray">{line.title}</CardTitle>
             </CardHeader>
             <CardContent>

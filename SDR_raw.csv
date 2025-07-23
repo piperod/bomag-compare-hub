@@ -1,0 +1,158 @@
+Modelo,BW211 D5-SL,BW211 D5-SL,BW211 D5-SL,HC110,CA25 D-Rhino,CS11GC,V110,SSR120C-10S,XS123,ASC110,116D
+Peso (Kg),"10,630","10,630","10,630","11,765","10,500","11,235","11,380","12,400","12,000","11,490","11,560"
+Motor,Cummins 4BT 3.9,Cummins 4BTAA 3.9,Deutz BF4M 2012 C,JDPS 4045PTE,Cummins QSF3.8,Cat C4.4,S8000 4-stroke,DONGFENG CUMMINS QSB3.9-C150-3,Cummins QSF3.8,Cummins QSB 4.5-C160,JCB DIESELMAX TCA-85
+Ancho de compactación (m),2.1,2.1,2.1,2.14,2.13,2.13,2.16,2.13,2.13,2.13,2.1
+Potencia (HP),100,110,132,135.4,130,83.4,110,110,139,160,114
+Amplitud (mm),"1,80 / 0,95","1,80 / 0,95","1,80 / 0,95","1,95/0,85","1,8/0,9","2,0/1,0","1,8/0,8","1,8/0,9","1,8/0,9","1,85/0,9","1,8/0,8"
+Carga Lineal Estática (Kg/cm),28.4,28.4,28.4,29.81,26,28.9,31,33.2,31.5,34.5,31.8
+Gradeabilidad (%),45,45,45,58,65,55,40,65,45,60,55
+País de origen,India,India,China,Germany,Sweden/ Brazil/ China,China,India,China/Brazil,Brazil,Brazil,India
+Asistente de compactación," BOMAG ECONOMIZER
+Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)"," BOMAG ECONOMIZER
+Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)"," BOMAG ECONOMIZER
+Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)",No aplica,No aplica,"CAT Machine Drive Power (MDP)
+Este sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)",No aplica,No aplica,No aplica,"AMMANN ACEforce
+ Tecnología de ajuste activo de la vibración, que ajusta continuamente la amplitud y la frecuencia del tambor según las condiciones del terreno. Esto mejora la eficiencia y la uniformidad de la compactación.","IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche."
+,"BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","HAMM SmartCompaction Value (Solo si es Serie VA)
+El sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima","Dynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación","CAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",No aplica,No aplica,No aplica,No aplica,No aplica
+Telemetría,Telematics,Telematics,Telematics,Smart Doc,Dyn@lizer,Vision Link,,,,,
+Tecnologías Innovadoras,"Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","EcoStop, SmartCompaction, vibración adaptativa","Dynapac Compaction meter (DCM), Dyn@lyzer","MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link","	ReadyKit básico (en algunas versiones), cabina optimizada","Tracción automática, vibración doble, telematics-ready",XCMG Telematics ,"ECOdrop, telemetría, control automático de vibración","	LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)"
+USP,"Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación
+","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación
+","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación
+","Conducción y maniobrabilidad
+* Bloqueo integrado de la articulación pendular
+* Control de tracción para una óptima transmisión de potencia","Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.","Controles ergonómicos y simples:
+
+* Palanca de control única para avance, vibración y dirección.
+* Instrumentación digital fácil de leer.","Controles básicos y mecánicos:
+
+* Fáciles de usar, ideales para operadores con poca capacitación.
+* Palanca de avance/reversa con control de vibración independiente.","Controles fáciles de usar:
+
+* Palanca tipo joystick para dirección, vibración y cambio de marcha.","Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.","Estación del operador
+El control intuitivo de la máquina facilita su uso. Las funciones avanzadas garantizan que incluso los principiantes sean productivos y de alto rendimiento.","Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo."
+,"Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Calidad de compactación
+* Asistente Smart Compact para el ajuste automático
+de la potencia de compactación
+*Alta carga lineal y fuerza centrífuga","Compactación efectiva
+* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.
+* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.","Mayor carga lineal estática
+Tambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.","Mayor tracción y maniobrabilidad
+Gracias a su sistema de doble tracción (Drum Drive), el rodillo compactador New Holland domina fácilmente los terrenos más empinados, mientras que su ángulo de giro de 37 grados proporciona una maniobrabilidad excepcional, simplificando el trabajo en espacios reducidos.","Calidad de compactación
+* Fuerza centrífuga hasta 320 kN, una de las más altas del segmento.
+* Sistema de vibración confiable con buena transferencia de energía.
+* Distribución de peso balanceada para compactación uniforme.","Calidad de Compactación
+* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.
+* Diseño del tambor que reduce rebotes y mejora la uniformidad.","Alto rendimiento de compactación
+Compactación más rápida de capas más gruesas en menos pasadas.","Calidad de Compactación
+* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.
+* Sistema de vibración robusto"
+,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Articulación pendular de 3 puntos para una estabilidad direccional superior,"Junta de articulación
+Ofrece un radio de giro estrecho y seguimiento preciso del terreno.",Junta de articulación libre de mantenimiento,"Junta de articulación
+Ofrece un radio de giro 37° y seguimiento preciso del terreno.",Articulación con oscilación hidráulica y gran ángulo de giro.," Junta de Articulación
+Articulación oscilante de diseño robusto.",Articulación central con bloqueo hidráulico y oscilación automática,
+,"Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad ","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad ","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad ","Control y confort
+* Gran espacio y comodidad de uso
+* Condiciones de trabajo ergonómicamente optimizadas
+gracias a su concepto operativo Easy Drive","Control y confort de operación
+* Ofrece visibilidad total del tambor y área de trabajo.","Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.
+
+Vibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces","Cabina confortable
+Una vez dentro, el ambiente está protegido por la estructura ROPS/FOPS, incluye aire acondicionado y está diseñado para absorber y minimizar las vibraciones generadas durante la operación, asegurando una experiencia de trabajo fluida y sin estrés.","Control y Confort
+* Cabina cerrada ROPS/FOPS opcional con aire acondicionado y asiento neumático.
+* Palanca tipo joystick para dirección, vibración y cambio de marcha.
+* Bajo nivel de vibración transmitida al operador."," Control y Confort
+* Cabina opcional con buena visibilidad.
+* Panel de instrumentos digital con indicadores de trabajo.
+* Asiento ajustable, pero menor confort que modelos premium.","Uso cómodo
+• El diseño sencillo del panel de
+instrumentos permite un control
+fácil y seguro
+• Para asegurar la máxima
+comodidad la plataforma del
+operario está montada en
+alojamientos de goma que
+amortigua las vibraciones","Control y Confort
+Cabina abierta o cerrada con controles simples.
+
+Panel analógico, sin diagnóstico digital.
+
+Ideal para operadores con poca experiencia."
+,"Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Sistema de asistencia de compactación 
+Interfaces digitales
+* John Deere Operations CenterTM
+* Track Assist & WPT Compacting
+* Smart Compact","El DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación","* Amplitud más alta del mercado
+* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).","Compactación eficiente
+Equipado con dos etapas de vibración para adaptarse a diferentes tipos de suelo, y además con un kit de pata de cabra, garantiza resultados impecables en cualquier tarea.","Sistema inteligente de control de vibración que ajusta la potencia según la resistencia del suelo, evitando sobrecompactación.",,"
+Tecnología ACE
+* ACEpro ajusta continuamente la frecuencia y amplitud según los valores obtenidos:
+• ACEpro elimina los saltos de los tambores
+y por eso minimiza el riesgo de excesiva
+compactación o deterioro del material
+• ACEforce muestra el proceso de compactación mediante la función de
+guiado del operario",
+,"Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Mantenimiento eficiente
+Todos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados
+en un lado de la máquina"," Mantenimiento y Servicio
+Diseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).","Mantenimiento y Servicio
+Diseño orientado a bajo mantenimiento:
+* Intervalos de mantenimiento extendidos.
+* Reducción de puntos de lubricación gracias al uso de componentes sellados.","Fácil mantenimiento
+Con un diseño de capó y compartimiento del motor de una sola pieza, el acceso al rodillo compactador New Holland es fácil para verificar los componentes esenciales, lo que facilita el trabajo del operador y proporciona mayor seguridad y disponibilidad operativa.","Mantenimiento y Servicio
+* Capó de apertura total con acceso a 3 lados del motor.
+* Sistema de diagnóstico electrónico desde la pantalla de control.
+* Componentes hidráulicos y eléctricos dispuestos para fácil inspección.","Mantenimiento y Servicio
+Capó lateral basculante, acceso rápido a motor y componentes hidráulicos.
+
+Módulos eléctricos centralizados.
+
+Motores Weichai o Cummins con buena cobertura de repuestos.","Diseño de fácil mantenimiento
+Tiempo de inactividad minimizado
+gracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes.","Mantenimiento y Servicio
+* Motor JCB DieselMax altamente confiable, sin electrónica compleja.
+* Capó con apertura completa para acceso rápido.
+* Menor necesidad de técnicos especializados."
+Profundidad de compactación máx (cm) Grava/Arena,60,60,60,60,55,60,50,60,50,60,55
+Rendimiento en compactación (m3/h),270 - 540,270 - 540,270 - 540,250 - 400,220 - 350,200,200 - 300,300 - 500,250 - 400,280 - 450,200 - 350
+Consumo de combustible (L/h) Carga 70%,11.8,11.8,12.4,13.6,13.6,14.5,10.5,15.3,13.6,16.3,13
+Precio CIF (USD)," $  57,592.78 "," $  59,374.00 "," $  63,530.18 "," $  91,845.10 "," $  90,000.00 "," $  105,298.85 "," $  71,600.00 "," $  56,392.00 "," $  54,786.00 "," $  89,930.00 "," $  84,076.00 "
+Mantenimiento preventivo (USD/h),1,1,1,1,1,1,1,1,1,1,1
+Mantenimiento correctivo (USD/h),2,2,2,2,2,2,2,2,2,2,2
+Tiempo de uso (h),3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000
+TCO (USD)," $  52,156,261,164,007,200,000.00 "," $  52,156,261,164,007,200,000.00 "," $  54,423,924,692,877,100,000.00 "," $  58,959,251,750,616,800,000.00 "," $  58,959,251,750,616,800,000.00 "," $  62,360,747,043,921,700,000.00 "," $  47,242,990,184,789,100,000.00 "," $  65,384,298,415,748,100,000.00 "," $  58,959,251,750,616,800,000.00 "," $  69,163,737,630,531,300,000.00 "," $  56,691,588,221,747,000,000.00 "
+Tiempo,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!,#REF!
+0," $  28,000.00 "," $  29,630.00 "," $  29,580.00 "," $  26,783.00 "," $  25,500.00 "," $  23,500.00 "," $  23,500.00 "," $  23,500.00 "," $  23,500.00 "," $  23,500.00 "," $  23,500.00 "
+1000," $  3,527,476,600,464,280,000,000.00 "," $  1,007,850,457,276,780,000.00 "," $  1,007,850,457,275,500,000.00 "," $  287,957,273,500,000.00 "," $  287,957,273,500,000.00 "," $  82,273,500,000.00 "," $  82,273,500,000.00 "," $  23,500,000.00 "," $  23,500,000.00 ", $  -   , $  -   
+1500," $  5,291,214,900,696,420,000,000.00 "," $  1,511,775,685,915,170,000.00 "," $  1,511,775,685,913,250,000.00 "," $  431,935,910,250,000.00 "," $  431,935,910,250,000.00 "," $  123,410,250,000.00 "," $  123,410,250,000.00 "," $  35,250,000.00 "," $  35,250,000.00 ", $  -   , $  -   
+2000," $  7,054,953,200,928,560,000,000.00 "," $  2,015,700,914,553,570,000.00 "," $  2,015,700,914,551,000,000.00 "," $  575,914,547,000,000.00 "," $  575,914,547,000,000.00 "," $  164,547,000,000.00 "," $  164,547,000,000.00 "," $  47,000,000.00 "," $  47,000,000.00 ", $  -   , $  -   
+2500," $  8,818,691,501,160,700,000,000.00 "," $  2,519,626,143,191,960,000.00 "," $  2,519,626,143,188,750,000.00 "," $  719,893,183,750,000.00 "," $  719,893,183,750,000.00 "," $  205,683,750,000.00 "," $  205,683,750,000.00 "," $  58,750,000.00 "," $  58,750,000.00 ", $  -   , $  -   
+3000," $  10,582,429,801,392,800,000,000.00 "," $  3,023,551,371,830,350,000.00 "," $  3,023,551,371,826,500,000.00 "," $  863,871,820,500,000.00 "," $  863,871,820,500,000.00 "," $  246,820,500,000.00 "," $  246,820,500,000.00 "," $  70,500,000.00 "," $  70,500,000.00 ", $  -   , $  -   

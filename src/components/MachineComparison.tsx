@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -257,7 +257,7 @@ const getImagePath = (model: string, line: string) => {
   if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
-      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','BW211_D5_SL.jpg'
+      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg'
     ],
     LTR: [
       'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
@@ -268,6 +268,10 @@ const getImagePath = (model: string, line: string) => {
   };
   const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
   const modelNorm = norm(model);
+  // Special case for CA25 D-Rhino
+  if (modelNorm === 'ca25drhino' && images[folder].includes('CA25DRhino.jpg')) {
+    return `${base}images/${folder}/CA25DRhino.jpg`;
+  }
   const match = images[folder].find(img => norm(img).includes(modelNorm));
   return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
 };
@@ -290,12 +294,15 @@ function getPriceColor(value: number, min: number, max: number) {
 const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const { t, language } = useLanguage();
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
-  
+  // Add state for editable TCO at time 0
+  const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+
   const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
 
-  // Reset selected machines when product line changes
+  // Reset selected machines and editableTCO when product line changes
   useEffect(() => {
     setSelectedMachines([]);
+    setEditableTCO({});
   }, [selectedLine]);
 
   const toggleMachineSelection = (machineId: string) => {
@@ -374,10 +381,6 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('power')}:</span>
                   <span className="font-medium">{machine.power} HP</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">{t('price')}:</span>
-                  <span className="font-medium text-bomag-orange">{formatCurrency(machine.price)}</span>
                 </div>
               </div>
             </CardContent>
@@ -578,25 +581,55 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                       </thead>
                       <tbody>
                         {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
-                          // Gather all prices for this row
-                          const prices = getSelectedMachineData().map(machine => machine.tcoTimeline?.find(e => e.hours === hours)?.price ?? null).filter(v => v !== null) as number[];
-                          const min = Math.min(...prices);
-                          const max = Math.max(...prices);
+                          // Gather all TCOs for this row
+                          const tcos = getSelectedMachineData().map((machine, index) => {
+                            const tco0 = editableTCO[index] !== undefined
+                              ? editableTCO[index]
+                              : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
+                            let tco = tco0;
+                            if (hours > 0) {
+                              tco = tco0
+                                + hours * (machine.fuelConsumption ?? 0)
+                                + hours * (machine.preventiveMaintenance ?? 0)
+                                + hours * (machine.correctiveMaintenance ?? 0);
+                            }
+                            return tco;
+                          });
+                          const min = Math.min(...tcos);
+                          const max = Math.max(...tcos);
                           return (
                             <tr key={hours} className="hover:bg-gray-50">
                               <td className="border border-gray-300 p-2 font-medium bg-gray-50">{hours}</td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const entry = machine.tcoTimeline?.find(e => e.hours === hours);
+                                const tco0 = editableTCO[index] !== undefined
+                                  ? editableTCO[index]
+                                  : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
+                                let tco = tco0;
+                                if (hours > 0) {
+                                  tco = tco0
+                                    + hours * (machine.fuelConsumption ?? 0)
+                                    + hours * (machine.preventiveMaintenance ?? 0)
+                                    + hours * (machine.correctiveMaintenance ?? 0);
+                                }
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">
-                                    {entry ? (
+                                    {hours === 0 ? (
+                                      <input
+                                        type="number"
+                                        className="border rounded px-2 py-1 w-24 text-right"
+                                        value={tco0}
+                                        onChange={e => {
+                                          const value = parseFloat(e.target.value);
+                                          setEditableTCO(prev => ({ ...prev, [index]: isNaN(value) ? 0 : value }));
+                                        }}
+                                      />
+                                    ) : (
                                       <div>
-                                        <div style={{ background: entry.price !== null ? getPriceColor(entry.price, min, max) : undefined, borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
-                                          Precio: {entry.price !== null ? formatCurrency(entry.price) : '-'}
+                                        <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
+                                          TCO: {formatCurrency(tco)}
                                         </div>
-                                        <div>TCO: {entry.tco !== null ? formatCurrency(entry.tco) : '-'}</div>
                                       </div>
-                                    ) : '-'}
+                                    )}
                                   </td>
                                 );
                               })}

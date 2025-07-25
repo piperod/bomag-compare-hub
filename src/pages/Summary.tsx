@@ -45,7 +45,7 @@ function getImagePath(model: string, line: string) {
   if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
-      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','BW211_D5_SL.jpg'
+      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg'
     ],
     LTR: [
       'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
@@ -56,6 +56,10 @@ function getImagePath(model: string, line: string) {
   };
   const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
   const modelNorm = norm(model);
+  // Special case for CA25 D-Rhino
+  if (modelNorm === 'ca25drhino' && images[folder].includes('CA25DRhino.jpg')) {
+    return `${base}images/${folder}/CA25DRhino.jpg`;
+  }
   const match = images[folder].find(img => norm(img).includes(modelNorm));
   return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
 }
@@ -97,10 +101,15 @@ function Summary() {
   const machines = machineLines.find(l => l.key === selectedLine)?.machines || [];
   const [visibleMachines, setVisibleMachines] = useState(machines.map((_, i) => i));
   const [visibleFields, setVisibleFields] = useState(summaryFields.map((_, i) => i));
+  // Add state for editable fields per machine
+  const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
+  const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
 
-  // Reset visible machines when line changes
   React.useEffect(() => {
     setVisibleMachines(machines.map((_, i) => i));
+    setVisibleFields(summaryFields.map((_, i) => i));
+    setEditableFields({});
+    setEditableTCO({});
   }, [selectedLine, machines.length]);
 
   // Defensive: filter out indices that are out of bounds
@@ -115,6 +124,14 @@ function Summary() {
   const restoreAll = () => {
     setVisibleMachines(machines.map((_, i) => i));
     setVisibleFields(summaryFields.map((_, i) => i));
+  };
+
+  // Helper to get the current value (edited or original)
+  const getFieldValue = (mIdx: number, key: string) => {
+    if (editableFields[mIdx] && editableFields[mIdx][key] !== undefined) {
+      return editableFields[mIdx][key];
+    }
+    return machines[mIdx][key];
   };
 
   return (
@@ -160,6 +177,56 @@ function Summary() {
                         <button onClick={() => removeField(fIdx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title="Remove">×</button>
                       </td>
                       {safeVisibleMachines.map(mIdx => {
+                        // Editable fields
+                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime"].includes(field.key)) {
+                          const val = getFieldValue(mIdx, field.key);
+                          return (
+                            <td key={mIdx} className="border border-gray-300 p-2 text-center">
+                              <input
+                                type="number"
+                                className="border rounded px-2 py-1 w-20 text-right"
+                                value={val === undefined || val === null ? '' : val}
+                                onChange={e => {
+                                  const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                                  setEditableFields(prev => ({
+                                    ...prev,
+                                    [mIdx]: {
+                                      ...prev[mIdx],
+                                      [field.key]: isNaN(value) ? 0 : value
+                                    }
+                                  }));
+                                }}
+                              />
+                            </td>
+                          );
+                        }
+                        // TCO field: show calculated value
+                        if (field.key === "tco") {
+                          // TCO = price + usageTime * (fuelConsumption + preventiveMaintenance + correctiveMaintenance)
+                          const price = getFieldValue(mIdx, "price") ?? 0;
+                          const usageTime = getFieldValue(mIdx, "usageTime") ?? 0;
+                          const fuel = machines[mIdx].fuelConsumption ?? 0;
+                          const pm = getFieldValue(mIdx, "preventiveMaintenance") ?? 0;
+                          const cm = getFieldValue(mIdx, "correctiveMaintenance") ?? 0;
+                          const tco = price + usageTime * (fuel + pm + cm);
+                          // Gather all TCOs for this row
+                          const tcos = safeVisibleMachines.map(idx => {
+                            const p = getFieldValue(idx, "price") ?? 0;
+                            const ut = getFieldValue(idx, "usageTime") ?? 0;
+                            const f = machines[idx].fuelConsumption ?? 0;
+                            const pM = getFieldValue(idx, "preventiveMaintenance") ?? 0;
+                            const cM = getFieldValue(idx, "correctiveMaintenance") ?? 0;
+                            return p + ut * (f + pM + cM);
+                          });
+                          const min = Math.min(...tcos);
+                          const max = Math.max(...tcos);
+                          return (
+                            <td key={mIdx} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
+                              <span style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px' }}>{formatCurrency(tco)}</span>
+                            </td>
+                          );
+                        }
+                        // Default rendering
                         let value = machines[mIdx][field.key];
                         if (field.multilanguage && value && typeof value === 'object') {
                           value = value[language] || value['es'] || '-';
@@ -195,25 +262,58 @@ function Summary() {
                 </thead>
                 <tbody>
                   {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
-                    // Gather all prices for this row
-                    const prices = safeVisibleMachines.map(idx => machines[idx].tcoTimeline?.find(e => e.hours === hours)?.price ?? null).filter(v => v !== null) as number[];
-                    const min = prices.length ? Math.min(...prices) : 0;
-                    const max = prices.length ? Math.max(...prices) : 0;
+                    // Gather all TCOs for this row
+                    const tcos = safeVisibleMachines.map(idx => {
+                      const price = getFieldValue(idx, "price") ?? 0;
+                      const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
+                      const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
+                      const usageTime = getFieldValue(idx, "usageTime") ?? 0;
+                      const fuel = machines[idx].fuelConsumption ?? 0;
+                      let tco = 0;
+                      if (hours === 0) {
+                        tco = editableTCO[idx] !== undefined ? editableTCO[idx] : price + 0 * (fuel + pm + cm);
+                      } else {
+                        tco = price + hours * (fuel + pm + cm);
+                      }
+                      return tco;
+                    });
+                    const min = Math.min(...tcos);
+                    const max = Math.max(...tcos);
                     return (
                       <tr key={hours} className="hover:bg-gray-50">
                         <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">{hours}</td>
-                        {safeVisibleMachines.map(idx => {
-                          const entry = machines[idx].tcoTimeline?.find(e => e.hours === hours);
+                        {safeVisibleMachines.map((idx, i) => {
+                          // Use edited values for price, pm, cm, usageTime
+                          const price = getFieldValue(idx, "price") ?? 0;
+                          const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
+                          const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
+                          const usageTime = getFieldValue(idx, "usageTime") ?? 0;
+                          const fuel = machines[idx].fuelConsumption ?? 0;
+                          let tco = 0;
+                          if (hours === 0) {
+                            tco = editableTCO[idx] !== undefined ? editableTCO[idx] : price + 0 * (fuel + pm + cm);
+                          } else {
+                            tco = price + hours * (fuel + pm + cm);
+                          }
                           return (
                             <td key={idx} className="border border-gray-300 p-2 text-center">
-                              {entry ? (
+                              {hours === 0 ? (
+                                <input
+                                  type="number"
+                                  className="border rounded px-2 py-1 w-24 text-right"
+                                  value={tco}
+                                  onChange={e => {
+                                    const value = parseFloat(e.target.value);
+                                    setEditableTCO(prev => ({ ...prev, [idx]: isNaN(value) ? 0 : value }));
+                                  }}
+                                />
+                              ) : (
                                 <div>
-                                  <div style={{ background: entry.price !== null ? getPriceColor(entry.price, min, max) : undefined, borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
-                                    {t('price') || 'Precio'}: {entry.price !== null ? formatCurrency(entry.price) : '-'}
+                                  <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
+                                    {t('tco') || 'TCO'}: {formatCurrency(tco)}
                                   </div>
-                                  <div>{t('tco') || 'TCO'}: {entry.tco !== null ? formatCurrency(entry.tco) : '-'}</div>
                                 </div>
-                              ) : '-'}
+                              )}
                             </td>
                           );
                         })}

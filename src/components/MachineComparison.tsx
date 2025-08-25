@@ -3,6 +3,9 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -306,6 +309,24 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   // Add state for editable TCO at time 0
   const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+  // Surface volume calculator state
+  const [surfaceVolumeM3, setSurfaceVolumeM3] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('surfaceVolumeM3');
+      const num = saved ? parseFloat(saved) : 0;
+      return isNaN(num) ? 0 : num;
+    }
+    return 0;
+  });
+  // Fuel price state
+  const [fuelPrice, setFuelPrice] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('fuelPriceUSD');
+      const num = saved ? parseFloat(saved) : 1.2;
+      return isNaN(num) ? 1.2 : num;
+    }
+    return 1.2;
+  });
 
   const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
   const machinesSorted = React.useMemo(() => {
@@ -324,6 +345,22 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
     setSelectedMachines([]);
     setEditableTCO({});
   }, [selectedLine]);
+
+  // Listen for volume and fuel price changes from localStorage
+  useEffect(() => {
+    const handler = () => {
+      const savedVolume = localStorage.getItem('surfaceVolumeM3');
+      const numVolume = savedVolume ? parseFloat(savedVolume) : 0;
+      setSurfaceVolumeM3(isNaN(numVolume) ? 0 : numVolume);
+      
+      const savedFuel = localStorage.getItem('fuelPriceUSD');
+      const numFuel = savedFuel ? parseFloat(savedFuel) : 1.2;
+      setFuelPrice(isNaN(numFuel) ? 1.2 : numFuel);
+    };
+    handler();
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   const toggleMachineSelection = (machineId: string) => {
     setSelectedMachines(prev => 
@@ -344,6 +381,21 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(value);
+  };
+
+  // Helper function to parse compaction performance
+  const parseCompactionPerformance = (perfRaw: string) => {
+    let perfAvg = 0;
+    if (typeof perfRaw === 'string') {
+      const parts = perfRaw.split('-').map(s => parseFloat(s.trim()));
+      if (parts.length === 2 && parts.every(n => !isNaN(n))) {
+        perfAvg = (parts[0] + parts[1]) / 2;
+      } else {
+        const single = parseFloat(perfRaw.trim());
+        perfAvg = isNaN(single) ? 0 : single;
+      }
+    }
+    return perfAvg;
   };
 
   const getBrandColor = (brand: string) => {
@@ -420,31 +472,32 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
             <CardTitle>{t('compare')} - {selectedMachines.length} Máquinas</CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="basic">Básico</TabsTrigger>
-                <TabsTrigger value="performance">{t('performance')}</TabsTrigger>
-                <TabsTrigger value="costs">Costos</TabsTrigger>
+            <Tabs defaultValue="comprehensive" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="comprehensive">Comparación Completa</TabsTrigger>
                 {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (
                   <TabsTrigger value="tco-timeline">TCO Progresivo</TabsTrigger>
                 )}
               </TabsList>
               
-              <TabsContent value="basic" className="mt-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-bomag-light-gray">
-                        <th className="border border-gray-300 p-2 text-left">Especificación</th>
-                        {getSelectedMachineData().map((machine, index) => (
-                          <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
-                            <div className="text-sm font-bold">{machine.brand}</div>
-                            <div className="text-xs">{machine.model}</div>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
+              <TabsContent value="comprehensive" className="mt-4 space-y-8">
+                {/* Basic Specifications Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Especificaciones Básicas</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left">Especificación</th>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
                         {(() => {
                           // Basic specs for all machines
                           const basicSpecs = [
@@ -500,92 +553,233 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                             ))}
                           </tr>
                         ))}
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </TabsContent>
 
-              <TabsContent value="performance" className="mt-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-bomag-light-gray">
-                        <th className="border border-gray-300 p-2 text-left">Rendimiento</th>
-                        {getSelectedMachineData().map((machine, index) => (
-                          <th key={index} className="border border-gray-300 p-2 text-center">
-                            <div className="text-sm font-bold">{machine.brand}</div>
-                            <div className="text-xs">{machine.model}</div>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(() => {
-                        // Performance specs vary by product line
-                        const performanceSpecs = [
-                          { key: 'fuelConsumption', label: t('fuelConsumption'), unit: 'L/h' }
-                        ];
-                        
-                        // SDR-specific performance fields
-                        if (selectedLine === 'sdr') {
-                          performanceSpecs.unshift(
-                            { key: 'maxCompactionDepth', label: t('maxCompactionDepth'), unit: 'cm' },
-                            { key: 'compactionPerformance', label: t('compactionPerformance'), unit: 'm³/h' }
-                          );
-                        }
-                        
-                        return performanceSpecs;
-                      })().map((spec) => (
-                        <tr key={spec.key} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                            {spec.label} ({spec.unit})
-                          </td>
+                              {/* Performance Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left">Rendimiento</th>
                           {getSelectedMachineData().map((machine, index) => (
-                            <td key={index} className="border border-gray-300 p-2 text-center">
-                              {machine[spec.key as keyof MachineSpec] || '-'}
-                            </td>
+                            <th key={index} className="border border-gray-300 p-2 text-center">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
                           ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="costs" className="mt-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-bomag-light-gray">
-                        <th className="border border-gray-300 p-2 text-left">Costos</th>
-                        {getSelectedMachineData().map((machine, index) => (
-                          <th key={index} className="border border-gray-300 p-2 text-center">
-                            <div className="text-sm font-bold">{machine.brand}</div>
-                            <div className="text-xs">{machine.model}</div>
-                          </th>
+                      </thead>
+                      <tbody>
+                        {(() => {
+                          // Performance specs vary by product line
+                          const performanceSpecs = [
+                            { key: 'fuelConsumption', label: t('fuelConsumption'), unit: 'L/h' }
+                          ];
+                          
+                          // SDR-specific performance fields
+                          if (selectedLine === 'sdr') {
+                            performanceSpecs.unshift(
+                              { key: 'maxCompactionDepth', label: t('maxCompactionDepth'), unit: 'cm' },
+                              { key: 'compactionPerformance', label: t('compactionPerformance'), unit: 'm³/h' }
+                            );
+                          }
+                          
+                          return performanceSpecs;
+                        })().map((spec) => (
+                          <tr key={spec.key} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {spec.label} ({spec.unit})
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center">
+                                {machine[spec.key as keyof MachineSpec] || '-'}
+                              </td>
+                            ))}
+                          </tr>
                         ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        { key: 'price', label: t('price'), format: formatCurrency },
-                        { key: 'preventiveMaintenance', label: t('preventiveMaintenance'), format: (v: number) => `$${v}` },
-                        { key: 'correctiveMaintenance', label: t('correctiveMaintenance'), format: (v: number) => `$${v}` },
-                        { key: 'tco', label: t('tco'), format: formatCurrency }
-                      ].map((spec) => (
-                        <tr key={spec.key} className="hover:bg-gray-50">
+                        {/* Calculated performance rows based on volume */}
+                        {surfaceVolumeM3 > 0 && (
+                          <>
+                            <tr className="hover:bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                                Time Estimated (h)
+                              </td>
+                              {getSelectedMachineData().map((machine, index) => {
+                                const perfRaw = machine.compactionPerformance || '';
+                                const perfAvg = parseCompactionPerformance(perfRaw);
+                                const hours = perfAvg > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                                return (
+                                  <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
+                                    {hours > 0 ? hours.toFixed(2) : '-'}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                                Cost (based on estimated time)
+                              </td>
+                              {getSelectedMachineData().map((machine, index) => {
+                                const perfRaw = machine.compactionPerformance || '';
+                                const perfAvg = parseCompactionPerformance(perfRaw);
+                                const hours = perfAvg > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                                // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
+                                const pm = machine.preventiveMaintenance ?? 0;
+                                const cm = machine.correctiveMaintenance ?? 0;
+                                const fuel = machine.fuelConsumption ?? 0;
+                                const costPerHour = fuel * fuelPrice + pm + cm;
+                                const totalCost = hours * costPerHour;
+                                return (
+                                  <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
+                                    {hours > 0 ? formatCurrency(totalCost) : '-'}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          </>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  {/* Volume Calculator Section */}
+                  <div className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-lg font-semibold text-gray-700">Calculadora de Volumen</h4>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="surface-volume-detail" className="text-sm text-gray-600">Volumen (m³)</Label>
+                          <Input
+                            id="surface-volume-detail"
+                            type="number"
+                            className="h-8 w-28 text-right"
+                            value={surfaceVolumeM3 || ''}
+                            onChange={(e) => {
+                              const v = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                              const val = isNaN(v) ? 0 : v;
+                              setSurfaceVolumeM3(val);
+                              if (typeof window !== 'undefined') {
+                                localStorage.setItem('surfaceVolumeM3', String(val));
+                              }
+                            }}
+                            placeholder="0"
+                          />
+                        </div>
+                        <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90" disabled>Calcular Rendimiento</Button>
+                      </div>
+                    </div>
+                    {surfaceVolumeM3 > 0 && (
+                      <div className="mt-3 text-sm text-gray-600">
+                        <p>Con un volumen de <strong>{surfaceVolumeM3} m³</strong>, las máquinas seleccionadas mostrarán sus tiempos estimados y costos en la tabla superior.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                              {/* Costs Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Costos</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left">Costos</th>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <th key={index} className="border border-gray-300 p-2 text-center">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { key: 'price', label: t('price'), format: formatCurrency },
+                          { key: 'preventiveMaintenance', label: t('preventiveMaintenance'), format: (v: number) => `$${v}` },
+                          { key: 'correctiveMaintenance', label: t('correctiveMaintenance'), format: (v: number) => `$${v}` }
+                        ].map((spec) => (
+                          <tr key={spec.key} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {spec.label}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {spec.format(machine[spec.key as keyof MachineSpec] as number)}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                        {/* Fuel Price Row */}
+                        <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                            {spec.label}
+                            <div className="flex items-center gap-2">
+                              <span>Diesel (USD/L)</span>
+                              <Input
+                                type="number"
+                                className="h-6 w-20 text-right"
+                                value={fuelPrice}
+                                onChange={(e) => {
+                                  const v = e.target.value === '' ? 1.2 : parseFloat(e.target.value);
+                                  const val = isNaN(v) ? 1.2 : v;
+                                  setFuelPrice(val);
+                                  if (typeof window !== 'undefined') {
+                                    localStorage.setItem('fuelPriceUSD', String(val));
+                                  }
+                                }}
+                                placeholder="1.2"
+                              />
+                            </div>
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
                             <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                              {spec.format(machine[spec.key as keyof MachineSpec] as number)}
+                              ${fuelPrice.toFixed(2)}
                             </td>
                           ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                        {/* Fuel Cost Calculation Row */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            Costo de combustible
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => {
+                            const fuelConsumption = machine.fuelConsumption ?? 0;
+                            const usageTime = machine.usageTime ?? 0;
+                            const fuelCost = fuelConsumption * usageTime * fuelPrice;
+                            return (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {formatCurrency(fuelCost)}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                        {/* TCO Row */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            {t('tco')}
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => {
+                            const price = machine.price ?? 0;
+                            const fuelConsumption = machine.fuelConsumption ?? 0;
+                            const usageTime = machine.usageTime ?? 0;
+                            const preventiveMaintenance = machine.preventiveMaintenance ?? 0;
+                            const correctiveMaintenance = machine.correctiveMaintenance ?? 0;
+                            const fuelCost = fuelConsumption * usageTime * fuelPrice;
+                            const maintenanceCost = usageTime * (preventiveMaintenance + correctiveMaintenance);
+                            const tco = price + fuelCost + maintenanceCost;
+                            return (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
+                                {formatCurrency(tco)}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </TabsContent>
 
@@ -614,7 +808,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                             let tco = tco0;
                             if (hours > 0) {
                               tco = tco0
-                                + hours * (machine.fuelConsumption ?? 0)
+                                + hours * (machine.fuelConsumption ?? 0) * fuelPrice
                                 + hours * (machine.preventiveMaintenance ?? 0)
                                 + hours * (machine.correctiveMaintenance ?? 0);
                             }
@@ -632,7 +826,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                                 let tco = tco0;
                                 if (hours > 0) {
                                   tco = tco0
-                                    + hours * (machine.fuelConsumption ?? 0)
+                                    + hours * (machine.fuelConsumption ?? 0) * fuelPrice
                                     + hours * (machine.preventiveMaintenance ?? 0)
                                     + hours * (machine.correctiveMaintenance ?? 0);
                                 }

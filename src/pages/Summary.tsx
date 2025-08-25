@@ -3,6 +3,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines } from '@/data/machineData';
 import React from 'react';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { LanguageProvider } from '@/contexts/LanguageContext';
@@ -40,6 +44,7 @@ const summaryFields = [
   { key: 'correctiveMaintenance', labelKey: 'correctiveMaintenance', format: v => '$' + v },
   { key: 'usageTime', labelKey: 'usageTime', format: v => v + ' h' },
   { key: 'tco', labelKey: 'tco', format: v => '$' + v.toLocaleString() },
+  // Calculated fields appended later: timeEstimated and costByTime
 ];
 
 function getImagePath(model: string, line: string) {
@@ -127,6 +132,18 @@ function Summary() {
   // Add state for editable fields per machine
   const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
   const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+  const [surfaceVolumeM3, setSurfaceVolumeM3] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('surfaceVolumeM3');
+      const num = saved ? parseFloat(saved) : 0;
+      return isNaN(num) ? 0 : num;
+    }
+    return 0;
+  });
+  const [isCalcOpen, setIsCalcOpen] = useState(false);
+  const [lengthM, setLengthM] = useState<string>('');
+  const [widthM, setWidthM] = useState<string>('');
+  const [heightM, setHeightM] = useState<string>('');
 
   React.useEffect(() => {
     setVisibleMachines(machinesSorted.map((_, i) => i));
@@ -139,6 +156,17 @@ function Summary() {
     setEditableFields(initFields);
     setEditableTCO({});
   }, [selectedLine, machinesSorted.length]);
+
+  React.useEffect(() => {
+    const handler = () => {
+      const saved = localStorage.getItem('surfaceVolumeM3');
+      const num = saved ? parseFloat(saved) : 0;
+      setSurfaceVolumeM3(isNaN(num) ? 0 : num);
+    };
+    handler();
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   // Defensive: filter out indices that are out of bounds
   const safeVisibleMachines = visibleMachines.filter(i => machinesSorted[i]);
@@ -269,10 +297,162 @@ function Summary() {
                     </tr>
                   );
                 })}
+
               </tbody>
             </table>
           </div>
         </Card>
+        {/* Performance Comparison by Volume Section */}
+        {safeVisibleMachines.length > 0 && (
+          <Card className="p-4 mt-8">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold">Comparación de rendimiento por volumen</h3>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="surface-volume" className="text-xs text-gray-600">Volumen (m³)</Label>
+                  <Input
+                    id="surface-volume"
+                    type="number"
+                    className="h-8 w-28 text-right"
+                    value={surfaceVolumeM3 || ''}
+                    onChange={(e) => {
+                      const v = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                      const val = isNaN(v) ? 0 : v;
+                      setSurfaceVolumeM3(val);
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('surfaceVolumeM3', String(val));
+                      }
+                    }}
+                    placeholder="0"
+                  />
+                </div>
+                <Dialog open={isCalcOpen} onOpenChange={setIsCalcOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">Calcular Rendimiento</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Calcular volumen de superficie</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <Label htmlFor="length-m">Largo (m)</Label>
+                        <Input id="length-m" type="number" value={lengthM} onChange={(e) => setLengthM(e.target.value)} placeholder="Ej: 100" />
+                      </div>
+                      <div>
+                        <Label htmlFor="width-m">Ancho (m)</Label>
+                        <Input id="width-m" type="number" value={widthM} onChange={(e) => setWidthM(e.target.value)} placeholder="Ej: 50" />
+                      </div>
+                      <div>
+                        <Label htmlFor="height-m">Altura (m)</Label>
+                        <Input id="height-m" type="number" value={heightM} onChange={(e) => setHeightM(e.target.value)} placeholder="Ej: 0.3" />
+                      </div>
+                    </div>
+                    <div className="mt-2 text-sm text-gray-600">Resultado (m³): <span className="font-semibold">{(() => {
+                      const L = parseFloat(lengthM);
+                      const W = parseFloat(widthM);
+                      const H = parseFloat(heightM);
+                      const vol = !isNaN(L) && !isNaN(W) && !isNaN(H) ? L * W * H : 0;
+                      return vol.toFixed(2);
+                    })()}</span></div>
+                    <div className="flex justify-end gap-2 mt-4">
+                      <Button
+                        variant="secondary"
+                        onClick={() => setIsCalcOpen(false)}
+                      >Cerrar</Button>
+                      <Button
+                        onClick={() => {
+                          const L = parseFloat(lengthM);
+                          const W = parseFloat(widthM);
+                          const H = parseFloat(heightM);
+                          const vol = !isNaN(L) && !isNaN(W) && !isNaN(H) ? L * W * H : 0;
+                          const val = isFinite(vol) ? parseFloat(vol.toFixed(2)) : 0;
+                          setSurfaceVolumeM3(val);
+                          if (typeof window !== 'undefined') {
+                            localStorage.setItem('surfaceVolumeM3', String(val));
+                          }
+                          setIsCalcOpen(false);
+                        }}
+                        className="bg-bomag-yellow text-black hover:bg-bomag-orange/90"
+                      >Calcular</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 text-xs">
+                <thead>
+                  <tr className="bg-bomag-light-gray">
+                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">Rendimiento</th>
+                    {safeVisibleMachines.map(idx => (
+                      <th key={idx} className="border border-gray-300 p-2 text-center min-w-40">
+                        <div className="font-bold">{machinesSorted[idx].brand}</div>
+                        <div className="text-xs">{machinesSorted[idx].model}</div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="hover:bg-gray-50">
+                    <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">
+                      Time Estimated (h)
+                    </td>
+                    {safeVisibleMachines.map(mIdx => {
+                      const machine = machinesSorted[mIdx];
+                      // compactionPerformance like "220 - 350" or "200"
+                      const perfRaw = machine.compactionPerformance || '';
+                      let perfAvg = 0;
+                      if (typeof perfRaw === 'string') {
+                        const parts = perfRaw.split('-').map(s => parseFloat(s.trim()));
+                        if (parts.length === 2 && parts.every(n => !isNaN(n))) {
+                          perfAvg = (parts[0] + parts[1]) / 2;
+                        } else {
+                          const single = parseFloat(perfRaw.trim());
+                          perfAvg = isNaN(single) ? 0 : single;
+                        }
+                      }
+                      const hours = perfAvg > 0 && surfaceVolumeM3 > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                      return (
+                        <td key={mIdx} className="border border-gray-300 p-2 text-center font-semibold">{hours > 0 ? hours.toFixed(2) : '-'}</td>
+                      );
+                    })}
+                  </tr>
+                  <tr className="hover:bg-gray-50">
+                    <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">
+                      Cost (based on estimated time)
+                    </td>
+                    {safeVisibleMachines.map(mIdx => {
+                      const machine = machinesSorted[mIdx];
+                      const perfRaw = machine.compactionPerformance || '';
+                      let perfAvg = 0;
+                      if (typeof perfRaw === 'string') {
+                        const parts = perfRaw.split('-').map(s => parseFloat(s.trim()));
+                        if (parts.length === 2 && parts.every(n => !isNaN(n))) {
+                          perfAvg = (parts[0] + parts[1]) / 2;
+                        } else {
+                          const single = parseFloat(perfRaw.trim());
+                          perfAvg = isNaN(single) ? 0 : single;
+                        }
+                      }
+                      const hours = perfAvg > 0 && surfaceVolumeM3 > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                      // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*dieselPrice + pm + cm
+                      const dieselPrice = (editableFields[mIdx]?.dieselPrice ?? 1.2) as number;
+                      const pm = (editableFields[mIdx]?.preventiveMaintenance ?? machinesSorted[mIdx].preventiveMaintenance ?? 0) as number;
+                      const cm = (editableFields[mIdx]?.correctiveMaintenance ?? machinesSorted[mIdx].correctiveMaintenance ?? 0) as number;
+                      const fuel = machine.fuelConsumption ?? 0;
+                      const costPerHour = fuel * dieselPrice + pm + cm;
+                      const totalCost = hours * costPerHour;
+                      return (
+                        <td key={mIdx} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">{hours > 0 ? formatCurrency(totalCost) : '-'}</td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        )}
         {/* TCO Timeline Table */}
         {safeVisibleMachines.length > 0 && machinesSorted.some(m => m.tcoTimeline) && (
           <Card className="p-4 mt-8">

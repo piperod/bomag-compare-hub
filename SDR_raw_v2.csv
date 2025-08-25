@@ -1,7 +1,6 @@
 MARCA,BOMAG,BOMAG,BOMAG,BOMAG,BOMAG,HAMM,DYNAPAC,DYNAPAC,CATERPILLAR,CATERPILLAR,CATERPILLAR,NEW HOLLAND,SANY,XCMG,AMMANN,JCB,SEM,CASE
 Máquina,,,,,,,,,,,,,,,,,,
 Modelo,BW211 D5-SL,BW211 D5-SL,BW211 D5-SL,BW212 D5-SL,BW213 D5-SL,HC110,CA25 D-Rhino,CA35 D-Rhino,CS10GC,CS11GC,CS12,V110,SSR120C-10S,XS123,ASC110,116D,510,1107EX
-Imagen,/images/SDR/BW211 D5-SL.png,/images/SDR/BW211 D5-SL.png,/images/SDR/BW211 D5-SL.png,/images/SDR/BW211 D5-SL.png,/images/SDR/BW211 D5-SL.png,/images/SDR/HC110.png,/images/SDR/CA25_D.jpg,/images/SDR/CA35D-Rhino.png,/images/SDR/CS10GC.jpg,/images/SDR/CS11GC.jpg,/images/SDR/CS12.jpg,/images/SDR/V110.jpg,/images/SDR/SSR120C-10S.jpg,/images/SDR/XS123.jpg,/images/SDR/ASC110.png,/images/SDR/116D.jpg,/images/SDR/510.jpg,/images/SDR/1107EX.png
 Peso (Kg),"10,630","10,630","10,630","11,490","12,320","11,765","10,500","12,200","10,492","11,235","11,743","11,380","12,400","12,000","11,490","11,560","10,000","11,200"
 Número de material,93500000,93500004,58400031,58400036,58400041,,,,,,,,,,,,,
 Motor,Cummins 4BT 3.9,Cummins 4BTAA 3.9,Deutz BF4M 2012 C,Deutz BF4M 2012 C,Deutz BF4M 2012 C,JDPS 4045PTE,Cummins QSF3.8,Cummins QSF3.8,Cat C4.4,Cat C4.4,Cat C7.1,S8000 4-stroke,DONGFENG CUMMINS QSB3.9-C150-3,Cummins QSF3.8,Cummins QSB 4.5-C160,JCB DIESELMAX TCA-85,WP4G130E22,S 8000
@@ -199,7 +198,7 @@ Tiempo de inactividad minimizado
 gracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes.","Mantenimiento y Servicio
 * Motor JCB DieselMax altamente confiable, sin electrónica compleja.
 * Capó con apertura completa para acceso rápido.
-* Menor necesidad de técnicos especializados.","Diseño excéntrico tipo 'pod'.
+* Menor necesidad de técnicos especializados.","Diseño excéntrico tipo ‘pod’.
 Doble amplitud y frecuencia con bomba y motor de pistón que disminuye las rutinas de mantenimiento","Mantenimiento y Servicio
 El mantenimiento diario y regular es posible desde el nivel del suelo gracias al capó abatible de una sola pieza. La reducción de tiempos de inactividad y de costos operativos se traduce en mayor productividad y mejor rentabilidad."
 Profundidad de compactación máx (cm) Grava/Arena,60,60,60,60,60,60,55,55,60,60,60,50,60,50,60,55,55,55

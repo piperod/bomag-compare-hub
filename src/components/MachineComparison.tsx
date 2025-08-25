@@ -257,7 +257,14 @@ const getImagePath = (model: string, line: string) => {
   if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
-      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg'
+      // Prefer PNGs when available
+      'BW211 D5-SL.png',
+      'ASC110.png',
+      '1107EX.png',
+      'HC110.png',
+      'CA35D-Rhino.png',
+      // JPG fallbacks and additional images
+      '116D.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','CS12.jpg','CS10GC.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg','510.jpg'
     ],
     LTR: [
       'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
@@ -273,7 +280,10 @@ const getImagePath = (model: string, line: string) => {
     return `${base}images/${folder}/CA25DRhino.jpg`;
   }
   const match = images[folder].find(img => norm(img).includes(modelNorm));
-  return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
+  if (match) return `${base}images/${folder}/${match}`;
+  // BOMAG SDR fallback image when specific model is missing
+  if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
+  return `${base}placeholder.svg`;
 };
 
 // Add a helper to interpolate color
@@ -298,6 +308,16 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
 
   const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
+  const machinesSorted = React.useMemo(() => {
+    const arr = [...machines];
+    arr.sort((a, b) => {
+      const aScore = a.brand === 'BOMAG' ? 0 : 1;
+      const bScore = b.brand === 'BOMAG' ? 0 : 1;
+      if (aScore !== bScore) return aScore - bScore;
+      return 0;
+    });
+    return arr;
+  }, [machines]);
 
   // Reset selected machines and editableTCO when product line changes
   useEffect(() => {
@@ -355,7 +375,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
 
       {/* Machine Selection Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {machines.map((machine, index) => (
+        {machinesSorted.map((machine, index) => (
           <Card key={index} className="relative">
             <CardHeader className="pb-2">
               <div className="flex flex-col items-center justify-between">
@@ -369,6 +389,11 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                     onCheckedChange={() => toggleMachineSelection(index.toString())}
                   />
                 </div>
+                {machine.brand === 'BOMAG' && (machine as any).materialNumber && (
+                  <div className="w-full text-[10px] text-gray-500 mt-1 text-right">
+                    Material: {(machine as any).materialNumber}
+                  </div>
+                )}
               </div>
               <CardTitle className="text-lg">{machine.model}</CardTitle>
             </CardHeader>

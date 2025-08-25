@@ -19,6 +19,7 @@ const summaryFields = [
   { key: 'line', labelKey: 'productLine' },
   { key: 'weight', labelKey: 'weight', format: v => v + ' kg' },
   { key: 'engine', labelKey: 'engine' },
+  { key: 'materialNumber', labelKey: 'materialNumber' },
   { key: 'compactionWidth', labelKey: 'compactionWidth', format: v => v + ' m' },
   { key: 'power', labelKey: 'power', format: v => v + ' HP' },
   { key: 'amplitude', labelKey: 'amplitude' },
@@ -31,6 +32,8 @@ const summaryFields = [
   { key: 'usp', labelKey: 'usp', multilanguage: true },
   { key: 'maxCompactionDepth', labelKey: 'maxCompactionDepth', format: v => v ? v + ' cm' : '-' },
   { key: 'compactionPerformance', labelKey: 'compactionPerformance' },
+  // Editable diesel price per machine (USD per liter)
+  { key: 'dieselPrice', labelKey: 'dieselPrice', format: v => '$' + v },
   { key: 'fuelConsumption', labelKey: 'fuelConsumption', format: v => v + ' L/h' },
   { key: 'price', labelKey: 'price', format: v => '$' + v.toLocaleString() },
   { key: 'preventiveMaintenance', labelKey: 'preventiveMaintenance', format: v => '$' + v },
@@ -45,7 +48,14 @@ function getImagePath(model: string, line: string) {
   if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
-      '116D.jpg','ASC110.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','HC110.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg'
+      // Prefer PNGs when available
+      'BW211 D5-SL.png',
+      'ASC110.png',
+      '1107EX.png',
+      'HC110.png',
+      'CA35D-Rhino.png',
+      // JPG fallbacks and additional images
+      '116D.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','CS12.jpg','CS10GC.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg','510.jpg'
     ],
     LTR: [
       'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
@@ -61,7 +71,10 @@ function getImagePath(model: string, line: string) {
     return `${base}images/${folder}/CA25DRhino.jpg`;
   }
   const match = images[folder].find(img => norm(img).includes(modelNorm));
-  return match ? `${base}images/${folder}/${match}` : `${base}placeholder.svg`;
+  if (match) return `${base}images/${folder}/${match}`;
+  // BOMAG SDR fallback image when specific model is missing
+  if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
+  return `${base}placeholder.svg`;
 }
 
 function getPriceColor(value: number, min: number, max: number) {
@@ -99,21 +112,36 @@ function Summary() {
   const { t, language } = useLanguage();
   const [selectedLine, setSelectedLine] = useState('sdr');
   const machines = machineLines.find(l => l.key === selectedLine)?.machines || [];
-  const [visibleMachines, setVisibleMachines] = useState(machines.map((_, i) => i));
+  const machinesSorted = React.useMemo(() => {
+    const arr = [...machines];
+    arr.sort((a, b) => {
+      const aScore = a.brand === 'BOMAG' ? 0 : 1;
+      const bScore = b.brand === 'BOMAG' ? 0 : 1;
+      if (aScore !== bScore) return aScore - bScore;
+      return 0;
+    });
+    return arr;
+  }, [machines]);
+  const [visibleMachines, setVisibleMachines] = useState(machinesSorted.map((_, i) => i));
   const [visibleFields, setVisibleFields] = useState(summaryFields.map((_, i) => i));
   // Add state for editable fields per machine
   const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
   const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
 
   React.useEffect(() => {
-    setVisibleMachines(machines.map((_, i) => i));
+    setVisibleMachines(machinesSorted.map((_, i) => i));
     setVisibleFields(summaryFields.map((_, i) => i));
-    setEditableFields({});
+    // Prefill dieselPrice with 1.2 so the inputs show a value
+    const initFields: { [key: number]: { [k: string]: number } } = {};
+    machinesSorted.forEach((_, i) => {
+      initFields[i] = { dieselPrice: 1.2 };
+    });
+    setEditableFields(initFields);
     setEditableTCO({});
-  }, [selectedLine, machines.length]);
+  }, [selectedLine, machinesSorted.length]);
 
   // Defensive: filter out indices that are out of bounds
-  const safeVisibleMachines = visibleMachines.filter(i => machines[i]);
+  const safeVisibleMachines = visibleMachines.filter(i => machinesSorted[i]);
 
   const removeMachine = (idx: number) => {
     setVisibleMachines(v => v.filter(i => i !== idx));
@@ -159,9 +187,9 @@ function Summary() {
                     <th key={idx} className="border border-gray-300 p-2 text-center min-w-40 relative">
                       <button onClick={() => removeMachine(idx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title="Remove">×</button>
                       <div className="flex flex-col items-center">
-                        <img src={getImagePath(machines[idx].model, machines[idx].line || selectedLine.toUpperCase())} alt={machines[idx].model} className="h-16 object-contain mb-1" />
-                        <div className="font-bold">{machines[idx].brand}</div>
-                        <div className="text-xs">{machines[idx].model}</div>
+                        <img src={getImagePath(machinesSorted[idx].model, machinesSorted[idx].line || selectedLine.toUpperCase())} alt={machinesSorted[idx].model} className="h-16 object-contain mb-1" />
+                        <div className="font-bold">{machinesSorted[idx].brand}</div>
+                        <div className="text-xs">{machinesSorted[idx].model}</div>
                       </div>
                     </th>
                   ))}
@@ -178,7 +206,7 @@ function Summary() {
                       </td>
                       {safeVisibleMachines.map(mIdx => {
                         // Editable fields
-                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime"].includes(field.key)) {
+                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "dieselPrice"].includes(field.key)) {
                           const val = getFieldValue(mIdx, field.key);
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center">
@@ -202,21 +230,23 @@ function Summary() {
                         }
                         // TCO field: show calculated value
                         if (field.key === "tco") {
-                          // TCO = price + usageTime * (fuelConsumption + preventiveMaintenance + correctiveMaintenance)
+                          // TCO = price + usageTime * fuelConsumption * dieselPrice + usageTime * (preventiveMaintenance + correctiveMaintenance)
                           const price = getFieldValue(mIdx, "price") ?? 0;
                           const usageTime = getFieldValue(mIdx, "usageTime") ?? 0;
-                          const fuel = machines[mIdx].fuelConsumption ?? 0;
+                          const fuel = machinesSorted[mIdx].fuelConsumption ?? 0;
+                          const dieselPrice = getFieldValue(mIdx, "dieselPrice") ?? 1.2;
                           const pm = getFieldValue(mIdx, "preventiveMaintenance") ?? 0;
                           const cm = getFieldValue(mIdx, "correctiveMaintenance") ?? 0;
-                          const tco = price + usageTime * (fuel + pm + cm);
+                          const tco = price + usageTime * (fuel * dieselPrice + pm + cm);
                           // Gather all TCOs for this row
                           const tcos = safeVisibleMachines.map(idx => {
                             const p = getFieldValue(idx, "price") ?? 0;
                             const ut = getFieldValue(idx, "usageTime") ?? 0;
-                            const f = machines[idx].fuelConsumption ?? 0;
+                            const f = machinesSorted[idx].fuelConsumption ?? 0;
+                            const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                             const pM = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                             const cM = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                            return p + ut * (f + pM + cM);
+                            return p + ut * (f * dp + pM + cM);
                           });
                           const min = Math.min(...tcos);
                           const max = Math.max(...tcos);
@@ -227,7 +257,7 @@ function Summary() {
                           );
                         }
                         // Default rendering
-                        let value = machines[mIdx][field.key];
+                        let value = machinesSorted[mIdx][field.key];
                         if (field.multilanguage && value && typeof value === 'object') {
                           value = value[language] || value['es'] || '-';
                         }
@@ -244,7 +274,7 @@ function Summary() {
           </div>
         </Card>
         {/* TCO Timeline Table */}
-        {safeVisibleMachines.length > 0 && machines.some(m => m.tcoTimeline) && (
+        {safeVisibleMachines.length > 0 && machinesSorted.some(m => m.tcoTimeline) && (
           <Card className="p-4 mt-8">
             <h3 className="text-lg font-bold mb-2">{t('tcoTimeline') || 'TCO Timeline'}</h3>
             <div className="overflow-x-auto">
@@ -254,8 +284,8 @@ function Summary() {
                     <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">Horas</th>
                     {safeVisibleMachines.map(idx => (
                       <th key={idx} className="border border-gray-300 p-2 text-center min-w-40">
-                        <div className="font-bold">{machines[idx].brand}</div>
-                        <div className="text-xs">{machines[idx].model}</div>
+                        <div className="font-bold">{machinesSorted[idx].brand}</div>
+                        <div className="text-xs">{machinesSorted[idx].model}</div>
                       </th>
                     ))}
                   </tr>
@@ -268,13 +298,12 @@ function Summary() {
                       const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                       const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
                       const usageTime = getFieldValue(idx, "usageTime") ?? 0;
-                      const fuel = machines[idx].fuelConsumption ?? 0;
-                      let tco = 0;
-                      if (hours === 0) {
-                        tco = editableTCO[idx] !== undefined ? editableTCO[idx] : price + 0 * (fuel + pm + cm);
-                      } else {
-                        tco = price + hours * (fuel + pm + cm);
-                      }
+                      const fuel = machinesSorted[idx].fuelConsumption ?? 0;
+                      const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
+                      const fuelCost = hours * fuel * dp;
+                      const variableCost = hours * (pm + cm);
+                      const base0 = editableTCO[idx] !== undefined ? editableTCO[idx] : price;
+                      const tco = (hours === 0) ? base0 : price + fuelCost + variableCost;
                       return tco;
                     });
                     const min = Math.min(...tcos);
@@ -288,13 +317,12 @@ function Summary() {
                           const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                           const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
                           const usageTime = getFieldValue(idx, "usageTime") ?? 0;
-                          const fuel = machines[idx].fuelConsumption ?? 0;
-                          let tco = 0;
-                          if (hours === 0) {
-                            tco = editableTCO[idx] !== undefined ? editableTCO[idx] : price + 0 * (fuel + pm + cm);
-                          } else {
-                            tco = price + hours * (fuel + pm + cm);
-                          }
+                          const fuel = machinesSorted[idx].fuelConsumption ?? 0;
+                          const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
+                          const fuelCost = hours * fuel * dp;
+                          const variableCost = hours * (pm + cm);
+                          const base0 = editableTCO[idx] !== undefined ? editableTCO[idx] : price;
+                          const tco = (hours === 0) ? base0 : price + fuelCost + variableCost;
                           return (
                             <td key={idx} className="border border-gray-300 p-2 text-center">
                               {hours === 0 ? (

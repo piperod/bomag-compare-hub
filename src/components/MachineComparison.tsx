@@ -385,7 +385,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   };
 
   const getSelectedMachineData = () => {
-    return machines.filter((_, index) => selectedMachines.includes(index.toString()));
+    return machinesSorted.filter((_, index) => selectedMachines.includes(index.toString()));
   };
 
   const formatCurrency = (value: number) => {

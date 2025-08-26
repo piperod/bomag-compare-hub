@@ -59,6 +59,8 @@ const translations = {
     globalSummary: 'Resumen Global',
     detailComparison: 'Comparación Detallada',
     restoreAll: 'Restaurar Todo',
+    timeEstimated: 'Tiempo Estimado (h)',
+    costBasedOnEstimatedTime: 'Costo (basado en tiempo estimado)',
   },
   en: {
     title: 'BOMAG Product Comparator',
@@ -110,6 +112,8 @@ const translations = {
     globalSummary: 'Global Summary',
     detailComparison: 'Detail Comparison',
     restoreAll: 'Restore All',
+    timeEstimated: 'Time Estimated (h)',
+    costBasedOnEstimatedTime: 'Cost (based on estimated time)',
   },
   de: {
     title: 'BOMAG Produktvergleich',
@@ -161,6 +165,8 @@ const translations = {
     globalSummary: 'Globale Übersicht',
     detailComparison: 'Detailvergleich',
     restoreAll: 'Alles wiederherstellen',
+    timeEstimated: 'Geschätzte Zeit (h)',
+    costBasedOnEstimatedTime: 'Kosten (basierend auf geschätzter Zeit)',
   },
   pt: {
     title: 'Comparador de Produtos BOMAG',
@@ -212,6 +218,8 @@ const translations = {
     globalSummary: 'Resumo Global',
     detailComparison: 'Comparação Detalhada',
     restoreAll: 'Restaurar Tudo',
+    timeEstimated: 'Tempo Estimado (h)',
+    costBasedOnEstimatedTime: 'Custo (baseado no tempo estimado)',
   }
 };
 

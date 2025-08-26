@@ -396,7 +396,7 @@ function Summary() {
                 <tbody>
                   <tr className="hover:bg-gray-50">
                     <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">
-                      Time Estimated (h)
+                      {t('timeEstimated')}
                     </td>
                     {safeVisibleMachines.map(mIdx => {
                       const machine = machinesSorted[mIdx];
@@ -420,7 +420,7 @@ function Summary() {
                   </tr>
                   <tr className="hover:bg-gray-50">
                     <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">
-                      Cost (based on estimated time)
+                      {t('costBasedOnEstimatedTime')}
                     </td>
                     {safeVisibleMachines.map(mIdx => {
                       const machine = machinesSorted[mIdx];

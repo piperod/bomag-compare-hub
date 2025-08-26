@@ -607,7 +607,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                           <>
                             <tr className="hover:bg-gray-50">
                               <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                                Time Estimated (h)
+                                {t('timeEstimated')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
                                 const perfRaw = machine.compactionPerformance || '';
@@ -622,7 +622,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                             </tr>
                             <tr className="hover:bg-gray-50">
                               <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                                Cost (based on estimated time)
+                                {t('costBasedOnEstimatedTime')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
                                 const perfRaw = machine.compactionPerformance || '';

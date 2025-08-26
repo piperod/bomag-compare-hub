@@ -519,7 +519,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                           if (selectedLine === 'ltr') {
                             basicSpecs.push(
                               { key: 'compactionSystem', label: 'Sistema de compactación', unit: '' },
-                              { key: 'waterTankCapacity', label: 'Capacidad tanque agua', unit: 'L' }
+                              { key: 'waterTankCapacity', label: 'Capacidad tanque agua (L)', unit: '' }
                             );
                           }
 
@@ -539,7 +539,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         })().map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              {spec.label} {spec.unit && `(${spec.unit})`}
+                              {spec.label}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">
@@ -593,7 +593,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         })().map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              {spec.label} ({spec.unit})
+                              {spec.label}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">

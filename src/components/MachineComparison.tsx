@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -309,6 +309,11 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   // Add state for editable TCO at time 0
   const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+  // Modal state for volume calculator
+  const [isCalcOpen, setIsCalcOpen] = useState(false);
+  const [lengthM, setLengthM] = useState<number>(0);
+  const [widthM, setWidthM] = useState<number>(0);
+  const [heightM, setHeightM] = useState<number>(0);
   // Surface volume calculator state
   const [surfaceVolumeM3, setSurfaceVolumeM3] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -368,6 +373,15 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
         ? prev.filter(id => id !== machineId)
         : [...prev, machineId]
     );
+  };
+
+  const calculateVolume = () => {
+    const volume = lengthM * widthM * heightM;
+    setSurfaceVolumeM3(volume);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('surfaceVolumeM3', String(volume));
+    }
+    setIsCalcOpen(false);
   };
 
   const getSelectedMachineData = () => {
@@ -669,7 +683,75 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                             placeholder="0"
                           />
                         </div>
-                        <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90" disabled>Calcular Rendimiento</Button>
+                        <Dialog open={isCalcOpen} onOpenChange={setIsCalcOpen}>
+                          <DialogTrigger asChild>
+                            <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">
+                              Calcular Rendimiento
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                              <DialogTitle>Calculadora de Volumen</DialogTitle>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="length" className="text-right">
+                                  Largo (m)
+                                </Label>
+                                <Input
+                                  id="length"
+                                  type="number"
+                                  className="col-span-3"
+                                  value={lengthM || ''}
+                                  onChange={(e) => setLengthM(parseFloat(e.target.value) || 0)}
+                                  placeholder="0"
+                                />
+                              </div>
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="width" className="text-right">
+                                  Ancho (m)
+                                </Label>
+                                <Input
+                                  id="width"
+                                  type="number"
+                                  className="col-span-3"
+                                  value={widthM || ''}
+                                  onChange={(e) => setWidthM(parseFloat(e.target.value) || 0)}
+                                  placeholder="0"
+                                />
+                              </div>
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="height" className="text-right">
+                                  Alto (m)
+                                </Label>
+                                <Input
+                                  id="height"
+                                  type="number"
+                                  className="col-span-3"
+                                  value={heightM || ''}
+                                  onChange={(e) => setHeightM(parseFloat(e.target.value) || 0)}
+                                  placeholder="0"
+                                />
+                              </div>
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className="text-right font-semibold">
+                                  Volumen (m³)
+                                </Label>
+                                <div className="col-span-3 text-lg font-bold">
+                                  {lengthM * widthM * heightM}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex justify-end gap-3">
+                              <Button variant="outline" onClick={() => setIsCalcOpen(false)}>
+                                Cancelar
+                              </Button>
+                              <Button onClick={calculateVolume}>
+                                Calcular
+                              </Button>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </div>
                     {surfaceVolumeM3 > 0 && (

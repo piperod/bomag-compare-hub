@@ -781,6 +781,49 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                     </table>
                   </div>
                 </div>
+
+                {/* USP Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Propuestas de Valor Único (USP)</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left">USP</th>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <th key={index} className="border border-gray-300 p-2 text-center">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { key: 'usp1', label: 'USP 1 - Operación' },
+                          { key: 'usp2', label: 'USP 2 - Rendimiento' },
+                          { key: 'usp3', label: 'USP 3 - Confort y Seguridad' },
+                          { key: 'usp4', label: 'USP 4 - Compactación Eficiente' },
+                          { key: 'usp5', label: 'USP 5 - Mantenimiento' }
+                        ].map((spec) => (
+                          <tr key={spec.key} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {spec.label}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center">
+                                {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object'
+                                  ? (machine[spec.key as keyof MachineSpec] as any)[language] || '-'
+                                  : '-'
+                                }
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </TabsContent>
 
               {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (

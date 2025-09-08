@@ -1048,10 +1048,10 @@ export interface CompactionData {
 }
 
 export const compactionHeightData: CompactionData[] = [
-  { weightRange: "1.5 – 2.5", rock: "-", gravel: "0.20 – 0.30", mixedSoil: "0.20 – 0.25", clay: "0.10 – 0.15" },
-  { weightRange: "3.0 – 4.5", rock: "-", gravel: "0.25 – 0.30", mixedSoil: "0.25 – 0.30", clay: "0.15 – 0.20" },
-  { weightRange: "7 – 9", rock: "-", gravel: "0.30 – 0.40", mixedSoil: "0.30 – 0.40", clay: "0.15 – 0.20" },
-  { weightRange: "10 – 12", rock: "-", gravel: "0.30 – 0.50", mixedSoil: "0.30 – 0.40", clay: "0.20 – 0.30" },
+  { weightRange: "1.5 – 2.5", rock: "0.10 – 0.20", gravel: "0.20 – 0.30", mixedSoil: "0.20 – 0.25", clay: "0.10 – 0.15" },
+  { weightRange: "3.0 – 4.5", rock: "0.15 – 0.25", gravel: "0.25 – 0.30", mixedSoil: "0.25 – 0.30", clay: "0.15 – 0.20" },
+  { weightRange: "7 – 9", rock: "0.20 – 0.35", gravel: "0.30 – 0.40", mixedSoil: "0.30 – 0.40", clay: "0.15 – 0.20" },
+  { weightRange: "10 – 12", rock: "0.25 – 0.40", gravel: "0.30 – 0.50", mixedSoil: "0.30 – 0.40", clay: "0.20 – 0.30" },
   { weightRange: "2 – 3", rock: "-", gravel: "0.20 – 0.35", mixedSoil: "0.20 – 0.30", clay: "0.15 – 0.20" },
   { weightRange: "6 – 8", rock: "0.30 – 0.50", gravel: "0.30 – 0.40", mixedSoil: "0.25 – 0.35", clay: "0.15 – 0.20" },
   { weightRange: "9 – 12", rock: "0.50 – 0.80", gravel: "0.50 – 0.80", mixedSoil: "0.40 – 0.60", clay: "0.20 – 0.30" },
@@ -1060,10 +1060,10 @@ export const compactionHeightData: CompactionData[] = [
 ];
 
 export const compactionPerformanceData: CompactionData[] = [
-  { weightRange: "1.5 – 2.5", rock: "-", gravel: "50 – 150", mixedSoil: "50 – 120", clay: "30 – 70" },
-  { weightRange: "3.0 – 4.5", rock: "-", gravel: "70 – 200", mixedSoil: "60 – 150", clay: "40 – 90" },
-  { weightRange: "7 – 9", rock: "-", gravel: "120 – 350", mixedSoil: "100 – 250", clay: "80 – 150" },
-  { weightRange: "10 – 12", rock: "-", gravel: "200 – 500", mixedSoil: "150 – 300", clay: "100 – 200" },
+  { weightRange: "1.5 – 2.5", rock: "30 – 80", gravel: "50 – 150", mixedSoil: "50 – 120", clay: "30 – 70" },
+  { weightRange: "3.0 – 4.5", rock: "50 – 120", gravel: "70 – 200", mixedSoil: "60 – 150", clay: "40 – 90" },
+  { weightRange: "7 – 9", rock: "80 – 200", gravel: "120 – 350", mixedSoil: "100 – 250", clay: "80 – 150" },
+  { weightRange: "10 – 12", rock: "120 – 300", gravel: "200 – 500", mixedSoil: "150 – 300", clay: "100 – 200" },
   { weightRange: "2 – 3", rock: "-", gravel: "60 – 180", mixedSoil: "60 – 180", clay: "40 – 100" },
   { weightRange: "6 – 8", rock: "200 – 500", gravel: "100 – 400", mixedSoil: "100 – 350", clay: "70 – 200" },
   { weightRange: "9 – 12", rock: "400 – 900", gravel: "200 – 700", mixedSoil: "200 – 600", clay: "100 – 300" },

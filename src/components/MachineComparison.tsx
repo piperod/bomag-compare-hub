@@ -333,6 +333,18 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
     return 1.2;
   });
 
+  // Editable compaction performance state
+  const [editableCompactionPerformance, setEditableCompactionPerformance] = useState<{ [key: number]: number }>({});
+  
+  // Work efficiency state (percentage)
+  const [workEfficiency, setWorkEfficiency] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('workEfficiency');
+      return saved ? parseFloat(saved) : 100;
+    }
+    return 100;
+  });
+
   const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
   const machinesSorted = React.useMemo(() => {
     const arr = [...machines];
@@ -382,6 +394,14 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
       localStorage.setItem('surfaceVolumeM3', String(volume));
     }
     setIsCalcOpen(false);
+  };
+
+  // Get effective compaction performance (original or edited) with work efficiency applied
+  const getEffectiveCompactionPerformance = (machine: MachineSpec, machineIndex: number) => {
+    const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
+    const editedPerf = editableCompactionPerformance[machineIndex];
+    const basePerf = editedPerf !== undefined ? editedPerf : originalPerf;
+    return basePerf * (workEfficiency / 100);
   };
 
   const getSelectedMachineData = () => {
@@ -685,33 +705,90 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {(() => {
-                          // Performance specs vary by product line
-                          const performanceSpecs = [
-                            { key: 'fuelConsumption', label: t('fuelConsumption'), unit: 'L/h' }
-                          ];
-                          
-                          // SDR-specific performance fields
-                          if (selectedLine === 'sdr') {
-                            performanceSpecs.unshift(
-                              { key: 'maxCompactionDepth', label: t('maxCompactionDepth'), unit: 'cm' },
-                              { key: 'compactionPerformance', label: t('compactionPerformance'), unit: 'm³/h' }
-                            );
-                          }
-                          
-                          return performanceSpecs;
-                        })().map((spec) => (
-                          <tr key={spec.key} className="hover:bg-gray-50">
+                        {/* Max Compaction Depth (SDR only) */}
+                        {selectedLine === 'sdr' && (
+                          <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              {spec.label}
+                              {t('maxCompactionDepth')}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">
-                                {machine[spec.key as keyof MachineSpec] || '-'}
+                                {machine.maxCompactionDepth || '-'}
                               </td>
                             ))}
                           </tr>
-                        ))}
+                        )}
+                        
+                        {/* Editable Compaction Performance (SDR only) */}
+                        {selectedLine === 'sdr' && (
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {t('compactionPerformance')} (m³/h)
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
+                              const editedPerf = editableCompactionPerformance[index];
+                              const currentPerf = editedPerf !== undefined ? editedPerf : originalPerf;
+                              
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center">
+                                  <Input
+                                    type="number"
+                                    className="w-20 h-8 text-center text-sm"
+                                    value={currentPerf || ''}
+                                    onChange={(e) => {
+                                      const value = parseFloat(e.target.value);
+                                      setEditableCompactionPerformance(prev => ({
+                                        ...prev,
+                                        [index]: isNaN(value) ? originalPerf : value
+                                      }));
+                                    }}
+                                    placeholder={originalPerf.toString()}
+                                  />
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        )}
+                        
+                        {/* Work Efficiency */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            Eficiencia de obra (%)
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <td key={index} className="border border-gray-300 p-2 text-center">
+                              <Input
+                                type="number"
+                                className="w-20 h-8 text-center text-sm"
+                                value={workEfficiency}
+                                onChange={(e) => {
+                                  const value = parseFloat(e.target.value);
+                                  const newValue = isNaN(value) ? 100 : Math.max(0, Math.min(200, value)); // Limit between 0-200%
+                                  setWorkEfficiency(newValue);
+                                  if (typeof window !== 'undefined') {
+                                    localStorage.setItem('workEfficiency', String(newValue));
+                                  }
+                                }}
+                                placeholder="100"
+                                min="0"
+                                max="200"
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                        
+                        {/* Fuel Consumption */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            {t('fuelConsumption')}
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <td key={index} className="border border-gray-300 p-2 text-center">
+                              {machine.fuelConsumption || '-'}
+                            </td>
+                          ))}
+                        </tr>
                         {/* Calculated performance rows based on volume */}
                         {surfaceVolumeM3 > 0 && (
                           <>
@@ -720,9 +797,8 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                                 {t('timeEstimated')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const perfRaw = machine.compactionPerformance || '';
-                                const perfAvg = parseCompactionPerformance(perfRaw);
-                                const hours = perfAvg > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                                const effectivePerf = getEffectiveCompactionPerformance(machine, index);
+                                const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
                                     {hours > 0 ? hours.toFixed(2) : '-'}
@@ -735,9 +811,8 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                                 {t('costBasedOnEstimatedTime')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const perfRaw = machine.compactionPerformance || '';
-                                const perfAvg = parseCompactionPerformance(perfRaw);
-                                const hours = perfAvg > 0 ? surfaceVolumeM3 / perfAvg : 0;
+                                const effectivePerf = getEffectiveCompactionPerformance(machine, index);
+                                const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
                                 // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
                                 const pm = machine.preventiveMaintenance ?? 0;
                                 const cm = machine.correctiveMaintenance ?? 0;

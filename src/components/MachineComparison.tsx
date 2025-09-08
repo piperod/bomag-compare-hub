@@ -756,6 +756,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                       </tbody>
                     </table>
                   </div>
+                </div>
 
                               {/* Costs Section */}
                 <div>

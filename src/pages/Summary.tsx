@@ -34,6 +34,11 @@ const summaryFields = [
   { key: 'telemetry', labelKey: 'telemetry', multilanguage: true },
   { key: 'innovations', labelKey: 'innovations', multilanguage: true },
   { key: 'usp', labelKey: 'usp', multilanguage: true },
+  { key: 'usp1', labelKey: 'usp1', multilanguage: true },
+  { key: 'usp2', labelKey: 'usp2', multilanguage: true },
+  { key: 'usp3', labelKey: 'usp3', multilanguage: true },
+  { key: 'usp4', labelKey: 'usp4', multilanguage: true },
+  { key: 'usp5', labelKey: 'usp5', multilanguage: true },
   { key: 'maxCompactionDepth', labelKey: 'maxCompactionDepth', format: v => v ? v + ' cm' : '-' },
   { key: 'compactionPerformance', labelKey: 'compactionPerformance' },
   // Editable diesel price per machine (USD per liter)

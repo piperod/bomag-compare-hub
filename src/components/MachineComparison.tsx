@@ -336,6 +336,9 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
   // Editable compaction performance state
   const [editableCompactionPerformance, setEditableCompactionPerformance] = useState<{ [key: number]: number }>({});
   
+  // Editable fuel consumption state
+  const [editableFuelConsumption, setEditableFuelConsumption] = useState<{ [key: number]: number }>({});
+  
   // Work efficiency state (percentage)
   const [workEfficiency, setWorkEfficiency] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -402,6 +405,13 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
     const editedPerf = editableCompactionPerformance[machineIndex];
     const basePerf = editedPerf !== undefined ? editedPerf : originalPerf;
     return basePerf * (workEfficiency / 100);
+  };
+
+  // Get effective fuel consumption (original or edited)
+  const getEffectiveFuelConsumption = (machine: MachineSpec, machineIndex: number) => {
+    const originalFuel = machine.fuelConsumption || 0;
+    const editedFuel = editableFuelConsumption[machineIndex];
+    return editedFuel !== undefined ? editedFuel : originalFuel;
   };
 
   const getSelectedMachineData = () => {
@@ -784,13 +794,33 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         {/* Fuel Consumption */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                            {t('fuelConsumption')}
+                            {t('fuelConsumption')} <span className="text-red-500">*</span>
                           </td>
-                          {getSelectedMachineData().map((machine, index) => (
-                            <td key={index} className="border border-gray-300 p-2 text-center">
-                              {machine.fuelConsumption || '-'}
-                            </td>
-                          ))}
+                          {getSelectedMachineData().map((machine, index) => {
+                            const originalFuel = machine.fuelConsumption || 0;
+                            const editedFuel = editableFuelConsumption[index];
+                            const currentFuel = editedFuel !== undefined ? editedFuel : originalFuel;
+                            
+                            return (
+                              <td key={index} className="border border-gray-300 p-2 text-center">
+                                <Input
+                                  type="number"
+                                  className="w-20 h-8 text-center text-sm"
+                                  value={currentFuel || ''}
+                                  onChange={(e) => {
+                                    const value = parseFloat(e.target.value);
+                                    setEditableFuelConsumption(prev => ({
+                                      ...prev,
+                                      [index]: isNaN(value) ? originalFuel : value
+                                    }));
+                                  }}
+                                  placeholder={originalFuel.toString()}
+                                  min="0"
+                                  step="0.1"
+                                />
+                              </td>
+                            );
+                          })}
                         </tr>
                         {/* Calculated performance rows based on volume */}
                         {surfaceVolumeM3 > 0 && (
@@ -819,7 +849,7 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                                 // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
                                 const pm = machine.preventiveMaintenance ?? 0;
                                 const cm = machine.correctiveMaintenance ?? 0;
-                                const fuel = machine.fuelConsumption ?? 0;
+                                const fuel = getEffectiveFuelConsumption(machine, index);
                                 const costPerHour = fuel * fuelPrice + pm + cm;
                                 const totalCost = hours * costPerHour;
                                 return (
@@ -833,6 +863,11 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         )}
                       </tbody>
                     </table>
+                  </div>
+                  
+                  {/* Footnote for fuel consumption */}
+                  <div className="mt-3 text-xs text-gray-600 italic">
+                    <span className="text-red-500">*</span> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
                   </div>
                 </div>
 

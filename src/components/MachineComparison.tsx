@@ -754,26 +754,29 @@ const MachineComparison = ({ selectedLine }: MachineComparisonProps) => {
                         {/* Work Efficiency */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                            Eficiencia de obra (%)
+                            Eficiencia de obra (%) <span className="text-xs text-gray-500">(0-100%)</span>
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
                             <td key={index} className="border border-gray-300 p-2 text-center">
-                              <Input
-                                type="number"
-                                className="w-20 h-8 text-center text-sm"
-                                value={workEfficiency}
-                                onChange={(e) => {
-                                  const value = parseFloat(e.target.value);
-                                  const newValue = isNaN(value) ? 100 : Math.max(0, Math.min(200, value)); // Limit between 0-200%
-                                  setWorkEfficiency(newValue);
-                                  if (typeof window !== 'undefined') {
-                                    localStorage.setItem('workEfficiency', String(newValue));
-                                  }
-                                }}
-                                placeholder="100"
-                                min="0"
-                                max="200"
-                              />
+                              <div className="flex items-center justify-center gap-1">
+                                <Input
+                                  type="number"
+                                  className="w-20 h-8 text-center text-sm"
+                                  value={workEfficiency}
+                                  onChange={(e) => {
+                                    const value = parseFloat(e.target.value);
+                                    const newValue = isNaN(value) ? 100 : Math.max(0, Math.min(100, value)); // Limit between 0-100%
+                                    setWorkEfficiency(newValue);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('workEfficiency', String(newValue));
+                                    }
+                                  }}
+                                  placeholder="100"
+                                  min="0"
+                                  max="100"
+                                />
+                                <span className="text-xs text-gray-500">%</span>
+                              </div>
                             </td>
                           ))}
                         </tr>

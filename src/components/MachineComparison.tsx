@@ -550,13 +550,12 @@ const MachineComparison = ({
     setIsCalcOpen(false);
   };
 
-  // Get effective compaction performance (original or edited) with work efficiency applied
+  // Get effective compaction performance (original or edited) - without work efficiency applied
   const getEffectiveCompactionPerformance = (machine: MachineSpec) => {
     const machineId = getMachineId(machine);
     const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
     const editedPerf = editableCompactionPerformance[machineId];
-    const basePerf = editedPerf !== undefined ? editedPerf : originalPerf;
-    return basePerf * (workEfficiency / 100);
+    return editedPerf !== undefined ? editedPerf : originalPerf;
   };
 
   // Get effective fuel consumption (original or edited)
@@ -1232,7 +1231,9 @@ const MachineComparison = ({
                                 </td>
                                 {getSelectedMachineData().map((machine, index) => {
                                   const effectivePerf = getEffectiveCompactionPerformance(machine);
-                                  const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
+                                  // Apply work efficiency: lower efficiency means longer time (divide by efficiency)
+                                  const adjustedPerf = effectivePerf * (workEfficiency / 100);
+                                  const hours = adjustedPerf > 0 ? surfaceVolumeM3 / adjustedPerf : 0;
                                   return (
                                     <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
                                       {hours > 0 ? hours.toFixed(2) : '-'}
@@ -1246,7 +1247,9 @@ const MachineComparison = ({
                                 </td>
                                 {getSelectedMachineData().map((machine, index) => {
                                   const effectivePerf = getEffectiveCompactionPerformance(machine);
-                                  const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
+                                  // Apply work efficiency: lower efficiency means longer time (divide by efficiency)
+                                  const adjustedPerf = effectivePerf * (workEfficiency / 100);
+                                  const hours = adjustedPerf > 0 ? surfaceVolumeM3 / adjustedPerf : 0;
                                   // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
                                   const pm = getEffectivePreventiveMaintenance(machine);
                                   const cm = getEffectiveCorrectiveMaintenance(machine);

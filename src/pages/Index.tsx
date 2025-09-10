@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import ProductLineSelector from '@/components/ProductLineSelector';
@@ -12,8 +12,7 @@ export default function Index() {
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
-  const [activeTab, setActiveTab] = useState<'comparison' | 'calculator'>('comparison');
-  const calculatorRef = useRef<HTMLDivElement | null>(null);
+  const [activeTab, setActiveTab] = useState<'comparison'>('comparison');
   const [isPerfCalcOpen, setIsPerfCalcOpen] = useState(false);
   
   // Load saved selections per line on line change
@@ -36,12 +35,7 @@ export default function Index() {
     } catch {}
   }, [selectedLine, selectedMachines]);
 
-  // Smooth scroll to calculator section when switching to calculator tab
-  useEffect(() => {
-    if (activeTab === 'calculator' && calculatorRef.current) {
-      calculatorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [activeTab]);
+  // No scrolling needed; calculator only available as modal
   
   return (
     <LanguageProvider>
@@ -51,9 +45,8 @@ export default function Index() {
           <ProductLineSelector selectedLine={selectedLine} onLineSelect={setSelectedLine} />
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
             <div className="flex items-center justify-between mb-6">
-              <TabsList className="grid grid-cols-2">
+              <TabsList className="grid grid-cols-1">
                 <TabsTrigger value="comparison">Comparación de Máquinas</TabsTrigger>
-                <TabsTrigger value="calculator">Calculadora de Rendimiento BOMAG</TabsTrigger>
               </TabsList>
               <Dialog open={isPerfCalcOpen} onOpenChange={setIsPerfCalcOpen}>
                 <DialogTrigger asChild>
@@ -77,11 +70,6 @@ export default function Index() {
                 editableTCO={editableTCO}
                 setEditableTCO={setEditableTCO}
               />
-            </TabsContent>
-            <TabsContent value="calculator" forceMount>
-              <div ref={calculatorRef}>
-                <PerformanceCalculator />
-              </div>
             </TabsContent>
           </Tabs>
         </main>

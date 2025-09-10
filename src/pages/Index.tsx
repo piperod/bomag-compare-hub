@@ -5,6 +5,8 @@ import ProductLineSelector from '@/components/ProductLineSelector';
 import MachineComparison from '@/components/MachineComparison';
 import PerformanceCalculator from '@/components/PerformanceCalculator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 export default function Index() {
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
@@ -12,6 +14,7 @@ export default function Index() {
   const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
   const [activeTab, setActiveTab] = useState<'comparison' | 'calculator'>('comparison');
   const calculatorRef = useRef<HTMLDivElement | null>(null);
+  const [isPerfCalcOpen, setIsPerfCalcOpen] = useState(false);
   
   // Load saved selections per line on line change
   useEffect(() => {
@@ -47,10 +50,25 @@ export default function Index() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <ProductLineSelector selectedLine={selectedLine} onLineSelect={setSelectedLine} />
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="comparison">Comparación de Máquinas</TabsTrigger>
-              <TabsTrigger value="calculator">Calculadora de Rendimiento BOMAG</TabsTrigger>
-            </TabsList>
+            <div className="flex items-center justify-between mb-6">
+              <TabsList className="grid grid-cols-2">
+                <TabsTrigger value="comparison">Comparación de Máquinas</TabsTrigger>
+                <TabsTrigger value="calculator">Calculadora de Rendimiento BOMAG</TabsTrigger>
+              </TabsList>
+              <Dialog open={isPerfCalcOpen} onOpenChange={setIsPerfCalcOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">Abrir calculadora de rendimiento BOMAG</Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl">
+                  <DialogHeader>
+                    <DialogTitle>Calculadora de Rendimiento BOMAG</DialogTitle>
+                  </DialogHeader>
+                  <div className="max-h-[75vh] overflow-y-auto">
+                    <PerformanceCalculator />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
             <TabsContent value="comparison" forceMount>
               <MachineComparison 
                 selectedLine={selectedLine} 

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -416,12 +415,14 @@ const MachineComparison = ({
   const [searchTerm, setSearchTerm] = useState<string>('');
   // Show only selected machines in the grid
   const [showOnlySelected, setShowOnlySelected] = useState<boolean>(false);
-  // Ref to calculator section for smooth scroll
-  const calcSectionRef = useRef<HTMLDivElement | null>(null);
 
   // When opening the volume calculator, restrict grid to selected machines
+  // When calculator opens in-page, keep only selected visible and scroll into view
   useEffect(() => {
     setShowOnlySelected(isCalcOpen);
+  }, [isCalcOpen]);
+  const calcSectionRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
     if (isCalcOpen && calcSectionRef.current) {
       calcSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -659,6 +660,7 @@ const MachineComparison = ({
         <div className="text-sm text-gray-600">
           {selectedMachines.length} máquinas seleccionadas para comparar
         </div>
+        <div className="flex items-center gap-2"></div>
       </div>
 
       {/* Search Bar */}
@@ -898,100 +900,7 @@ const MachineComparison = ({
                 </div>
 
                 {/* Volume Calculator Section */}
-                <div ref={calcSectionRef} className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold text-gray-700">Calculadora de Volumen</h4>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <Label htmlFor="surface-volume-detail" className="text-sm text-gray-600">Volumen (m³)</Label>
-                        <Input
-                          id="surface-volume-detail"
-                          type="number"
-                          className="h-8 w-28 text-right"
-                          value={surfaceVolumeM3 || ''}
-                          onChange={(e) => {
-                            const v = e.target.value === '' ? 0 : parseFloat(e.target.value);
-                            const val = isNaN(v) ? 0 : v;
-                            setSurfaceVolumeM3(val);
-                            if (typeof window !== 'undefined') {
-                              localStorage.setItem('surfaceVolumeM3', String(val));
-                            }
-                          }}
-                          placeholder="0"
-                        />
-                      </div>
-                      <Dialog open={isCalcOpen} onOpenChange={setIsCalcOpen}>
-                        <DialogTrigger asChild>
-                          <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">
-                            Calcular Rendimiento
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Calculadora de Volumen</DialogTitle>
-                          </DialogHeader>
-                          <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <Label htmlFor="length" className="text-right">
-                                Largo (m)
-                              </Label>
-                              <Input
-                                id="length"
-                                type="number"
-                                className="col-span-3"
-                                value={lengthM || ''}
-                                onChange={(e) => setLengthM(parseFloat(e.target.value) || 0)}
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <Label htmlFor="width" className="text-right">
-                                Ancho (m)
-                              </Label>
-                              <Input
-                                id="width"
-                                type="number"
-                                className="col-span-3"
-                                value={widthM || ''}
-                                onChange={(e) => setWidthM(parseFloat(e.target.value) || 0)}
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <Label htmlFor="height" className="text-right">
-                                Alto (m)
-                              </Label>
-                              <Input
-                                id="height"
-                                type="number"
-                                className="col-span-3"
-                                value={heightM || ''}
-                                onChange={(e) => setHeightM(parseFloat(e.target.value) || 0)}
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <Label className="text-right font-semibold">
-                                Volumen (m³)
-                              </Label>
-                              <div className="col-span-3 text-lg font-bold">
-                                {lengthM * widthM * heightM}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex justify-end gap-3">
-                            <Button variant="outline" onClick={() => setIsCalcOpen(false)}>
-                              Cancelar
-                            </Button>
-                            <Button onClick={calculateVolume}>
-                              Aplicar
-                            </Button>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    </div>
-                  </div>
-                </div>
+                {/* Calculadora de Volumen section removed per request */}
 
                               {/* Performance Section */}
                 <div>

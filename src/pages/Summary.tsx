@@ -11,6 +11,17 @@ import Header from '@/components/Header';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 
+interface SummaryProps {
+  editableTCO: { [key: string]: number };
+  setEditableTCO: (tco: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editablePrice: { [key: string]: number };
+  setEditablePrice: (price: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editablePreventiveMaintenance: { [key: string]: number };
+  setEditablePreventiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editableCorrectiveMaintenance: { [key: string]: number };
+  setEditableCorrectiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+}
+
 const machineLines = [
   { key: 'sdr', label: 'SDR', machines: sdrMachines },
   { key: 'ltr', label: 'LTR', machines: ltrMachines },
@@ -113,12 +124,30 @@ function formatCurrency(value: number) {
 export default function SummaryPage() {
   return (
     <LanguageProvider>
-      <Summary />
+      <Summary 
+        editableTCO={{}}
+        setEditableTCO={() => {}}
+        editablePrice={{}}
+        setEditablePrice={() => {}}
+        editablePreventiveMaintenance={{}}
+        setEditablePreventiveMaintenance={() => {}}
+        editableCorrectiveMaintenance={{}}
+        setEditableCorrectiveMaintenance={() => {}}
+      />
     </LanguageProvider>
   );
 }
 
-function Summary() {
+function Summary({ 
+  editableTCO, 
+  setEditableTCO, 
+  editablePrice, 
+  setEditablePrice, 
+  editablePreventiveMaintenance, 
+  setEditablePreventiveMaintenance, 
+  editableCorrectiveMaintenance, 
+  setEditableCorrectiveMaintenance 
+}: SummaryProps) {
   const { t, language } = useLanguage();
   const [selectedLine, setSelectedLine] = useState('sdr');
   const machines = machineLines.find(l => l.key === selectedLine)?.machines || [];
@@ -136,7 +165,55 @@ function Summary() {
   const [visibleFields, setVisibleFields] = useState(summaryFields.map((_, i) => i));
   // Add state for editable fields per machine
   const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
-  const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+  
+  // Load editable values from localStorage
+  const [localEditableTCO, setLocalEditableTCO] = useState<{ [key: string]: number }>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('editableTCO');
+        return saved ? JSON.parse(saved) : {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
+  
+  const [localEditablePrice, setLocalEditablePrice] = useState<{ [key: string]: number }>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('editablePrice');
+        return saved ? JSON.parse(saved) : {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
+  
+  const [localEditablePreventiveMaintenance, setLocalEditablePreventiveMaintenance] = useState<{ [key: string]: number }>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('editablePreventiveMaintenance');
+        return saved ? JSON.parse(saved) : {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
+  
+  const [localEditableCorrectiveMaintenance, setLocalEditableCorrectiveMaintenance] = useState<{ [key: string]: number }>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('editableCorrectiveMaintenance');
+        return saved ? JSON.parse(saved) : {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
   const [surfaceVolumeM3, setSurfaceVolumeM3] = useState<number>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('surfaceVolumeM3');
@@ -187,12 +264,36 @@ function Summary() {
     setVisibleFields(summaryFields.map((_, i) => i));
   };
 
+  // Helper to get machine ID (same as in MachineComparison)
+  const getMachineId = (machine: any) => {
+    const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+    return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize(machine.engine)}`;
+  };
+
   // Helper to get the current value (edited or original)
   const getFieldValue = (mIdx: number, key: string) => {
+    const machine = machinesSorted[mIdx];
+    const machineId = getMachineId(machine);
+    
+    // Check if this field has been edited in localStorage
+    if (key === 'price' && localEditablePrice[machineId] !== undefined) {
+      return localEditablePrice[machineId];
+    }
+    if (key === 'preventiveMaintenance' && localEditablePreventiveMaintenance[machineId] !== undefined) {
+      return localEditablePreventiveMaintenance[machineId];
+    }
+    if (key === 'correctiveMaintenance' && localEditableCorrectiveMaintenance[machineId] !== undefined) {
+      return localEditableCorrectiveMaintenance[machineId];
+    }
+    if (key === 'tco' && localEditableTCO[machineId] !== undefined) {
+      return localEditableTCO[machineId];
+    }
+    
+    // Check if this field has been edited locally
     if (editableFields[mIdx] && editableFields[mIdx][key] !== undefined) {
       return editableFields[mIdx][key];
     }
-    return machines[mIdx][key];
+    return machinesSorted[mIdx][key];
   };
 
   return (
@@ -297,7 +398,9 @@ function Summary() {
                         if (field.format && value !== undefined && value !== null) {
                           value = field.format(value);
                         }
-                        const alignClass = field.multilanguage ? 'text-left whitespace-pre-line' : 'text-center';
+                        const alignClass = field.key === 'origin'
+                          ? 'text-center whitespace-pre-line'
+                          : (field.multilanguage ? 'text-left whitespace-pre-line' : 'text-center');
                         return <td key={mIdx} className={`border border-gray-300 p-2 ${alignClass}`}>{value || '-'}</td>;
                       })}
                     </tr>

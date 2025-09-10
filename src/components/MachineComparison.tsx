@@ -17,6 +17,12 @@ interface MachineComparisonProps {
   setSelectedMachines: (machines: string[] | ((prev: string[]) => string[])) => void;
   editableTCO: { [key: string]: number };
   setEditableTCO: (tco: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editablePrice: { [key: string]: number };
+  setEditablePrice: (price: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editablePreventiveMaintenance: { [key: string]: number };
+  setEditablePreventiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editableCorrectiveMaintenance: { [key: string]: number };
+  setEditableCorrectiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
 }
 
 // HTR machine data (hardcoded, Spanish labels)
@@ -369,7 +375,13 @@ const MachineComparison = ({
   selectedMachines, 
   setSelectedMachines, 
   editableTCO, 
-  setEditableTCO 
+  setEditableTCO,
+  editablePrice,
+  setEditablePrice,
+  editablePreventiveMaintenance,
+  setEditablePreventiveMaintenance,
+  editableCorrectiveMaintenance,
+  setEditableCorrectiveMaintenance
 }: MachineComparisonProps) => {
   const { t, language } = useLanguage();
   // Modal state for volume calculator
@@ -470,11 +482,39 @@ const MachineComparison = ({
     return arr;
   }, [machines, searchTerm, selectedMachines, showOnlySelected]);
 
-  // Reset selected machines and editableTCO when product line changes
+  // Reset selected machines and editable states when product line changes
   useEffect(() => {
     setSelectedMachines([]);
     setEditableTCO({});
+    setEditablePrice({});
+    setEditablePreventiveMaintenance({});
+    setEditableCorrectiveMaintenance({});
   }, [selectedLine]);
+
+  // Persist editable values to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('editableTCO', JSON.stringify(editableTCO));
+    }
+  }, [editableTCO]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('editablePrice', JSON.stringify(editablePrice));
+    }
+  }, [editablePrice]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('editablePreventiveMaintenance', JSON.stringify(editablePreventiveMaintenance));
+    }
+  }, [editablePreventiveMaintenance]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('editableCorrectiveMaintenance', JSON.stringify(editableCorrectiveMaintenance));
+    }
+  }, [editableCorrectiveMaintenance]);
 
   // Listen for volume and fuel price changes from localStorage
   useEffect(() => {
@@ -525,6 +565,30 @@ const MachineComparison = ({
     const originalFuel = machine.fuelConsumption || 0;
     const editedFuel = editableFuelConsumption[machineId];
     return editedFuel !== undefined ? editedFuel : originalFuel;
+  };
+
+  // Get effective price (original or edited)
+  const getEffectivePrice = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
+    const originalPrice = machine.price || 0;
+    const editedPrice = editablePrice[machineId];
+    return editedPrice !== undefined ? editedPrice : originalPrice;
+  };
+
+  // Get effective preventive maintenance (original or edited)
+  const getEffectivePreventiveMaintenance = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
+    const originalMaintenance = machine.preventiveMaintenance || 0;
+    const editedMaintenance = editablePreventiveMaintenance[machineId];
+    return editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
+  };
+
+  // Get effective corrective maintenance (original or edited)
+  const getEffectiveCorrectiveMaintenance = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
+    const originalMaintenance = machine.correctiveMaintenance || 0;
+    const editedMaintenance = editableCorrectiveMaintenance[machineId];
+    return editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
   };
 
   const getSelectedMachineData = () => {
@@ -792,15 +856,13 @@ const MachineComparison = ({
             <CardTitle>{t('compare')} - {selectedMachines.length} Máquinas</CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="comprehensive" className="w-full">
+            <Tabs defaultValue="specs" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="comprehensive">Comparación Completa</TabsTrigger>
-                {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (
-                  <TabsTrigger value="tco-timeline">TCO Progresivo</TabsTrigger>
-                )}
+                <TabsTrigger value="specs">Especificaciones</TabsTrigger>
+                <TabsTrigger value="financial">Análisis Financiero</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="comprehensive" className="mt-4 space-y-8">
+              <TabsContent value="specs" className="mt-4 space-y-8">
                 {/* Basic Specifications Section */}
                 <div>
                   <h4 className="text-lg font-semibold text-gray-700 mb-3">Especificaciones Básicas</h4>
@@ -899,8 +961,6 @@ const MachineComparison = ({
                   </div>
                 </div>
 
-                {/* Volume Calculator Section */}
-                {/* Calculadora de Volumen section removed per request */}
 
                               {/* Performance Section */}
                 <div>
@@ -1032,45 +1092,6 @@ const MachineComparison = ({
                             );
                           })}
                         </tr>
-                        {/* Calculated performance rows based on volume */}
-                        {surfaceVolumeM3 > 0 && (
-                          <>
-                            <tr className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                                {t('timeEstimated')}
-                              </td>
-                              {getSelectedMachineData().map((machine, index) => {
-                                const effectivePerf = getEffectiveCompactionPerformance(machine);
-                                const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
-                                return (
-                                  <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
-                                    {hours > 0 ? hours.toFixed(2) : '-'}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                            <tr className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                                {t('costBasedOnEstimatedTime')}
-                              </td>
-                              {getSelectedMachineData().map((machine, index) => {
-                                const effectivePerf = getEffectiveCompactionPerformance(machine);
-                                const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
-                                // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
-                                const pm = machine.preventiveMaintenance ?? 0;
-                                const cm = machine.correctiveMaintenance ?? 0;
-                                const fuel = getEffectiveFuelConsumption(machine);
-                                const costPerHour = fuel * fuelPrice + pm + cm;
-                                const totalCost = hours * costPerHour;
-                                return (
-                                  <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
-                                    {hours > 0 ? formatCurrency(totalCost) : '-'}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          </>
-                        )}
                       </tbody>
                     </table>
                   </div>
@@ -1130,8 +1151,122 @@ const MachineComparison = ({
                 </div>
               </TabsContent>
 
-              {(selectedLine === 'sdr' || selectedLine === 'ltr') && machines.some(m => m.tcoTimeline) && (
-                <TabsContent value="tco-timeline" className="mt-4 space-y-8">
+              <TabsContent value="financial" className="mt-4 space-y-8">
+                  {/* Performance Calculation Section */}
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">Cálculo de Rendimiento</h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-bomag-light-gray">
+                            <th className="border border-gray-300 p-2 text-left font-semibold">Parámetro</th>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                                <div className="text-sm font-bold">{machine.brand}</div>
+                                <div className="text-xs">{machine.model}</div>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {/* Volume input row */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              <div className="flex items-center justify-center gap-2">
+                                <span>Volumen (m³)</span>
+                                <Input
+                                  type="number"
+                                  className="h-6 w-20 text-center"
+                                  value={surfaceVolumeM3 || ''}
+                                  onChange={(e) => {
+                                    const v = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                                    const val = isNaN(v) ? 0 : v;
+                                    setSurfaceVolumeM3(val);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('surfaceVolumeM3', String(val));
+                                    }
+                                  }}
+                                  placeholder="0"
+                                />
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {surfaceVolumeM3 > 0 ? surfaceVolumeM3.toFixed(2) : '-'}
+                              </td>
+                            ))}
+                          </tr>
+                          {/* Work efficiency row */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              <div className="flex items-center justify-center gap-2">
+                                <span>Eficiencia de trabajo (%)</span>
+                                <Input
+                                  type="number"
+                                  className="h-6 w-16 text-center"
+                                  value={workEfficiency}
+                                  onChange={(e) => {
+                                    const v = e.target.value === '' ? 100 : parseFloat(e.target.value);
+                                    const val = isNaN(v) ? 100 : Math.max(0, Math.min(100, v));
+                                    setWorkEfficiency(val);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('workEfficiency', String(val));
+                                    }
+                                  }}
+                                  placeholder="100"
+                                />
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {workEfficiency}%
+                              </td>
+                            ))}
+                          </tr>
+                          {/* Calculated performance rows based on volume */}
+                          {surfaceVolumeM3 > 0 && (
+                            <>
+                              <tr className="hover:bg-gray-50">
+                                <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                                  {t('timeEstimated')}
+                                </td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const effectivePerf = getEffectiveCompactionPerformance(machine);
+                                  const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
+                                      {hours > 0 ? hours.toFixed(2) : '-'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-gray-50">
+                                <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                                  {t('costBasedOnEstimatedTime')}
+                                </td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const effectivePerf = getEffectiveCompactionPerformance(machine);
+                                  const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
+                                  // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
+                                  const pm = getEffectivePreventiveMaintenance(machine);
+                                  const cm = getEffectiveCorrectiveMaintenance(machine);
+                                  const fuel = getEffectiveFuelConsumption(machine);
+                                  const costPerHour = fuel * fuelPrice + pm + cm;
+                                  const totalCost = hours * costPerHour;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
+                                      {hours > 0 ? formatCurrency(totalCost) : '-'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            </>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
                   {/* Costs Section */}
                   <div>
                     <h4 className="text-lg font-semibold text-gray-700 mb-3">Costos</h4>
@@ -1149,30 +1284,89 @@ const MachineComparison = ({
                           </tr>
                         </thead>
                         <tbody>
-                          {[
-                            { key: 'price', label: t('price'), format: formatCurrency },
-                            { key: 'preventiveMaintenance', label: t('preventiveMaintenance'), format: (v: number) => `$${v}` },
-                            { key: 'correctiveMaintenance', label: t('correctiveMaintenance'), format: (v: number) => `$${v}` }
-                          ].map((spec) => (
-                            <tr key={spec.key} className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                                {spec.label}
-                              </td>
-                              {getSelectedMachineData().map((machine, index) => (
-                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {spec.format(machine[spec.key as keyof MachineSpec] as number)}
+                          {/* Price Row - Editable */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              {t('price')}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const machineId = getMachineId(machine);
+                              const effectivePrice = getEffectivePrice(machine);
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-yellow-50">
+                                  <div className="flex justify-center">
+                                    <Input
+                                      type="number"
+                                      className="border rounded px-2 py-1 w-24 text-center bg-yellow-50"
+                                      value={effectivePrice}
+                                      onChange={e => {
+                                        const value = parseFloat(e.target.value);
+                                        setEditablePrice(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                      }}
+                                    />
+                                  </div>
                                 </td>
-                              ))}
-                            </tr>
-                          ))}
+                              );
+                            })}
+                          </tr>
+                          {/* Preventive Maintenance Row - Editable */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              {t('preventiveMaintenance')}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const machineId = getMachineId(machine);
+                              const effectiveMaintenance = getEffectivePreventiveMaintenance(machine);
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-yellow-50">
+                                  <div className="flex justify-center">
+                                    <Input
+                                      type="number"
+                                      className="border rounded px-2 py-1 w-20 text-center bg-yellow-50"
+                                      value={effectiveMaintenance}
+                                      onChange={e => {
+                                        const value = parseFloat(e.target.value);
+                                        setEditablePreventiveMaintenance(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                      }}
+                                    />
+                                  </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                          {/* Corrective Maintenance Row - Editable */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              {t('correctiveMaintenance')}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const machineId = getMachineId(machine);
+                              const effectiveMaintenance = getEffectiveCorrectiveMaintenance(machine);
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-yellow-50">
+                                  <div className="flex justify-center">
+                                    <Input
+                                      type="number"
+                                      className="border rounded px-2 py-1 w-20 text-center bg-yellow-50"
+                                      value={effectiveMaintenance}
+                                      onChange={e => {
+                                        const value = parseFloat(e.target.value);
+                                        setEditableCorrectiveMaintenance(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                      }}
+                                    />
+                                  </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
                           {/* Fuel Price Row */}
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center justify-center gap-2">
                                 <span>Diesel (USD/L)</span>
                                 <Input
                                   type="number"
-                                  className="h-6 w-20 text-right"
+                                  className="h-6 w-20 text-center"
                                   value={fuelPrice}
                                   onChange={(e) => {
                                     const v = e.target.value === '' ? 1.2 : parseFloat(e.target.value);
@@ -1214,11 +1408,11 @@ const MachineComparison = ({
                               {t('tco')}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const price = machine.price ?? 0;
-                              const fuelConsumption = machine.fuelConsumption ?? 0;
+                              const price = getEffectivePrice(machine);
+                              const fuelConsumption = getEffectiveFuelConsumption(machine);
                               const usageTime = machine.usageTime ?? 0;
-                              const preventiveMaintenance = machine.preventiveMaintenance ?? 0;
-                              const correctiveMaintenance = machine.correctiveMaintenance ?? 0;
+                              const preventiveMaintenance = getEffectivePreventiveMaintenance(machine);
+                              const correctiveMaintenance = getEffectiveCorrectiveMaintenance(machine);
                               const fuelCost = fuelConsumption * usageTime * fuelPrice;
                               const maintenanceCost = usageTime * (preventiveMaintenance + correctiveMaintenance);
                               const tco = price + fuelCost + maintenanceCost;
@@ -1314,7 +1508,6 @@ const MachineComparison = ({
                   </div>
                   </div>
                 </TabsContent>
-              )}
             </Tabs>
           </CardContent>
         </Card>

@@ -1,0 +1,1537 @@
+[
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "93500000",
+    "weight": 10630,
+    "engine": "Cummins 4BT 3.9",
+    "compactionWidth": 2.1,
+    "power": 100,
+    "amplitude": "1.80 / 0.95",
+    "staticLinearLoad": 28.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 11.8,
+    "price": 57592.78,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 109072.78
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "93500004",
+    "weight": 10630,
+    "engine": "Cummins 4BTAA 3.9",
+    "compactionWidth": 2.1,
+    "power": 110,
+    "amplitude": "1.80 / 0.95",
+    "staticLinearLoad": 28.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 11.8,
+    "price": 59374,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 110854
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "58400031",
+    "weight": 10630,
+    "engine": "Deutz BF4M 2012 C",
+    "compactionWidth": 2.1,
+    "power": 132,
+    "amplitude": "1.80 / 0.95",
+    "staticLinearLoad": 28.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 12.4,
+    "price": 63530.18,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 117170.18
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW212 D5-SL",
+    "materialNumber": "58400036",
+    "weight": 11490,
+    "engine": "Deutz BF4M 2012 C",
+    "compactionWidth": 2.13,
+    "power": 132,
+    "amplitude": "1.80 / 0.96",
+    "staticLinearLoad": 32.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 12.4,
+    "price": 68684,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 122324
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW213 D5-SL",
+    "materialNumber": "58400041",
+    "weight": 12320,
+    "engine": "Deutz BF4M 2012 C",
+    "compactionWidth": 2.13,
+    "power": 132,
+    "amplitude": "1.80 / 0.96",
+    "staticLinearLoad": 37.1,
+    "gradeability": 45,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 12.4,
+    "price": 72948,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 126588
+  },
+  {
+    "brand": "HAMM",
+    "model": "HC110",
+    "weight": 11765,
+    "engine": "JDPS 4045PTE",
+    "compactionWidth": 2.14,
+    "power": 135.4,
+    "amplitude": "1.95/0.85",
+    "staticLinearLoad": 29.81,
+    "gradeability": 58,
+    "origin": {
+      "es": "Alemania",
+      "en": "Alemania",
+      "de": "Alemania",
+      "pt": "Alemania"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nHAMM SmartCompaction Value (Solo si es Serie VA)\nEl sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima",
+      "en": "No aplica\nHAMM SmartCompaction Value (Solo si es Serie VA)\nEl sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima",
+      "de": "No aplica\nHAMM SmartCompaction Value (Solo si es Serie VA)\nEl sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima",
+      "pt": "No aplica\nHAMM SmartCompaction Value (Solo si es Serie VA)\nEl sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima"
+    },
+    "telemetry": {
+      "es": "Smart Doc",
+      "en": "Smart Doc",
+      "de": "Smart Doc",
+      "pt": "Smart Doc"
+    },
+    "innovations": {
+      "es": "EcoStop, SmartCompaction, vibración adaptativa",
+      "en": "EcoStop, SmartCompaction, vibración adaptativa",
+      "de": "EcoStop, SmartCompaction, vibración adaptativa",
+      "pt": "EcoStop, SmartCompaction, vibración adaptativa"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Conducción y maniobrabilidad\n* Bloqueo integrado de la articulación pendular\n* Control de tracción para una óptima transmisión de potencia",
+      "en": "Conducción y maniobrabilidad\n* Bloqueo integrado de la articulación pendular\n* Control de tracción para una óptima transmisión de potencia",
+      "de": "Conducción y maniobrabilidad\n* Bloqueo integrado de la articulación pendular\n* Control de tracción para una óptima transmisión de potencia",
+      "pt": "Conducción y maniobrabilidad\n* Bloqueo integrado de la articulación pendular\n* Control de tracción para una óptima transmisión de potencia"
+    },
+    "usp2": {
+      "es": "Calidad de compactación\n* Asistente Smart Compact para el ajuste automático\nde la potencia de compactación\n*Alta carga lineal y fuerza centrífuga",
+      "en": "Calidad de compactación\n* Asistente Smart Compact para el ajuste automático\nde la potencia de compactación\n*Alta carga lineal y fuerza centrífuga",
+      "de": "Calidad de compactación\n* Asistente Smart Compact para el ajuste automático\nde la potencia de compactación\n*Alta carga lineal y fuerza centrífuga",
+      "pt": "Calidad de compactación\n* Asistente Smart Compact para el ajuste automático\nde la potencia de compactación\n*Alta carga lineal y fuerza centrífuga"
+    },
+    "usp3": {
+      "es": "Articulación pendular de 3 puntos para una estabilidad direccional superior",
+      "en": "Articulación pendular de 3 puntos para una estabilidad direccional superior",
+      "de": "Articulación pendular de 3 puntos para una estabilidad direccional superior",
+      "pt": "Articulación pendular de 3 puntos para una estabilidad direccional superior"
+    },
+    "usp4": {
+      "es": "Control y confort\n* Gran espacio y comodidad de uso\n* Condiciones de trabajo ergonómicamente optimizadas\ngracias a su concepto operativo Easy Drive",
+      "en": "Control y confort\n* Gran espacio y comodidad de uso\n* Condiciones de trabajo ergonómicamente optimizadas\ngracias a su concepto operativo Easy Drive",
+      "de": "Control y confort\n* Gran espacio y comodidad de uso\n* Condiciones de trabajo ergonómicamente optimizadas\ngracias a su concepto operativo Easy Drive",
+      "pt": "Control y confort\n* Gran espacio y comodidad de uso\n* Condiciones de trabajo ergonómicamente optimizadas\ngracias a su concepto operativo Easy Drive"
+    },
+    "usp5": {
+      "es": "Sistema de asistencia de compactación \nInterfaces digitales\n* John Deere Operations CenterTM\n* Track Assist & WPT Compacting\n* Smart Compact",
+      "en": "Sistema de asistencia de compactación \nInterfaces digitales\n* John Deere Operations CenterTM\n* Track Assist & WPT Compacting\n* Smart Compact",
+      "de": "Sistema de asistencia de compactación \nInterfaces digitales\n* John Deere Operations CenterTM\n* Track Assist & WPT Compacting\n* Smart Compact",
+      "pt": "Sistema de asistencia de compactación \nInterfaces digitales\n* John Deere Operations CenterTM\n* Track Assist & WPT Compacting\n* Smart Compact"
+    },
+    "usp6": {
+      "es": "Mantenimiento eficiente\nTodos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados\nen un lado de la máquina",
+      "en": "Mantenimiento eficiente\nTodos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados\nen un lado de la máquina",
+      "de": "Mantenimiento eficiente\nTodos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados\nen un lado de la máquina",
+      "pt": "Mantenimiento eficiente\nTodos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados\nen un lado de la máquina"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "250 - 400",
+    "fuelConsumption": 13.6,
+    "price": 91845.1,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 149805.1
+  },
+  {
+    "brand": "DYNAPAC",
+    "model": "CA25 D-Rhino",
+    "weight": 10500,
+    "engine": "Cummins QSF3.8",
+    "compactionWidth": 2.13,
+    "power": 130,
+    "amplitude": "1.7/0.7",
+    "staticLinearLoad": 26,
+    "gradeability": 41,
+    "origin": {
+      "es": "Suecia/Brasil",
+      "en": "Suecia/Brasil",
+      "de": "Suecia/Brasil",
+      "pt": "Suecia/Brasil"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "en": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "de": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "pt": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación"
+    },
+    "telemetry": {
+      "es": "Dyn@lizer",
+      "en": "Dyn@lizer",
+      "de": "Dyn@lizer",
+      "pt": "Dyn@lizer"
+    },
+    "innovations": {
+      "es": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "en": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "de": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "pt": "Dynapac Compaction meter (DCM), Dyn@lyzer"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "en": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "de": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "pt": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia."
+    },
+    "usp2": {
+      "es": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "en": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "de": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "pt": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento."
+    },
+    "usp3": {
+      "es": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "en": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "de": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "pt": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno."
+    },
+    "usp4": {
+      "es": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "en": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "de": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "pt": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación"
+    },
+    "usp5": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "en": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "de": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "pt": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas)."
+    },
+    "maxCompactionDepth": 55,
+    "compactionPerformance": "220 - 350",
+    "fuelConsumption": 13.6,
+    "price": 90000,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 160200
+  },
+  {
+    "brand": "DYNAPAC",
+    "model": "CA35 D-Rhino",
+    "weight": 12200,
+    "engine": "Cummins QSF3.8",
+    "compactionWidth": 2.13,
+    "power": 130,
+    "amplitude": "1.7/0.8",
+    "staticLinearLoad": 35,
+    "gradeability": 46,
+    "origin": {
+      "es": "Suecia/Brasil",
+      "en": "Suecia/Brasil",
+      "de": "Suecia/Brasil",
+      "pt": "Suecia/Brasil"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "en": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "de": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",
+      "pt": "No aplica\nDynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación"
+    },
+    "telemetry": {
+      "es": "Dyn@lizer",
+      "en": "Dyn@lizer",
+      "de": "Dyn@lizer",
+      "pt": "Dyn@lizer"
+    },
+    "innovations": {
+      "es": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "en": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "de": "Dynapac Compaction meter (DCM), Dyn@lyzer",
+      "pt": "Dynapac Compaction meter (DCM), Dyn@lyzer"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "en": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "de": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.",
+      "pt": "Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia."
+    },
+    "usp2": {
+      "es": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "en": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "de": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.",
+      "pt": "Compactación efectiva\n* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.\n* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento."
+    },
+    "usp3": {
+      "es": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "en": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "de": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno.",
+      "pt": "Junta de articulación\nOfrece un radio de giro estrecho y seguimiento preciso del terreno."
+    },
+    "usp4": {
+      "es": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "en": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "de": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",
+      "pt": "Control y confort de operación\n* Ofrece visibilidad total del tambor y área de trabajo.\nEl DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación"
+    },
+    "usp5": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "en": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "de": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",
+      "pt": "Mantenimiento y Servicio\nDiseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas)."
+    },
+    "maxCompactionDepth": 55,
+    "compactionPerformance": "220 - 350",
+    "fuelConsumption": 13.6,
+    "price": 90000,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 160200
+  },
+  {
+    "brand": "CATERPILLAR",
+    "model": "CS10GC",
+    "weight": 10492,
+    "engine": "Cat C4.4",
+    "compactionWidth": 2.13,
+    "power": 112.4,
+    "amplitude": "2.0/1.0",
+    "staticLinearLoad": 27.3,
+    "gradeability": 55,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "en": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "de": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "pt": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación."
+    },
+    "telemetry": {
+      "es": "Vision Link",
+      "en": "Vision Link",
+      "de": "Vision Link",
+      "pt": "Vision Link"
+    },
+    "innovations": {
+      "es": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "en": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "de": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "pt": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "en": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "de": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "pt": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer."
+    },
+    "usp2": {
+      "es": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "en": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "de": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "pt": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación."
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "en": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "de": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "pt": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces"
+    },
+    "usp5": {
+      "es": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "en": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "de": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "pt": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales)."
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "en": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "de": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "pt": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados."
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "200",
+    "fuelConsumption": 14.5,
+    "price": 105298.85,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 179548.85
+  },
+  {
+    "brand": "CATERPILLAR",
+    "model": "CS11GC",
+    "weight": 11235,
+    "engine": "Cat C4.4",
+    "compactionWidth": 2.13,
+    "power": 112.4,
+    "amplitude": "2.0/1.0",
+    "staticLinearLoad": 28.9,
+    "gradeability": 55,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "en": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "de": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "pt": "CAT Machine Drive Power (MDP)\nEste sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación."
+    },
+    "telemetry": {
+      "es": "Vision Link",
+      "en": "Vision Link",
+      "de": "Vision Link",
+      "pt": "Vision Link"
+    },
+    "innovations": {
+      "es": "CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "en": "CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "de": "CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "pt": "CMV, AccuGrade Compaction, Eco-mode, Vision Link"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Pantalla integranda en palanca de control.\n* Cambio de velocidad asistida\n* Instrumentación digital fácil de leer.",
+      "en": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Pantalla integranda en palanca de control.\n* Cambio de velocidad asistida\n* Instrumentación digital fácil de leer.",
+      "de": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Pantalla integranda en palanca de control.\n* Cambio de velocidad asistida\n* Instrumentación digital fácil de leer.",
+      "pt": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Pantalla integranda en palanca de control.\n* Cambio de velocidad asistida\n* Instrumentación digital fácil de leer."
+    },
+    "usp2": {
+      "es": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "en": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "de": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.",
+      "pt": "Mayor carga lineal estática\nTambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación."
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "en": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "de": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "pt": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces"
+    },
+    "usp5": {
+      "es": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "en": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "de": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",
+      "pt": "* Amplitud más alta del mercado\n* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales)."
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "en": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "de": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "pt": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados."
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "200",
+    "fuelConsumption": 14.5,
+    "price": 105298.85,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 179548.85
+  },
+  {
+    "brand": "CATERPILLAR",
+    "model": "CS12",
+    "weight": 11743,
+    "engine": "Cat C7.1",
+    "compactionWidth": 2.13,
+    "power": 157.6,
+    "amplitude": "2.1/0.98",
+    "staticLinearLoad": 29.7,
+    "gradeability": 57,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "en": "No aplica\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "de": "No aplica\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",
+      "pt": "No aplica\nCAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación."
+    },
+    "telemetry": {
+      "es": "Vision Link",
+      "en": "Vision Link",
+      "de": "Vision Link",
+      "pt": "Vision Link"
+    },
+    "innovations": {
+      "es": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "en": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "de": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link",
+      "pt": "MDP, CMV, AccuGrade Compaction, Eco-mode, Vision Link"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "en": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "de": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer.",
+      "pt": "Controles ergonómicos y simples:\n\n* Palanca de control única para avance, vibración y dirección.\n* Instrumentación digital fácil de leer."
+    },
+    "usp2": {
+      "es": "Diseñado con un sistema de propulsión de doble bomba, las dos bombas suministran un flujo separado y dedicado al motor de accionamiento del tambor y al motor del eje trasero, lo que garantiza una capacidad de ascenso y tracción excepcionales tanto en avance como en retroceso",
+      "en": "Diseñado con un sistema de propulsión de doble bomba, las dos bombas suministran un flujo separado y dedicado al motor de accionamiento del tambor y al motor del eje trasero, lo que garantiza una capacidad de ascenso y tracción excepcionales tanto en avance como en retroceso",
+      "de": "Diseñado con un sistema de propulsión de doble bomba, las dos bombas suministran un flujo separado y dedicado al motor de accionamiento del tambor y al motor del eje trasero, lo que garantiza una capacidad de ascenso y tracción excepcionales tanto en avance como en retroceso",
+      "pt": "Diseñado con un sistema de propulsión de doble bomba, las dos bombas suministran un flujo separado y dedicado al motor de accionamiento del tambor y al motor del eje trasero, lo que garantiza una capacidad de ascenso y tracción excepcionales tanto en avance como en retroceso"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "en": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "de": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",
+      "pt": "Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.\n\nVibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces"
+    },
+    "usp5": {
+      "es": "* Amplitud más alta del mercado",
+      "en": "* Amplitud más alta del mercado",
+      "de": "* Amplitud más alta del mercado",
+      "pt": "* Amplitud más alta del mercado"
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "en": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "de": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados.",
+      "pt": "Mantenimiento y Servicio\nDiseño orientado a bajo mantenimiento:\n* Intervalos de mantenimiento extendidos.\n* Reducción de puntos de lubricación gracias al uso de componentes sellados."
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "200",
+    "fuelConsumption": 14.5,
+    "price": 105298.85,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 179548.85
+  },
+  {
+    "brand": "NEW HOLLAND",
+    "model": "V110",
+    "weight": 11380,
+    "engine": "S8000 4-stroke",
+    "compactionWidth": 2.16,
+    "power": 110,
+    "amplitude": "1.8/0.8",
+    "staticLinearLoad": 31,
+    "gradeability": 40,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nNo aplica",
+      "en": "No aplica\nNo aplica",
+      "de": "No aplica\nNo aplica",
+      "pt": "No aplica\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "ReadyKit básico (en algunas versiones), cabina optimizada",
+      "en": "ReadyKit básico (en algunas versiones), cabina optimizada",
+      "de": "ReadyKit básico (en algunas versiones), cabina optimizada",
+      "pt": "ReadyKit básico (en algunas versiones), cabina optimizada"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles básicos y mecánicos:\n\n* Fáciles de usar, ideales para operadores con poca capacitación.\n* Palanca de avance/reversa con control de vibración independiente.",
+      "en": "Controles básicos y mecánicos:\n\n* Fáciles de usar, ideales para operadores con poca capacitación.\n* Palanca de avance/reversa con control de vibración independiente.",
+      "de": "Controles básicos y mecánicos:\n\n* Fáciles de usar, ideales para operadores con poca capacitación.\n* Palanca de avance/reversa con control de vibración independiente.",
+      "pt": "Controles básicos y mecánicos:\n\n* Fáciles de usar, ideales para operadores con poca capacitación.\n* Palanca de avance/reversa con control de vibración independiente."
+    },
+    "usp2": {
+      "es": "Mayor tracción y maniobrabilidad\nGracias a su sistema de doble tracción (Drum Drive), el rodillo compactador New Holland domina fácilmente los terrenos más empinados, mientras que su ángulo de giro de 37 grados proporciona una maniobrabilidad excepcional, simplificando el trabajo en espacios reducidos.",
+      "en": "Mayor tracción y maniobrabilidad\nGracias a su sistema de doble tracción (Drum Drive), el rodillo compactador New Holland domina fácilmente los terrenos más empinados, mientras que su ángulo de giro de 37 grados proporciona una maniobrabilidad excepcional, simplificando el trabajo en espacios reducidos.",
+      "de": "Mayor tracción y maniobrabilidad\nGracias a su sistema de doble tracción (Drum Drive), el rodillo compactador New Holland domina fácilmente los terrenos más empinados, mientras que su ángulo de giro de 37 grados proporciona una maniobrabilidad excepcional, simplificando el trabajo en espacios reducidos.",
+      "pt": "Mayor tracción y maniobrabilidad\nGracias a su sistema de doble tracción (Drum Drive), el rodillo compactador New Holland domina fácilmente los terrenos más empinados, mientras que su ángulo de giro de 37 grados proporciona una maniobrabilidad excepcional, simplificando el trabajo en espacios reducidos."
+    },
+    "usp3": {
+      "es": "Junta de articulación\nOfrece un radio de giro 37° y seguimiento preciso del terreno.",
+      "en": "Junta de articulación\nOfrece un radio de giro 37° y seguimiento preciso del terreno.",
+      "de": "Junta de articulación\nOfrece un radio de giro 37° y seguimiento preciso del terreno.",
+      "pt": "Junta de articulación\nOfrece un radio de giro 37° y seguimiento preciso del terreno."
+    },
+    "usp4": {
+      "es": "Cabina confortable\nUna vez dentro, el ambiente está protegido por la estructura ROPS/FOPS, incluye aire acondicionado y está diseñado para absorber y minimizar las vibraciones generadas durante la operación, asegurando una experiencia de trabajo fluida y sin estrés.",
+      "en": "Cabina confortable\nUna vez dentro, el ambiente está protegido por la estructura ROPS/FOPS, incluye aire acondicionado y está diseñado para absorber y minimizar las vibraciones generadas durante la operación, asegurando una experiencia de trabajo fluida y sin estrés.",
+      "de": "Cabina confortable\nUna vez dentro, el ambiente está protegido por la estructura ROPS/FOPS, incluye aire acondicionado y está diseñado para absorber y minimizar las vibraciones generadas durante la operación, asegurando una experiencia de trabajo fluida y sin estrés.",
+      "pt": "Cabina confortable\nUna vez dentro, el ambiente está protegido por la estructura ROPS/FOPS, incluye aire acondicionado y está diseñado para absorber y minimizar las vibraciones generadas durante la operación, asegurando una experiencia de trabajo fluida y sin estrés."
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nEquipado con dos etapas de vibración para adaptarse a diferentes tipos de suelo, y además con un kit de pata de cabra, garantiza resultados impecables en cualquier tarea.",
+      "en": "Compactación eficiente\nEquipado con dos etapas de vibración para adaptarse a diferentes tipos de suelo, y además con un kit de pata de cabra, garantiza resultados impecables en cualquier tarea.",
+      "de": "Compactación eficiente\nEquipado con dos etapas de vibración para adaptarse a diferentes tipos de suelo, y además con un kit de pata de cabra, garantiza resultados impecables en cualquier tarea.",
+      "pt": "Compactación eficiente\nEquipado con dos etapas de vibración para adaptarse a diferentes tipos de suelo, y además con un kit de pata de cabra, garantiza resultados impecables en cualquier tarea."
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\nCon un diseño de capó y compartimiento del motor de una sola pieza, el acceso al rodillo compactador New Holland es fácil para verificar los componentes esenciales, lo que facilita el trabajo del operador y proporciona mayor seguridad y disponibilidad operativa.",
+      "en": "Fácil mantenimiento\nCon un diseño de capó y compartimiento del motor de una sola pieza, el acceso al rodillo compactador New Holland es fácil para verificar los componentes esenciales, lo que facilita el trabajo del operador y proporciona mayor seguridad y disponibilidad operativa.",
+      "de": "Fácil mantenimiento\nCon un diseño de capó y compartimiento del motor de una sola pieza, el acceso al rodillo compactador New Holland es fácil para verificar los componentes esenciales, lo que facilita el trabajo del operador y proporciona mayor seguridad y disponibilidad operativa.",
+      "pt": "Fácil mantenimiento\nCon un diseño de capó y compartimiento del motor de una sola pieza, el acceso al rodillo compactador New Holland es fácil para verificar los componentes esenciales, lo que facilita el trabajo del operador y proporciona mayor seguridad y disponibilidad operativa."
+    },
+    "maxCompactionDepth": 50,
+    "compactionPerformance": "200 - 300",
+    "fuelConsumption": 10.5,
+    "price": 71600,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 127850
+  },
+  {
+    "brand": "SANY",
+    "model": "SSR120C-10S",
+    "weight": 12400,
+    "engine": "DONGFENG CUMMINS QSB3.9-C150-3",
+    "compactionWidth": 2.13,
+    "power": 110,
+    "amplitude": "1.8/0.9",
+    "staticLinearLoad": 33.2,
+    "gradeability": 65,
+    "origin": {
+      "es": "China/Brasil",
+      "en": "China/Brasil",
+      "de": "China/Brasil",
+      "pt": "China/Brasil"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nNo aplica",
+      "en": "No aplica\nNo aplica",
+      "de": "No aplica\nNo aplica",
+      "pt": "No aplica\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "Tracción automática, vibración doble, telematics-ready",
+      "en": "Tracción automática, vibración doble, telematics-ready",
+      "de": "Tracción automática, vibración doble, telematics-ready",
+      "pt": "Tracción automática, vibración doble, telematics-ready"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Controles fáciles de usar:\n\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.",
+      "en": "Controles fáciles de usar:\n\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.",
+      "de": "Controles fáciles de usar:\n\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.",
+      "pt": "Controles fáciles de usar:\n\n* Palanca tipo joystick para dirección, vibración y cambio de marcha."
+    },
+    "usp2": {
+      "es": "Calidad de compactación\n* Fuerza centrífuga hasta 320 kN, una de las más altas del segmento.\n* Sistema de vibración confiable con buena transferencia de energía.\n* Distribución de peso balanceada para compactación uniforme.",
+      "en": "Calidad de compactación\n* Fuerza centrífuga hasta 320 kN, una de las más altas del segmento.\n* Sistema de vibración confiable con buena transferencia de energía.\n* Distribución de peso balanceada para compactación uniforme.",
+      "de": "Calidad de compactación\n* Fuerza centrífuga hasta 320 kN, una de las más altas del segmento.\n* Sistema de vibración confiable con buena transferencia de energía.\n* Distribución de peso balanceada para compactación uniforme.",
+      "pt": "Calidad de compactación\n* Fuerza centrífuga hasta 320 kN, una de las más altas del segmento.\n* Sistema de vibración confiable con buena transferencia de energía.\n* Distribución de peso balanceada para compactación uniforme."
+    },
+    "usp3": {
+      "es": "Articulación con oscilación hidráulica y gran ángulo de giro.",
+      "en": "Articulación con oscilación hidráulica y gran ángulo de giro.",
+      "de": "Articulación con oscilación hidráulica y gran ángulo de giro.",
+      "pt": "Articulación con oscilación hidráulica y gran ángulo de giro."
+    },
+    "usp4": {
+      "es": "Control y Confort\n* Cabina cerrada ROPS/FOPS opcional con aire acondicionado y asiento neumático.\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.\n* Bajo nivel de vibración transmitida al operador.",
+      "en": "Control y Confort\n* Cabina cerrada ROPS/FOPS opcional con aire acondicionado y asiento neumático.\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.\n* Bajo nivel de vibración transmitida al operador.",
+      "de": "Control y Confort\n* Cabina cerrada ROPS/FOPS opcional con aire acondicionado y asiento neumático.\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.\n* Bajo nivel de vibración transmitida al operador.",
+      "pt": "Control y Confort\n* Cabina cerrada ROPS/FOPS opcional con aire acondicionado y asiento neumático.\n* Palanca tipo joystick para dirección, vibración y cambio de marcha.\n* Bajo nivel de vibración transmitida al operador."
+    },
+    "usp5": {
+      "es": "Sistema inteligente de control de vibración que ajusta la potencia según la resistencia del suelo, evitando sobrecompactación.",
+      "en": "Sistema inteligente de control de vibración que ajusta la potencia según la resistencia del suelo, evitando sobrecompactación.",
+      "de": "Sistema inteligente de control de vibración que ajusta la potencia según la resistencia del suelo, evitando sobrecompactación.",
+      "pt": "Sistema inteligente de control de vibración que ajusta la potencia según la resistencia del suelo, evitando sobrecompactación."
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\n* Capó de apertura total con acceso a 3 lados del motor.\n* Sistema de diagnóstico electrónico desde la pantalla de control.\n* Componentes hidráulicos y eléctricos dispuestos para fácil inspección.",
+      "en": "Mantenimiento y Servicio\n* Capó de apertura total con acceso a 3 lados del motor.\n* Sistema de diagnóstico electrónico desde la pantalla de control.\n* Componentes hidráulicos y eléctricos dispuestos para fácil inspección.",
+      "de": "Mantenimiento y Servicio\n* Capó de apertura total con acceso a 3 lados del motor.\n* Sistema de diagnóstico electrónico desde la pantalla de control.\n* Componentes hidráulicos y eléctricos dispuestos para fácil inspección.",
+      "pt": "Mantenimiento y Servicio\n* Capó de apertura total con acceso a 3 lados del motor.\n* Sistema de diagnóstico electrónico desde la pantalla de control.\n* Componentes hidráulicos y eléctricos dispuestos para fácil inspección."
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "300 - 500",
+    "fuelConsumption": 15.3,
+    "price": 56392,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 134242
+  },
+  {
+    "brand": "XCMG",
+    "model": "XS123",
+    "weight": 12000,
+    "engine": "Cummins QSF3.8",
+    "compactionWidth": 2.13,
+    "power": 139,
+    "amplitude": "1.8/0.9",
+    "staticLinearLoad": 31.5,
+    "gradeability": 45,
+    "origin": {
+      "es": "Brasil",
+      "en": "Brasil",
+      "de": "Brasil",
+      "pt": "Brasil"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nNo aplica",
+      "en": "No aplica\nNo aplica",
+      "de": "No aplica\nNo aplica",
+      "pt": "No aplica\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "XCMG Telematics",
+      "en": "XCMG Telematics",
+      "de": "XCMG Telematics",
+      "pt": "XCMG Telematics"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "en": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "de": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "pt": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo."
+    },
+    "usp2": {
+      "es": "Calidad de Compactación\n* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.\n* Diseño del tambor que reduce rebotes y mejora la uniformidad.",
+      "en": "Calidad de Compactación\n* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.\n* Diseño del tambor que reduce rebotes y mejora la uniformidad.",
+      "de": "Calidad de Compactación\n* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.\n* Diseño del tambor que reduce rebotes y mejora la uniformidad.",
+      "pt": "Calidad de Compactación\n* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.\n* Diseño del tambor que reduce rebotes y mejora la uniformidad."
+    },
+    "usp3": {
+      "es": "Junta de Articulación\nArticulación oscilante de diseño robusto.",
+      "en": "Junta de Articulación\nArticulación oscilante de diseño robusto.",
+      "de": "Junta de Articulación\nArticulación oscilante de diseño robusto.",
+      "pt": "Junta de Articulación\nArticulación oscilante de diseño robusto."
+    },
+    "usp4": {
+      "es": "Control y Confort\n* Cabina opcional con buena visibilidad.\n* Panel de instrumentos digital con indicadores de trabajo.\n* Asiento ajustable, pero menor confort que modelos premium.",
+      "en": "Control y Confort\n* Cabina opcional con buena visibilidad.\n* Panel de instrumentos digital con indicadores de trabajo.\n* Asiento ajustable, pero menor confort que modelos premium.",
+      "de": "Control y Confort\n* Cabina opcional con buena visibilidad.\n* Panel de instrumentos digital con indicadores de trabajo.\n* Asiento ajustable, pero menor confort que modelos premium.",
+      "pt": "Control y Confort\n* Cabina opcional con buena visibilidad.\n* Panel de instrumentos digital con indicadores de trabajo.\n* Asiento ajustable, pero menor confort que modelos premium."
+    },
+    "usp5": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nCapó lateral basculante, acceso rápido a motor y componentes hidráulicos.\n\nMódulos eléctricos centralizados.\n\nMotores Weichai o Cummins con buena cobertura de repuestos.",
+      "en": "Mantenimiento y Servicio\nCapó lateral basculante, acceso rápido a motor y componentes hidráulicos.\n\nMódulos eléctricos centralizados.\n\nMotores Weichai o Cummins con buena cobertura de repuestos.",
+      "de": "Mantenimiento y Servicio\nCapó lateral basculante, acceso rápido a motor y componentes hidráulicos.\n\nMódulos eléctricos centralizados.\n\nMotores Weichai o Cummins con buena cobertura de repuestos.",
+      "pt": "Mantenimiento y Servicio\nCapó lateral basculante, acceso rápido a motor y componentes hidráulicos.\n\nMódulos eléctricos centralizados.\n\nMotores Weichai o Cummins con buena cobertura de repuestos."
+    },
+    "maxCompactionDepth": 50,
+    "compactionPerformance": "250 - 400",
+    "fuelConsumption": 13.6,
+    "price": 54786,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 124986
+  },
+  {
+    "brand": "AMMANN",
+    "model": "ASC110",
+    "weight": 11490,
+    "engine": "Cummins QSB 4.5-C160",
+    "compactionWidth": 2.13,
+    "power": 160,
+    "amplitude": "1.85/0.9",
+    "staticLinearLoad": 34.5,
+    "gradeability": 60,
+    "origin": {
+      "es": "Brasil",
+      "en": "Brasil",
+      "de": "Brasil",
+      "pt": "Brasil"
+    },
+    "compactionAssistant": {
+      "es": "AMMANN ACEforce\n Tecnología de ajuste activo de la vibración, que ajusta continuamente la amplitud y la frecuencia del tambor según las condiciones del terreno. Esto mejora la eficiencia y la uniformidad de la compactación.\nNo aplica",
+      "en": "AMMANN ACEforce\n Tecnología de ajuste activo de la vibración, que ajusta continuamente la amplitud y la frecuencia del tambor según las condiciones del terreno. Esto mejora la eficiencia y la uniformidad de la compactación.\nNo aplica",
+      "de": "AMMANN ACEforce\n Tecnología de ajuste activo de la vibración, que ajusta continuamente la amplitud y la frecuencia del tambor según las condiciones del terreno. Esto mejora la eficiencia y la uniformidad de la compactación.\nNo aplica",
+      "pt": "AMMANN ACEforce\n Tecnología de ajuste activo de la vibración, que ajusta continuamente la amplitud y la frecuencia del tambor según las condiciones del terreno. Esto mejora la eficiencia y la uniformidad de la compactación.\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "ECOdrop, telemetría, control automático de vibración",
+      "en": "ECOdrop, telemetría, control automático de vibración",
+      "de": "ECOdrop, telemetría, control automático de vibración",
+      "pt": "ECOdrop, telemetría, control automático de vibración"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Estación del operador\nEl control intuitivo de la máquina facilita su uso. Las funciones avanzadas garantizan que incluso los principiantes sean productivos y de alto rendimiento.",
+      "en": "Estación del operador\nEl control intuitivo de la máquina facilita su uso. Las funciones avanzadas garantizan que incluso los principiantes sean productivos y de alto rendimiento.",
+      "de": "Estación del operador\nEl control intuitivo de la máquina facilita su uso. Las funciones avanzadas garantizan que incluso los principiantes sean productivos y de alto rendimiento.",
+      "pt": "Estación del operador\nEl control intuitivo de la máquina facilita su uso. Las funciones avanzadas garantizan que incluso los principiantes sean productivos y de alto rendimiento."
+    },
+    "usp2": {
+      "es": "Alto rendimiento de compactación\nCompactación más rápida de capas más gruesas en menos pasadas.",
+      "en": "Alto rendimiento de compactación\nCompactación más rápida de capas más gruesas en menos pasadas.",
+      "de": "Alto rendimiento de compactación\nCompactación más rápida de capas más gruesas en menos pasadas.",
+      "pt": "Alto rendimiento de compactación\nCompactación más rápida de capas más gruesas en menos pasadas."
+    },
+    "usp3": {
+      "es": "Articulación central con bloqueo hidráulico y oscilación automática",
+      "en": "Articulación central con bloqueo hidráulico y oscilación automática",
+      "de": "Articulación central con bloqueo hidráulico y oscilación automática",
+      "pt": "Articulación central con bloqueo hidráulico y oscilación automática"
+    },
+    "usp4": {
+      "es": "Uso cómodo\n• El diseño sencillo del panel de\ninstrumentos permite un control\nfácil y seguro\n• Para asegurar la máxima\ncomodidad la plataforma del\noperario está montada en\nalojamientos de goma que\namortigua las vibraciones",
+      "en": "Uso cómodo\n• El diseño sencillo del panel de\ninstrumentos permite un control\nfácil y seguro\n• Para asegurar la máxima\ncomodidad la plataforma del\noperario está montada en\nalojamientos de goma que\namortigua las vibraciones",
+      "de": "Uso cómodo\n• El diseño sencillo del panel de\ninstrumentos permite un control\nfácil y seguro\n• Para asegurar la máxima\ncomodidad la plataforma del\noperario está montada en\nalojamientos de goma que\namortigua las vibraciones",
+      "pt": "Uso cómodo\n• El diseño sencillo del panel de\ninstrumentos permite un control\nfácil y seguro\n• Para asegurar la máxima\ncomodidad la plataforma del\noperario está montada en\nalojamientos de goma que\namortigua las vibraciones"
+    },
+    "usp5": {
+      "es": "Tecnología ACE\n* ACEpro ajusta continuamente la frecuencia y amplitud según los valores obtenidos:\n• ACEpro elimina los saltos de los tambores\ny por eso minimiza el riesgo de excesiva\ncompactación o deterioro del material\n• ACEforce muestra el proceso de compactación mediante la función de\nguiado del operario",
+      "en": "Tecnología ACE\n* ACEpro ajusta continuamente la frecuencia y amplitud según los valores obtenidos:\n• ACEpro elimina los saltos de los tambores\ny por eso minimiza el riesgo de excesiva\ncompactación o deterioro del material\n• ACEforce muestra el proceso de compactación mediante la función de\nguiado del operario",
+      "de": "Tecnología ACE\n* ACEpro ajusta continuamente la frecuencia y amplitud según los valores obtenidos:\n• ACEpro elimina los saltos de los tambores\ny por eso minimiza el riesgo de excesiva\ncompactación o deterioro del material\n• ACEforce muestra el proceso de compactación mediante la función de\nguiado del operario",
+      "pt": "Tecnología ACE\n* ACEpro ajusta continuamente la frecuencia y amplitud según los valores obtenidos:\n• ACEpro elimina los saltos de los tambores\ny por eso minimiza el riesgo de excesiva\ncompactación o deterioro del material\n• ACEforce muestra el proceso de compactación mediante la función de\nguiado del operario"
+    },
+    "usp6": {
+      "es": "Diseño de fácil mantenimiento\nTiempo de inactividad minimizado\ngracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes.",
+      "en": "Diseño de fácil mantenimiento\nTiempo de inactividad minimizado\ngracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes.",
+      "de": "Diseño de fácil mantenimiento\nTiempo de inactividad minimizado\ngracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes.",
+      "pt": "Diseño de fácil mantenimiento\nTiempo de inactividad minimizado\ngracias a procesos de mantenimiento sencillos y un diseño robusto de la máquina y sus componentes."
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "280 - 450",
+    "fuelConsumption": 16.3,
+    "price": 89930,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 172280
+  },
+  {
+    "brand": "JCB",
+    "model": "116D",
+    "weight": 11560,
+    "engine": "JCB DIESELMAX TCA-85",
+    "compactionWidth": 2.1,
+    "power": 114,
+    "amplitude": "1.8/0.8",
+    "staticLinearLoad": 31.8,
+    "gradeability": 55,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche.\nNo aplica",
+      "en": "IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche.\nNo aplica",
+      "de": "IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche.\nNo aplica",
+      "pt": "IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche.\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)",
+      "en": "LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)",
+      "de": "LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)",
+      "pt": "LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "en": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "de": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "pt": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo."
+    },
+    "usp2": {
+      "es": "Calidad de Compactación\n* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.\n* Sistema de vibración robusto",
+      "en": "Calidad de Compactación\n* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.\n* Sistema de vibración robusto",
+      "de": "Calidad de Compactación\n* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.\n* Sistema de vibración robusto",
+      "pt": "Calidad de Compactación\n* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.\n* Sistema de vibración robusto"
+    },
+    "usp3": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp4": {
+      "es": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "en": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "de": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "pt": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia."
+    },
+    "usp5": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\n* Motor JCB DieselMax altamente confiable, sin electrónica compleja.\n* Capó con apertura completa para acceso rápido.\n* Menor necesidad de técnicos especializados.",
+      "en": "Mantenimiento y Servicio\n* Motor JCB DieselMax altamente confiable, sin electrónica compleja.\n* Capó con apertura completa para acceso rápido.\n* Menor necesidad de técnicos especializados.",
+      "de": "Mantenimiento y Servicio\n* Motor JCB DieselMax altamente confiable, sin electrónica compleja.\n* Capó con apertura completa para acceso rápido.\n* Menor necesidad de técnicos especializados.",
+      "pt": "Mantenimiento y Servicio\n* Motor JCB DieselMax altamente confiable, sin electrónica compleja.\n* Capó con apertura completa para acceso rápido.\n* Menor necesidad de técnicos especializados."
+    },
+    "maxCompactionDepth": 55,
+    "compactionPerformance": "200 - 350",
+    "fuelConsumption": 13,
+    "price": 84076,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 151576
+  },
+  {
+    "brand": "SEM",
+    "model": "510",
+    "weight": 10000,
+    "engine": "WP4G130E22",
+    "compactionWidth": 2.1,
+    "power": 130.7,
+    "amplitude": "1.8/0.9",
+    "staticLinearLoad": 27.6,
+    "gradeability": 45,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nNo aplica",
+      "en": "No aplica\nNo aplica",
+      "de": "No aplica\nNo aplica",
+      "pt": "No aplica\nNo aplica"
+    },
+    "telemetry": {
+      "es": "Vision Link",
+      "en": "Vision Link",
+      "de": "Vision Link",
+      "pt": "Vision Link"
+    },
+    "innovations": {
+      "es": "Vision Link",
+      "en": "Vision Link",
+      "de": "Vision Link",
+      "pt": "Vision Link"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Su sistema de operación es muy sencillo: cuenta únicamente con dos palancas de control, una para el acelerador y otra para el control de avance/retroceso y freno",
+      "en": "Su sistema de operación es muy sencillo: cuenta únicamente con dos palancas de control, una para el acelerador y otra para el control de avance/retroceso y freno",
+      "de": "Su sistema de operación es muy sencillo: cuenta únicamente con dos palancas de control, una para el acelerador y otra para el control de avance/retroceso y freno",
+      "pt": "Su sistema de operación es muy sencillo: cuenta únicamente con dos palancas de control, una para el acelerador y otra para el control de avance/retroceso y freno"
+    },
+    "usp2": {
+      "es": "Se utilizan ampliamente en trabajos viales, sub-bases, estacionamientos, desarrollos de obra, excavaciones para agua y alcantarillado, así como en terrenos inclinados y superficies irregulare",
+      "en": "Se utilizan ampliamente en trabajos viales, sub-bases, estacionamientos, desarrollos de obra, excavaciones para agua y alcantarillado, así como en terrenos inclinados y superficies irregulare",
+      "de": "Se utilizan ampliamente en trabajos viales, sub-bases, estacionamientos, desarrollos de obra, excavaciones para agua y alcantarillado, así como en terrenos inclinados y superficies irregulare",
+      "pt": "Se utilizan ampliamente en trabajos viales, sub-bases, estacionamientos, desarrollos de obra, excavaciones para agua y alcantarillado, así como en terrenos inclinados y superficies irregulare"
+    },
+    "usp3": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp4": {
+      "es": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "en": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "de": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia.",
+      "pt": "Control y Confort\nCabina abierta o cerrada con controles simples.\n\nPanel analógico, sin diagnóstico digital.\n\nIdeal para operadores con poca experiencia."
+    },
+    "usp5": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp6": {
+      "es": "Diseño excéntrico tipo ‘pod’.\nDoble amplitud y frecuencia con bomba y motor de pistón que disminuye las rutinas de mantenimiento",
+      "en": "Diseño excéntrico tipo ‘pod’.\nDoble amplitud y frecuencia con bomba y motor de pistón que disminuye las rutinas de mantenimiento",
+      "de": "Diseño excéntrico tipo ‘pod’.\nDoble amplitud y frecuencia con bomba y motor de pistón que disminuye las rutinas de mantenimiento",
+      "pt": "Diseño excéntrico tipo ‘pod’.\nDoble amplitud y frecuencia con bomba y motor de pistón que disminuye las rutinas de mantenimiento"
+    },
+    "maxCompactionDepth": 55,
+    "compactionPerformance": "200 - 350",
+    "fuelConsumption": 13,
+    "price": 84076,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 151576
+  },
+  {
+    "brand": "CASE",
+    "model": "1107EX",
+    "weight": 11200,
+    "engine": "S 8000",
+    "compactionWidth": 2.1,
+    "power": 110,
+    "amplitude": "1.8/0.8",
+    "staticLinearLoad": 29,
+    "gradeability": 36,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "No aplica\nNo aplica",
+      "en": "No aplica\nNo aplica",
+      "de": "No aplica\nNo aplica",
+      "pt": "No aplica\nNo aplica"
+    },
+    "telemetry": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "innovations": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "en": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "de": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.",
+      "pt": "Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo."
+    },
+    "usp2": {
+      "es": "El sistema opcional de accionamiento del tambor incorpora un motor de alto par en el bastidor delantero, lo que proporciona una excelente capacidad de ascenso (36%) y tracción optimizada.",
+      "en": "El sistema opcional de accionamiento del tambor incorpora un motor de alto par en el bastidor delantero, lo que proporciona una excelente capacidad de ascenso (36%) y tracción optimizada.",
+      "de": "El sistema opcional de accionamiento del tambor incorpora un motor de alto par en el bastidor delantero, lo que proporciona una excelente capacidad de ascenso (36%) y tracción optimizada.",
+      "pt": "El sistema opcional de accionamiento del tambor incorpora un motor de alto par en el bastidor delantero, lo que proporciona una excelente capacidad de ascenso (36%) y tracción optimizada."
+    },
+    "usp3": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp4": {
+      "es": "Control y Confort\nSistema de aire acondicionado y calefacción eficiente con 8 difusores",
+      "en": "Control y Confort\nSistema de aire acondicionado y calefacción eficiente con 8 difusores",
+      "de": "Control y Confort\nSistema de aire acondicionado y calefacción eficiente con 8 difusores",
+      "pt": "Control y Confort\nSistema de aire acondicionado y calefacción eficiente con 8 difusores"
+    },
+    "usp5": {
+      "es": "-",
+      "en": "-",
+      "de": "-",
+      "pt": "-"
+    },
+    "usp6": {
+      "es": "Mantenimiento y Servicio\nEl mantenimiento diario y regular es posible desde el nivel del suelo gracias al capó abatible de una sola pieza. La reducción de tiempos de inactividad y de costos operativos se traduce en mayor productividad y mejor rentabilidad.",
+      "en": "Mantenimiento y Servicio\nEl mantenimiento diario y regular es posible desde el nivel del suelo gracias al capó abatible de una sola pieza. La reducción de tiempos de inactividad y de costos operativos se traduce en mayor productividad y mejor rentabilidad.",
+      "de": "Mantenimiento y Servicio\nEl mantenimiento diario y regular es posible desde el nivel del suelo gracias al capó abatible de una sola pieza. La reducción de tiempos de inactividad y de costos operativos se traduce en mayor productividad y mejor rentabilidad.",
+      "pt": "Mantenimiento y Servicio\nEl mantenimiento diario y regular es posible desde el nivel del suelo gracias al capó abatible de una sola pieza. La reducción de tiempos de inactividad y de costos operativos se traduce en mayor productividad y mejor rentabilidad."
+    },
+    "maxCompactionDepth": 55,
+    "compactionPerformance": "-",
+    "fuelConsumption": 13,
+    "price": 84076,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 151576
+  }
+]

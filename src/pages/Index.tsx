@@ -12,6 +12,9 @@ export default function Index() {
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
+  const [editablePrice, setEditablePrice] = useState<{ [key: string]: number }>({});
+  const [editablePreventiveMaintenance, setEditablePreventiveMaintenance] = useState<{ [key: string]: number }>({});
+  const [editableCorrectiveMaintenance, setEditableCorrectiveMaintenance] = useState<{ [key: string]: number }>({});
   const [activeTab, setActiveTab] = useState<'comparison'>('comparison');
   const [isPerfCalcOpen, setIsPerfCalcOpen] = useState(false);
   
@@ -26,6 +29,9 @@ export default function Index() {
       setSelectedMachines([]);
     }
     setEditableTCO({});
+    setEditablePrice({});
+    setEditablePreventiveMaintenance({});
+    setEditableCorrectiveMaintenance({});
   }, [selectedLine]);
 
   // Persist selections per line
@@ -69,6 +75,12 @@ export default function Index() {
                 setSelectedMachines={setSelectedMachines}
                 editableTCO={editableTCO}
                 setEditableTCO={setEditableTCO}
+                editablePrice={editablePrice}
+                setEditablePrice={setEditablePrice}
+                editablePreventiveMaintenance={editablePreventiveMaintenance}
+                setEditablePreventiveMaintenance={setEditablePreventiveMaintenance}
+                editableCorrectiveMaintenance={editableCorrectiveMaintenance}
+                setEditableCorrectiveMaintenance={setEditableCorrectiveMaintenance}
               />
             </TabsContent>
           </Tabs>

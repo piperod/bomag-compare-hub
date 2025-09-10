@@ -19,6 +19,7 @@ export interface MachineSpec {
   usp3?: { es: string; en: string; de: string; pt: string };
   usp4?: { es: string; en: string; de: string; pt: string };
   usp5?: { es: string; en: string; de: string; pt: string };
+  usp6?: { es: string; en: string; de: string; pt: string };
   maxCompactionDepth?: number;
   compactionPerformance?: string;
   fuelConsumption: number;
@@ -40,6 +41,9 @@ export interface MachineSpec {
   staticTco?: number;
 }
 
+import sdrFromCsv from '@/data/sdrFromCsv.json';
+
+/*
 export const sdrMachines: MachineSpec[] = [
   {
     brand: "BOMAG",
@@ -678,6 +682,9 @@ export const sdrMachines: MachineSpec[] = [
     tco: 151576.0
   }
 ];
+*/
+
+export const sdrMachines: MachineSpec[] = sdrFromCsv as unknown as MachineSpec[];
 
 export const ltrMachines: MachineSpec[] = [
   {

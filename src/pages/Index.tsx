@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 export default function Index() {
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
-  const [editableTCO, setEditableTCO] = useState<{ [key: number]: number }>({});
+  const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
   
   // Reset machine selection when product line changes
   useEffect(() => {

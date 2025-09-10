@@ -15,8 +15,8 @@ interface MachineComparisonProps {
   selectedLine: string;
   selectedMachines: string[];
   setSelectedMachines: (machines: string[] | ((prev: string[]) => string[])) => void;
-  editableTCO: { [key: number]: number };
-  setEditableTCO: (tco: { [key: number]: number } | ((prev: { [key: number]: number }) => { [key: number]: number })) => void;
+  editableTCO: { [key: string]: number };
+  setEditableTCO: (tco: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
 }
 
 // HTR machine data (hardcoded, Spanish labels)
@@ -66,7 +66,17 @@ const htrMachines = [
     fuelConsumption: 11.8,
     price: 28000,
     preventiveMaintenance: 1,
-    correctiveMaintenance: 2
+    correctiveMaintenance: 2,
+    usageTime: 2000,
+    tco: 50000,
+    usp: { es: 'TANGO, ASPHALT MANAGER, ECONOMIZER ECOMODE, TELEMATIC', en: 'TANGO, ASPHALT MANAGER, ECONOMIZER ECOMODE, TELEMATIC', de: 'TANGO, ASPHALT MANAGER, ECONOMIZER ECOMODE, TELEMATIC', pt: 'TANGO, ASPHALT MANAGER, ECONOMIZER ECOMODE, TELEMATIC' },
+    maxCompactionDepth: 0.3,
+    compactionPerformance: '150-200',
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 28000 },
+      { hours: 1000, price: null, tco: 35000 },
+      { hours: 2000, price: null, tco: 42000 }
+    ]
   },
   {
     brand: 'AMMANN',
@@ -113,7 +123,17 @@ const htrMachines = [
     fuelConsumption: 11.8,
     price: 28000,
     preventiveMaintenance: 1,
-    correctiveMaintenance: 2
+    correctiveMaintenance: 2,
+    usageTime: 2000,
+    tco: 50000,
+    usp: { es: 'Junta con oscilación, diagnóstico abordo', en: 'Oscillation joint, on-board diagnosis', de: 'Schwenkgelenk, Borddiagnose', pt: 'Articulação com oscilação, diagnóstico a bordo' },
+    maxCompactionDepth: 0.3,
+    compactionPerformance: '140-180',
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 28000 },
+      { hours: 1000, price: null, tco: 35000 },
+      { hours: 2000, price: null, tco: 42000 }
+    ]
   },
   {
     brand: 'CATERPILLAR',
@@ -160,7 +180,17 @@ const htrMachines = [
     fuelConsumption: 11.8,
     price: 28000,
     preventiveMaintenance: 1,
-    correctiveMaintenance: 2
+    correctiveMaintenance: 2,
+    usageTime: 2000,
+    tco: 50000,
+    usp: { es: 'Versa Vibe™, 360° visión, Oscilación', en: 'Versa Vibe™, 360° vision, Oscillation', de: 'Versa Vibe™, 360° Sicht, Oszillation', pt: 'Versa Vibe™, 360° visão, Oscilação' },
+    maxCompactionDepth: 0.3,
+    compactionPerformance: '160-210',
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 28000 },
+      { hours: 1000, price: null, tco: 35000 },
+      { hours: 2000, price: null, tco: 42000 }
+    ]
   },
   {
     brand: 'DYNAPAC',
@@ -207,7 +237,17 @@ const htrMachines = [
     fuelConsumption: 11.8,
     price: 28000,
     preventiveMaintenance: 1,
-    correctiveMaintenance: 2
+    correctiveMaintenance: 2,
+    usageTime: 2000,
+    tco: 50000,
+    usp: { es: 'Oscilación, cabina deslizante', en: 'Oscillation, sliding cabin', de: 'Oszillation, schwenkbare Kabine', pt: 'Oscilação, cabine deslizante' },
+    maxCompactionDepth: 0.3,
+    compactionPerformance: '150-190',
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 28000 },
+      { hours: 1000, price: null, tco: 35000 },
+      { hours: 2000, price: null, tco: 42000 }
+    ]
   },
   {
     brand: 'HAMM',
@@ -254,7 +294,17 @@ const htrMachines = [
     fuelConsumption: 11.8,
     price: 28000,
     preventiveMaintenance: 1,
-    correctiveMaintenance: 2
+    correctiveMaintenance: 2,
+    usageTime: 2000,
+    tco: 50000,
+    usp: { es: 'VIO, HAMMTRONIC, Easy Drive', en: 'VIO, HAMMTRONIC, Easy Drive', de: 'VIO, HAMMTRONIC, Easy Drive', pt: 'VIO, HAMMTRONIC, Easy Drive' },
+    maxCompactionDepth: 0.3,
+    compactionPerformance: '170-220',
+    tcoTimeline: [
+      { hours: 0, price: 28000, tco: 28000 },
+      { hours: 1000, price: null, tco: 35000 },
+      { hours: 2000, price: null, tco: 42000 }
+    ]
   },
 ];
 
@@ -341,10 +391,10 @@ const MachineComparison = ({
   });
 
   // Editable compaction performance state
-  const [editableCompactionPerformance, setEditableCompactionPerformance] = useState<{ [key: number]: number }>({});
+  const [editableCompactionPerformance, setEditableCompactionPerformance] = useState<{ [key: string]: number }>({});
   
   // Editable fuel consumption state
-  const [editableFuelConsumption, setEditableFuelConsumption] = useState<{ [key: number]: number }>({});
+  const [editableFuelConsumption, setEditableFuelConsumption] = useState<{ [key: string]: number }>({});
   
   // Work efficiency state (percentage)
   const [workEfficiency, setWorkEfficiency] = useState<number>(() => {
@@ -405,7 +455,8 @@ const MachineComparison = ({
     return () => window.removeEventListener('storage', handler);
   }, []);
 
-  const toggleMachineSelection = (machineId: string) => {
+  const toggleMachineSelection = (machine: MachineSpec, index: number) => {
+    const machineId = `${machine.brand}-${machine.model}-${index}`;
     setSelectedMachines(prev => 
       prev.includes(machineId) 
         ? prev.filter(id => id !== machineId)
@@ -424,21 +475,26 @@ const MachineComparison = ({
 
   // Get effective compaction performance (original or edited) with work efficiency applied
   const getEffectiveCompactionPerformance = (machine: MachineSpec, machineIndex: number) => {
+    const machineId = `${machine.brand}-${machine.model}-${machineIndex}`;
     const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
-    const editedPerf = editableCompactionPerformance[machineIndex];
+    const editedPerf = editableCompactionPerformance[machineId];
     const basePerf = editedPerf !== undefined ? editedPerf : originalPerf;
     return basePerf * (workEfficiency / 100);
   };
 
   // Get effective fuel consumption (original or edited)
   const getEffectiveFuelConsumption = (machine: MachineSpec, machineIndex: number) => {
+    const machineId = `${machine.brand}-${machine.model}-${machineIndex}`;
     const originalFuel = machine.fuelConsumption || 0;
-    const editedFuel = editableFuelConsumption[machineIndex];
+    const editedFuel = editableFuelConsumption[machineId];
     return editedFuel !== undefined ? editedFuel : originalFuel;
   };
 
   const getSelectedMachineData = () => {
-    return machinesSorted.filter((_, index) => selectedMachines.includes(index.toString()));
+    return machinesSorted.filter((machine, index) => {
+      const machineId = `${machine.brand}-${machine.model}-${index}`;
+      return selectedMachines.includes(machineId);
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -538,8 +594,8 @@ const MachineComparison = ({
                     {machine.brand}
                   </Badge>
                   <Checkbox
-                    checked={selectedMachines.includes(index.toString())}
-                    onCheckedChange={() => toggleMachineSelection(index.toString())}
+                    checked={selectedMachines.includes(`${machine.brand}-${machine.model}-${index}`)}
+                    onCheckedChange={() => toggleMachineSelection(machine, index)}
                   />
                 </div>
                 {machine.brand === 'BOMAG' && (machine as any).materialNumber && (
@@ -660,12 +716,15 @@ const MachineComparison = ({
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">
-                                {spec.key === 'weight' 
-                                  ? (machine.weight as number).toLocaleString()
-                                  : typeof machine[spec.key] === 'object'
-                                    ? machine[spec.key][language] || '-'
-                                    : String(machine[spec.key as keyof typeof machine] || '-')
-                                }
+                                {spec.key === 'weight' ? (
+                                  (machine.weight as number).toLocaleString()
+                                ) : typeof machine[spec.key] === 'object' ? (
+                                  <div className="whitespace-pre-line text-left">
+                                    {machine[spec.key][language] || '-'}
+                                  </div>
+                                ) : (
+                                  String(machine[spec.key as keyof typeof machine] || '-')
+                                )}
                               </td>
                             ))}
                           </tr>
@@ -809,25 +868,28 @@ const MachineComparison = ({
                               {t('compactionPerformance')} (m³/h)
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
+                              const machineId = `${machine.brand}-${machine.model}-${index}`;
                               const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
-                              const editedPerf = editableCompactionPerformance[index];
+                              const editedPerf = editableCompactionPerformance[machineId];
                               const currentPerf = editedPerf !== undefined ? editedPerf : originalPerf;
                               
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <Input
-                                    type="number"
-                                    className="w-20 h-8 text-center text-sm"
-                                    value={currentPerf || ''}
-                                    onChange={(e) => {
-                                      const value = parseFloat(e.target.value);
-                                      setEditableCompactionPerformance(prev => ({
-                                        ...prev,
-                                        [index]: isNaN(value) ? originalPerf : value
-                                      }));
-                                    }}
-                                    placeholder={originalPerf.toString()}
-                                  />
+                                  <div className="flex justify-center">
+                                    <Input
+                                      type="number"
+                                      className="w-20 h-8 text-center text-sm"
+                                      value={currentPerf || ''}
+                                      onChange={(e) => {
+                                        const value = parseFloat(e.target.value);
+                                        setEditableCompactionPerformance(prev => ({
+                                          ...prev,
+                                          [machineId]: isNaN(value) ? originalPerf : value
+                                        }));
+                                      }}
+                                      placeholder={originalPerf.toString()}
+                                    />
+                                  </div>
                                 </td>
                               );
                             })}
@@ -870,27 +932,30 @@ const MachineComparison = ({
                             {t('fuelConsumption')} <span className="text-red-500">*</span>
                           </td>
                           {getSelectedMachineData().map((machine, index) => {
+                            const machineId = `${machine.brand}-${machine.model}-${index}`;
                             const originalFuel = machine.fuelConsumption || 0;
-                            const editedFuel = editableFuelConsumption[index];
+                            const editedFuel = editableFuelConsumption[machineId];
                             const currentFuel = editedFuel !== undefined ? editedFuel : originalFuel;
                             
                             return (
                               <td key={index} className="border border-gray-300 p-2 text-center">
-                                <Input
-                                  type="number"
-                                  className="w-20 h-8 text-center text-sm"
-                                  value={currentFuel || ''}
-                                  onChange={(e) => {
-                                    const value = parseFloat(e.target.value);
-                                    setEditableFuelConsumption(prev => ({
-                                      ...prev,
-                                      [index]: isNaN(value) ? originalFuel : value
-                                    }));
-                                  }}
-                                  placeholder={originalFuel.toString()}
-                                  min="0"
-                                  step="0.1"
-                                />
+                                <div className="flex justify-center">
+                                  <Input
+                                    type="number"
+                                    className="w-20 h-8 text-center text-sm"
+                                    value={currentFuel || ''}
+                                    onChange={(e) => {
+                                      const value = parseFloat(e.target.value);
+                                      setEditableFuelConsumption(prev => ({
+                                        ...prev,
+                                        [machineId]: isNaN(value) ? originalFuel : value
+                                      }));
+                                    }}
+                                    placeholder={originalFuel.toString()}
+                                    min="0"
+                                    step="0.1"
+                                  />
+                                </div>
                               </td>
                             );
                           })}
@@ -975,10 +1040,13 @@ const MachineComparison = ({
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">
-                                {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object'
-                                  ? (machine[spec.key as keyof MachineSpec] as any)[language] || '-'
-                                  : '-'
-                                }
+                                {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object' ? (
+                                  <div className="whitespace-pre-line text-left">
+                                    {(machine[spec.key as keyof MachineSpec] as any)[language] || '-'}
+                                  </div>
+                                ) : (
+                                  '-'
+                                )}
                               </td>
                             ))}
                           </tr>
@@ -1113,8 +1181,9 @@ const MachineComparison = ({
                         {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
                           // Gather all TCOs for this row
                           const tcos = getSelectedMachineData().map((machine, index) => {
-                            const tco0 = editableTCO[index] !== undefined
-                              ? editableTCO[index]
+                            const machineId = `${machine.brand}-${machine.model}-${index}`;
+                            const tco0 = editableTCO[machineId] !== undefined
+                              ? editableTCO[machineId]
                               : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
                             let tco = tco0;
                             if (hours > 0) {
@@ -1131,8 +1200,9 @@ const MachineComparison = ({
                             <tr key={hours} className="hover:bg-gray-50">
                               <td className="border border-gray-300 p-2 font-medium bg-gray-50">{hours}</td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const tco0 = editableTCO[index] !== undefined
-                                  ? editableTCO[index]
+                                const machineId = `${machine.brand}-${machine.model}-${index}`;
+                                const tco0 = editableTCO[machineId] !== undefined
+                                  ? editableTCO[machineId]
                                   : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
                                 let tco = tco0;
                                 if (hours > 0) {
@@ -1150,7 +1220,7 @@ const MachineComparison = ({
                                         value={tco0}
                                         onChange={e => {
                                           const value = parseFloat(e.target.value);
-                                          setEditableTCO(prev => ({ ...prev, [index]: isNaN(value) ? 0 : value }));
+                                          setEditableTCO(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
                                         }}
                                       />
                                     ) : (

@@ -297,7 +297,8 @@ function Summary() {
                         if (field.format && value !== undefined && value !== null) {
                           value = field.format(value);
                         }
-                        return <td key={mIdx} className="border border-gray-300 p-2 text-center whitespace-pre-line">{value || '-'}</td>;
+                        const alignClass = field.multilanguage ? 'text-left whitespace-pre-line' : 'text-center';
+                        return <td key={mIdx} className={`border border-gray-300 p-2 ${alignClass}`}>{value || '-'}</td>;
                       })}
                     </tr>
                   );

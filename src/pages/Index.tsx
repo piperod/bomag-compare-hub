@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import ProductLineSelector from '@/components/ProductLineSelector';
@@ -10,12 +10,35 @@ export default function Index() {
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
   const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
+  const [activeTab, setActiveTab] = useState<'comparison' | 'calculator'>('comparison');
+  const calculatorRef = useRef<HTMLDivElement | null>(null);
   
-  // Reset machine selection when product line changes
+  // Load saved selections per line on line change
   useEffect(() => {
-    setSelectedMachines([]);
+    try {
+      const raw = localStorage.getItem(`selectedMachines:${selectedLine}`);
+      const parsed = raw ? JSON.parse(raw) : [];
+      if (Array.isArray(parsed)) setSelectedMachines(parsed);
+      else setSelectedMachines([]);
+    } catch {
+      setSelectedMachines([]);
+    }
     setEditableTCO({});
   }, [selectedLine]);
+
+  // Persist selections per line
+  useEffect(() => {
+    try {
+      localStorage.setItem(`selectedMachines:${selectedLine}`, JSON.stringify(selectedMachines));
+    } catch {}
+  }, [selectedLine, selectedMachines]);
+
+  // Smooth scroll to calculator section when switching to calculator tab
+  useEffect(() => {
+    if (activeTab === 'calculator' && calculatorRef.current) {
+      calculatorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [activeTab]);
   
   return (
     <LanguageProvider>
@@ -23,12 +46,12 @@ export default function Index() {
         <Header />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <ProductLineSelector selectedLine={selectedLine} onLineSelect={setSelectedLine} />
-          <Tabs defaultValue="comparison" className="w-full">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="comparison">Comparación de Máquinas</TabsTrigger>
               <TabsTrigger value="calculator">Calculadora de Rendimiento BOMAG</TabsTrigger>
             </TabsList>
-            <TabsContent value="comparison">
+            <TabsContent value="comparison" forceMount>
               <MachineComparison 
                 selectedLine={selectedLine} 
                 selectedMachines={selectedMachines}
@@ -37,8 +60,10 @@ export default function Index() {
                 setEditableTCO={setEditableTCO}
               />
             </TabsContent>
-            <TabsContent value="calculator">
-              <PerformanceCalculator />
+            <TabsContent value="calculator" forceMount>
+              <div ref={calculatorRef}>
+                <PerformanceCalculator />
+              </div>
             </TabsContent>
           </Tabs>
         </main>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -358,6 +359,12 @@ function getPriceColor(value: number, min: number, max: number) {
   }
 }
 
+// Stable machine id independent of search/filter order
+const getMachineId = (machine: MachineSpec) => {
+  const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+  return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize(machine.engine)}`;
+};
+
 const MachineComparison = ({ 
   selectedLine, 
   selectedMachines, 
@@ -407,21 +414,50 @@ const MachineComparison = ({
 
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>('');
+  // Show only selected machines in the grid
+  const [showOnlySelected, setShowOnlySelected] = useState<boolean>(false);
+  // Ref to calculator section for smooth scroll
+  const calcSectionRef = useRef<HTMLDivElement | null>(null);
+
+  // When opening the volume calculator, restrict grid to selected machines
+  useEffect(() => {
+    setShowOnlySelected(isCalcOpen);
+    if (isCalcOpen && calcSectionRef.current) {
+      calcSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isCalcOpen]);
 
   const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
   const machinesSorted = React.useMemo(() => {
     let arr = [...machines];
-    
+
     // Filter by search term if provided
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase().trim();
-      arr = arr.filter(machine => 
+      const filtered = arr.filter(machine => 
         machine.brand.toLowerCase().includes(searchLower) ||
         machine.model.toLowerCase().includes(searchLower) ||
         machine.engine.toLowerCase().includes(searchLower)
       );
+
+      // Always include already selected machines even if they don't match the search
+      const selectedSet = new Set(selectedMachines);
+      const selectedMachinesList = arr.filter(m => selectedSet.has(getMachineId(m)));
+
+      // Merge and de-duplicate by stable id
+      const byId: { [k: string]: typeof arr[number] } = {};
+      [...filtered, ...selectedMachinesList].forEach(m => {
+        byId[getMachineId(m)] = m;
+      });
+      arr = Object.values(byId);
     }
-    
+
+    // When enabled, restrict grid to selected machines only
+    if (showOnlySelected) {
+      const selectedSet = new Set(selectedMachines);
+      arr = arr.filter(m => selectedSet.has(getMachineId(m)));
+    }
+
     // Sort: BOMAG first, then others
     arr.sort((a, b) => {
       const aScore = a.brand === 'BOMAG' ? 0 : 1;
@@ -429,9 +465,9 @@ const MachineComparison = ({
       if (aScore !== bScore) return aScore - bScore;
       return 0;
     });
-    
+
     return arr;
-  }, [machines, searchTerm]);
+  }, [machines, searchTerm, selectedMachines, showOnlySelected]);
 
   // Reset selected machines and editableTCO when product line changes
   useEffect(() => {
@@ -455,8 +491,8 @@ const MachineComparison = ({
     return () => window.removeEventListener('storage', handler);
   }, []);
 
-  const toggleMachineSelection = (machine: MachineSpec, index: number) => {
-    const machineId = `${machine.brand}-${machine.model}-${index}`;
+  const toggleMachineSelection = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
     setSelectedMachines(prev => 
       prev.includes(machineId) 
         ? prev.filter(id => id !== machineId)
@@ -474,8 +510,8 @@ const MachineComparison = ({
   };
 
   // Get effective compaction performance (original or edited) with work efficiency applied
-  const getEffectiveCompactionPerformance = (machine: MachineSpec, machineIndex: number) => {
-    const machineId = `${machine.brand}-${machine.model}-${machineIndex}`;
+  const getEffectiveCompactionPerformance = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
     const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
     const editedPerf = editableCompactionPerformance[machineId];
     const basePerf = editedPerf !== undefined ? editedPerf : originalPerf;
@@ -483,16 +519,16 @@ const MachineComparison = ({
   };
 
   // Get effective fuel consumption (original or edited)
-  const getEffectiveFuelConsumption = (machine: MachineSpec, machineIndex: number) => {
-    const machineId = `${machine.brand}-${machine.model}-${machineIndex}`;
+  const getEffectiveFuelConsumption = (machine: MachineSpec) => {
+    const machineId = getMachineId(machine);
     const originalFuel = machine.fuelConsumption || 0;
     const editedFuel = editableFuelConsumption[machineId];
     return editedFuel !== undefined ? editedFuel : originalFuel;
   };
 
   const getSelectedMachineData = () => {
-    return machinesSorted.filter((machine, index) => {
-      const machineId = `${machine.brand}-${machine.model}-${index}`;
+    return machinesSorted.filter((machine) => {
+      const machineId = getMachineId(machine);
       return selectedMachines.includes(machineId);
     });
   };
@@ -537,6 +573,83 @@ const MachineComparison = ({
     return colors[brand as keyof typeof colors] || 'bg-gray-500';
   };
 
+  // Normalize multiline text: collapse duplicate bullets and use a single bullet mark
+  const formatMultiline = (text: string) => {
+    if (!text) return text;
+    return text
+      .split('\n')
+      .map(line => {
+        const trimmed = line.replace(/^\s+|\s+$/g, '');
+        // Normalize common bullet starters
+        const bulletMatch = /^([*•\-]\s*)+/.exec(trimmed);
+        if (bulletMatch) {
+          const content = trimmed.replace(/^([*•\-]\s*)+/, '').trim();
+          return `• ${content}`;
+        }
+        return trimmed;
+      })
+      .join('\n');
+  };
+
+  // -------- USP helpers --------
+  const getLocalizedText = (obj: any) => {
+    if (!obj) return '';
+    if (typeof obj === 'string') return obj;
+    return obj[language] || '';
+  };
+
+  const splitToBullets = (text: string): string[] => {
+    if (!text) return [];
+    // Split by newlines first, then by commas, trim and dedupe
+    const parts = text
+      .split(/\n+/)
+      .flatMap(l => l.split(/[,•;]+/))
+      .map(s => s.trim())
+      .filter(Boolean);
+    // de-duplicate while preserving order
+    const seen: Record<string, boolean> = {};
+    return parts.filter(p => (seen[p.toLowerCase()] ? false : (seen[p.toLowerCase()] = true)));
+  };
+
+  const buildUspBullets = (machine: MachineSpec, category: 'operation' | 'performance' | 'comfort' | 'efficient' | 'maintenance'): string[] => {
+    const bullets: string[] = [];
+    const pushText = (field?: any) => splitToBullets(getLocalizedText(field)).forEach(x => bullets.push(x));
+
+    switch (category) {
+      case 'operation':
+        pushText((machine as any).asphaltManager);
+        pushText(machine.telemetry);
+        pushText((machine as any).articulationJoint);
+        // Common operation notes sometimes live in innovations (e.g., cabina deslizante)
+        pushText(machine.innovations);
+        break;
+      case 'performance':
+        pushText((machine as any).vibrationSystems);
+        pushText(machine.innovations);
+        // Include LTR-specific performance features
+        pushText((machine as any).aceTechnology);
+        pushText((machine as any).compactionSystem);
+        break;
+      case 'comfort':
+        pushText((machine as any).comfortSafety);
+        // Some comfort items are inside innovations (e.g., Easy Drive, alta visibilidad)
+        pushText(machine.innovations);
+        break;
+      case 'efficient':
+        pushText(machine.compactionAssistant);
+        pushText((machine as any).asphaltManager);
+        pushText((machine as any).vibrationSystems);
+        pushText((machine as any).efficientCompaction);
+        break;
+      case 'maintenance':
+        pushText((machine as any).easyMaintenance);
+        pushText((machine as any).maintenanceJoint);
+        break;
+    }
+
+    return bullets;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -574,6 +687,14 @@ const MachineComparison = ({
             </button>
           )}
         </div>
+        {/* Toggle: Only selected */}
+        <div className="mt-3 flex items-center gap-2 text-sm text-gray-700">
+          <Checkbox
+            checked={showOnlySelected}
+            onCheckedChange={(v) => setShowOnlySelected(Boolean(v))}
+          />
+          <span>Solo máquinas seleccionadas</span>
+        </div>
         {searchTerm && (
           <div className="mt-2 text-sm text-gray-600">
             Mostrando {machinesSorted.length} máquina(s) que coinciden con "{searchTerm}"
@@ -585,17 +706,25 @@ const MachineComparison = ({
       {machinesSorted.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {machinesSorted.map((machine, index) => (
-          <Card key={index} className="relative">
+          <Card
+            key={index}
+            className={`relative ${selectedMachines.includes(getMachineId(machine)) ? 'border-2 border-yellow-400' : ''}`}
+          >
             <CardHeader className="pb-2">
               <div className="flex flex-col items-center justify-between">
                 <img src={getImagePath(machine.model, selectedLine)} alt={machine.model} className="w-full h-32 object-contain mb-2" />
+                {selectedMachines.includes(getMachineId(machine)) && (
+                  <div className="absolute top-2 right-2">
+                    <Badge className="bg-bomag-yellow text-black border border-black/10">Seleccionada</Badge>
+                  </div>
+                )}
                 <div className="flex items-center justify-between w-full">
                   <Badge className={`${getBrandColor(machine.brand)} text-white`}>
                     {machine.brand}
                   </Badge>
                   <Checkbox
-                    checked={selectedMachines.includes(`${machine.brand}-${machine.model}-${index}`)}
-                    onCheckedChange={() => toggleMachineSelection(machine, index)}
+                    checked={selectedMachines.includes(getMachineId(machine))}
+                    onCheckedChange={() => toggleMachineSelection(machine)}
                   />
                 </div>
                 {machine.brand === 'BOMAG' && (machine as any).materialNumber && (
@@ -604,17 +733,33 @@ const MachineComparison = ({
                   </div>
                 )}
               </div>
-              <CardTitle className="text-lg">{machine.model}</CardTitle>
+              <CardTitle className="text-lg font-semibold">{machine.model}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">{t('weight')}:</span>
+                  <span className="text-gray-600 font-semibold">{t('weight')}:</span>
                   <span className="font-medium">{machine.weight.toLocaleString()} kg</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">{t('power')}:</span>
+                  <span className="text-gray-600 font-semibold">{t('power')}:</span>
                   <span className="font-medium">{machine.power} HP</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 font-semibold">{t('compactionWidth')}:</span>
+                  <span className="font-medium">{machine.compactionWidth} m</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 font-semibold">{t('amplitude')}:</span>
+                  <span className="font-medium text-left">{formatMultiline(String(machine.amplitude || '-'))}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-gray-600 font-semibold">Telemetría:</span>
+                  <span className="font-medium whitespace-pre-line text-left">
+                    {typeof (machine as any).telemetry === 'object'
+                      ? formatMultiline(((machine as any).telemetry?.[language]) || '-')
+                      : formatMultiline(String((machine as any).telemetry || '-'))}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -661,7 +806,7 @@ const MachineComparison = ({
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left">Especificación</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">Especificación</th>
                           {getSelectedMachineData().map((machine, index) => (
                             <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
                               <div className="text-sm font-bold">{machine.brand}</div>
@@ -707,26 +852,44 @@ const MachineComparison = ({
                               { key: 'maintenanceJoint', label: 'Junta de articulación libre de mantenimiento', unit: '' },
                             );
                           }
+
+                          // Add SDR-specific fields from CSV-derived data
+                          if (selectedLine === 'sdr') {
+                            basicSpecs.push(
+                              { key: 'compactionAssistant', label: 'Asistente de compactación', unit: '' },
+                              { key: 'telemetry', label: 'Telemetría', unit: '' },
+                              { key: 'innovations', label: 'Tecnologías Innovadoras', unit: '' },
+                            );
+                          }
                           
                           return basicSpecs;
                         })().map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               {spec.label}
                             </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center">
-                                {spec.key === 'weight' ? (
-                                  (machine.weight as number).toLocaleString()
-                                ) : typeof machine[spec.key] === 'object' ? (
-                                  <div className="whitespace-pre-line text-left">
-                                    {machine[spec.key][language] || '-'}
-                                  </div>
-                                ) : (
-                                  String(machine[spec.key as keyof typeof machine] || '-')
-                                )}
-                              </td>
-                            ))}
+                            {getSelectedMachineData().map((machine, index) => {
+                              const value: any = machine[spec.key as keyof typeof machine];
+                              const isObj = typeof value === 'object' && value !== null;
+                              const strVal = !isObj ? String(value ?? '-') : '';
+                              const isLong = !isObj && (strVal.includes('\n') || strVal.length > 40);
+                              const cellAlign = isObj || isLong ? 'text-left' : 'text-center';
+                              return (
+                                <td key={index} className={`border border-gray-300 p-2 ${cellAlign}`}>
+                                  {spec.key === 'weight' ? (
+                                    (machine.weight as number).toLocaleString()
+                                  ) : isObj ? (
+                                    <div className="whitespace-pre-line">
+                                      {formatMultiline(value[language] || '-')}
+                                    </div>
+                                  ) : (
+                                    <div className={isLong ? 'whitespace-pre-line' : ''}>
+                                      {formatMultiline(strVal || '-')}
+                                    </div>
+                                  )}
+                                </td>
+                              );
+                            })}
                           </tr>
                         ))}
                       </tbody>
@@ -735,7 +898,7 @@ const MachineComparison = ({
                 </div>
 
                 {/* Volume Calculator Section */}
-                <div className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                <div ref={calcSectionRef} className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
                   <div className="flex items-center justify-between">
                     <h4 className="text-lg font-semibold text-gray-700">Calculadora de Volumen</h4>
                     <div className="flex items-center gap-3">
@@ -837,7 +1000,7 @@ const MachineComparison = ({
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left">Rendimiento</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">Rendimiento</th>
                           {getSelectedMachineData().map((machine, index) => (
                             <th key={index} className="border border-gray-300 p-2 text-center">
                               <div className="text-sm font-bold">{machine.brand}</div>
@@ -850,7 +1013,7 @@ const MachineComparison = ({
                         {/* Max Compaction Depth (SDR only) */}
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               {t('maxCompactionDepth')}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
@@ -864,11 +1027,11 @@ const MachineComparison = ({
                         {/* Editable Compaction Performance (SDR only) */}
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              {t('compactionPerformance')} (m³/h)
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              {t('compactionPerformance')}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const machineId = `${machine.brand}-${machine.model}-${index}`;
+                              const machineId = getMachineId(machine);
                               const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
                               const editedPerf = editableCompactionPerformance[machineId];
                               const currentPerf = editedPerf !== undefined ? editedPerf : originalPerf;
@@ -898,7 +1061,7 @@ const MachineComparison = ({
                         
                         {/* Work Efficiency */}
                         <tr className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                             Eficiencia de obra (%) <span className="text-xs text-gray-500">(0-100%)</span>
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
@@ -932,7 +1095,7 @@ const MachineComparison = ({
                             {t('fuelConsumption')} <span className="text-red-500">*</span>
                           </td>
                           {getSelectedMachineData().map((machine, index) => {
-                            const machineId = `${machine.brand}-${machine.model}-${index}`;
+                            const machineId = getMachineId(machine);
                             const originalFuel = machine.fuelConsumption || 0;
                             const editedFuel = editableFuelConsumption[machineId];
                             const currentFuel = editedFuel !== undefined ? editedFuel : originalFuel;
@@ -964,11 +1127,11 @@ const MachineComparison = ({
                         {surfaceVolumeM3 > 0 && (
                           <>
                             <tr className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                                 {t('timeEstimated')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const effectivePerf = getEffectiveCompactionPerformance(machine, index);
+                                const effectivePerf = getEffectiveCompactionPerformance(machine);
                                 const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center font-semibold">
@@ -978,16 +1141,16 @@ const MachineComparison = ({
                               })}
                             </tr>
                             <tr className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                                 {t('costBasedOnEstimatedTime')}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const effectivePerf = getEffectiveCompactionPerformance(machine, index);
+                                const effectivePerf = getEffectiveCompactionPerformance(machine);
                                 const hours = effectivePerf > 0 ? surfaceVolumeM3 / effectivePerf : 0;
                                 // Cost/hour approximation using fuel + maint only (no operator): fuelConsumption*fuelPrice + pm + cm
                                 const pm = machine.preventiveMaintenance ?? 0;
                                 const cm = machine.correctiveMaintenance ?? 0;
-                                const fuel = getEffectiveFuelConsumption(machine, index);
+                                const fuel = getEffectiveFuelConsumption(machine);
                                 const costPerHour = fuel * fuelPrice + pm + cm;
                                 const totalCost = hours * costPerHour;
                                 return (
@@ -1017,7 +1180,7 @@ const MachineComparison = ({
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left">USP</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">USP</th>
                           {getSelectedMachineData().map((machine, index) => (
                             <th key={index} className="border border-gray-300 p-2 text-center">
                               <div className="text-sm font-bold">{machine.brand}</div>
@@ -1030,22 +1193,23 @@ const MachineComparison = ({
                         {[
                           { key: 'usp1', label: 'USP 1 - Operación' },
                           { key: 'usp2', label: 'USP 2 - Rendimiento' },
-                          { key: 'usp3', label: 'USP 3 - Confort y Seguridad' },
-                          { key: 'usp4', label: 'USP 4 - Compactación Eficiente' },
-                          { key: 'usp5', label: 'USP 5 - Mantenimiento' }
+                          { key: 'usp3', label: 'USP 3 - Dirección y Articulación' },
+                          { key: 'usp4', label: 'USP 4 - Confort y Operación' },
+                          { key: 'usp5', label: 'USP 5 - Sistemas/Medición de compactación' },
+                          { key: 'usp6', label: 'USP 6 - Mantenimiento' }
                         ].map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               {spec.label}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center">
+                              <td key={index} className="border border-gray-300 p-2 text-left">
                                 {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object' ? (
-                                  <div className="whitespace-pre-line text-left">
-                                    {(machine[spec.key as keyof MachineSpec] as any)[language] || '-'}
+                                  <div className="whitespace-pre-line">
+                                    {formatMultiline((machine[spec.key as keyof MachineSpec] as any)[language] || '-')}
                                   </div>
                                 ) : (
-                                  '-'
+                                  <span className="text-gray-400">-</span>
                                 )}
                               </td>
                             ))}
@@ -1066,7 +1230,7 @@ const MachineComparison = ({
                       <table className="w-full border-collapse border border-gray-300">
                         <thead>
                           <tr className="bg-bomag-light-gray">
-                            <th className="border border-gray-300 p-2 text-left">Costos</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">Costos</th>
                             {getSelectedMachineData().map((machine, index) => (
                               <th key={index} className="border border-gray-300 p-2 text-center">
                                 <div className="text-sm font-bold">{machine.brand}</div>
@@ -1082,7 +1246,7 @@ const MachineComparison = ({
                             { key: 'correctiveMaintenance', label: t('correctiveMaintenance'), format: (v: number) => `$${v}` }
                           ].map((spec) => (
                             <tr key={spec.key} className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                                 {spec.label}
                               </td>
                               {getSelectedMachineData().map((machine, index) => (
@@ -1094,7 +1258,7 @@ const MachineComparison = ({
                           ))}
                           {/* Fuel Price Row */}
                           <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               <div className="flex items-center gap-2">
                                 <span>Diesel (USD/L)</span>
                                 <Input
@@ -1181,7 +1345,7 @@ const MachineComparison = ({
                         {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
                           // Gather all TCOs for this row
                           const tcos = getSelectedMachineData().map((machine, index) => {
-                            const machineId = `${machine.brand}-${machine.model}-${index}`;
+                            const machineId = getMachineId(machine);
                             const tco0 = editableTCO[machineId] !== undefined
                               ? editableTCO[machineId]
                               : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
@@ -1200,7 +1364,7 @@ const MachineComparison = ({
                             <tr key={hours} className="hover:bg-gray-50">
                               <td className="border border-gray-300 p-2 font-medium bg-gray-50">{hours}</td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const machineId = `${machine.brand}-${machine.model}-${index}`;
+                                const machineId = getMachineId(machine);
                                 const tco0 = editableTCO[machineId] !== undefined
                                   ? editableTCO[machineId]
                                   : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;

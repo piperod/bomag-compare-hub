@@ -997,14 +997,7 @@ const MachineComparison = ({
 
                               {/* Performance Section */}
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento (Cálculo Corregido)</h4>
-                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
-                    <p className="text-sm text-blue-800">
-                      <strong>Cálculo Corregido:</strong> Los valores de rendimiento ahora se calculan usando interpolación 
-                      basada en el peso de la máquina y el tipo de suelo seleccionado. Esto proporciona estimaciones más precisas 
-                      que se ajustan automáticamente según las especificaciones de cada máquina.
-                    </p>
-                  </div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento</h4>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>

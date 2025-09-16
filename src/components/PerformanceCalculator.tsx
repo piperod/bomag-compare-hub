@@ -131,7 +131,7 @@ const PerformanceCalculator = () => {
             <Card className="bg-blue-50">
               <CardContent className="pt-6">
                 <h4 className="font-semibold text-bomag-gray mb-4">
-                  Recomendación para {customWeight}t (Interpolación Corregida)
+                  Recomendación para {customWeight}t
                 </h4>
                 {(() => {
                   const weight = parseFloat(customWeight);
@@ -151,16 +151,11 @@ const PerformanceCalculator = () => {
                         </div>
                         <div>
                           <h5 className="text-sm text-gray-600">
-                            Rendimiento (interpolación corregida)
+                            Rendimiento de compactación
                           </h5>
                           <div className="text-xl font-bold text-bomag-blue">
                             {interpolatedPerf ? `${interpolatedPerf} m³/h` : 'N/A'}
                           </div>
-                          {interpolatedPerf && (
-                            <div className="text-xs text-gray-500 mt-1">
-                              Basado en tabla corregida con interpolación
-                            </div>
-                          )}
                         </div>
                       </div>
                     );
@@ -209,7 +204,7 @@ const PerformanceCalculator = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t('compactionOutput')} (Tabla Corregida)</CardTitle>
+            <CardTitle>{t('compactionOutput')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -237,12 +232,6 @@ const PerformanceCalculator = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-              <p className="text-sm text-yellow-800">
-                <strong>Tabla Corregida:</strong> Esta tabla utiliza los valores corregidos proporcionados por el usuario.
-                Para pesos personalizados, el sistema interpola automáticamente entre los rangos para obtener valores más precisos.
-              </p>
             </div>
           </CardContent>
         </Card>

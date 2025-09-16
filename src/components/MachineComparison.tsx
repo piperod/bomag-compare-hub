@@ -1063,6 +1063,32 @@ const MachineComparison = ({
                         </tr>
                       </thead>
                       <tbody>
+                        {/* Soil type selector row */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                            <div className="flex items-center justify-center gap-2">
+                              <span>Tipo de suelo</span>
+                              <select
+                                className="h-6 text-xs border rounded px-1"
+                                value={selectedSoilType}
+                                onChange={(e) => setSelectedSoilType(e.target.value as SoilType)}
+                              >
+                                <option value="rock">Roca</option>
+                                <option value="gravel">Grava, arena</option>
+                                <option value="mixedSoil">Suelo mixto</option>
+                                <option value="clay">Limo, arcilla</option>
+                              </select>
+                            </div>
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                              {selectedSoilType === 'rock' ? 'Roca' : 
+                               selectedSoilType === 'gravel' ? 'Grava, arena' :
+                               selectedSoilType === 'mixedSoil' ? 'Suelo mixto' : 'Limo, arcilla'}
+                            </td>
+                          ))}
+                        </tr>
+                        
                         {/* Max Compaction Depth (SDR only) */}
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
@@ -1299,31 +1325,6 @@ const MachineComparison = ({
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center font-medium">
                                 {surfaceVolumeM3 > 0 ? surfaceVolumeM3.toFixed(2) : '-'}
-                              </td>
-                            ))}
-                          </tr>
-                          {/* Soil type selector row */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              <div className="flex items-center justify-center gap-2">
-                                <span>Tipo de suelo</span>
-                                <select
-                                  className="h-6 text-xs border rounded px-1"
-                                  value={selectedSoilType}
-                                  onChange={(e) => setSelectedSoilType(e.target.value as SoilType)}
-                                >
-                                  <option value="rock">Roca</option>
-                                  <option value="gravel">Grava, arena</option>
-                                  <option value="mixedSoil">Suelo mixto</option>
-                                  <option value="clay">Limo, arcilla</option>
-                                </select>
-                              </div>
-                            </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                {selectedSoilType === 'rock' ? 'Roca' : 
-                                 selectedSoilType === 'gravel' ? 'Grava, arena' :
-                                 selectedSoilType === 'mixedSoil' ? 'Suelo mixto' : 'Limo, arcilla'}
                               </td>
                             ))}
                           </tr>

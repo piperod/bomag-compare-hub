@@ -997,7 +997,56 @@ const MachineComparison = ({
                 </div>
 
 
-                              {/* Performance Section */}
+                {/* USP Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Propuestas de Valor Único (USP)</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-bomag-light-gray">
+                          <th className="border border-gray-300 p-2 text-left font-semibold">USP</th>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <th key={index} className="border border-gray-300 p-2 text-center">
+                              <div className="text-sm font-bold">{machine.brand}</div>
+                              <div className="text-xs">{machine.model}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { key: 'usp1', label: 'USP 1 - Operación' },
+                          { key: 'usp2', label: 'USP 2 - Rendimiento' },
+                          { key: 'usp3', label: 'USP 3 - Dirección y Articulación' },
+                          { key: 'usp4', label: 'USP 4 - Confort y Operación' },
+                          { key: 'usp5', label: 'USP 5 - Sistemas/Medición de compactación' },
+                          { key: 'usp6', label: 'USP 6 - Mantenimiento' }
+                        ].map((spec) => (
+                          <tr key={spec.key} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              {spec.label}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-left">
+                                {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object' ? (
+                                  <div className="whitespace-pre-line">
+                                    {formatMultiline((machine[spec.key as keyof MachineSpec] as any)[language] || '-')}
+                                  </div>
+                                ) : (
+                                  <span className="text-gray-400">-</span>
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="financial" className="mt-4 space-y-8">
+                  {/* Performance Section */}
                 <div>
                   <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento</h4>
                   <div className="overflow-x-auto">
@@ -1137,56 +1186,6 @@ const MachineComparison = ({
                   </div>
                 </div>
 
-
-                {/* USP Section */}
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Propuestas de Valor Único (USP)</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-300">
-                      <thead>
-                        <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">USP</th>
-                          {getSelectedMachineData().map((machine, index) => (
-                            <th key={index} className="border border-gray-300 p-2 text-center">
-                              <div className="text-sm font-bold">{machine.brand}</div>
-                              <div className="text-xs">{machine.model}</div>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[
-                          { key: 'usp1', label: 'USP 1 - Operación' },
-                          { key: 'usp2', label: 'USP 2 - Rendimiento' },
-                          { key: 'usp3', label: 'USP 3 - Dirección y Articulación' },
-                          { key: 'usp4', label: 'USP 4 - Confort y Operación' },
-                          { key: 'usp5', label: 'USP 5 - Sistemas/Medición de compactación' },
-                          { key: 'usp6', label: 'USP 6 - Mantenimiento' }
-                        ].map((spec) => (
-                          <tr key={spec.key} className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {spec.label}
-                            </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-left">
-                                {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object' ? (
-                                  <div className="whitespace-pre-line">
-                                    {formatMultiline((machine[spec.key as keyof MachineSpec] as any)[language] || '-')}
-                                  </div>
-                                ) : (
-                                  <span className="text-gray-400">-</span>
-                                )}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="financial" className="mt-4 space-y-8">
                   {/* Performance Calculation Section */}
                   <div>
                     <h4 className="text-lg font-semibold text-gray-700 mb-3">Cálculo de Rendimiento</h4>

@@ -1430,6 +1430,24 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+                          {/* Fuel Consumption Reference Row - Read Only */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                              {t('fuelConsumption')} <span className="text-green-500">***</span> <span className="text-xs text-gray-500">(L/h)</span>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const machineId = getMachineId(machine);
+                              const originalFuel = machine.fuelConsumption || 0;
+                              const editedFuel = editableFuelConsumption[machineId];
+                              const currentFuel = editedFuel !== undefined ? editedFuel : originalFuel;
+                              
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-blue-50">
+                                  {currentFuel.toFixed(1)} L/h
+                                </td>
+                              );
+                            })}
+                          </tr>
                           {/* Preventive Maintenance Row - Editable */}
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">

@@ -435,6 +435,9 @@ const MachineComparison = ({
     return 'mixedSoil';
   });
 
+  // BOMAG technology multiplier state (Economizer/Terrameter)
+  const [bomagTechEnabled, setBomagTechEnabled] = useState<{ [key: string]: boolean }>({});
+
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>('');
   // Show only selected machines in the grid
@@ -579,24 +582,32 @@ const MachineComparison = ({
     const machineId = getMachineId(machine);
     const editedPerf = editableCompactionPerformance[machineId];
     
+    let basePerformance: number;
+    
     // If user has manually edited the performance, use that
     if (editedPerf !== undefined) {
-      return editedPerf;
+      basePerformance = editedPerf;
+    } else {
+      // Otherwise, use corrected interpolation based on machine weight
+      const weightInTons = machine.weight / 1000; // Convert kg to tons
+      
+      // Use selected soil type for machine performance calculation
+      const interpolatedPerf = interpolatePerformance(weightInTons, selectedSoilType);
+      
+      if (interpolatedPerf !== null) {
+        basePerformance = interpolatedPerf;
+      } else {
+        // Fallback to original parsing if interpolation fails
+        basePerformance = parseCompactionPerformance(machine.compactionPerformance || '');
+      }
     }
     
-    // Otherwise, use corrected interpolation based on machine weight
-    const weightInTons = machine.weight / 1000; // Convert kg to tons
+    // Apply BOMAG technology multiplier if enabled
+    const isBomag = machine.brand === 'BOMAG';
+    const techEnabled = bomagTechEnabled[machineId] || false;
+    const multiplier = isBomag && techEnabled ? 1.25 : 1.0;
     
-    // Use selected soil type for machine performance calculation
-    const interpolatedPerf = interpolatePerformance(weightInTons, selectedSoilType);
-    
-    if (interpolatedPerf !== null) {
-      return interpolatedPerf;
-    }
-    
-    // Fallback to original parsing if interpolation fails
-    const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
-    return originalPerf;
+    return basePerformance * multiplier;
   };
 
   // Get effective fuel consumption (original or edited)
@@ -1116,17 +1127,26 @@ const MachineComparison = ({
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
-                              const interpolatedPerf = getEffectiveCompactionPerformance(machine);
+                              // Get base performance without multiplier for editing
+                              const weightInTons = machine.weight / 1000;
+                              const interpolatedPerf = interpolatePerformance(weightInTons, selectedSoilType) || 
+                                                     parseCompactionPerformance(machine.compactionPerformance || '');
                               const editedPerf = editableCompactionPerformance[machineId];
-                              const currentPerf = editedPerf !== undefined ? editedPerf : interpolatedPerf;
+                              const basePerf = editedPerf !== undefined ? editedPerf : interpolatedPerf;
+                              
+                              // Show effective performance with multiplier
+                              const isBomag = machine.brand === 'BOMAG';
+                              const techEnabled = bomagTechEnabled[machineId] || false;
+                              const multiplier = isBomag && techEnabled ? 1.25 : 1.0;
+                              const effectivePerf = basePerf * multiplier;
                               
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <div className="flex justify-center">
+                                  <div className="flex flex-col items-center gap-1">
                                     <Input
                                       type="number"
                                       className="w-20 h-8 text-center text-sm"
-                                      value={currentPerf || ''}
+                                      value={basePerf || ''}
                                       onChange={(e) => {
                                         const value = parseFloat(e.target.value);
                                         setEditableCompactionPerformance(prev => ({
@@ -1136,7 +1156,46 @@ const MachineComparison = ({
                                       }}
                                       placeholder={interpolatedPerf.toString()}
                                     />
+                                    {isBomag && techEnabled && (
+                                      <div className="text-xs text-green-600 font-semibold">
+                                        = {effectivePerf.toFixed(0)} m³/h
+                                      </div>
+                                    )}
                                   </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        )}
+                        
+                        {/* BOMAG Technology Multiplier (Economizer/Terrameter) */}
+                        {selectedLine === 'sdr' && (
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              ¿Tiene tecnología Economizer o Terrameter?
+                              <div className="text-xs text-gray-500 mt-1">Multiplicador x1.25</div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const machineId = getMachineId(machine);
+                              const isBomag = machine.brand === 'BOMAG';
+                              
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center">
+                                  {isBomag ? (
+                                    <div className="flex items-center justify-center">
+                                      <Checkbox
+                                        checked={bomagTechEnabled[machineId] || false}
+                                        onCheckedChange={(checked) => {
+                                          setBomagTechEnabled(prev => ({
+                                            ...prev,
+                                            [machineId]: Boolean(checked)
+                                          }));
+                                        }}
+                                      />
+                                    </div>
+                                  ) : (
+                                    <span className="text-gray-400">-</span>
+                                  )}
                                 </td>
                               );
                             })}

@@ -1067,7 +1067,7 @@ const MachineComparison = ({
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {t('maxCompactionDepth')}
+                              {t('maxCompactionDepth')} <span className="text-blue-500">**</span>
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center">
@@ -1081,7 +1081,7 @@ const MachineComparison = ({
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {t('compactionPerformance')}
+                              {t('compactionPerformance')} <span className="text-red-500">*</span>
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -1145,7 +1145,7 @@ const MachineComparison = ({
                         {/* Fuel Consumption */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                            {t('fuelConsumption')} <span className="text-red-500">*</span>
+                            {t('fuelConsumption')} <span className="text-green-500">***</span>
                           </td>
                           {getSelectedMachineData().map((machine, index) => {
                             const machineId = getMachineId(machine);
@@ -1180,9 +1180,17 @@ const MachineComparison = ({
                     </table>
                   </div>
                   
-                  {/* Footnote for fuel consumption */}
-                  <div className="mt-3 text-xs text-gray-600 italic">
-                    <span className="text-red-500">*</span> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
+                  {/* Footnotes */}
+                  <div className="mt-3 text-xs text-gray-600 italic space-y-1">
+                    <div>
+                      <span className="text-red-500">*</span> <strong>Rendimiento:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag para un tipo de suelo grava-arena.
+                    </div>
+                    <div>
+                      <span className="text-blue-500">**</span> <strong>Capa de compactación:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag. Considere que el máximo espesor sugerido por normativa suele ser 30 cm.
+                    </div>
+                    <div>
+                      <span className="text-green-500">***</span> <strong>Consumo de combustible:</strong> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
+                    </div>
                   </div>
                 </div>
 

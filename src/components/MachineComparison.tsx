@@ -1587,7 +1587,7 @@ const MachineComparison = ({
                             const machineId = getMachineId(machine);
                             const tco0 = editableTCO[machineId] !== undefined
                               ? editableTCO[machineId]
-                              : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
+                              : getEffectivePrice(machine);
                             let tco = tco0;
                             if (hours > 0) {
                               tco = tco0
@@ -1606,7 +1606,7 @@ const MachineComparison = ({
                                 const machineId = getMachineId(machine);
                                 const tco0 = editableTCO[machineId] !== undefined
                                   ? editableTCO[machineId]
-                                  : machine.tcoTimeline?.find(e => e.hours === 0)?.tco ?? 0;
+                                  : getEffectivePrice(machine);
                                 let tco = tco0;
                                 if (hours > 0) {
                                   tco = tco0

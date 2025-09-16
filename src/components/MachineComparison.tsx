@@ -551,6 +551,11 @@ const MachineComparison = ({
     }
   }, [selectedSoilType]);
 
+  // Reset compaction performance when soil type changes to show new interpolated values
+  useEffect(() => {
+    setEditableCompactionPerformance({});
+  }, [selectedSoilType]);
+
   const toggleMachineSelection = (machine: MachineSpec) => {
     const machineId = getMachineId(machine);
     setSelectedMachines(prev => 
@@ -1111,9 +1116,9 @@ const MachineComparison = ({
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
-                              const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
+                              const interpolatedPerf = getEffectiveCompactionPerformance(machine);
                               const editedPerf = editableCompactionPerformance[machineId];
-                              const currentPerf = editedPerf !== undefined ? editedPerf : originalPerf;
+                              const currentPerf = editedPerf !== undefined ? editedPerf : interpolatedPerf;
                               
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center">
@@ -1126,10 +1131,10 @@ const MachineComparison = ({
                                         const value = parseFloat(e.target.value);
                                         setEditableCompactionPerformance(prev => ({
                                           ...prev,
-                                          [machineId]: isNaN(value) ? originalPerf : value
+                                          [machineId]: isNaN(value) ? interpolatedPerf : value
                                         }));
                                       }}
-                                      placeholder={originalPerf.toString()}
+                                      placeholder={interpolatedPerf.toString()}
                                     />
                                   </div>
                                 </td>

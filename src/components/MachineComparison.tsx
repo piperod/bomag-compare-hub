@@ -1046,20 +1046,20 @@ const MachineComparison = ({
               </TabsContent>
 
               <TabsContent value="financial" className="mt-4 space-y-8">
-                  {/* Performance Section */}
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-300">
-                      <thead>
-                        <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">Rendimiento</th>
-                          {getSelectedMachineData().map((machine, index) => (
-                            <th key={index} className="border border-gray-300 p-2 text-center">
-                              <div className="text-sm font-bold">{machine.brand}</div>
-                              <div className="text-xs">{machine.model}</div>
-                            </th>
-                          ))}
+                  {/* Performance Calculation Section */}
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">Cálculo de Rendimiento</h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-bomag-light-gray">
+                            <th className="border border-gray-300 p-2 text-left font-semibold">Parámetro</th>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                                <div className="text-sm font-bold">{machine.brand}</div>
+                                <div className="text-xs">{machine.model}</div>
+                              </th>
+                            ))}
                         </tr>
                       </thead>
                       <tbody>
@@ -1070,7 +1070,7 @@ const MachineComparison = ({
                               {t('maxCompactionDepth')} <span className="text-blue-500">**</span>
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center">
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
                                 {machine.maxCompactionDepth || '-'}
                               </td>
                             ))}
@@ -1112,36 +1112,6 @@ const MachineComparison = ({
                           </tr>
                         )}
                         
-                        {/* Work Efficiency */}
-                        <tr className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                            Eficiencia de obra (%) <span className="text-xs text-gray-500">(0-100%)</span>
-                          </td>
-                          {getSelectedMachineData().map((machine, index) => (
-                            <td key={index} className="border border-gray-300 p-2 text-center">
-                              <div className="flex items-center justify-center gap-1">
-                                <Input
-                                  type="number"
-                                  className="w-20 h-8 text-center text-sm"
-                                  value={workEfficiency}
-                                  onChange={(e) => {
-                                    const value = parseFloat(e.target.value);
-                                    const newValue = isNaN(value) ? 100 : Math.max(0, Math.min(100, value)); // Limit between 0-100%
-                                    setWorkEfficiency(newValue);
-                                    if (typeof window !== 'undefined') {
-                                      localStorage.setItem('workEfficiency', String(newValue));
-                                    }
-                                  }}
-                                  placeholder="100"
-                                  min="0"
-                                  max="100"
-                                />
-                                <span className="text-xs text-gray-500">%</span>
-                              </div>
-                            </td>
-                          ))}
-                        </tr>
-                        
                         {/* Fuel Consumption */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
@@ -1176,42 +1146,64 @@ const MachineComparison = ({
                             );
                           })}
                         </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  
-                  {/* Footnotes */}
-                  <div className="mt-3 text-xs text-gray-600 italic space-y-1">
-                    <div>
-                      <span className="text-red-500">*</span> <strong>Rendimiento:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag para un tipo de suelo grava-arena.
-                    </div>
-                    <div>
-                      <span className="text-blue-500">**</span> <strong>Capa de compactación:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag. Considere que el máximo espesor sugerido por normativa suele ser 30 cm.
-                    </div>
-                    <div>
-                      <span className="text-green-500">***</span> <strong>Consumo de combustible:</strong> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
-                    </div>
-                  </div>
-                </div>
 
-                  {/* Performance Calculation Section */}
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">Cálculo de Rendimiento</h4>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
-                        <thead>
-                          <tr className="bg-bomag-light-gray">
-                            <th className="border border-gray-300 p-2 text-left font-semibold">Parámetro</th>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
-                                <div className="text-sm font-bold">{machine.brand}</div>
-                                <div className="text-xs">{machine.model}</div>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {/* Volume input row */}
+                        {/* Fuel Price Row */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                            <div className="flex items-center justify-center gap-2">
+                              <span>Diesel (USD/L)</span>
+                              <Input
+                                type="number"
+                                className="h-6 w-20 text-center"
+                                value={fuelPrice}
+                                onChange={(e) => {
+                                  const v = e.target.value === '' ? 1.2 : parseFloat(e.target.value);
+                                  const val = isNaN(v) ? 1.2 : v;
+                                  setFuelPrice(val);
+                                  if (typeof window !== 'undefined') {
+                                    localStorage.setItem('fuelPriceUSD', String(val));
+                                  }
+                                }}
+                                placeholder="1.2"
+                              />
+                            </div>
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                              ${fuelPrice.toFixed(2)}
+                            </td>
+                          ))}
+                        </tr>
+
+                        {/* Work Efficiency */}
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                            <div className="flex items-center justify-center gap-2">
+                              <span>Eficiencia de trabajo (%)</span>
+                              <Input
+                                type="number"
+                                className="h-6 w-16 text-center"
+                                value={workEfficiency}
+                                onChange={(e) => {
+                                  const v = e.target.value === '' ? 100 : parseFloat(e.target.value);
+                                  const val = isNaN(v) ? 100 : Math.max(0, Math.min(100, v));
+                                  setWorkEfficiency(val);
+                                  if (typeof window !== 'undefined') {
+                                    localStorage.setItem('workEfficiency', String(val));
+                                  }
+                                }}
+                                placeholder="100"
+                              />
+                            </div>
+                          </td>
+                          {getSelectedMachineData().map((machine, index) => (
+                            <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                              {workEfficiency}%
+                            </td>
+                          ))}
+                        </tr>
+
+                        {/* Volume input row */}
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               <div className="flex items-center justify-center gap-2">
@@ -1335,33 +1327,6 @@ const MachineComparison = ({
                               </td>
                             ))}
                           </tr>
-                          {/* Work efficiency row */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              <div className="flex items-center justify-center gap-2">
-                                <span>Eficiencia de trabajo (%)</span>
-                                <Input
-                                  type="number"
-                                  className="h-6 w-16 text-center"
-                                  value={workEfficiency}
-                                  onChange={(e) => {
-                                    const v = e.target.value === '' ? 100 : parseFloat(e.target.value);
-                                    const val = isNaN(v) ? 100 : Math.max(0, Math.min(100, v));
-                                    setWorkEfficiency(val);
-                                    if (typeof window !== 'undefined') {
-                                      localStorage.setItem('workEfficiency', String(val));
-                                    }
-                                  }}
-                                  placeholder="100"
-                                />
-                              </div>
-                            </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                {workEfficiency}%
-                              </td>
-                            ))}
-                          </tr>
                           {/* Calculated performance rows based on volume */}
                           {surfaceVolumeM3 > 0 && (
                             <>
@@ -1407,6 +1372,19 @@ const MachineComparison = ({
                           )}
                         </tbody>
                       </table>
+                    </div>
+                    
+                    {/* Footnotes */}
+                    <div className="mt-3 text-xs text-gray-600 italic space-y-1">
+                      <div>
+                        <span className="text-red-500">*</span> <strong>Rendimiento:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag para un tipo de suelo grava-arena.
+                      </div>
+                      <div>
+                        <span className="text-blue-500">**</span> <strong>Capa de compactación:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag. Considere que el máximo espesor sugerido por normativa suele ser 30 cm.
+                      </div>
+                      <div>
+                        <span className="text-green-500">***</span> <strong>Consumo de combustible:</strong> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
+                      </div>
                     </div>
                   </div>
 

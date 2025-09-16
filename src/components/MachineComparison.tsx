@@ -390,6 +390,8 @@ const MachineComparison = ({
   const [lengthM, setLengthM] = useState<number>(0);
   const [widthM, setWidthM] = useState<number>(0);
   const [heightM, setHeightM] = useState<number>(0);
+  // Volume calculator modal state
+  const [isVolumeCalcOpen, setIsVolumeCalcOpen] = useState(false);
   // Surface volume calculator state
   const [surfaceVolumeM3, setSurfaceVolumeM3] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -1221,6 +1223,78 @@ const MachineComparison = ({
                                   }}
                                   placeholder="0"
                                 />
+                                <Dialog open={isVolumeCalcOpen} onOpenChange={setIsVolumeCalcOpen}>
+                                  <DialogTrigger asChild>
+                                    <Button size="sm" variant="outline" className="h-6 px-2 text-xs">
+                                      📐
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="sm:max-w-md">
+                                    <DialogHeader>
+                                      <DialogTitle>Calculadora de Volumen</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4">
+                                      <div>
+                                        <Label htmlFor="length">Longitud de calzada (m)</Label>
+                                        <Input
+                                          id="length"
+                                          type="number"
+                                          value={lengthM || ''}
+                                          onChange={(e) => setLengthM(parseFloat(e.target.value) || 0)}
+                                          placeholder="0"
+                                        />
+                                      </div>
+                                      <div>
+                                        <Label htmlFor="width">Ancho de calzada (m)</Label>
+                                        <Input
+                                          id="width"
+                                          type="number"
+                                          value={widthM || ''}
+                                          onChange={(e) => setWidthM(parseFloat(e.target.value) || 0)}
+                                          placeholder="0"
+                                        />
+                                      </div>
+                                      <div>
+                                        <Label htmlFor="thickness">Espesor de capa (m)</Label>
+                                        <Input
+                                          id="thickness"
+                                          type="number"
+                                          step="0.01"
+                                          value={heightM || ''}
+                                          onChange={(e) => setHeightM(parseFloat(e.target.value) || 0)}
+                                          placeholder="0.00"
+                                        />
+                                      </div>
+                                      <div className="bg-gray-50 p-3 rounded">
+                                        <div className="text-sm text-gray-600">Volumen calculado:</div>
+                                        <div className="text-xl font-bold text-bomag-blue">
+                                          {(lengthM * widthM * heightM).toFixed(2)} m³
+                                        </div>
+                                      </div>
+                                      <div className="flex gap-2">
+                                        <Button 
+                                          onClick={() => {
+                                            const volume = lengthM * widthM * heightM;
+                                            setSurfaceVolumeM3(volume);
+                                            if (typeof window !== 'undefined') {
+                                              localStorage.setItem('surfaceVolumeM3', String(volume));
+                                            }
+                                            setIsVolumeCalcOpen(false);
+                                          }}
+                                          className="flex-1"
+                                        >
+                                          Usar este volumen
+                                        </Button>
+                                        <Button 
+                                          variant="outline" 
+                                          onClick={() => setIsVolumeCalcOpen(false)}
+                                        >
+                                          Cancelar
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
                               </div>
                             </td>
                             {getSelectedMachineData().map((machine, index) => (

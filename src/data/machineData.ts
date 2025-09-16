@@ -1055,10 +1055,6 @@ export interface CompactionData {
 }
 
 export const compactionHeightData: CompactionData[] = [
-  { weightRange: "1.5 – 2.5", rock: "0.10 – 0.20", gravel: "0.20 – 0.30", mixedSoil: "0.20 – 0.25", clay: "0.10 – 0.15" },
-  { weightRange: "3.0 – 4.5", rock: "0.15 – 0.25", gravel: "0.25 – 0.30", mixedSoil: "0.25 – 0.30", clay: "0.15 – 0.20" },
-  { weightRange: "7 – 9", rock: "0.20 – 0.35", gravel: "0.30 – 0.40", mixedSoil: "0.30 – 0.40", clay: "0.15 – 0.20" },
-  { weightRange: "10 – 12", rock: "0.25 – 0.40", gravel: "0.30 – 0.50", mixedSoil: "0.30 – 0.40", clay: "0.20 – 0.30" },
   { weightRange: "2 – 3", rock: "-", gravel: "0.20 – 0.35", mixedSoil: "0.20 – 0.30", clay: "0.15 – 0.20" },
   { weightRange: "6 – 8", rock: "0.30 – 0.50", gravel: "0.30 – 0.40", mixedSoil: "0.25 – 0.35", clay: "0.15 – 0.20" },
   { weightRange: "9 – 12", rock: "0.50 – 0.80", gravel: "0.50 – 0.80", mixedSoil: "0.40 – 0.60", clay: "0.20 – 0.30" },

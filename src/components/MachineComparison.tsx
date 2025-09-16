@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
+import { interpolatePerformance, SoilType } from '@/data/correctedPerformanceData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -423,6 +424,15 @@ const MachineComparison = ({
     return 100;
   });
 
+  // Soil type for performance calculation
+  const [selectedSoilType, setSelectedSoilType] = useState<SoilType>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('selectedSoilType');
+      return (saved as SoilType) || 'mixedSoil';
+    }
+    return 'mixedSoil';
+  });
+
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>('');
   // Show only selected machines in the grid
@@ -532,6 +542,13 @@ const MachineComparison = ({
     return () => window.removeEventListener('storage', handler);
   }, []);
 
+  // Persist soil type selection
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedSoilType', selectedSoilType);
+    }
+  }, [selectedSoilType]);
+
   const toggleMachineSelection = (machine: MachineSpec) => {
     const machineId = getMachineId(machine);
     setSelectedMachines(prev => 
@@ -553,9 +570,26 @@ const MachineComparison = ({
   // Get effective compaction performance (original or edited) - without work efficiency applied
   const getEffectiveCompactionPerformance = (machine: MachineSpec) => {
     const machineId = getMachineId(machine);
-    const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
     const editedPerf = editableCompactionPerformance[machineId];
-    return editedPerf !== undefined ? editedPerf : originalPerf;
+    
+    // If user has manually edited the performance, use that
+    if (editedPerf !== undefined) {
+      return editedPerf;
+    }
+    
+    // Otherwise, use corrected interpolation based on machine weight
+    const weightInTons = machine.weight / 1000; // Convert kg to tons
+    
+    // Use selected soil type for machine performance calculation
+    const interpolatedPerf = interpolatePerformance(weightInTons, selectedSoilType);
+    
+    if (interpolatedPerf !== null) {
+      return interpolatedPerf;
+    }
+    
+    // Fallback to original parsing if interpolation fails
+    const originalPerf = parseCompactionPerformance(machine.compactionPerformance || '');
+    return originalPerf;
   };
 
   // Get effective fuel consumption (original or edited)
@@ -963,7 +997,14 @@ const MachineComparison = ({
 
                               {/* Performance Section */}
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento</h4>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Rendimiento (Cálculo Corregido)</h4>
+                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                    <p className="text-sm text-blue-800">
+                      <strong>Cálculo Corregido:</strong> Los valores de rendimiento ahora se calculan usando interpolación 
+                      basada en el peso de la máquina y el tipo de suelo seleccionado. Esto proporciona estimaciones más precisas 
+                      que se ajustan automáticamente según las especificaciones de cada máquina.
+                    </p>
+                  </div>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>
@@ -1192,6 +1233,31 @@ const MachineComparison = ({
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-center font-medium">
                                 {surfaceVolumeM3 > 0 ? surfaceVolumeM3.toFixed(2) : '-'}
+                              </td>
+                            ))}
+                          </tr>
+                          {/* Soil type selector row */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              <div className="flex items-center justify-center gap-2">
+                                <span>Tipo de suelo</span>
+                                <select
+                                  className="h-6 text-xs border rounded px-1"
+                                  value={selectedSoilType}
+                                  onChange={(e) => setSelectedSoilType(e.target.value as SoilType)}
+                                >
+                                  <option value="rock">Roca</option>
+                                  <option value="gravel">Grava, arena</option>
+                                  <option value="mixedSoil">Suelo mixto</option>
+                                  <option value="clay">Limo, arcilla</option>
+                                </select>
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {selectedSoilType === 'rock' ? 'Roca' : 
+                                 selectedSoilType === 'gravel' ? 'Grava, arena' :
+                                 selectedSoilType === 'mixedSoil' ? 'Suelo mixto' : 'Limo, arcilla'}
                               </td>
                             ))}
                           </tr>

@@ -59,6 +59,7 @@ const summaryFields = [
   { key: 'preventiveMaintenance', labelKey: 'preventiveMaintenance', format: v => '$' + v },
   { key: 'correctiveMaintenance', labelKey: 'correctiveMaintenance', format: v => '$' + v },
   { key: 'usageTime', labelKey: 'usageTime', format: v => v + ' h' },
+  { key: 'operationTime', labelKey: 'operationTime', format: v => v + ' h' },
   { key: 'tco', labelKey: 'tco', format: v => '$' + v.toLocaleString() },
   // Calculated fields appended later: timeEstimated and costByTime
 ];
@@ -222,6 +223,16 @@ function Summary({
     }
     return 0;
   });
+
+  // Operation time state (hours)
+  const [operationTime, setOperationTime] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('operationTimeHours');
+      const num = saved ? parseFloat(saved) : 3000;
+      return isNaN(num) ? 3000 : num;
+    }
+    return 3000;
+  });
   const [isCalcOpen, setIsCalcOpen] = useState(false);
   const [lengthM, setLengthM] = useState<string>('');
   const [widthM, setWidthM] = useState<string>('');
@@ -244,6 +255,10 @@ function Summary({
       const saved = localStorage.getItem('surfaceVolumeM3');
       const num = saved ? parseFloat(saved) : 0;
       setSurfaceVolumeM3(isNaN(num) ? 0 : num);
+
+      const savedOperationTime = localStorage.getItem('operationTimeHours');
+      const numOperationTime = savedOperationTime ? parseFloat(savedOperationTime) : 3000;
+      setOperationTime(isNaN(numOperationTime) ? 3000 : numOperationTime);
     };
     handler();
     window.addEventListener('storage', handler);
@@ -274,6 +289,11 @@ function Summary({
   const getFieldValue = (mIdx: number, key: string) => {
     const machine = machinesSorted[mIdx];
     const machineId = getMachineId(machine);
+    
+    // Special case for operationTime - use global state
+    if (key === 'operationTime') {
+      return operationTime;
+    }
     
     // Check if this field has been edited in localStorage
     if (key === 'price' && localEditablePrice[machineId] !== undefined) {
@@ -340,7 +360,7 @@ function Summary({
                       </td>
                       {safeVisibleMachines.map(mIdx => {
                         // Editable fields
-                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "dieselPrice"].includes(field.key)) {
+                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "operationTime", "dieselPrice"].includes(field.key)) {
                           const val = getFieldValue(mIdx, field.key);
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center">
@@ -350,13 +370,21 @@ function Summary({
                                 value={val === undefined || val === null ? '' : val}
                                 onChange={e => {
                                   const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
-                                  setEditableFields(prev => ({
-                                    ...prev,
-                                    [mIdx]: {
-                                      ...prev[mIdx],
-                                      [field.key]: isNaN(value) ? 0 : value
+                                  if (field.key === 'operationTime') {
+                                    // Special handling for operationTime - update global state
+                                    setOperationTime(isNaN(value) ? 3000 : value);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('operationTimeHours', String(isNaN(value) ? 3000 : value));
                                     }
-                                  }));
+                                  } else {
+                                    setEditableFields(prev => ({
+                                      ...prev,
+                                      [mIdx]: {
+                                        ...prev[mIdx],
+                                        [field.key]: isNaN(value) ? 0 : value
+                                      }
+                                    }));
+                                  }
                                 }}
                               />
                             </td>
@@ -364,23 +392,21 @@ function Summary({
                         }
                         // TCO field: show calculated value
                         if (field.key === "tco") {
-                          // TCO = price + usageTime * fuelConsumption * dieselPrice + usageTime * (preventiveMaintenance + correctiveMaintenance)
+                          // TCO = price + operationTime * fuelConsumption * dieselPrice + operationTime * (preventiveMaintenance + correctiveMaintenance)
                           const price = getFieldValue(mIdx, "price") ?? 0;
-                          const usageTime = getFieldValue(mIdx, "usageTime") ?? 0;
                           const fuel = machinesSorted[mIdx].fuelConsumption ?? 0;
                           const dieselPrice = getFieldValue(mIdx, "dieselPrice") ?? 1.2;
                           const pm = getFieldValue(mIdx, "preventiveMaintenance") ?? 0;
                           const cm = getFieldValue(mIdx, "correctiveMaintenance") ?? 0;
-                          const tco = price + usageTime * (fuel * dieselPrice + pm + cm);
+                          const tco = price + operationTime * (fuel * dieselPrice + pm + cm);
                           // Gather all TCOs for this row
                           const tcos = safeVisibleMachines.map(idx => {
                             const p = getFieldValue(idx, "price") ?? 0;
-                            const ut = getFieldValue(idx, "usageTime") ?? 0;
                             const f = machinesSorted[idx].fuelConsumption ?? 0;
                             const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                             const pM = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                             const cM = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                            return p + ut * (f * dp + pM + cM);
+                            return p + operationTime * (f * dp + pM + cM);
                           });
                           const min = Math.min(...tcos);
                           const max = Math.max(...tcos);
@@ -586,7 +612,6 @@ function Summary({
                       const price = getFieldValue(idx, "price") ?? 0;
                       const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                       const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                      const usageTime = getFieldValue(idx, "usageTime") ?? 0;
                       const fuel = machinesSorted[idx].fuelConsumption ?? 0;
                       const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                       const fuelCost = hours * fuel * dp;
@@ -601,11 +626,10 @@ function Summary({
                       <tr key={hours} className="hover:bg-gray-50">
                         <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">{hours}</td>
                         {safeVisibleMachines.map((idx, i) => {
-                          // Use edited values for price, pm, cm, usageTime
+                          // Use edited values for price, pm, cm
                           const price = getFieldValue(idx, "price") ?? 0;
                           const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                           const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                          const usageTime = getFieldValue(idx, "usageTime") ?? 0;
                           const fuel = machinesSorted[idx].fuelConsumption ?? 0;
                           const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                           const fuelCost = hours * fuel * dp;

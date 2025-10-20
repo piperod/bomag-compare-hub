@@ -411,6 +411,16 @@ const MachineComparison = ({
     return 1.2;
   });
 
+  // Operation time state (hours)
+  const [operationTime, setOperationTime] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('operationTimeHours');
+      const num = saved ? parseFloat(saved) : 3000;
+      return isNaN(num) ? 3000 : num;
+    }
+    return 3000;
+  });
+
   // Editable compaction performance state
   const [editableCompactionPerformance, setEditableCompactionPerformance] = useState<{ [key: string]: number }>({});
   
@@ -531,7 +541,7 @@ const MachineComparison = ({
     }
   }, [editableCorrectiveMaintenance]);
 
-  // Listen for volume and fuel price changes from localStorage
+  // Listen for volume, fuel price, and operation time changes from localStorage
   useEffect(() => {
     const handler = () => {
       const savedVolume = localStorage.getItem('surfaceVolumeM3');
@@ -541,6 +551,10 @@ const MachineComparison = ({
       const savedFuel = localStorage.getItem('fuelPriceUSD');
       const numFuel = savedFuel ? parseFloat(savedFuel) : 1.2;
       setFuelPrice(isNaN(numFuel) ? 1.2 : numFuel);
+
+      const savedOperationTime = localStorage.getItem('operationTimeHours');
+      const numOperationTime = savedOperationTime ? parseFloat(savedOperationTime) : 3000;
+      setOperationTime(isNaN(numOperationTime) ? 3000 : numOperationTime);
     };
     handler();
     window.addEventListener('storage', handler);
@@ -1590,15 +1604,42 @@ const MachineComparison = ({
                               </td>
                             ))}
                           </tr>
+
+                          {/* Operation Time Row */}
+                          <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
+                              <div className="flex items-center justify-center gap-2">
+                                <span>Tiempo de operación (h)</span>
+                                <Input
+                                  type="number"
+                                  className="h-6 w-20 text-center"
+                                  value={operationTime}
+                                  onChange={(e) => {
+                                    const v = e.target.value === '' ? 3000 : parseFloat(e.target.value);
+                                    const val = isNaN(v) ? 3000 : v;
+                                    setOperationTime(val);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('operationTimeHours', String(val));
+                                    }
+                                  }}
+                                  placeholder="3000"
+                                />
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {operationTime.toLocaleString()} h
+                              </td>
+                            ))}
+                          </tr>
                           {/* Fuel Cost Calculation Row */}
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-medium bg-gray-50">
                               Costo de combustible
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const fuelConsumption = machine.fuelConsumption ?? 0;
-                              const usageTime = machine.usageTime ?? 0;
-                              const fuelCost = fuelConsumption * usageTime * fuelPrice;
+                              const fuelConsumption = getEffectiveFuelConsumption(machine);
+                              const fuelCost = fuelConsumption * operationTime * fuelPrice;
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-medium">
                                   {formatCurrency(fuelCost)}
@@ -1614,11 +1655,10 @@ const MachineComparison = ({
                             {getSelectedMachineData().map((machine, index) => {
                               const price = getEffectivePrice(machine);
                               const fuelConsumption = getEffectiveFuelConsumption(machine);
-                              const usageTime = machine.usageTime ?? 0;
                               const preventiveMaintenance = getEffectivePreventiveMaintenance(machine);
                               const correctiveMaintenance = getEffectiveCorrectiveMaintenance(machine);
-                              const fuelCost = fuelConsumption * usageTime * fuelPrice;
-                              const maintenanceCost = usageTime * (preventiveMaintenance + correctiveMaintenance);
+                              const fuelCost = fuelConsumption * operationTime * fuelPrice;
+                              const maintenanceCost = operationTime * (preventiveMaintenance + correctiveMaintenance);
                               const tco = price + fuelCost + maintenanceCost;
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
@@ -1659,9 +1699,9 @@ const MachineComparison = ({
                             let tco = tco0;
                             if (hours > 0) {
                               tco = tco0
-                                + hours * (machine.fuelConsumption ?? 0) * fuelPrice
-                                + hours * (machine.preventiveMaintenance ?? 0)
-                                + hours * (machine.correctiveMaintenance ?? 0);
+                                + hours * getEffectiveFuelConsumption(machine) * fuelPrice
+                                + hours * getEffectivePreventiveMaintenance(machine)
+                                + hours * getEffectiveCorrectiveMaintenance(machine);
                             }
                             return tco;
                           });
@@ -1678,9 +1718,9 @@ const MachineComparison = ({
                                 let tco = tco0;
                                 if (hours > 0) {
                                   tco = tco0
-                                    + hours * (machine.fuelConsumption ?? 0) * fuelPrice
-                                    + hours * (machine.preventiveMaintenance ?? 0)
-                                    + hours * (machine.correctiveMaintenance ?? 0);
+                                    + hours * getEffectiveFuelConsumption(machine) * fuelPrice
+                                    + hours * getEffectivePreventiveMaintenance(machine)
+                                    + hours * getEffectiveCorrectiveMaintenance(machine);
                                 }
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">

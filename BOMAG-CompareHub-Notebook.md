@@ -11,7 +11,7 @@ This notebook documents the major features, improvements, and fixes implemented 
 - Added a language toggle in the navbar for instant language switching.
 
 ## 2. Machine Data Integration
-- Integrated detailed data for SDR, LTR, and HTR machines in `src/data/machineData.ts`.
+- Integrated detailed data for Single Drum Roller, LTR, and HTR machines in `src/data/machineData.ts`.
 - Machine data includes multilanguage fields, TCO timelines, and all relevant specs.
 - Added/updated missing machines and corrected data as needed.
 
@@ -25,7 +25,7 @@ This notebook documents the major features, improvements, and fixes implemented 
 ### Summary View
 - `Summary.tsx` implements a global summary page with a transposed table (machines as columns, properties as rows).
 - Interactive toggling of visible machines (columns) and properties (rows) with '×' icons.
-- Tabs for SDR, LTR, and (optionally) HTR lines.
+- Tabs for Single Drum Roller, LTR, and (optionally) HTR lines.
 - Consistent styling and image handling as in the detail view.
 - Added a TCO timeline table at the bottom, with color-coded price cells and TCO values.
 
@@ -41,13 +41,23 @@ This notebook documents the major features, improvements, and fixes implemented 
 - Used `gh-pages` for automated deployment.
 - Image paths and routing are compatible with both local and deployed environments.
 
-## 6. Error Fixes & Troubleshooting
+## 6. Dynamic Operation Time Feature
+- Added editable "Tiempo de operación (h)" row in both comparison and summary views.
+- Users can now modify the operation time (default: 3000 hours) to dynamically calculate fuel costs.
+- The operation time affects:
+  - Total fuel cost calculation (consumption × time × price)
+  - TCO calculations (price + fuel cost + maintenance cost)
+  - TCO timeline projections
+- Values are persisted in localStorage and synchronized across all views.
+- Added multilingual support for the operation time field in Spanish, English, German, and Portuguese.
+
+## 7. Error Fixes & Troubleshooting
 - Fixed context errors by wrapping all pages in `LanguageProvider`.
 - Fixed image loading issues with robust path logic.
 - Fixed LTR summary tab error by filtering visible machine indices.
 - Identified and ignored unrelated browser extension IO errors.
 
-## 7. Workflow
+## 8. Workflow
 - All changes tracked in git, with regular commits and pushes.
 - Deployment triggered after each major update.
 - User feedback incorporated iteratively for rapid improvements.

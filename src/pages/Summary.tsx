@@ -360,7 +360,7 @@ function Summary({
                       </td>
                       {safeVisibleMachines.map(mIdx => {
                         // Editable fields
-                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "operationTime", "dieselPrice"].includes(field.key)) {
+                        if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "operationTime", "dieselPrice", "fuelConsumption"].includes(field.key)) {
                           const val = getFieldValue(mIdx, field.key);
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center">
@@ -612,7 +612,7 @@ function Summary({
                       const price = getFieldValue(idx, "price") ?? 0;
                       const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                       const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                      const fuel = machinesSorted[idx].fuelConsumption ?? 0;
+                      const fuel = getFieldValue(idx, "fuelConsumption") ?? machinesSorted[idx].fuelConsumption ?? 0;
                       const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                       const fuelCost = hours * fuel * dp;
                       const variableCost = hours * (pm + cm);
@@ -626,11 +626,11 @@ function Summary({
                       <tr key={hours} className="hover:bg-gray-50">
                         <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10">{hours}</td>
                         {safeVisibleMachines.map((idx, i) => {
-                          // Use edited values for price, pm, cm
+                          // Use edited values for price, pm, cm, fuel consumption
                           const price = getFieldValue(idx, "price") ?? 0;
                           const pm = getFieldValue(idx, "preventiveMaintenance") ?? 0;
                           const cm = getFieldValue(idx, "correctiveMaintenance") ?? 0;
-                          const fuel = machinesSorted[idx].fuelConsumption ?? 0;
+                          const fuel = getFieldValue(idx, "fuelConsumption") ?? machinesSorted[idx].fuelConsumption ?? 0;
                           const dp = getFieldValue(idx, "dieselPrice") ?? 1.2;
                           const fuelCost = hours * fuel * dp;
                           const variableCost = hours * (pm + cm);

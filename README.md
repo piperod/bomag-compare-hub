@@ -1,73 +1,70 @@
-# Welcome to your Lovable project
+# BOMAG Compare Hub
 
-## Project info
+## Run locally
 
-**URL**: https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553
+### Prerequisites
 
-## How can I edit this code?
+- **Node.js** (LTS recommended) and **npm**
+  - Install via [nvm](https://github.com/nvm-sh/nvm#installing-and-updating): `nvm install --lts` then `nvm use --lts`
+  - Or download the LTS installer from [nodejs.org](https://nodejs.org/)
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Check that Node and npm are available:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+node --version   # e.g. v20.x or v22.x
+npm --version    # e.g. 10.x
+```
+
+### Setup and run
+
+```sh
+# 1. Clone the repository (if you haven't already)
 git clone <YOUR_GIT_URL>
+cd bomag-compare-hub
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 3. Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at **http://localhost:5173** (or the URL shown in the terminal). The dev server uses hot reload, so changes in the code will update in the browser automatically.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### If `vite: command not found` appears
 
-**Use GitHub Codespaces**
+The dev script uses `npx vite` so the local Vite from `node_modules` is used. If you still see a “command not found” error, run:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```sh
+npm install
+npm run dev
+```
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Project info
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+**Lovable project**: [BOMAG Compare Hub on Lovable](https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553)
 
-## How can I deploy this project?
+## Tech stack
 
-Simply open [Lovable](https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553) and click on Share -> Publish.
+- **Vite** – build tool and dev server
+- **TypeScript**
+- **React**
+- **shadcn-ui**
+- **Tailwind CSS**
 
-## Can I connect a custom domain to my Lovable project?
+## Editing the code
 
-Yes, you can!
+- **Lovable** – Open the [Lovable project](https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553) and edit via the UI; changes are committed to this repo.
+- **Local IDE** – Clone, edit in your editor, then push; changes sync to Lovable.
+- **GitHub** – Edit files in the repo with the “Edit” (pencil) button and commit.
+- **GitHub Codespaces** – Use “Code” → “Codespaces” → “New codespace” to work in the browser.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deploy
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Open [Lovable](https://lovable.dev/projects/bc1a093f-03ce-45e0-a6ba-43bdae532553), then **Share → Publish**.
+
+## Custom domain
+
+To use your own domain: in Lovable go to **Project → Settings → Domains** and click **Connect Domain**. See [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide).

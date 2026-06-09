@@ -109,3 +109,22 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .compare-table {
+    table-layout: fixed;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .compare-table th:first-child,
+  .compare-table td:first-child {
+    text-align: left;
+  }
+}

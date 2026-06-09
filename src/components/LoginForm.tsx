@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,6 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 const LoginForm: React.FC = () => {
+  const { t } = useLanguage();
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -19,12 +21,11 @@ const LoginForm: React.FC = () => {
     setIsLoading(true);
     setError('');
 
-    // Simular un pequeño delay para mejor UX
     await new Promise(resolve => setTimeout(resolve, 500));
 
     const success = login(password);
     if (!success) {
-      setError('Contraseña incorrecta. Inténtalo de nuevo.');
+      setError(t('wrongPassword'));
       setPassword('');
     }
     setIsLoading(false);
@@ -38,23 +39,23 @@ const LoginForm: React.FC = () => {
             <Lock className="h-8 w-8 text-blue-600" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
-            Acceso BOMAG
+            {t('loginAccess')}
           </CardTitle>
           <CardDescription className="text-gray-600">
-            Ingresa la contraseña para acceder al sistema de comparación
+            {t('loginDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Ingresa la contraseña"
+                  placeholder={t('passwordPlaceholder')}
                   className="pr-10"
                   required
                   disabled={isLoading}
@@ -87,12 +88,12 @@ const LoginForm: React.FC = () => {
               className="w-full"
               disabled={isLoading || !password.trim()}
             >
-              {isLoading ? 'Verificando...' : 'Acceder'}
+              {isLoading ? t('verifying') : t('loginSubmit')}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">
-            <p>Contacta al administrador si no tienes acceso</p>
+            <p>{t('contactAdmin')}</p>
           </div>
         </CardContent>
       </Card>

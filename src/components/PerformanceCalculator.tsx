@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { CompareTable } from '@/components/CompareTable';
 
 const PerformanceCalculator = () => {
   const { t } = useLanguage();
@@ -62,7 +63,7 @@ const PerformanceCalculator = () => {
               <Label htmlFor="weight-select">{t('operatingWeight')}</Label>
               <Select value={selectedWeight} onValueChange={setSelectedWeight}>
                 <SelectTrigger id="weight-select">
-                  <SelectValue placeholder="Seleccionar rango de peso" />
+                  <SelectValue placeholder={t('selectWeightRange')} />
                 </SelectTrigger>
                 <SelectContent>
                   {compactionHeightData.map((item, index) => (
@@ -78,7 +79,7 @@ const PerformanceCalculator = () => {
               <Label htmlFor="soil-select">{t('soilType')}</Label>
               <Select value={selectedSoil} onValueChange={setSelectedSoil}>
                 <SelectTrigger id="soil-select">
-                  <SelectValue placeholder="Seleccionar tipo de suelo" />
+                  <SelectValue placeholder={t('selectSoilType')} />
                 </SelectTrigger>
                 <SelectContent>
                   {soilTypes.map((soil) => (
@@ -91,13 +92,13 @@ const PerformanceCalculator = () => {
             </div>
 
             <div>
-              <Label htmlFor="custom-weight">Peso personalizado (t)</Label>
+              <Label htmlFor="custom-weight">{t('customWeight')}</Label>
               <Input
                 id="custom-weight"
                 type="number"
                 value={customWeight}
                 onChange={(e) => setCustomWeight(e.target.value)}
-                placeholder="Ej: 11.5"
+                placeholder={t('examplePlaceholder', { value: '11.5' })}
               />
             </div>
           </div>
@@ -108,7 +109,7 @@ const PerformanceCalculator = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold text-bomag-gray mb-2">
-                      Altura de capa compactada
+                      {t('compactedLayerHeight')}
                     </h4>
                     <div className="text-2xl font-bold text-bomag-orange">
                       {getPerformanceData(compactionHeightData, selectedWeight, selectedSoil)} m
@@ -116,7 +117,7 @@ const PerformanceCalculator = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-bomag-gray mb-2">
-                      Rendimiento de compactación
+                      {t('compactionPerformanceShort')}
                     </h4>
                     <div className="text-2xl font-bold text-bomag-blue">
                       {getPerformanceData(compactionPerformanceData, selectedWeight, selectedSoil)} m³/h
@@ -131,7 +132,7 @@ const PerformanceCalculator = () => {
             <Card className="bg-blue-50">
               <CardContent className="pt-6">
                 <h4 className="font-semibold text-bomag-gray mb-4">
-                  Recomendación para {customWeight}t
+                  {t('recommendationFor', { weight: customWeight })}
                 </h4>
                 {(() => {
                   const weight = parseFloat(customWeight);
@@ -143,7 +144,9 @@ const PerformanceCalculator = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <h5 className="text-sm text-gray-600">
-                            Altura de capa {recommendation ? `(basado en rango ${recommendation.weightRange}t)` : '(estimado)'}
+                            {recommendation
+                              ? t('layerHeightBasedOn', { range: recommendation.weightRange })
+                              : t('layerHeightEstimated')}
                           </h5>
                           <div className="text-xl font-bold text-bomag-orange">
                             {recommendation ? recommendation[selectedSoil as keyof CompactionData] : 'N/A'} m
@@ -151,7 +154,7 @@ const PerformanceCalculator = () => {
                         </div>
                         <div>
                           <h5 className="text-sm text-gray-600">
-                            Rendimiento de compactación
+                            {t('compactionPerformanceShort')}
                           </h5>
                           <div className="text-xl font-bold text-bomag-blue">
                             {interpolatedPerf ? `${interpolatedPerf} m³/h` : 'N/A'}
@@ -160,7 +163,7 @@ const PerformanceCalculator = () => {
                       </div>
                     );
                   }
-                  return <div className="text-gray-500">No se encontraron datos para este peso</div>;
+                  return <div className="text-gray-500">{t('noDataForWeight')}</div>;
                 })()}
               </CardContent>
             </Card>
@@ -176,7 +179,7 @@ const PerformanceCalculator = () => {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300 text-sm">
+              <CompareTable columnCount={5} className="text-sm">
                 <thead>
                   <tr className="bg-bomag-light-gray">
                     <th className="border border-gray-300 p-2">{t('operatingWeight')}</th>
@@ -197,7 +200,7 @@ const PerformanceCalculator = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </CompareTable>
             </div>
           </CardContent>
         </Card>
@@ -208,7 +211,7 @@ const PerformanceCalculator = () => {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300 text-sm">
+              <CompareTable columnCount={5} className="text-sm">
                 <thead>
                   <tr className="bg-bomag-light-gray">
                     <th className="border border-gray-300 p-2">{t('operatingWeight')}</th>
@@ -231,7 +234,7 @@ const PerformanceCalculator = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </CompareTable>
             </div>
           </CardContent>
         </Card>

@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
+import { millingMachines, MillingMachineSpec, bm100020PreventiveMaintenance } from '@/data/millingData';
+import { paversMachines, PaverMachineSpec } from '@/data/paversData';
+import { CompareTable } from '@/components/CompareTable';
+import { BomagAdvantageBadge } from '@/components/BomagAdvantageBadge';
+import { paverHasCompetitiveAdvantage } from '@/utils/paverCompetitiveAdvantage';
+import { pickLocalized, pickLocalizedWithFallback } from '@/utils/localizedText';
+import { localizePaverText } from '@/utils/paverSpecText';
+import { localizeMillingText } from '@/utils/millingSpecText';
 import { interpolatePerformance, SoilType } from '@/data/correctedPerformanceData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,6 +20,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import placeholder from '/public/placeholder.svg';
+import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 
 interface MachineComparisonProps {
   selectedLine: string;
@@ -24,6 +34,8 @@ interface MachineComparisonProps {
   setEditablePreventiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
   editableCorrectiveMaintenance: { [key: string]: number };
   setEditableCorrectiveMaintenance: (maintenance: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
+  editableRemainingValue: { [key: string]: number };
+  setEditableRemainingValue: (value: { [key: string]: number } | ((prev: { [key: string]: number }) => { [key: string]: number })) => void;
 }
 
 // HTR machine data (hardcoded, Spanish labels)
@@ -43,7 +55,7 @@ const htrMachines = [
       es: 'BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación.',
       en: 'BOMAG ECONOMIZER\nVisual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction.',
       de: 'BOMAG ECONOMIZER\nVisuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden.',
-      pt: 'BOMAG ECONOMIZER\nSistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação.'
+      pt: 'BOMAG ECONOMIZER\nSistema visual que permite que os operadores meçam o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação.'
     },
     asphaltManager: {
       es: 'BOMAG ASPHALT MANAGER\nNingún otro sistema es tan flexible como la AM: con la amplitud de salida variable, puede ser potente o sensible. Se aplica el nivel de fuerza adecuado en la dirección correcta en cualquier aplicación: Adaptación del tambor de vibración hasta oscilación. Medición del Evib en MN/m2',
@@ -317,7 +329,7 @@ const htrMachines = [
 
 const base = import.meta.env.BASE_URL;
 const getImagePath = (model: string, line: string) => {
-  const folder = line === 'sdr' ? 'SDR' : line === 'ltr' ? 'LTR' : line === 'htr' ? 'HTR' : '';
+  const folder = line === 'sdr' ? 'SDR' : line === 'ltr' ? 'LTR' : line === 'htr' ? 'HTR' : line === 'milling' ? 'Milling' : line === 'pavers' ? 'Pavers' : '';
   if (!folder) return base + 'placeholder.svg';
   const images = {
     SDR: [
@@ -335,10 +347,30 @@ const getImagePath = (model: string, line: string) => {
     ],
     HTR: [
       'HD90 VV.jpg','CC4200.jpg','CB10.jpg','AV110X.jpg','BW161-AD-4.jpg','BW161AD4.jpg'
+    ],
+    Milling: [
+      'BM1000-20.png',   // BOMAG BM 1000/20
+      'XM1005H.png',     // XCMG XM1005H
+      'SCM1000C-8.png'   // SANY SCM1000C-8
+    ],
+    Pavers: [
+      'BF600-C-3.png',    // BOMAG BF600 C-3
+      'AP655.png',        // Caterpillar AP655
+      'Super-1800-3.png', // Vögele Super 1800-3
+      'SD2500CS.png'      // Dynapac SD2500CS
     ]
   };
   const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
   const modelNorm = norm(model);
+  const paverImageByModel: Record<string, string> = {
+    ap655: 'AP655.png',
+    bf600c3: 'BF600-C-3.png',
+    super18003: 'Super-1800-3.png',
+    sd2500cs: 'SD2500CS.png',
+  };
+  if (folder === 'Pavers' && paverImageByModel[modelNorm]) {
+    return `${base}images/${folder}/${paverImageByModel[modelNorm]}`;
+  }
   // Special case for CA25 D-Rhino
   if (modelNorm === 'ca25drhino' && images[folder].includes('CA25DRhino.jpg')) {
     return `${base}images/${folder}/CA25DRhino.jpg`;
@@ -347,8 +379,30 @@ const getImagePath = (model: string, line: string) => {
   if (match) return `${base}images/${folder}/${match}`;
   // BOMAG SDR fallback image when specific model is missing
   if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
+  if (folder === 'Pavers') return `${base}images/${folder}/BF600-C-3.png`;
   return `${base}placeholder.svg`;
 };
+
+function CardSpecRow({
+  label,
+  value,
+  tall = false,
+}: {
+  label: string;
+  value: React.ReactNode;
+  tall?: boolean;
+}) {
+  return (
+    <div
+      className={`grid grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] items-start gap-x-2 border-b border-gray-100 px-0.5 last:border-b-0 ${
+        tall ? 'min-h-[4.75rem] py-2' : 'min-h-[3rem] py-1.5'
+      }`}
+    >
+      <span className="text-sm leading-snug text-gray-600 font-semibold">{label}</span>
+      <span className="text-sm leading-snug font-medium text-right whitespace-pre-line">{value}</span>
+    </div>
+  );
+}
 
 // Add a helper to interpolate color
 function getPriceColor(value: number, min: number, max: number) {
@@ -366,9 +420,9 @@ function getPriceColor(value: number, min: number, max: number) {
 }
 
 // Stable machine id independent of search/filter order
-const getMachineId = (machine: MachineSpec) => {
+const getMachineId = (machine: MachineSpec | MillingMachineSpec | PaverMachineSpec) => {
   const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
-  return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize(machine.engine)}`;
+  return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize((machine as any).engine ?? '')}`;
 };
 
 const MachineComparison = ({ 
@@ -382,9 +436,32 @@ const MachineComparison = ({
   editablePreventiveMaintenance,
   setEditablePreventiveMaintenance,
   editableCorrectiveMaintenance,
-  setEditableCorrectiveMaintenance
+  setEditableCorrectiveMaintenance,
+  editableRemainingValue,
+  setEditableRemainingValue
 }: MachineComparisonProps) => {
-  const { t, language } = useLanguage();
+  const { t, language, locale } = useLanguage();
+  const paverText = (value: string) => localizePaverText(value, language);
+  const millingText = (value: string) => localizeMillingText(value, language);
+  const {
+    currency,
+    isZeroDecimal,
+    formatFromUsd,
+    formatFuelPerLiterFromUsd,
+    usdToInputNumber,
+    inputNumberToUsd,
+  } = useCurrency();
+  const ccy = { currency };
+  const showFinancialTab = selectedLine !== 'milling';
+  const uspRowsList: Array<{ key: string; labelKey: string }> = selectedLine === 'milling'
+    ? ((locale.millingUspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [
+        { key: 'usp1', labelKey: 'millingUsp1' }, { key: 'usp2', labelKey: 'millingUsp2' }, { key: 'usp3', labelKey: 'millingUsp3' }, { key: 'usp4', labelKey: 'millingUsp4' }
+      ])
+    : selectedLine === 'pavers'
+    ? ((locale.paverUspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [])
+    : ((locale.uspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [
+        { key: 'usp1', labelKey: 'usp1' }, { key: 'usp2', labelKey: 'usp2' }, { key: 'usp3', labelKey: 'uspTable3' }, { key: 'usp4', labelKey: 'uspTable4' }, { key: 'usp5', labelKey: 'uspTable5' }, { key: 'usp6', labelKey: 'uspTable6' }
+      ]);
   // Modal state for volume calculator
   const [isCalcOpen, setIsCalcOpen] = useState(false);
   const [lengthM, setLengthM] = useState<number>(0);
@@ -448,6 +525,10 @@ const MachineComparison = ({
   // BOMAG technology multiplier state (Economizer/Terrameter)
   const [bomagTechEnabled, setBomagTechEnabled] = useState<{ [key: string]: boolean }>({});
 
+  // Maintenance-free articulation joint USP selection (SDR only)
+  const [articulationJointUSPEnabled, setArticulationJointUSPEnabled] = useState<{ [key: string]: boolean }>({});
+  const [showArticulationVariables, setShowArticulationVariables] = useState<boolean>(false);
+
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>('');
   // Show only selected machines in the grid
@@ -465,7 +546,7 @@ const MachineComparison = ({
     }
   }, [isCalcOpen]);
 
-  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : [];
+  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : selectedLine === 'milling' ? millingMachines : selectedLine === 'pavers' ? paversMachines : [];
   const machinesSorted = React.useMemo(() => {
     let arr = [...machines];
 
@@ -514,7 +595,29 @@ const MachineComparison = ({
     setEditablePrice({});
     setEditablePreventiveMaintenance({});
     setEditableCorrectiveMaintenance({});
+    setArticulationJointUSPEnabled({});
+    setShowArticulationVariables(false);
   }, [selectedLine]);
+
+  // Initialize articulation joint USP defaults for selected models
+  useEffect(() => {
+    if (selectedLine !== 'sdr') return;
+    setArticulationJointUSPEnabled((prev) => {
+      const next = { ...prev };
+      const selectedSet = new Set(selectedMachines);
+      Object.keys(next).forEach((id) => {
+        if (!selectedSet.has(id)) delete next[id];
+      });
+
+      selectedSet.forEach((id) => {
+        if (next[id] === undefined) {
+          const machine = machinesSorted.find((m) => getMachineId(m) === id);
+          next[id] = machine?.brand === 'BOMAG';
+        }
+      });
+      return next;
+    });
+  }, [selectedMachines, selectedLine, machinesSorted]);
 
   // Persist editable values to localStorage
   useEffect(() => {
@@ -656,6 +759,27 @@ const MachineComparison = ({
     return editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
   };
 
+  // Estimated resale / residual value — single user-entered amount (USD), deducted from TCO
+  const getEffectiveRemainingValue = (machine: MachineSpec | MillingMachineSpec) => {
+    const machineId = getMachineId(machine);
+    return editableRemainingValue[machineId] ?? 0;
+  };
+
+  // Articulation joint greasing cost for a machine over `hours` of operation.
+  // Returns 0 if the machine has the maintenance-free joint USP enabled.
+  const getArticulationJointCost = (machine: MachineSpec | MillingMachineSpec, hours: number): number => {
+    if (selectedLine !== 'sdr') return 0;
+    const machineId = getMachineId(machine);
+    const hasFreeJoint = articulationJointUSPEnabled[machineId] ?? (machine.brand === 'BOMAG');
+    if (hasFreeJoint) return 0;
+    const ajTech = parseFloat(localStorage.getItem('aj_technicianRate') || '35') || 35;
+    const ajIdle = parseFloat(localStorage.getItem('aj_machineIdleRate') || '120') || 120;
+    const ajGrease = parseFloat(localStorage.getItem('aj_greaseCostPerIntervention') || '15') || 15;
+    const interventions = hours / 50;
+    const unproductiveHours = interventions * 0.5;
+    return unproductiveHours * ajTech + interventions * ajGrease + unproductiveHours * ajIdle;
+  };
+
   const getSelectedMachineData = () => {
     return machinesSorted.filter((machine) => {
       const machineId = getMachineId(machine);
@@ -663,16 +787,6 @@ const MachineComparison = ({
     });
   };
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
-  // Helper function to parse compaction performance
   const parseCompactionPerformance = (perfRaw: string) => {
     let perfAvg = 0;
     if (typeof perfRaw === 'string') {
@@ -698,7 +812,10 @@ const MachineComparison = ({
       'XCMG': 'bg-orange-500',
       'AMMANN': 'bg-green-600',
       'JCB': 'bg-yellow-600',
-      'WACKER NEUSON': 'bg-red-600'
+      'WACKER NEUSON': 'bg-red-600',
+      'Vögele': 'bg-indigo-600',
+      'Dynapac': 'bg-yellow-500',
+      'Caterpillar': 'bg-yellow-400'
     };
     return colors[brand as keyof typeof colors] || 'bg-gray-500';
   };
@@ -725,7 +842,7 @@ const MachineComparison = ({
   const getLocalizedText = (obj: any) => {
     if (!obj) return '';
     if (typeof obj === 'string') return obj;
-    return obj[language] || '';
+    return pickLocalizedWithFallback(obj, language);
   };
 
   const splitToBullets = (text: string): string[] => {
@@ -780,6 +897,10 @@ const MachineComparison = ({
     return bullets;
   };
 
+  const selectedMachineData = getSelectedMachineData();
+  const compareSpecCols = 1 + selectedMachineData.length;
+  const compareCostCols = 2 + selectedMachineData.length;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -787,7 +908,7 @@ const MachineComparison = ({
           {selectedLine.toUpperCase()} - {t('detailComparison')}
         </h3>
         <div className="text-sm text-gray-600">
-          {selectedMachines.length} máquinas seleccionadas para comparar
+          {selectedMachines.length} {t('machinesSelectedToCompare')}
         </div>
         <div className="flex items-center gap-2"></div>
       </div>
@@ -797,7 +918,7 @@ const MachineComparison = ({
         <div className="relative">
           <Input
             type="text"
-            placeholder="Buscar máquinas por marca, modelo o motor..."
+            placeholder={t('searchMachinesPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 pr-4 py-2 w-full"
@@ -824,29 +945,29 @@ const MachineComparison = ({
             checked={showOnlySelected}
             onCheckedChange={(v) => setShowOnlySelected(Boolean(v))}
           />
-          <span>Solo máquinas seleccionadas</span>
+          <span>{t('onlySelectedMachines')}</span>
         </div>
         {searchTerm && (
           <div className="mt-2 text-sm text-gray-600">
-            Mostrando {machinesSorted.length} máquina(s) que coinciden con "{searchTerm}"
+            {t('showingMatches', { count: machinesSorted.length, term: searchTerm })}
           </div>
         )}
       </div>
 
       {/* Machine Selection Grid */}
       {machinesSorted.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 items-stretch">
           {machinesSorted.map((machine, index) => (
           <Card
             key={index}
-            className={`relative ${selectedMachines.includes(getMachineId(machine)) ? 'border-2 border-yellow-400' : ''}`}
+            className={`relative flex h-full flex-col ${selectedMachines.includes(getMachineId(machine)) ? 'border-2 border-yellow-400' : ''}`}
           >
             <CardHeader className="pb-2">
               <div className="flex flex-col items-center justify-between">
                 <img src={getImagePath(machine.model, selectedLine)} alt={machine.model} className="w-full h-32 object-contain mb-2" />
                 {selectedMachines.includes(getMachineId(machine)) && (
                   <div className="absolute top-2 right-2">
-                    <Badge className="bg-bomag-yellow text-black border border-black/10">Seleccionada</Badge>
+                    <Badge className="bg-bomag-yellow text-black border border-black/10">{t('selected')}</Badge>
                   </div>
                 )}
                 <div className="flex items-center justify-between w-full">
@@ -860,38 +981,45 @@ const MachineComparison = ({
                 </div>
                 {machine.brand === 'BOMAG' && (machine as any).materialNumber && (
                   <div className="w-full text-[10px] text-gray-500 mt-1 text-right">
-                    Material: {(machine as any).materialNumber}
+                    {t('material')}: {(machine as any).materialNumber}
                   </div>
                 )}
               </div>
-              <CardTitle className="text-lg font-semibold">{machine.model}</CardTitle>
+              <CardTitle className="text-xl font-semibold">{machine.model}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-semibold">{t('weight')}:</span>
-                  <span className="font-medium">{machine.weight.toLocaleString()} kg</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-semibold">{t('power')}:</span>
-                  <span className="font-medium">{machine.power} HP</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-semibold">{t('compactionWidth')}:</span>
-                  <span className="font-medium">{machine.compactionWidth} m</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-semibold">{t('amplitude')}:</span>
-                  <span className="font-medium text-left">{formatMultiline(String(machine.amplitude || '-'))}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-gray-600 font-semibold">Telemetría:</span>
-                  <span className="font-medium whitespace-pre-line text-left">
-                    {typeof (machine as any).telemetry === 'object'
-                      ? formatMultiline(((machine as any).telemetry?.[language]) || '-')
-                      : formatMultiline(String((machine as any).telemetry || '-'))}
-                  </span>
-                </div>
+            <CardContent className="mt-auto flex flex-1 flex-col pt-0">
+              <div className="mt-auto">
+                {selectedLine === 'milling' ? (
+                  <>
+                    <CardSpecRow label={t('millingWidth')} value={(machine as MillingMachineSpec).millingWidth} />
+                    <CardSpecRow label={t('maxDepth')} value={(machine as MillingMachineSpec).maxDepth} />
+                    <CardSpecRow label={t('enginePower')} value={formatMultiline((machine as MillingMachineSpec).enginePower)} />
+                    <CardSpecRow label={t('operatingWeight')} value={millingText((machine as MillingMachineSpec).operatingWeight)} tall />
+                  </>
+                ) : selectedLine === 'pavers' ? (
+                  <>
+                    <CardSpecRow label={t('paverCardNominalPower')} value={formatMultiline((machine as PaverMachineSpec).nominalPower)} />
+                    <CardSpecRow label={t('paverCardMaxProduction')} value={paverText((machine as PaverMachineSpec).maxProduction)} />
+                    <CardSpecRow label={t('paverCardOperatingWeight')} value={formatMultiline(paverText((machine as PaverMachineSpec).operatingWeight))} tall />
+                    <CardSpecRow label={t('paverCardMinWorkingWidth')} value={paverText((machine as PaverMachineSpec).minWorkingWidth)} />
+                  </>
+                ) : (
+                  <>
+                    <CardSpecRow label={t('weight')} value={`${(machine as MachineSpec).weight.toLocaleString()} kg`} />
+                    <CardSpecRow label={t('power')} value={`${(machine as MachineSpec).power} HP`} />
+                    <CardSpecRow label={t('compactionWidth')} value={`${(machine as MachineSpec).compactionWidth} m`} />
+                    <CardSpecRow label={t('amplitude')} value={formatMultiline(String((machine as MachineSpec).amplitude || '-'))} />
+                    <CardSpecRow
+                      label={t('telemetry')}
+                      value={
+                        typeof (machine as any).telemetry === 'object'
+                          ? formatMultiline(pickLocalizedWithFallback((machine as any).telemetry, language) || '-')
+                          : formatMultiline(String((machine as any).telemetry || '-'))
+                      }
+                      tall
+                    />
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -899,16 +1027,16 @@ const MachineComparison = ({
         </div>
       ) : (
         <div className="text-center py-12">
-          <div className="text-gray-500 text-lg mb-2">No se encontraron máquinas</div>
+          <div className="text-gray-500 text-lg mb-2">{t('noMachinesFound')}</div>
           <div className="text-gray-400 text-sm">
-            {searchTerm ? `No hay máquinas que coincidan con "${searchTerm}"` : 'No hay máquinas disponibles'}
+            {searchTerm ? t('noMachinesMatching', { term: searchTerm }) : t('noMachinesAvailable')}
           </div>
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
               className="mt-4 text-bomag-blue hover:text-bomag-orange underline"
             >
-              Limpiar búsqueda
+              {t('clearSearch')}
             </button>
           )}
         </div>
@@ -918,26 +1046,82 @@ const MachineComparison = ({
       {selectedMachines.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>{t('compare')} - {selectedMachines.length} Máquinas</CardTitle>
+            <CardTitle>{t('compare')} - {selectedMachines.length} {t('machines')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="specs" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="specs">Especificaciones</TabsTrigger>
-                <TabsTrigger value="financial">Análisis Financiero</TabsTrigger>
+              <TabsList className={`grid w-full ${showFinancialTab ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                <TabsTrigger value="specs">{t('specifications')}</TabsTrigger>
+                {showFinancialTab && (
+                  <TabsTrigger value="financial">{t('financialAnalysis')}</TabsTrigger>
+                )}
               </TabsList>
               
               <TabsContent value="specs" className="mt-4 space-y-8">
                 {/* Basic Specifications Section */}
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Especificaciones Básicas</h4>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('basicSpecifications')}</h4>
+                  {selectedLine === 'pavers' ? (
+                    <>
+                    {(locale.paverSpecSections ?? []).map((section, sIdx) => (
+                      <div key={sIdx} className={sIdx > 0 ? 'mt-6' : ''}>
+                        <h5 className="text-md font-semibold text-gray-600 mb-3">{t(section.titleKey)}</h5>
+                        <div className="overflow-x-auto">
+                          <CompareTable columnCount={compareSpecCols}>
+                            <thead>
+                              <tr className="bg-bomag-light-gray">
+                                <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                                {getSelectedMachineData().map((machine, index) => (
+                                  <th key={index} className="border border-gray-300 p-2 text-center">
+                                    <div className="text-sm font-bold">{machine.brand}</div>
+                                    <div className="text-xs">{machine.model}</div>
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {section.rows.map((spec) => (
+                                <tr key={spec.key} className="hover:bg-gray-50">
+                                  <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(spec.labelKey)}</td>
+                                  {selectedMachineData.map((machine, index) => {
+                                    const value = (machine as PaverMachineSpec)[spec.key as keyof PaverMachineSpec];
+                                    const strVal = paverText(String(value ?? '-'));
+                                    const showAdvantage = paverHasCompetitiveAdvantage(
+                                      spec.key,
+                                      machine as PaverMachineSpec,
+                                      selectedMachineData as PaverMachineSpec[]
+                                    );
+                                    return (
+                                      <td key={index} className="border border-gray-300 p-2">
+                                        <div className="flex items-center justify-center gap-1 whitespace-pre-line">
+                                          <span>{formatMultiline(strVal)}</span>
+                                          {showAdvantage && (
+                                            <BomagAdvantageBadge title={t('bomagCompetitiveAdvantage')} />
+                                          )}
+                                        </div>
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </CompareTable>
+                        </div>
+                      </div>
+                    ))}
+                    <p className="mt-4 flex items-center justify-end gap-2 text-sm text-gray-600">
+                      <BomagAdvantageBadge title={t('bomagCompetitiveAdvantage')} />
+                      <span>{t('bomagAdvantageLegend')}</span>
+                    </p>
+                    </>
+                  ) : (
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-300">
+                    <CompareTable columnCount={compareSpecCols}>
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">Especificación</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
                           {getSelectedMachineData().map((machine, index) => (
-                            <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                            <th key={index} className="border border-gray-300 p-2 text-center">
                               <div className="text-sm font-bold">{machine.brand}</div>
                               <div className="text-xs">{machine.model}</div>
                             </th>
@@ -946,51 +1130,22 @@ const MachineComparison = ({
                       </thead>
                       <tbody>
                         {(() => {
-                          // Basic specs for all machines
-                          const basicSpecs = [
-                            { key: 'weight', label: t('weight'), unit: 'kg' },
-                            { key: 'engine', label: t('engine'), unit: '' },
-                            { key: 'compactionWidth', label: t('compactionWidth'), unit: 'm' },
-                            { key: 'power', label: t('power'), unit: 'HP' },
-                            { key: 'amplitude', label: t('amplitude'), unit: 'mm' },
-                            { key: 'staticLinearLoad', label: t('staticLinearLoad'), unit: 'Kg/cm' },
-                            { key: 'origin', label: t('origin'), unit: '' }
-                          ];
-                          
-                          // Add gradeability only for SDR machines
+                          if (selectedLine === 'milling') {
+                            const rows = (locale.basicSpecificationRowsMilling ?? []) as Array<{ key: string; labelKey: string }>;
+                            return rows.map(r => ({ key: r.key, label: t(r.labelKey), unit: '' }));
+                          }
+                          const commonRows = (locale.basicSpecificationRowsCommon ?? ['weight', 'engine', 'compactionWidth', 'power', 'amplitude', 'staticLinearLoad', 'origin']) as string[];
+                          const getLabel = (key: string) => {
+                            if (key === 'waterTankCapacity') return `${t('waterTankCapacity')} (L)`;
+                            if (key === 'asphaltManager') return t('asphaltManagerLabel');
+                            return t(key);
+                          };
+                          const basicSpecs: { key: string; label: string; unit: string }[] = commonRows.map(key => ({ key, label: getLabel(key), unit: key === 'weight' ? 'kg' : key === 'compactionWidth' ? 'm' : key === 'amplitude' ? 'mm' : key === 'staticLinearLoad' ? 'Kg/cm' : key === 'gradeability' ? '%' : '' }));
                           if (selectedLine === 'sdr' || selectedLine === 'htr') {
                             basicSpecs.splice(6, 0, { key: 'gradeability', label: t('gradeability'), unit: '%' });
                           }
-                          
-                          // Add LTR-specific fields
-                          if (selectedLine === 'ltr') {
-                            basicSpecs.push(
-                              { key: 'compactionSystem', label: 'Sistema de compactación', unit: '' },
-                              { key: 'waterTankCapacity', label: 'Capacidad tanque agua (L)', unit: '' }
-                            );
-                          }
-
-                          // Add HTR-specific fields
-                          if (selectedLine === 'htr') {
-                            basicSpecs.push(
-                              { key: 'compactionAssistant', label: 'Asistente de compactación', unit: '' },
-                              { key: 'asphaltManager', label: 'BOMAG ASPHALT MANAGER', unit: '' },
-                              { key: 'telemetry', label: 'Telemetría', unit: '' },
-                              { key: 'innovations', label: 'Tecnologías Innovadoras', unit: '' },
-                              { key: 'vibrationSystems', label: 'Sistemas de vibración / Notas', unit: '' },
-                              { key: 'maintenanceJoint', label: 'Junta de articulación libre de mantenimiento', unit: '' },
-                            );
-                          }
-
-                          // Add SDR-specific fields from CSV-derived data
-                          if (selectedLine === 'sdr') {
-                            basicSpecs.push(
-                              { key: 'compactionAssistant', label: 'Asistente de compactación', unit: '' },
-                              { key: 'telemetry', label: 'Telemetría', unit: '' },
-                              { key: 'innovations', label: 'Tecnologías Innovadoras', unit: '' },
-                            );
-                          }
-                          
+                          const lineRows = selectedLine === 'sdr' ? (locale.basicSpecificationRowsSdr ?? []) : selectedLine === 'ltr' ? (locale.basicSpecificationRowsLtr ?? []) : (locale.basicSpecificationRowsHtr ?? []);
+                          (lineRows as string[]).forEach(key => basicSpecs.push({ key, label: getLabel(key), unit: key === 'waterTankCapacity' ? 'L' : '' }));
                           return basicSpecs;
                         })().map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
@@ -1005,15 +1160,21 @@ const MachineComparison = ({
                               const cellAlign = isObj || isLong ? 'text-left' : 'text-center';
                               return (
                                 <td key={index} className={`border border-gray-300 p-2 ${cellAlign}`}>
-                                  {spec.key === 'weight' ? (
-                                    (machine.weight as number).toLocaleString()
+                                  {spec.key === 'weight' && typeof (machine as any).weight === 'number' ? (
+                                    ((machine as any).weight as number).toLocaleString()
                                   ) : isObj ? (
                                     <div className="whitespace-pre-line">
-                                      {formatMultiline(value[language] || '-')}
+                                      {formatMultiline(
+                                        selectedLine === 'milling'
+                                          ? millingText(pickLocalizedWithFallback(value, language) || '-')
+                                          : pickLocalizedWithFallback(value, language) || '-'
+                                      )}
                                     </div>
                                   ) : (
                                     <div className={isLong ? 'whitespace-pre-line' : ''}>
-                                      {formatMultiline(strVal || '-')}
+                                      {formatMultiline(
+                                        selectedLine === 'milling' ? millingText(strVal || '-') : strVal || '-'
+                                      )}
                                     </div>
                                   )}
                                 </td>
@@ -1022,19 +1183,21 @@ const MachineComparison = ({
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </CompareTable>
                   </div>
+                  )}
                 </div>
 
 
                 {/* USP Section */}
+                {uspRowsList.length > 0 && (
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">Propuestas de Valor Único (USP)</h4>
+                  <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('uspSectionTitle')}</h4>
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-300">
+                    <CompareTable columnCount={compareSpecCols}>
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">USP</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">{t('usp')}</th>
                           {getSelectedMachineData().map((machine, index) => (
                             <th key={index} className="border border-gray-300 p-2 text-center">
                               <div className="text-sm font-bold">{machine.brand}</div>
@@ -1044,23 +1207,20 @@ const MachineComparison = ({
                         </tr>
                       </thead>
                       <tbody>
-                        {[
-                          { key: 'usp1', label: 'USP 1 - Operación' },
-                          { key: 'usp2', label: 'USP 2 - Rendimiento' },
-                          { key: 'usp3', label: 'USP 3 - Dirección y Articulación' },
-                          { key: 'usp4', label: 'USP 4 - Confort y Operación' },
-                          { key: 'usp5', label: 'USP 5 - Sistemas/Medición de compactación' },
-                          { key: 'usp6', label: 'USP 6 - Mantenimiento' }
-                        ].map((spec) => (
+                        {uspRowsList.map((spec) => (
                           <tr key={spec.key} className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {spec.label}
+                              {t(spec.labelKey)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => (
                               <td key={index} className="border border-gray-300 p-2 text-left">
                                 {machine[spec.key as keyof MachineSpec] && typeof machine[spec.key as keyof MachineSpec] === 'object' ? (
                                   <div className="whitespace-pre-line">
-                                    {formatMultiline((machine[spec.key as keyof MachineSpec] as any)[language] || '-')}
+                                    {formatMultiline(
+                                      selectedLine === 'milling'
+                                        ? millingText(pickLocalizedWithFallback((machine[spec.key as keyof MachineSpec] as any), language) || '-')
+                                        : pickLocalizedWithFallback((machine[spec.key as keyof MachineSpec] as any), language) || '-'
+                                    )}
                                   </div>
                                 ) : (
                                   <span className="text-gray-400">-</span>
@@ -1070,22 +1230,143 @@ const MachineComparison = ({
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </CompareTable>
                   </div>
                 </div>
+                )}
+
+                {/* Preventive maintenance routine and costs (Milling only) */}
+                {selectedLine === 'milling' && (
+                  <div className="mt-8">
+                    <h4 className="text-lg font-semibold text-gray-700 mb-4">{t('preventiveMaintenanceRoutineAndCosts')}</h4>
+                    <div className="mb-4">
+                      <h5 className="text-md font-semibold text-gray-600 mb-3">{t('bm100020')}</h5>
+                      <div className="overflow-x-auto">
+                        <CompareTable columnCount={9}>
+                          <thead>
+                            <tr className="bg-bomag-light-gray">
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmRevision')}</th>
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmMaintenance')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmPeriod')}</th>
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmDescription')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmSapCode')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmQuantityPerMachine')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmUnit')}</th>
+                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmPublicPrice')}</th>
+                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmTotalPrice')}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {bm100020PreventiveMaintenance.map((row, idx) => (
+                              <tr key={idx} className="hover:bg-gray-50">
+                                <td className="border border-gray-300 p-2 text-left">{row.revision[language] ?? row.revision.en}</td>
+                                <td className="border border-gray-300 p-2 text-left">{row.maintenance[language] ?? row.maintenance.en}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.period}</td>
+                                <td className="border border-gray-300 p-2 text-left">{row.description[language] ?? row.description.en}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.sapCode}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.quantityPerMachine}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.unit}</td>
+                                <td className="border border-gray-300 p-2 text-right">{row.publicPrice != null ? formatFromUsd(row.publicPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
+                                <td className="border border-gray-300 p-2 text-right">{row.totalPrice != null ? formatFromUsd(row.totalPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </CompareTable>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </TabsContent>
 
+              {showFinancialTab && selectedLine === 'pavers' && (
+              <TabsContent value="financial" className="mt-4 space-y-8">
+                {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('paverFinancialFuelSection')}</h4>
+                    <div className="overflow-x-auto">
+                      <CompareTable columnCount={compareSpecCols}>
+                        <thead>
+                          <tr className="bg-bomag-light-gray">
+                            <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <th key={index} className="border border-gray-300 p-2 text-center">
+                                <div className="text-sm font-bold">{machine.brand}</div>
+                                <div className="text-xs">{machine.model}</div>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }>).map((row) => (
+                            <tr key={row.key} className="hover:bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
+                              {getSelectedMachineData().map((machine, index) => {
+                                const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
+                                const strVal = paverText(String(value));
+                                return (
+                                  <td key={index} className="border border-gray-300 p-2">
+                                    <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </CompareTable>
+                    </div>
+                  </div>
+                ) : null}
+                {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('paverFinancialWearSection')}</h4>
+                    <div className="overflow-x-auto">
+                      <CompareTable columnCount={compareSpecCols}>
+                        <thead>
+                          <tr className="bg-bomag-light-gray">
+                            <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <th key={index} className="border border-gray-300 p-2 text-center">
+                                <div className="text-sm font-bold">{machine.brand}</div>
+                                <div className="text-xs">{machine.model}</div>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }>).map((row) => (
+                            <tr key={row.key} className="hover:bg-gray-50">
+                              <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
+                              {getSelectedMachineData().map((machine, index) => {
+                                const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
+                                const strVal = paverText(String(value));
+                                return (
+                                  <td key={index} className="border border-gray-300 p-2">
+                                    <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </CompareTable>
+                    </div>
+                  </div>
+                ) : null}
+              </TabsContent>
+              )}
+
+              {showFinancialTab && selectedLine !== 'pavers' && (
               <TabsContent value="financial" className="mt-4 space-y-8">
                   {/* Performance Calculation Section */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">Cálculo de Rendimiento</h4>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('performanceCalculation')}</h4>
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <CompareTable columnCount={compareSpecCols}>
                         <thead>
                           <tr className="bg-bomag-light-gray">
-                            <th className="border border-gray-300 p-2 text-left font-semibold">Parámetro</th>
+                            <th className="border border-gray-300 p-2 text-left font-semibold">{t('parameter')}</th>
                             {getSelectedMachineData().map((machine, index) => (
-                              <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                              <th key={index} className="border border-gray-300 p-2 text-center">
                                 <div className="text-sm font-bold">{machine.brand}</div>
                                 <div className="text-xs">{machine.model}</div>
                               </th>
@@ -1097,24 +1378,24 @@ const MachineComparison = ({
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                             <div className="flex items-center justify-center gap-2">
-                              <span>Tipo de suelo</span>
+                              <span>{t('soilType')}</span>
                               <select
                                 className="h-6 text-xs border rounded px-1"
                                 value={selectedSoilType}
                                 onChange={(e) => setSelectedSoilType(e.target.value as SoilType)}
                               >
-                                <option value="rock">Roca</option>
-                                <option value="gravel">Grava, arena</option>
-                                <option value="mixedSoil">Suelo mixto</option>
-                                <option value="clay">Limo, arcilla</option>
+                                <option value="rock">{t('rock')}</option>
+                                <option value="gravel">{t('gravel')}</option>
+                                <option value="mixedSoil">{t('mixedSoil')}</option>
+                                <option value="clay">{t('clay')}</option>
                               </select>
                             </div>
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
                             <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                              {selectedSoilType === 'rock' ? 'Roca' : 
-                               selectedSoilType === 'gravel' ? 'Grava, arena' :
-                               selectedSoilType === 'mixedSoil' ? 'Suelo mixto' : 'Limo, arcilla'}
+                              {selectedSoilType === 'rock' ? t('rock') : 
+                               selectedSoilType === 'gravel' ? t('gravel') :
+                               selectedSoilType === 'mixedSoil' ? t('mixedSoil') : t('clay')}
                             </td>
                           ))}
                         </tr>
@@ -1186,8 +1467,8 @@ const MachineComparison = ({
                         {selectedLine === 'sdr' && (
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              ¿Tiene tecnología Economizer o Terrameter?
-                              <div className="text-xs text-gray-500 mt-1">Multiplicador x1.25</div>
+                              {t('economizerQuestion')}
+                              <div className="text-xs text-gray-500 mt-1">{t('economizerMultiplier')}</div>
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -1215,7 +1496,7 @@ const MachineComparison = ({
                             })}
                           </tr>
                         )}
-                        
+
                         {/* Fuel Consumption */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-medium bg-gray-50">
@@ -1254,27 +1535,29 @@ const MachineComparison = ({
                         {/* Fuel Price Row */}
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                            <div className="flex items-center justify-center gap-2">
-                              <span>Diesel (USD/L)</span>
+                            <div className="flex items-center justify-start gap-2">
+                              <span>{t('dieselPriceLabel', ccy)}</span>
                               <Input
                                 type="number"
                                 className="h-6 w-20 text-center"
-                                value={fuelPrice}
+                                value={usdToInputNumber(fuelPrice, 'fuelPerLiter')}
                                 onChange={(e) => {
-                                  const v = e.target.value === '' ? 1.2 : parseFloat(e.target.value);
-                                  const val = isNaN(v) ? 1.2 : v;
+                                  const raw = e.target.value;
+                                  const v = raw === '' ? NaN : parseFloat(raw);
+                                  const usd = Number.isNaN(v) ? 1.2 : inputNumberToUsd(v, 'fuelPerLiter');
+                                  const val = Math.max(0, usd);
                                   setFuelPrice(val);
                                   if (typeof window !== 'undefined') {
                                     localStorage.setItem('fuelPriceUSD', String(val));
                                   }
                                 }}
-                                placeholder="1.2"
+                                placeholder={String(usdToInputNumber(1.2, 'fuelPerLiter'))}
                               />
                             </div>
                           </td>
                           {getSelectedMachineData().map((machine, index) => (
                             <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                              ${fuelPrice.toFixed(2)}
+                              {formatFuelPerLiterFromUsd(fuelPrice)}
                             </td>
                           ))}
                         </tr>
@@ -1311,7 +1594,7 @@ const MachineComparison = ({
                           <tr className="hover:bg-gray-50">
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                               <div className="flex items-center justify-center gap-2">
-                                <span>Volumen (m³)</span>
+                                <span>{t('volumeM3')}</span>
                                 <Input
                                   type="number"
                                   className="h-6 w-20 text-center"
@@ -1334,11 +1617,11 @@ const MachineComparison = ({
                                   </DialogTrigger>
                                   <DialogContent className="sm:max-w-md">
                                     <DialogHeader>
-                                      <DialogTitle>Calculadora de Volumen</DialogTitle>
+                                      <DialogTitle>{t('volumeCalculator')}</DialogTitle>
                                     </DialogHeader>
                                     <div className="space-y-4">
                                       <div>
-                                        <Label htmlFor="length">Longitud de calzada (m)</Label>
+                                        <Label htmlFor="length">{t('roadLength')}</Label>
                                         <Input
                                           id="length"
                                           type="number"
@@ -1348,7 +1631,7 @@ const MachineComparison = ({
                                         />
                                       </div>
                                       <div>
-                                        <Label htmlFor="width">Ancho de calzada (m)</Label>
+                                        <Label htmlFor="width">{t('roadWidth')}</Label>
                                         <Input
                                           id="width"
                                           type="number"
@@ -1358,7 +1641,7 @@ const MachineComparison = ({
                                         />
                                       </div>
                                       <div>
-                                        <Label htmlFor="thickness">Espesor de capa (m)</Label>
+                                        <Label htmlFor="thickness">{t('layerThickness')}</Label>
                                         <Input
                                           id="thickness"
                                           type="number"
@@ -1369,7 +1652,7 @@ const MachineComparison = ({
                                         />
                                       </div>
                                       <div className="bg-gray-50 p-3 rounded">
-                                        <div className="text-sm text-gray-600">Volumen calculado:</div>
+                                        <div className="text-sm text-gray-600">{t('calculatedVolume')}</div>
                                         <div className="text-xl font-bold text-bomag-blue">
                                           {(lengthM * widthM * heightM).toFixed(2)} m³
                                         </div>
@@ -1386,13 +1669,13 @@ const MachineComparison = ({
                                           }}
                                           className="flex-1"
                                         >
-                                          Usar este volumen
+                                          {t('useThisVolume')}
                                         </Button>
                                         <Button 
                                           variant="outline" 
                                           onClick={() => setIsVolumeCalcOpen(false)}
                                         >
-                                          Cancelar
+                                          {t('cancel')}
                                         </Button>
                                       </div>
                                     </div>
@@ -1442,7 +1725,7 @@ const MachineComparison = ({
                                   const totalCost = hours * costPerHour;
                                   return (
                                     <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
-                                      {hours > 0 ? formatCurrency(totalCost) : '-'}
+                                      {hours > 0 ? formatFromUsd(totalCost) : '-'}
                                     </td>
                                   );
                                 })}
@@ -1450,31 +1733,32 @@ const MachineComparison = ({
                             </>
                           )}
                         </tbody>
-                      </table>
+                      </CompareTable>
                     </div>
                     
                     {/* Footnotes */}
                     <div className="mt-3 text-xs text-gray-600 italic space-y-1">
                       <div>
-                        <span className="text-red-500">*</span> <strong>Rendimiento:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag para un tipo de suelo grava-arena.
+                        <span className="text-red-500">*</span> <strong>{t('performance')}:</strong> {t('footnotePerformance')}
                       </div>
                       <div>
-                        <span className="text-blue-500">**</span> <strong>Capa de compactación:</strong> Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag. Considere que el máximo espesor sugerido por normativa suele ser 30 cm.
+                        <span className="text-blue-500">**</span> <strong>{t('compactionLayerLabel')}:</strong> {t('footnoteCompactionLayer')}
                       </div>
                       <div>
-                        <span className="text-green-500">***</span> <strong>Consumo de combustible:</strong> Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.
+                        <span className="text-green-500">***</span> <strong>{t('fuelConsumption')}:</strong> {t('footnoteFuelConsumption')}
                       </div>
                     </div>
                   </div>
 
                   {/* Costs Section */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">Costos</h4>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('costs')}</h4>
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <CompareTable columnCount={compareCostCols}>
                         <thead>
                           <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">Costos</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">#</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">{t('costs')}</th>
                             {getSelectedMachineData().map((machine, index) => (
                               <th key={index} className="border border-gray-300 p-2 text-center">
                                 <div className="text-sm font-bold">{machine.brand}</div>
@@ -1486,8 +1770,9 @@ const MachineComparison = ({
                         <tbody>
                           {/* Price Row - Editable */}
                           <tr className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500">1</td>
                             <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {t('price')}
+                              {t('price', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -1498,10 +1783,14 @@ const MachineComparison = ({
                                     <Input
                                       type="number"
                                       className="border rounded px-2 py-1 w-24 text-center bg-yellow-50"
-                                      value={effectivePrice}
+                                      value={usdToInputNumber(effectivePrice, 'aggregate')}
                                       onChange={e => {
-                                        const value = parseFloat(e.target.value);
-                                        setEditablePrice(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                        const raw = e.target.value;
+                                        const v = raw === '' ? NaN : parseFloat(raw);
+                                        setEditablePrice(prev => ({
+                                          ...prev,
+                                          [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'aggregate'),
+                                        }));
                                       }}
                                     />
                                   </div>
@@ -1509,9 +1798,47 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+
+                          {/* Operation Time Row - "Tiempo de operación a analizar" */}
+                          <tr className="hover:bg-sky-50/80 bg-sky-50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-sky-100">2</td>
+                            <td className="border border-gray-300 p-2 font-semibold bg-sky-100">
+                              <div className="flex items-center justify-start gap-2">
+                                <span>{t('operationTimeToAnalyze')}</span>
+                                <Input
+                                  type="number"
+                                  className="h-6 w-20 text-center bg-white"
+                                  value={operationTime}
+                                  onChange={(e) => {
+                                    const v = e.target.value === '' ? 3000 : parseFloat(e.target.value);
+                                    const val = isNaN(v) ? 3000 : v;
+                                    setOperationTime(val);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('operationTimeHours', String(val));
+                                    }
+                                  }}
+                                  placeholder="3000"
+                                />
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-sky-50">
+                                {operationTime.toLocaleString()} h
+                              </td>
+                            ))}
+                          </tr>
+
+                          {/* Category: Combustible */}
+                          <tr>
+                            <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 font-bold text-sm bg-orange-100 text-orange-900">
+                              {t('fuelCategory')}
+                            </td>
+                          </tr>
+
                           {/* Fuel Consumption Reference Row - Read Only */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                          <tr className="hover:bg-orange-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">3</td>
+                            <td className="border border-gray-300 p-2 font-medium bg-orange-50">
                               {t('fuelConsumption')} <span className="text-green-500">***</span> <span className="text-xs text-gray-500">(L/h)</span>
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
@@ -1527,10 +1854,66 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+                          {/* Fuel Price Row */}
+                          <tr className="hover:bg-orange-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">4</td>
+                            <td className="border border-gray-300 p-2 font-semibold bg-orange-50">
+                              <div className="flex items-center justify-start gap-2">
+                                <span>{t('dieselPriceLabel', ccy)}</span>
+                                <Input
+                                  type="number"
+                                  className="h-6 w-20 text-center"
+                                  value={usdToInputNumber(fuelPrice, 'fuelPerLiter')}
+                                  onChange={(e) => {
+                                    const raw = e.target.value;
+                                    const v = raw === '' ? NaN : parseFloat(raw);
+                                    const usd = Number.isNaN(v) ? 1.2 : inputNumberToUsd(v, 'fuelPerLiter');
+                                    const val = Math.max(0, usd);
+                                    setFuelPrice(val);
+                                    if (typeof window !== 'undefined') {
+                                      localStorage.setItem('fuelPriceUSD', String(val));
+                                    }
+                                  }}
+                                  placeholder={String(usdToInputNumber(1.2, 'fuelPerLiter'))}
+                                />
+                              </div>
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => (
+                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                {formatFuelPerLiterFromUsd(fuelPrice)}
+                              </td>
+                            ))}
+                          </tr>
+
+                          {/* Fuel Cost Calculation Row */}
+                          <tr className="hover:bg-orange-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">5</td>
+                            <td className="border border-gray-300 p-2 font-medium bg-orange-50">
+                              {t('fuelCostLabel')}
+                            </td>
+                            {getSelectedMachineData().map((machine, index) => {
+                              const fuelConsumption = getEffectiveFuelConsumption(machine);
+                              const fuelCost = fuelConsumption * operationTime * fuelPrice;
+                              return (
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                  {formatFromUsd(fuelCost)}
+                                </td>
+                              );
+                            })}
+                          </tr>
+
+                          {/* Category: Mantenimiento */}
+                          <tr>
+                            <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 font-bold text-sm bg-green-100 text-green-900">
+                              {t('maintenanceCategory')}
+                            </td>
+                          </tr>
+
                           {/* Preventive Maintenance Row - Editable */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {t('preventiveMaintenance')}
+                          <tr className="hover:bg-green-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-green-50">6</td>
+                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">
+                              {t('preventiveMaintenance', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -1541,10 +1924,14 @@ const MachineComparison = ({
                                     <Input
                                       type="number"
                                       className="border rounded px-2 py-1 w-20 text-center bg-yellow-50"
-                                      value={effectiveMaintenance}
+                                      value={usdToInputNumber(effectiveMaintenance, 'hourlyRate')}
                                       onChange={e => {
-                                        const value = parseFloat(e.target.value);
-                                        setEditablePreventiveMaintenance(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                        const raw = e.target.value;
+                                        const v = raw === '' ? NaN : parseFloat(raw);
+                                        setEditablePreventiveMaintenance(prev => ({
+                                          ...prev,
+                                          [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'hourlyRate'),
+                                        }));
                                       }}
                                     />
                                   </div>
@@ -1552,10 +1939,135 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+
+                          {/* Maintenance-free articulation joint USP selection (SDR only) */}
+                          {selectedLine === 'sdr' &&
+                            getSelectedMachineData().some((m) => (m as any).brand === 'BOMAG') && (
+                              <tr className="hover:bg-green-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-green-50">7</td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-green-50">
+                                  {t('maintenanceJointUSPQuestion')}
+                                </td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const machineId = getMachineId(machine);
+                                  const checked = articulationJointUSPEnabled[machineId] ?? (machine.brand === 'BOMAG');
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center">
+                                      <div className="flex items-center justify-center">
+                                        <Checkbox
+                                          checked={checked}
+                                          onCheckedChange={(checkedValue) => {
+                                            setArticulationJointUSPEnabled((prev) => ({
+                                              ...prev,
+                                              [machineId]: Boolean(checkedValue),
+                                            }));
+                                          }}
+                                        />
+                                      </div>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            )}
+
+                          {/* Articulation joint savings summary + toggle */}
+                          {selectedLine === 'sdr' &&
+                            getSelectedMachineData().some((m) => (m as any).brand === 'BOMAG') && (
+                              <tr className="hover:bg-green-50/50">
+                                <td
+                                  colSpan={getSelectedMachineData().length + 2}
+                                  className="border border-gray-300 p-2 bg-green-50"
+                                >
+                                  {(() => {
+                                    const selected = getSelectedMachineData();
+                                    const bomagMachine = selected.find((m) => m.brand === 'BOMAG');
+                                    const competitorMachine = selected.find((m) => m.brand !== 'BOMAG');
+                                    const bomagId = bomagMachine ? getMachineId(bomagMachine) : null;
+                                    const competitorId = competitorMachine ? getMachineId(competitorMachine) : null;
+                                    const bomagHas = bomagId ? (articulationJointUSPEnabled[bomagId] ?? true) : false;
+                                    const competitorHas = competitorId ? Boolean(articulationJointUSPEnabled[competitorId]) : false;
+
+                                    const ajTech = parseFloat(localStorage.getItem('aj_technicianRate') || '35') || 35;
+                                    const ajIdle = parseFloat(localStorage.getItem('aj_machineIdleRate') || '120') || 120;
+                                    const ajGrease = parseFloat(localStorage.getItem('aj_greaseCostPerIntervention') || '15') || 15;
+                                    const computeJointCost = (hasFree: boolean) => {
+                                      if (hasFree) return 0;
+                                      const interventions = operationTime / 50;
+                                      const unproductiveHours = interventions * 0.5;
+                                      return unproductiveHours * ajTech + interventions * ajGrease + unproductiveHours * ajIdle;
+                                    };
+                                    const savings = computeJointCost(competitorHas) - computeJointCost(bomagHas);
+
+                                    return (
+                                      <div className="flex items-center justify-between gap-4">
+                                        <div className="flex items-center gap-3">
+                                          {savings > 0 && (
+                                            <span className="inline-block rounded-full bg-blue-200 px-3 py-1 text-sm font-bold text-blue-900 tabular-nums">
+                                              {t('bomagSavingsPeriod')}: {formatFromUsd(savings)}
+                                            </span>
+                                          )}
+                                          {savings === 0 && (
+                                            <span className="text-sm text-gray-500">
+                                              {t('bomagSavingsPeriod')}: {formatFromUsd(0)}
+                                            </span>
+                                          )}
+                                        </div>
+                                        <button
+                                          type="button"
+                                          className="text-bomag-blue hover:underline text-sm font-medium shrink-0"
+                                          onClick={() => setShowArticulationVariables((prev) => !prev)}
+                                        >
+                                          {showArticulationVariables
+                                            ? t('hideArticulationVariables')
+                                            : t('showArticulationVariables')}
+                                        </button>
+                                      </div>
+                                    );
+                                  })()}
+                                </td>
+                              </tr>
+                            )}
+
+                          {/* Preventive maintenance - Articulation joint USP (SDR BOMAG) */}
+                          {selectedLine === 'sdr' &&
+                            getSelectedMachineData().some((m) => (m as any).brand === 'BOMAG') &&
+                            showArticulationVariables && (
+                              <tr className="hover:bg-green-50/50">
+                                <td
+                                  colSpan={getSelectedMachineData().length + 2}
+                                  className="border border-gray-300 p-0"
+                                >
+                                  <div className="p-4">
+                                    {(() => {
+                                      const selected = getSelectedMachineData();
+                                      const bomagMachine = selected.find((m) => m.brand === 'BOMAG');
+                                      const competitorMachine = selected.find((m) => m.brand !== 'BOMAG');
+
+                                      const bomagId = bomagMachine ? getMachineId(bomagMachine) : null;
+                                      const competitorId = competitorMachine ? getMachineId(competitorMachine) : null;
+
+                                      const bomagHas = bomagId ? (articulationJointUSPEnabled[bomagId] ?? true) : false;
+                                      const competitorHas = competitorId ? Boolean(articulationJointUSPEnabled[competitorId]) : false;
+
+                                      return (
+                                        <ArticulationJointCostAnalysis
+                                          show={true}
+                                          operationTime={operationTime}
+                                          bomagHasMaintenanceFreeJoint={bomagHas}
+                                          competitorHasMaintenanceFreeJoint={competitorHas}
+                                        />
+                                      );
+                                    })()}
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+
                           {/* Corrective Maintenance Row - Editable */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              {t('correctiveMaintenance')}
+                          <tr className="hover:bg-green-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-green-50">8</td>
+                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">
+                              {t('correctiveMaintenance', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -1566,10 +2078,14 @@ const MachineComparison = ({
                                     <Input
                                       type="number"
                                       className="border rounded px-2 py-1 w-20 text-center bg-yellow-50"
-                                      value={effectiveMaintenance}
+                                      value={usdToInputNumber(effectiveMaintenance, 'hourlyRate')}
                                       onChange={e => {
-                                        const value = parseFloat(e.target.value);
-                                        setEditableCorrectiveMaintenance(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                        const raw = e.target.value;
+                                        const v = raw === '' ? NaN : parseFloat(raw);
+                                        setEditableCorrectiveMaintenance(prev => ({
+                                          ...prev,
+                                          [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'hourlyRate'),
+                                        }));
                                       }}
                                     />
                                   </div>
@@ -1577,111 +2093,85 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
-                          {/* Fuel Price Row */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              <div className="flex items-center justify-center gap-2">
-                                <span>Diesel (USD/L)</span>
-                                <Input
-                                  type="number"
-                                  className="h-6 w-20 text-center"
-                                  value={fuelPrice}
-                                  onChange={(e) => {
-                                    const v = e.target.value === '' ? 1.2 : parseFloat(e.target.value);
-                                    const val = isNaN(v) ? 1.2 : v;
-                                    setFuelPrice(val);
-                                    if (typeof window !== 'undefined') {
-                                      localStorage.setItem('fuelPriceUSD', String(val));
-                                    }
-                                  }}
-                                  placeholder="1.2"
-                                />
-                              </div>
+                          {/* Category: Resale value — manual estimate */}
+                          <tr>
+                            <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 bg-purple-100">
+                              <div className="font-bold text-sm text-purple-900">{t('resaleCategory')}</div>
                             </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                ${fuelPrice.toFixed(2)}
-                              </td>
-                            ))}
                           </tr>
-
-                          {/* Operation Time Row */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
-                              <div className="flex items-center justify-center gap-2">
-                                <span>Tiempo de operación (h)</span>
-                                <Input
-                                  type="number"
-                                  className="h-6 w-20 text-center"
-                                  value={operationTime}
-                                  onChange={(e) => {
-                                    const v = e.target.value === '' ? 3000 : parseFloat(e.target.value);
-                                    const val = isNaN(v) ? 3000 : v;
-                                    setOperationTime(val);
-                                    if (typeof window !== 'undefined') {
-                                      localStorage.setItem('operationTimeHours', String(val));
-                                    }
-                                  }}
-                                  placeholder="3000"
-                                />
-                              </div>
+                          <tr>
+                            <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 bg-purple-50/80">
+                              <p className="text-xs text-purple-900 leading-relaxed">{t('resaleValueHint', ccy)}</p>
                             </td>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                {operationTime.toLocaleString()} h
-                              </td>
-                            ))}
                           </tr>
-                          {/* Fuel Cost Calculation Row */}
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              Costo de combustible
+                          <tr className="hover:bg-purple-50/50">
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-purple-50">9</td>
+                            <td className="border border-gray-300 p-2 font-semibold bg-purple-50">
+                              {t('manualResaleValue', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const fuelConsumption = getEffectiveFuelConsumption(machine);
-                              const fuelCost = fuelConsumption * operationTime * fuelPrice;
+                              const machineId = getMachineId(machine);
+                              const value = editableRemainingValue[machineId] ?? 0;
                               return (
-                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {formatCurrency(fuelCost)}
+                                <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-yellow-50">
+                                  <div className="flex justify-center">
+                                    <Input
+                                      type="number"
+                                      className="border rounded px-2 py-1 w-28 text-center bg-yellow-50"
+                                      value={usdToInputNumber(value, 'aggregate')}
+                                      onChange={e => {
+                                        const raw = e.target.value;
+                                        const v = raw === '' ? NaN : parseFloat(raw);
+                                        setEditableRemainingValue(prev => ({
+                                          ...prev,
+                                          [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'aggregate'),
+                                        }));
+                                      }}
+                                      placeholder="0"
+                                    />
+                                  </div>
                                 </td>
                               );
                             })}
                           </tr>
-                          {/* TCO Row */}
+                          {/* TCO Row (includes deduction for resale estimate) */}
                           <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-medium bg-gray-50">
-                              {t('tco')}
+                            <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500"></td>
+                            <td className="border border-gray-300 p-2 font-bold bg-gray-100">
+                              {t('tco', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const price = getEffectivePrice(machine);
                               const fuelConsumption = getEffectiveFuelConsumption(machine);
                               const preventiveMaintenance = getEffectivePreventiveMaintenance(machine);
                               const correctiveMaintenance = getEffectiveCorrectiveMaintenance(machine);
+                              const remainingValue = getEffectiveRemainingValue(machine);
                               const fuelCost = fuelConsumption * operationTime * fuelPrice;
                               const maintenanceCost = operationTime * (preventiveMaintenance + correctiveMaintenance);
-                              const tco = price + fuelCost + maintenanceCost;
+                              const jointCost = getArticulationJointCost(machine, operationTime);
+                              const tco = price + fuelCost + maintenanceCost + jointCost - remainingValue;
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
-                                  {formatCurrency(tco)}
+                                  {formatFromUsd(tco)}
                                 </td>
                               );
                             })}
                           </tr>
                         </tbody>
-                      </table>
+                      </CompareTable>
                     </div>
                   </div>
 
                   {/* TCO Timeline Section */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">TCO Progresivo</h4>
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('tcoProgressive')}</h4>
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <CompareTable columnCount={compareSpecCols}>
                         <thead>
                           <tr className="bg-bomag-light-gray">
-                            <th className="border border-gray-300 p-2 text-left">Horas</th>
+                            <th className="border border-gray-300 p-2 text-left">{t('hoursLabel')}</th>
                             {getSelectedMachineData().map((machine, index) => (
-                              <th key={index} className="border border-gray-300 p-2 text-center min-w-32">
+                              <th key={index} className="border border-gray-300 p-2 text-center">
                                 <div className="text-sm font-bold">{machine.brand}</div>
                                 <div className="text-xs">{machine.model}</div>
                               </th>
@@ -1689,8 +2179,8 @@ const MachineComparison = ({
                           </tr>
                         </thead>
                       <tbody>
-                        {[0, 1000, 1500, 2000, 2500, 3000].map(hours => {
-                          // Gather all TCOs for this row
+                        {[0, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000].map(hours => {
+                          // Gather all TCOs for this row (net of remaining value)
                           const tcos = getSelectedMachineData().map((machine, index) => {
                             const machineId = getMachineId(machine);
                             const tco0 = editableTCO[machineId] !== undefined
@@ -1701,8 +2191,10 @@ const MachineComparison = ({
                               tco = tco0
                                 + hours * getEffectiveFuelConsumption(machine) * fuelPrice
                                 + hours * getEffectivePreventiveMaintenance(machine)
-                                + hours * getEffectiveCorrectiveMaintenance(machine);
+                                + hours * getEffectiveCorrectiveMaintenance(machine)
+                                + getArticulationJointCost(machine, hours);
                             }
+                            tco -= getEffectiveRemainingValue(machine);
                             return tco;
                           });
                           const min = Math.min(...tcos);
@@ -1720,24 +2212,30 @@ const MachineComparison = ({
                                   tco = tco0
                                     + hours * getEffectiveFuelConsumption(machine) * fuelPrice
                                     + hours * getEffectivePreventiveMaintenance(machine)
-                                    + hours * getEffectiveCorrectiveMaintenance(machine);
+                                    + hours * getEffectiveCorrectiveMaintenance(machine)
+                                    + getArticulationJointCost(machine, hours);
                                 }
+                                tco -= getEffectiveRemainingValue(machine);
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">
                                     {hours === 0 ? (
                                       <input
                                         type="number"
                                         className="border rounded px-2 py-1 w-24 text-right"
-                                        value={tco0}
+                                        value={usdToInputNumber(tco0, 'aggregate')}
                                         onChange={e => {
-                                          const value = parseFloat(e.target.value);
-                                          setEditableTCO(prev => ({ ...prev, [machineId]: isNaN(value) ? 0 : value }));
+                                          const raw = e.target.value;
+                                          const v = raw === '' ? NaN : parseFloat(raw);
+                                          setEditableTCO(prev => ({
+                                            ...prev,
+                                            [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'aggregate'),
+                                          }));
                                         }}
                                       />
                                     ) : (
                                       <div>
                                         <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
-                                          TCO: {formatCurrency(tco)}
+                                          TCO: {formatFromUsd(tco)}
                                         </div>
                                       </div>
                                     )}
@@ -1748,10 +2246,11 @@ const MachineComparison = ({
                           );
                         })}
                       </tbody>
-                    </table>
+                    </CompareTable>
                   </div>
                   </div>
                 </TabsContent>
+              )}
             </Tabs>
           </CardContent>
         </Card>

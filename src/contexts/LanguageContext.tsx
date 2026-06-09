@@ -1,250 +1,42 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import en from '@/locales/en.json';
+import es from '@/locales/es.json';
+import de from '@/locales/de.json';
+import pt from '@/locales/pt.json';
 
 export type Language = 'es' | 'en' | 'de' | 'pt';
+
+export interface LocaleSpec {
+  basicSpecificationRowsCommon?: string[];
+  basicSpecificationRowsSdr?: string[];
+  basicSpecificationRowsLtr?: string[];
+  basicSpecificationRowsHtr?: string[];
+  basicSpecificationRowsMilling?: Array<{ key: string; labelKey: string }>;
+  paverSpecSections?: Array<{ titleKey: string; rows: Array<{ key: string; labelKey: string }> }>;
+  uspRows?: Array<{ key: string; labelKey: string }>;
+  millingUspRows?: Array<{ key: string; labelKey: string }>;
+  [key: string]: unknown;
+}
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+  locale: LocaleSpec;
 }
 
-const translations = {
-  es: {
-    title: 'Comparador de Productos BOMAG',
-    productLines: 'Líneas de Productos',
-    sdr: 'SDR - Rodillo de Tambor Simple',
-    ltr: 'LTR - Rodillo Tandem Ligero',
-    htr: 'HTR - Rodillo Tandem Pesado',
-    compare: 'Comparar',
-    specifications: 'Especificaciones',
-    performance: 'Rendimiento',
-    calculator: 'Calculadora de Rendimiento',
-    brand: 'Marca',
-    model: 'Modelo',
-    weight: 'Peso (Kg)',
-    engine: 'Motor',
-    compactionWidth: 'Ancho de compactación (m)',
-    power: 'Potencia (HP)',
-    amplitude: 'Amplitud (mm)',
-    staticLinearLoad: 'Carga Lineal Estática (Kg/cm)',
-    gradeability: 'Gradeabilidad (%)',
-    origin: 'País de origen',
-    compactionAssistant: 'Asistente de compactación',
-    telemetry: 'Telemetría',
-    innovations: 'Tecnologías Innovadoras',
-    usp: 'USP',
-    usp1: 'USP 1 - Operación',
-    usp2: 'USP 2 - Rendimiento',
-    usp3: 'USP 3 - Confort y Seguridad',
-    usp4: 'USP 4 - Compactación Eficiente',
-    usp5: 'USP 5 - Mantenimiento',
-    maxCompactionDepth: 'Profundidad de compactación máx (cm)',
-    compactionPerformance: 'Rendimiento en compactación (m³/h)',
-    fuelConsumption: 'Consumo de combustible (L/h)',
-    dieselPrice: 'Valor diésel/ lt (USD)',
-    price: 'Precio CIF (USD)',
-    preventiveMaintenance: 'Mantenimiento preventivo (USD/h)',
-    correctiveMaintenance: 'Mantenimiento correctivo (USD/h)',
-    usageTime: 'Tiempo de uso (h)',
-    operationTime: 'Tiempo de operación (h)',
-    tco: 'TCO (USD)',
-    soilType: 'Tipo de Suelo',
-    operatingWeight: 'Peso Operativo (t)',
-    rock: 'Roca',
-    gravel: 'Grava, arena',
-    mixedSoil: 'Suelo mixto',
-    clay: 'Limo, arcilla',
-    compactionHeight: 'Altura de capa compactada según tipo de suelo y peso operativo',
-    compactionOutput: 'Rendimiento de compactación según tipo de suelo y peso operativo',
-    compactionSystem: 'Sistema de compactación',
-    waterTankCapacity: 'Capacidad tanque agua',
-    compactionControlAssistants: 'Asistentes de control de compactación',
-    sdrDesc: 'Rodillos de un solo tambor para compactación de suelos',
-    ltrDesc: 'Rodillos tandem ligeros para trabajos de compactación versátiles',
-    htrDesc: 'Rodillos tandem pesados para proyectos de gran escala',
-    globalSummary: 'Resumen Global',
-    detailComparison: 'Comparación Detallada',
-    restoreAll: 'Restaurar Todo',
-    timeEstimated: 'Tiempo Estimado (h)',
-    costBasedOnEstimatedTime: 'Costo (basado en tiempo estimado)',
-  },
-  en: {
-    title: 'BOMAG Product Comparator',
-    productLines: 'Product Lines',
-    sdr: 'SDR - Single Drum Roller',
-    ltr: 'LTR - Light Tandem Roller',
-    htr: 'HTR - Heavy Tandem Roller',
-    compare: 'Compare',
-    specifications: 'Specifications',
-    performance: 'Performance',
-    calculator: 'Performance Calculator',
-    brand: 'Brand',
-    model: 'Model',
-    weight: 'Weight (Kg)',
-    engine: 'Engine',
-    compactionWidth: 'Compaction Width (m)',
-    power: 'Power (HP)',
-    amplitude: 'Amplitude (mm)',
-    staticLinearLoad: 'Static Linear Load (Kg/cm)',
-    gradeability: 'Gradeability (%)',
-    origin: 'Country of origin',
-    compactionAssistant: 'Compaction Assistant',
-    telemetry: 'Telemetry',
-    innovations: 'Innovative Technologies',
-    usp: 'USP',
-    usp1: 'USP 1 - Operation',
-    usp2: 'USP 2 - Performance',
-    usp3: 'USP 3 - Comfort and Safety',
-    usp4: 'USP 4 - Efficient Compaction',
-    usp5: 'USP 5 - Maintenance',
-    maxCompactionDepth: 'Max compaction depth (cm)',
-    compactionPerformance: 'Compaction performance (m³/h)',
-    fuelConsumption: 'Fuel consumption (L/h)',
-    dieselPrice: 'Diesel price / L (USD)',
-    price: 'CIF Price (USD)',
-    preventiveMaintenance: 'Preventive maintenance (USD/h)',
-    correctiveMaintenance: 'Corrective maintenance (USD/h)',
-    usageTime: 'Usage time (h)',
-    operationTime: 'Operation time (h)',
-    tco: 'TCO (USD)',
-    soilType: 'Soil Type',
-    operatingWeight: 'Operating Weight (t)',
-    rock: 'Rock',
-    gravel: 'Gravel, sand',
-    mixedSoil: 'Mixed soil',
-    clay: 'Silt, clay',
-    compactionHeight: 'Compacted layer height by soil type and operating weight',
-    compactionOutput: 'Compaction output by soil type and operating weight',
-    compactionSystem: 'Compaction System',
-    waterTankCapacity: 'Water Tank Capacity',
-    compactionControlAssistants: 'Compaction Control Assistants',
-    sdrDesc: 'Single drum rollers for soil and asphalt compaction',
-    ltrDesc: 'Light tandem rollers for versatile compaction jobs',
-    htrDesc: 'Heavy tandem rollers for large-scale projects',
-    globalSummary: 'Global Summary',
-    detailComparison: 'Detail Comparison',
-    restoreAll: 'Restore All',
-    timeEstimated: 'Time Estimated (h)',
-    costBasedOnEstimatedTime: 'Cost (based on estimated time)',
-  },
-  de: {
-    title: 'BOMAG Produktvergleich',
-    productLines: 'Produktlinien',
-    sdr: 'SDR - Einzylinderwalze',
-    ltr: 'LTR - Leichte Tandemwalze',
-    htr: 'HTR - Schwere Tandemwalze',
-    compare: 'Vergleichen',
-    specifications: 'Spezifikationen',
-    performance: 'Leistung',
-    calculator: 'Leistungsrechner',
-    brand: 'Marke',
-    model: 'Modell',
-    weight: 'Gewicht (Kg)',
-    engine: 'Motor',
-    compactionWidth: 'Verdichtungsbreite (m)',
-    power: 'Leistung (HP)',
-    amplitude: 'Amplitude (mm)',
-    staticLinearLoad: 'Statische Linienlast (Kg/cm)',
-    gradeability: 'Steigfähigkeit (%)',
-    origin: 'Herkunftsland',
-    compactionAssistant: 'Verdichtungsassistent',
-    telemetry: 'Telemetrie',
-    innovations: 'Innovative Technologien',
-    usp: 'USP',
-    usp1: 'USP 1 - Bedienung',
-    usp2: 'USP 2 - Leistung',
-    usp3: 'USP 3 - Komfort und Sicherheit',
-    usp4: 'USP 4 - Effiziente Verdichtung',
-    usp5: 'USP 5 - Wartung',
-    maxCompactionDepth: 'Max. Verdichtungstiefe (cm)',
-    compactionPerformance: 'Verdichtungsleistung (m³/h)',
-    fuelConsumption: 'Kraftstoffverbrauch (L/h)',
-    dieselPrice: 'Dieselpreis / L (USD)',
-    price: 'CIF-Preis (USD)',
-    preventiveMaintenance: 'Vorbeugende Wartung (USD/h)',
-    correctiveMaintenance: 'Korrektive Wartung (USD/h)',
-    usageTime: 'Nutzungszeit (h)',
-    operationTime: 'Betriebszeit (h)',
-    tco: 'TCO (USD)',
-    soilType: 'Bodenart',
-    operatingWeight: 'Betriebsgewicht (t)',
-    rock: 'Felsen',
-    gravel: 'Kies, Sand',
-    mixedSoil: 'Mischboden',
-    clay: 'Schluff, Ton',
-    compactionHeight: 'Verdichtete Schichthöhe nach Bodenart und Betriebsgewicht',
-    compactionOutput: 'Verdichtungsleistung nach Bodenart und Betriebsgewicht',
-    compactionSystem: 'Verdichtungssystem',
-    waterTankCapacity: 'Wassertankkapazität',
-    compactionControlAssistants: 'Verdichtungskontrollassistenten',
-    sdrDesc: 'Einzeltrommelwalzen für die Verdichtung von Boden und Asphalt',
-    ltrDesc: 'Leichte Tandemwalzen für vielseitige Verdichtungsarbeiten',
-    htrDesc: 'Schwere Tandemwalzen für Großprojekte',
-    globalSummary: 'Globale Übersicht',
-    detailComparison: 'Detailvergleich',
-    restoreAll: 'Alles wiederherstellen',
-    timeEstimated: 'Geschätzte Zeit (h)',
-    costBasedOnEstimatedTime: 'Kosten (basierend auf geschätzter Zeit)',
-  },
-  pt: {
-    title: 'Comparador de Produtos BOMAG',
-    productLines: 'Linhas de Produtos',
-    sdr: 'SDR - Rolo de Tambor Único',
-    ltr: 'LTR - Rolo Tandem Leve',
-    htr: 'HTR - Rolo Tandem Pesado',
-    compare: 'Comparar',
-    specifications: 'Especificações',
-    performance: 'Desempenho',
-    calculator: 'Calculadora de Desempenho',
-    brand: 'Marca',
-    model: 'Modelo',
-    weight: 'Peso (Kg)',
-    engine: 'Motor',
-    compactionWidth: 'Largura de compactação (m)',
-    power: 'Potência (HP)',
-    amplitude: 'Amplitude (mm)',
-    staticLinearLoad: 'Carga Linear Estática (Kg/cm)',
-    gradeability: 'Rampabilidade (%)',
-    origin: 'País de origem',
-    compactionAssistant: 'Assistente de compactação',
-    telemetry: 'Telemetria',
-    innovations: 'Tecnologias Inovadoras',
-    usp: 'USP',
-    usp1: 'USP 1 - Operação',
-    usp2: 'USP 2 - Desempenho',
-    usp3: 'USP 3 - Conforto e Segurança',
-    usp4: 'USP 4 - Compactação Eficiente',
-    usp5: 'USP 5 - Manutenção',
-    maxCompactionDepth: 'Profundidade máxima de compactação (cm)',
-    compactionPerformance: 'Desempenho de compactação (m³/h)',
-    fuelConsumption: 'Consumo de combustível (L/h)',
-    dieselPrice: 'Preço do diesel / L (USD)',
-    price: 'Preço CIF (USD)',
-    preventiveMaintenance: 'Manutenção preventiva (USD/h)',
-    correctiveMaintenance: 'Manutenção corretiva (USD/h)',
-    usageTime: 'Tempo de uso (h)',
-    operationTime: 'Tempo de operação (h)',
-    tco: 'TCO (USD)',
-    soilType: 'Tipo de Solo',
-    operatingWeight: 'Peso Operacional (t)',
-    rock: 'Rocha',
-    gravel: 'Cascalho, areia',
-    mixedSoil: 'Solo misto',
-    clay: 'Silte, argila',
-    compactionHeight: 'Altura da camada compactada por tipo de solo e peso operacional',
-    compactionOutput: 'Desempenho de compactação por tipo de solo e peso operacional',
-    compactionSystem: 'Sistema de compactação',
-    waterTankCapacity: 'Capacidade do tanque de água',
-    compactionControlAssistants: 'Assistentes de controle de compactação',
-    sdrDesc: 'Rolos de tambor único para compactação de solo e asfalto',
-    ltrDesc: 'Rolos tandem leves para trabalhos de compactação versáteis',
-    htrDesc: 'Rolos tandem pesados para projetos de grande escala',
-    globalSummary: 'Resumo Global',
-    detailComparison: 'Comparação Detalhada',
-    restoreAll: 'Restaurar Tudo',
-    timeEstimated: 'Tempo Estimado (h)',
-    costBasedOnEstimatedTime: 'Custo (baseado no tempo estimado)',
-  }
+const localeData: Record<Language, LocaleSpec> = {
+  es: es as LocaleSpec,
+  en: en as LocaleSpec,
+  de: de as LocaleSpec,
+  pt: pt as LocaleSpec,
+};
+
+const translations: Record<Language, Record<string, string>> = {
+  es: es as Record<string, string>,
+  en: en as Record<string, string>,
+  de: de as Record<string, string>,
+  pt: pt as Record<string, string>,
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -252,12 +44,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('es');
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+  const t = (key: string, vars?: Record<string, string | number>): string => {
+    const raw = translations[language][key] ?? key;
+    if (!vars) return raw;
+    return Object.entries(vars).reduce((acc, [k, v]) => {
+      return acc.replaceAll(`{{${k}}}`, String(v));
+    }, raw);
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, locale: localeData[language] }}>
       {children}
     </LanguageContext.Provider>
   );

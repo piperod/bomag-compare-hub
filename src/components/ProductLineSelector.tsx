@@ -31,13 +31,27 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
       description: t('htrDesc'),
       icon: `${base}htricon.webp`,
       alt: 'Heavy Tandem Roller Icon'
+    },
+    {
+      id: 'milling',
+      title: t('milling'),
+      description: t('millingDesc'),
+      icon: `${base}images/Milling/BM1000-20.png`,
+      alt: 'Milling Machine Icon'
+    },
+    {
+      id: 'pavers',
+      title: t('pavers'),
+      description: t('paversDesc'),
+      icon: `${base}images/Pavers/BF600-C-3.png`,
+      alt: 'Paver Icon'
     }
   ];
 
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-bold text-bomag-gray mb-6">{t('productLines')}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {productLines.map((line) => (
           <Card
             key={line.id}

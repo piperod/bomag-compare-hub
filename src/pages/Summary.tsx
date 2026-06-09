@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage, LanguageProvider } from '@/contexts/LanguageContext';
+import { pickLocalizedWithFallback } from '@/utils/localizedText';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { sdrMachines, ltrMachines } from '@/data/machineData';
 import React from 'react';
 import { Card } from '@/components/ui/card';
@@ -8,8 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
+import { CompareTable } from '@/components/CompareTable';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { LanguageProvider } from '@/contexts/LanguageContext';
 
 interface SummaryProps {
   editableTCO: { [key: string]: number };
@@ -52,15 +54,15 @@ const summaryFields = [
   { key: 'usp5', labelKey: 'usp5', multilanguage: true },
   { key: 'maxCompactionDepth', labelKey: 'maxCompactionDepth', format: v => v ? v + ' cm' : '-' },
   { key: 'compactionPerformance', labelKey: 'compactionPerformance' },
-  // Editable diesel price per machine (USD per liter)
-  { key: 'dieselPrice', labelKey: 'dieselPrice', format: v => '$' + v },
+  // Stored values are USD; display uses header currency selector
+  { key: 'dieselPrice', labelKey: 'dieselPrice' },
   { key: 'fuelConsumption', labelKey: 'fuelConsumption', format: v => v + ' L/h' },
-  { key: 'price', labelKey: 'price', format: v => '$' + v.toLocaleString() },
-  { key: 'preventiveMaintenance', labelKey: 'preventiveMaintenance', format: v => '$' + v },
-  { key: 'correctiveMaintenance', labelKey: 'correctiveMaintenance', format: v => '$' + v },
+  { key: 'price', labelKey: 'price' },
+  { key: 'preventiveMaintenance', labelKey: 'preventiveMaintenance' },
+  { key: 'correctiveMaintenance', labelKey: 'correctiveMaintenance' },
   { key: 'usageTime', labelKey: 'usageTime', format: v => v + ' h' },
   { key: 'operationTime', labelKey: 'operationTime', format: v => v + ' h' },
-  { key: 'tco', labelKey: 'tco', format: v => '$' + v.toLocaleString() },
+  { key: 'tco', labelKey: 'tco' },
   // Calculated fields appended later: timeEstimated and costByTime
 ];
 
@@ -113,15 +115,6 @@ function getPriceColor(value: number, min: number, max: number) {
   }
 }
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-}
-
 export default function SummaryPage() {
   return (
     <LanguageProvider>
@@ -150,6 +143,22 @@ function Summary({
   setEditableCorrectiveMaintenance 
 }: SummaryProps) {
   const { t, language } = useLanguage();
+  const { formatFromUsd, currency, usdToInputNumber, inputNumberToUsd } = useCurrency();
+  const ccy = { currency };
+
+  const moneyFieldKeys = new Set([
+    'dieselPrice',
+    'price',
+    'preventiveMaintenance',
+    'correctiveMaintenance',
+    'tco',
+  ]);
+
+  const moneyInputKind = (key: string): 'aggregate' | 'fuelPerLiter' | 'hourlyRate' => {
+    if (key === 'dieselPrice') return 'fuelPerLiter';
+    if (key === 'price') return 'aggregate';
+    return 'hourlyRate';
+  };
   const [selectedLine, setSelectedLine] = useState('sdr');
   const machines = machineLines.find(l => l.key === selectedLine)?.machines || [];
   const machinesSorted = React.useMemo(() => {
@@ -267,6 +276,7 @@ function Summary({
 
   // Defensive: filter out indices that are out of bounds
   const safeVisibleMachines = visibleMachines.filter(i => machinesSorted[i]);
+  const summaryTableCols = 1 + safeVisibleMachines.length;
 
   const removeMachine = (idx: number) => {
     setVisibleMachines(v => v.filter(i => i !== idx));
@@ -333,13 +343,13 @@ function Summary({
             </TabsList>
           </Tabs>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse border border-gray-300 text-xs">
+            <CompareTable columnCount={summaryTableCols} className="text-xs">
               <thead>
                 <tr className="bg-bomag-light-gray">
                   <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">{t('specifications')}</th>
                   {safeVisibleMachines.map(idx => (
-                    <th key={idx} className="border border-gray-300 p-2 text-center min-w-40 relative">
-                      <button onClick={() => removeMachine(idx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title="Remove">×</button>
+                    <th key={idx} className="border border-gray-300 p-2 text-center relative">
+                      <button onClick={() => removeMachine(idx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title={t('remove')}>×</button>
                       <div className="flex flex-col items-center">
                         <img src={getImagePath(machinesSorted[idx].model, machinesSorted[idx].line || selectedLine.toUpperCase())} alt={machinesSorted[idx].model} className="h-16 object-contain mb-1" />
                         <div className="font-bold">{machinesSorted[idx].brand}</div>
@@ -355,34 +365,59 @@ function Summary({
                   return (
                     <tr key={field.key} className="hover:bg-gray-50">
                       <td className="border border-gray-300 p-2 font-medium bg-gray-50 sticky left-0 bg-bomag-light-gray z-10 relative">
-                        {t(field.labelKey)}
-                        <button onClick={() => removeField(fIdx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title="Remove">×</button>
+                        {moneyFieldKeys.has(field.key) ? t(field.labelKey, ccy) : t(field.labelKey)}
+                        <button onClick={() => removeField(fIdx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title={t('remove')}>×</button>
                       </td>
                       {safeVisibleMachines.map(mIdx => {
                         // Editable fields
                         if (["price", "preventiveMaintenance", "correctiveMaintenance", "usageTime", "operationTime", "dieselPrice", "fuelConsumption"].includes(field.key)) {
                           const val = getFieldValue(mIdx, field.key);
+                          const isMoney =
+                            field.key === 'price' ||
+                            field.key === 'preventiveMaintenance' ||
+                            field.key === 'correctiveMaintenance' ||
+                            field.key === 'dieselPrice';
+                          const inputKind = moneyInputKind(field.key);
+                          const displayNum =
+                            isMoney && typeof val === 'number'
+                              ? usdToInputNumber(val, inputKind)
+                              : val;
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center">
                               <input
                                 type="number"
                                 className="border rounded px-2 py-1 w-20 text-right"
-                                value={val === undefined || val === null ? '' : val}
+                                value={displayNum === undefined || displayNum === null ? '' : displayNum}
                                 onChange={e => {
-                                  const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                                  const raw = e.target.value;
+                                  const parsed = raw === '' ? NaN : parseFloat(raw);
                                   if (field.key === 'operationTime') {
-                                    // Special handling for operationTime - update global state
-                                    setOperationTime(isNaN(value) ? 3000 : value);
+                                    setOperationTime(Number.isNaN(parsed) ? 3000 : parsed);
                                     if (typeof window !== 'undefined') {
-                                      localStorage.setItem('operationTimeHours', String(isNaN(value) ? 3000 : value));
+                                      localStorage.setItem(
+                                        'operationTimeHours',
+                                        String(Number.isNaN(parsed) ? 3000 : parsed)
+                                      );
                                     }
-                                  } else {
+                                  } else if (isMoney) {
+                                    const usd = Number.isNaN(parsed)
+                                      ? 0
+                                      : inputNumberToUsd(parsed, inputKind);
                                     setEditableFields(prev => ({
                                       ...prev,
                                       [mIdx]: {
                                         ...prev[mIdx],
-                                        [field.key]: isNaN(value) ? 0 : value
-                                      }
+                                        [field.key]: usd,
+                                      },
+                                    }));
+                                  } else {
+                                    const value = Number.isNaN(parsed) ? 0 : parsed;
+                                    setEditableFields(prev => ({
+                                      ...prev,
+                                      [mIdx]: {
+                                        ...prev[mIdx],
+                                        [field.key]: value,
+                                      },
                                     }));
                                   }
                                 }}
@@ -412,16 +447,18 @@ function Summary({
                           const max = Math.max(...tcos);
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">
-                              <span style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px' }}>{formatCurrency(tco)}</span>
+                              <span style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px' }}>{formatFromUsd(tco)}</span>
                             </td>
                           );
                         }
                         // Default rendering
                         let value = machinesSorted[mIdx][field.key];
                         if (field.multilanguage && value && typeof value === 'object') {
-                          value = value[language] || value['es'] || '-';
+                          value = pickLocalizedWithFallback(value, language) || '-';
                         }
-                        if (field.format && value !== undefined && value !== null) {
+                        if (['dieselPrice', 'price', 'preventiveMaintenance', 'correctiveMaintenance'].includes(field.key) && typeof value === 'number') {
+                          value = formatFromUsd(value);
+                        } else if (field.format && value !== undefined && value !== null) {
                           value = field.format(value);
                         }
                         const alignClass = field.key === 'origin'
@@ -434,17 +471,17 @@ function Summary({
                 })}
 
               </tbody>
-            </table>
+            </CompareTable>
           </div>
         </Card>
         {/* Performance Comparison by Volume Section */}
         {safeVisibleMachines.length > 0 && (
           <Card className="p-4 mt-8">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold">Comparación de rendimiento por volumen</h3>
+              <h3 className="text-lg font-bold">{t('performanceComparisonByVolume')}</h3>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <Label htmlFor="surface-volume" className="text-xs text-gray-600">Volumen (m³)</Label>
+                  <Label htmlFor="surface-volume" className="text-xs text-gray-600">{t('volumeM3')}</Label>
                   <Input
                     id="surface-volume"
                     type="number"
@@ -463,27 +500,27 @@ function Summary({
                 </div>
                 <Dialog open={isCalcOpen} onOpenChange={setIsCalcOpen}>
                   <DialogTrigger asChild>
-                    <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">Calcular Rendimiento</Button>
+                    <Button className="bg-bomag-yellow text-black hover:bg-bomag-orange/90">{t('calcPerformance')}</Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Calcular volumen de superficie</DialogTitle>
+                      <DialogTitle>{t('calcSurfaceVolume')}</DialogTitle>
                     </DialogHeader>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="length-m">Largo (m)</Label>
-                        <Input id="length-m" type="number" value={lengthM} onChange={(e) => setLengthM(e.target.value)} placeholder="Ej: 100" />
+                        <Label htmlFor="length-m">{t('roadLength')}</Label>
+                        <Input id="length-m" type="number" value={lengthM} onChange={(e) => setLengthM(e.target.value)} placeholder={t('examplePlaceholder', { value: '100' })} />
                       </div>
                       <div>
-                        <Label htmlFor="width-m">Ancho (m)</Label>
-                        <Input id="width-m" type="number" value={widthM} onChange={(e) => setWidthM(e.target.value)} placeholder="Ej: 50" />
+                        <Label htmlFor="width-m">{t('roadWidth')}</Label>
+                        <Input id="width-m" type="number" value={widthM} onChange={(e) => setWidthM(e.target.value)} placeholder={t('examplePlaceholder', { value: '50' })} />
                       </div>
                       <div>
-                        <Label htmlFor="height-m">Altura (m)</Label>
-                        <Input id="height-m" type="number" value={heightM} onChange={(e) => setHeightM(e.target.value)} placeholder="Ej: 0.3" />
+                        <Label htmlFor="height-m">{t('layerHeight')}</Label>
+                        <Input id="height-m" type="number" value={heightM} onChange={(e) => setHeightM(e.target.value)} placeholder={t('examplePlaceholder', { value: '0.3' })} />
                       </div>
                     </div>
-                    <div className="mt-2 text-sm text-gray-600">Resultado (m³): <span className="font-semibold">{(() => {
+                    <div className="mt-2 text-sm text-gray-600">{t('calculatedVolume')} <span className="font-semibold">{(() => {
                       const L = parseFloat(lengthM);
                       const W = parseFloat(widthM);
                       const H = parseFloat(heightM);
@@ -494,7 +531,7 @@ function Summary({
                       <Button
                         variant="secondary"
                         onClick={() => setIsCalcOpen(false)}
-                      >Cerrar</Button>
+                      >{t('close')}</Button>
                       <Button
                         onClick={() => {
                           const L = parseFloat(lengthM);
@@ -509,19 +546,19 @@ function Summary({
                           setIsCalcOpen(false);
                         }}
                         className="bg-bomag-yellow text-black hover:bg-bomag-orange/90"
-                      >Calcular</Button>
+                      >{t('calculate')}</Button>
                     </div>
                   </DialogContent>
                 </Dialog>
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300 text-xs">
+              <CompareTable columnCount={summaryTableCols} className="text-xs">
                 <thead>
                   <tr className="bg-bomag-light-gray">
-                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">Rendimiento</th>
+                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">{t('performance')}</th>
                     {safeVisibleMachines.map(idx => (
-                      <th key={idx} className="border border-gray-300 p-2 text-center min-w-40">
+                      <th key={idx} className="border border-gray-300 p-2 text-center">
                         <div className="font-bold">{machinesSorted[idx].brand}</div>
                         <div className="text-xs">{machinesSorted[idx].model}</div>
                       </th>
@@ -579,26 +616,26 @@ function Summary({
                       const costPerHour = fuel * dieselPrice + pm + cm;
                       const totalCost = hours * costPerHour;
                       return (
-                        <td key={mIdx} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">{hours > 0 ? formatCurrency(totalCost) : '-'}</td>
+                        <td key={mIdx} className="border border-gray-300 p-2 text-center font-bold bg-yellow-50">{hours > 0 ? formatFromUsd(totalCost) : '-'}</td>
                       );
                     })}
                   </tr>
                 </tbody>
-              </table>
+              </CompareTable>
             </div>
           </Card>
         )}
         {/* TCO Timeline Table */}
         {safeVisibleMachines.length > 0 && machinesSorted.some(m => m.tcoTimeline) && (
           <Card className="p-4 mt-8">
-            <h3 className="text-lg font-bold mb-2">{t('tcoTimeline') || 'TCO Timeline'}</h3>
+            <h3 className="text-lg font-bold mb-2">{t('tcoTimeline')}</h3>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300 text-xs">
+              <CompareTable columnCount={summaryTableCols} className="text-xs">
                 <thead>
                   <tr className="bg-bomag-light-gray">
-                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">Horas</th>
+                    <th className="border border-gray-300 p-2 text-left sticky left-0 bg-bomag-light-gray z-10">{t('hoursLabel')}</th>
                     {safeVisibleMachines.map(idx => (
-                      <th key={idx} className="border border-gray-300 p-2 text-center min-w-40">
+                      <th key={idx} className="border border-gray-300 p-2 text-center">
                         <div className="font-bold">{machinesSorted[idx].brand}</div>
                         <div className="text-xs">{machinesSorted[idx].model}</div>
                       </th>
@@ -651,7 +688,7 @@ function Summary({
                               ) : (
                                 <div>
                                   <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
-                                    {t('tco') || 'TCO'}: {formatCurrency(tco)}
+                                    {t('tco') || 'TCO'}: {formatFromUsd(tco)}
                                   </div>
                                 </div>
                               )}
@@ -662,7 +699,7 @@ function Summary({
                     );
                   })}
                 </tbody>
-              </table>
+              </CompareTable>
             </div>
           </Card>
         )}

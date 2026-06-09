@@ -242,10 +242,10 @@ const rawPaversMachines: PaverMachineSpec[] = [
       "pt": "Regulación activa bombas hidráulicas según demanda real - Ahorro hasta 17%"
     },
     "usp4": {
-      "es": "Sin tornillos - sin herramientas - mín. tiempo de reequipamiento - EXCLUSIVO BOMAG",
-      "en": "Sin tornillos - sin herramientas - mín. tiempo de reequipamiento - EXCLUSIVO BOMAG",
-      "de": "Sin tornillos - sin herramientas - mín. tiempo de reequipamiento - EXCLUSIVO BOMAG",
-      "pt": "Sin tornillos - sin herramientas - mín. tiempo de reequipamiento - EXCLUSIVO BOMAG"
+      "es": "Sin tornillos - sin herramientas - mín. tiempo de acople - EXCLUSIVO BOMAG",
+      "en": "Sin tornillos - sin herramientas - mín. tiempo de acople - EXCLUSIVO BOMAG",
+      "de": "Sin tornillos - sin herramientas - mín. tiempo de acople - EXCLUSIVO BOMAG",
+      "pt": "Sin tornillos - sin herramientas - mín. tiempo de acople - EXCLUSIVO BOMAG"
     },
     "usp5": {
       "es": "Asiento + consola deslizables al lateral - visión directa regla y borde - ESTÁNDAR",

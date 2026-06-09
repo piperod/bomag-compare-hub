@@ -68,9 +68,9 @@ const PAVER_USP_I18N: Record<string, UspOverrides> = {
       pt: 'Regulação ativa das bombas hidráulicas conforme demanda real - Economia até 17%',
     },
     usp4: {
-      en: 'No bolts - no tools - min. re-equipment time - BOMAG EXCLUSIVE',
-      de: 'Keine Schrauben - kein Werkzeug - min. Umrüstzeit - EXKLUSIV BOMAG',
-      pt: 'Sem parafusos - sem ferramentas - mín. tempo de reequipamento - EXCLUSIVO BOMAG',
+      en: 'No bolts - no tools - min. coupling time - BOMAG EXCLUSIVE',
+      de: 'Keine Schrauben - kein Werkzeug - min. Ankuppelzeit - EXKLUSIV BOMAG',
+      pt: 'Sem parafusos - sem ferramentas - mín. tempo de acoplamento - EXCLUSIVO BOMAG',
     },
     usp5: {
       en: 'Seat + console slideable to the side - direct view of screed and edge - STANDARD',

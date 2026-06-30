@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import placeholder from '/public/placeholder.svg';
+import { getMachineImagePath } from '@/utils/machineImages';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 
 interface MachineComparisonProps {
@@ -328,60 +328,7 @@ const htrMachines = [
 ];
 
 const base = import.meta.env.BASE_URL;
-const getImagePath = (model: string, line: string) => {
-  const folder = line === 'sdr' ? 'SDR' : line === 'ltr' ? 'LTR' : line === 'htr' ? 'HTR' : line === 'milling' ? 'Milling' : line === 'pavers' ? 'Pavers' : '';
-  if (!folder) return base + 'placeholder.svg';
-  const images = {
-    SDR: [
-      // Prefer PNGs when available
-      'BW211 D5-SL.png',
-      'ASC110.png',
-      '1107EX.png',
-      'HC110.png',
-      'CA35D-Rhino.png',
-      // JPG fallbacks and additional images
-      '116D.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','CS12.jpg','CS10GC.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg','510.jpg'
-    ],
-    LTR: [
-      'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
-    ],
-    HTR: [
-      'HD90 VV.jpg','CC4200.jpg','CB10.jpg','AV110X.jpg','BW161-AD-4.jpg','BW161AD4.jpg'
-    ],
-    Milling: [
-      'BM1000-20.png',   // BOMAG BM 1000/20
-      'XM1005H.png',     // XCMG XM1005H
-      'SCM1000C-8.png'   // SANY SCM1000C-8
-    ],
-    Pavers: [
-      'BF600-C-3.png',    // BOMAG BF600 C-3
-      'AP655.png',        // Caterpillar AP655
-      'Super-1800-3.png', // Vögele Super 1800-3
-      'SD2500CS.png'      // Dynapac SD2500CS
-    ]
-  };
-  const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-  const modelNorm = norm(model);
-  const paverImageByModel: Record<string, string> = {
-    ap655: 'AP655.png',
-    bf600c3: 'BF600-C-3.png',
-    super18003: 'Super-1800-3.png',
-    sd2500cs: 'SD2500CS.png',
-  };
-  if (folder === 'Pavers' && paverImageByModel[modelNorm]) {
-    return `${base}images/${folder}/${paverImageByModel[modelNorm]}`;
-  }
-  // Special case for CA25 D-Rhino
-  if (modelNorm === 'ca25drhino' && images[folder].includes('CA25DRhino.jpg')) {
-    return `${base}images/${folder}/CA25DRhino.jpg`;
-  }
-  const match = images[folder].find(img => norm(img).includes(modelNorm));
-  if (match) return `${base}images/${folder}/${match}`;
-  // BOMAG SDR fallback image when specific model is missing
-  if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
-  if (folder === 'Pavers') return `${base}images/${folder}/BF600-C-3.png`;
-  return `${base}placeholder.svg`;
-};
+const getImagePath = getMachineImagePath;
 
 function CardSpecRow({
   label,
@@ -1164,11 +1111,13 @@ const MachineComparison = ({
                                     ((machine as any).weight as number).toLocaleString()
                                   ) : isObj ? (
                                     <div className="whitespace-pre-line">
-                                      {formatMultiline(
-                                        selectedLine === 'milling'
-                                          ? millingText(pickLocalizedWithFallback(value, language) || '-')
-                                          : pickLocalizedWithFallback(value, language) || '-'
-                                      )}
+                                      {(() => {
+                                        const localized =
+                                          selectedLine === 'milling'
+                                            ? millingText(pickLocalizedWithFallback(value, language))
+                                            : pickLocalizedWithFallback(value, language);
+                                        return localized ? formatMultiline(localized) : '';
+                                      })()}
                                     </div>
                                   ) : (
                                     <div className={isLong ? 'whitespace-pre-line' : ''}>

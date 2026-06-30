@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CSV_PATH = path.join(__dirname, '..', 'SDR_raw_v3.csv');
+const CSV_PATH = path.join(__dirname, '..', 'SDR_raw_v4.csv');
 const OUT_PATH = path.join(__dirname, '..', 'src', 'data', 'sdrFromCsv.json');
 
 function parseCSV(text) {
@@ -176,7 +176,7 @@ function main() {
       origin: makeLangObj(originVal),
       compactionAssistant: makeLangObj(assistantEs || 'No aplica'),
       telemetry: makeLangObj(telemetryEs || 'No aplica'),
-      innovations: makeLangObj(innovationsEs || '-'),
+      innovations: makeLangObj(innovationsEs || ''),
       usp: makeLangObj(''),
       usp1: makeLangObj(strOrDash(usp1)),
       usp2: makeLangObj(strOrDash(usp2)),

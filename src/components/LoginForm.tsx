@@ -10,6 +10,7 @@ import { Lock, Eye, EyeOff } from 'lucide-react';
 
 const LoginForm: React.FC = () => {
   const { t } = useLanguage();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +24,7 @@ const LoginForm: React.FC = () => {
 
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    const success = login(password);
+    const success = login(username, password);
     if (!success) {
       setError(t('wrongPassword'));
       setPassword('');
@@ -47,6 +48,20 @@ const LoginForm: React.FC = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">{t('username')}</Label>
+              <Input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder={t('usernamePlaceholder')}
+                autoComplete="username"
+                required
+                disabled={isLoading}
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="password">{t('password')}</Label>
               <div className="relative">
@@ -86,7 +101,7 @@ const LoginForm: React.FC = () => {
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading || !password.trim()}
+              disabled={isLoading || !username.trim() || !password.trim()}
             >
               {isLoading ? t('verifying') : t('loginSubmit')}
             </Button>

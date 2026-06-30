@@ -1,0 +1,274 @@
+MARCA,BOMAG,BOMAG,BOMAG,BOMAG,BOMAG,BOMAG,BOMAG,SAKAI,SAKAI,SAKAI,SAKAI,DYNAPAC,DYNAPAC,DYNAPAC,DYNAPAC,DYNAPAC REDLINE,HAMM,HAMM,HAMM,HAMM,HAMM,CATERPILLAR,CATERPILLAR,XCMG,XCMG,XCMG,XCMG,XCMG,SANY,SANY,SHANTUI,SHANTUI,JCB,JCB
+Máquina,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Modelo,BW211 D5-SL,BW212 D5-SL,BW213 D5-SL,BW213 D5-SL TCD,BW216 D5-SL,BW219 D5-PL,BW220 D5-PL,SV521D,SV621D,SV700D,SV900-1,CA25 D-Rhino,CA2500D,CA3500D,CA4500D,DRS120D,HC119,H13i,H16i,H18i,H25i,CS11GC,CS13GC,XS113E,XS143J,XS162J,XS182,XS203J,SSR120C-8,SSR120C-10,SR16,SR22,VM115,VM137
+Peso (Kg),"10,120","10,980","11,810","11,960","14,850","19,400","20,100","10,720","13,020","14,950","19,350","10,400","10,000","16,000","21,000","11,400","11,745","12,600","16,430","18,000","24,925","10,900","12,700","10,400","14,000","16,000","18,000","20,000","11,580","12,000","16,000","22,000","11,500","13,700"
+Número de material,58400031,58400036,58400041,58400041,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Motor,Cummins 4BT AA 3.9,Deutz BF 4M 2012 C,Deutz BF 4M 2012 C,Deutz TCD 2021 L04 2V,Deutz TCD 2013 L04,Deutz TCD 2012 L06,Deutz TCD 2012 L06,ISUZU 4BG1T (Tier 2),ISUZU 4BG1T (Tier 2),ISUZU BB-6BG1TRJ,ISUZU AH-4HK1XYLB-01,Cummins QSF3.8 (T3),Cummins QSB4.5,Cummins QSB6.7,Cummins QSC8.3,Dynapac 4-cyl turbo,Cummins QSB4.5,Deutz TCD2012,Deutz TCD3.6 L6,Deutz TCD3.6,Liebherr D946,Cat C4.4 (Tier 3),Cat C4.4 (Tier 3),Weichai WP4,Cummins B5.9,Cummins B5.9,Cummins B5.9,Cummins QSB6.7,Cummins QSB4.5,ISUZU 4JJ1,Cummins QSB6.7,Cummins QSC8.3,JCB DieselMAX,JCB DieselMAX
+Ancho de compactación (m),2.13,2.13,2.13,2.13,2.13,2.13,2.13,2.3,2.3,2.13,2.13,2.13,2.13,2.13,2.13,2.13,2.14,2.13,2.14,2.14,2.14,2.13,2.13,2.13,2.13,2.13,2.13,2.13,2.13,2.13,2,2.13,2.13,2.13
+Potencia (HP),110,132,132,140,162,202,202,118,131,217,166,130,130,174,250,105,121,130,168,215,215,74,100,110,150,161,174,200,145,130,168,236,125,125
+Amplitud (mm),1.80 / 0.95,1.80 / 0.95,1.90 / 0.96,1.90 / 0.96,1.90 / 0.96,2.10 / 1.20,2.10 / 1.20,2.05/0.90,2.03/0.90,2.0 / 0.9,1.9 / 1.0,1.8/0.9,1.80/0.90,2.00/0.95,2.10/1.05,-,1.90/0.90,1.90/0.80,2.13/0.95,2.10/0.90,2.00/0.90,1.88/0.91,2.10/1.05,1.80/0.90,1.90/0.95,2.00/0.95,1.86/,2.00/1.00,1.80/0.90,1.80/0.90,2.0/0.9,2.1/1.0,1.90/0.95,2.00/1.00
+Carga Lineal Estática (Kg/cm),28.4,32.4,37.1,37,50.2,60.1,61.8,28,34,39.9,51.4,51.4,26,37.5,49.3,32,29.1,29.6,38.4,42.1,58.3,25.6,30,,,,53.9,,,,,,,
+Gradeabilidad (%),45,45,45,45,,,,,,,,41,,46,,,58,,,,,55,,45,,,,,,,,,55,
+País de origen,China,China,China,China,-,-,-,-,-,India,-,Suecia/Brasil,-,Suecia/Brasil,-,India,Alemania,-,India,India,-,China,India,Brasil,India,-,-,-,India,India,India,India,India,India
+Asistente de compactación,BOMAG ECONOMIZER,BOMAG ECONOMIZER,BOMAG ECONOMIZER,BOMAG ECONOMIZER,BOMAG ECONOMIZER,BOMAG ECONOMIZER,BOMAG ECONOMIZER,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,CAT Machine Drive Power (MDP),No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,No aplica,"IntelliCompaction  Proporciona un valor de compactación relativa, lo que ayuda a lograr una compactación consistente y uniforme en todo el parche.",No aplica
+,"Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2","Sistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)
+BOMAG TERRAMETER
+Sistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",,,,,"Dynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",,"Dynapac Compaction Meter (DCM) utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación. Estas señales se procesan y se presentan como CMV  Cuando el CMV deja de aumentar, se considera que se ha alcanzado la compactación",,,"HAMM SmartCompaction Value (Solo si es Serie VA)
+El sistema determina el valor de capacidad de carga actual SCV (Smart Compaction Value) del suelo en MN/m². A continuación, el asistente de compactación coloca automáticamente el sistema de desequilibrio en el tambor VA especialmente desarrollado en todas las situaciones, de modo que siempre oscile con la amplitud óptima",,,,,"Este sistema mide la resistencia del terreno durante la compactación, proporcionando datos en tiempo real sobre la capacidad de trabajo del equipo y las condiciones del suelo. Permite ajustar la intensidad de la compactación para evitar sobrecarga en el motor y mejorar la eficiencia. (Opcional)
+CAT Compaction Meter Value (CMV) Sistema que mide en tiempo real la rigidez del suelo a medida que el tambor vibrante pasa sobre él. El valor se muestra en la cabina, permitiendo a los operadores monitorear el progreso de la compactación.",,No aplica,,,,,,,,,No aplica,
+Telemetría,Telematics,Telematics,Telematics,Telematics,Telematics,Telematics,Telematics,,,,,Dyn@lizer,,Dyn@lizer,,,Smart Doc,,,,,Vision Link,,-,,,,,,,,,-,
+Tecnologías Innovadoras,"Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC","Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",Tier 2; Fuerza centrífuga 260/ kN; Frecuencia de vibración 30/ Hz; Vel. máx. 10; 7th gen 10t; high Cf 26t; ECO mode; SEA,Tier 2; Fuerza centrífuga 260/ kN; Frecuencia de vibración 30/ Hz; Vel. máx. 10; 13t; Tier 2; ECO mode; SEA,Tier 2; Fuerza centrífuga 275 / 220 kN; Frecuencia de vibración 36.5 / 27.5 Hz; Vel. máx. 10; 20t; mine-grade; Tier 2; SEA/MEA,Tier 3; Fuerza centrífuga 343 / 245 kN; Frecuencia de vibración 33 / 28 Hz; Vel. máx. 0 -10; 20t; vertical vibration option; mine; SEA,"Dynapac Compaction meter (DCM), Dyn@lyzer",Tier 3; Fuerza centrífuga 205/100 kN; Frecuencia de vibración 30/22 Hz; Vel. máx. 10; Standard Asia Pacific workhorse; padfoot opt; Tier 3,"Dynapac Compaction meter (DCM), Dyn@lyzer",Tier 3; Fuerza centrífuga 340/170 kN; Frecuencia de vibración 26/20 Hz; Vel. máx. 10; 21t; mega compaction; mine; Tier 3,Tier 3; Vel. máx. 10; SEA sub-brand (2021+); 105HP; patented eccentric; foldable canopy; APAC/MEA,"EcoStop, SmartCompaction, vibración adaptativa",Stage IIIA; Fuerza centrífuga 213/90 kN; Frecuencia de vibración 30/24 Hz; Vel. máx. 10; 13t; Stage IIIA; ECO stop; HAMMTRONIC,Stage IIIA; Fuerza centrífuga 328/150 kN; Frecuencia de vibración 31/22 Hz; Vel. máx. 10; 16t; 2140mm drum; SEA/MEA,Stage IIIA; Fuerza centrífuga 354/160 kN; Frecuencia de vibración 29/20 Hz; Vel. máx. 10; 18t; heavy earthworks; MEA/SEA,Stage IIIA; Fuerza centrífuga 380/190 kN; Frecuencia de vibración 26/20 Hz; Vel. máx. 10; 25t; mine-grade; HAMMTRONIC; Stage IIIA,"CMV, AccuGrade Compaction, Eco-mode, Vision Link",Tier 3/Stage IIIA; Fuerza centrífuga 208/100 kN; Frecuencia de vibración 30/20 Hz; Vel. máx. 11; Tier 3 available; 12.7t; frequency 30Hz; amp 2.1mm; SEA/MEA,XCMG Telematics,Tier 3/CN3; Fuerza centrífuga 230/115 kN; Frecuencia de vibración 30/ Hz; Vel. máx. 10; 14t; J-series; SEA/MEA,Tier 3/CN3; Fuerza centrífuga 260/130 kN; Frecuencia de vibración 30/ Hz; Vel. máx. 10; 16t; Africa/SEA,Tier 3/CN3; Frecuencia de vibración 33/ Hz; Vel. máx. 10; 18t; Indonesia/Africa standard,Tier 3/CN3; Fuerza centrífuga 310/155 kN; Frecuencia de vibración 28/ Hz; Vel. máx. 10; 20t; heavy grade; Indonesia/Africa,Tier 3; Fuerza centrífuga 190/95 kN; Frecuencia de vibración 30/22 Hz; Vel. máx. 8.2; 84-in drum; padfoot kit std; 3yr/3000hr warranty; SEA/MEA,Tier 3; Fuerza centrífuga 205/100 kN; Frecuencia de vibración 30/22 Hz; Vel. máx. 10; Isuzu engine variant; SEA/MEA; Tier 3,Tier 3; Vel. máx. 10; 16t; Africa/MEA; Tier 3,Tier 3; Vel. máx. 10; 22t; mining; Africa/MEA,"LiveLinks Telematics, CCOMPATRONIC (compaction measurement device)",Tier 3; Vel. máx. 10; 13.7t; MEA market; Tier 3
+USP 1,"Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Operación Intuitiva
+* Un switch para cada función
+* Símbolos intuitivos facilitan la operación","Especificaciones técnicas
+* Motor ISUZU 4BG1T (Tier 2)
+* 118 HP
+* Peso operativo 10,720 kg","Especificaciones técnicas
+* Motor ISUZU 4BG1T (Tier 2)
+* 131 HP
+* Peso operativo 13,020 kg","Especificaciones técnicas
+* Motor ISUZU BB-6BG1TRJ
+* 217 HP
+* Peso operativo 14,950 kg","Especificaciones técnicas
+* Motor ISUZU AH-4HK1XYLB-01
+* 166 HP
+* Peso operativo 19,350 kg","Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.","Especificaciones técnicas
+* Motor Cummins QSB4.5
+* 130 HP
+* Peso operativo 10,000 kg","Controles intuitivos: Palancas simples y panel de instrumentos con indicadores claros, fáciles de operar incluso por personal con poca experiencia.","Especificaciones técnicas
+* Motor Cummins QSC8.3
+* 250 HP
+* Peso operativo 21,000 kg","Especificaciones técnicas
+* Motor Dynapac 4-cyl turbo
+* 105 HP
+* Peso operativo 11,400 kg","Conducción y maniobrabilidad
+* Bloqueo integrado de la articulación pendular
+* Control de tracción para una óptima transmisión de potencia","Especificaciones técnicas
+* Motor Deutz TCD2012
+* 130 HP
+* Peso operativo 12,600 kg","Especificaciones técnicas
+* Motor Deutz TCD3.6 L6
+* 168 HP
+* Peso operativo 16,430 kg","Especificaciones técnicas
+* Motor Deutz TCD3.6
+* 215 HP
+* Peso operativo 18,000 kg","Especificaciones técnicas
+* Motor Liebherr D946
+* 215 HP
+* Peso operativo 24,925 kg","Controles ergonómicos y simples:
+
+* Palanca de control única para avance, vibración y dirección.
+* Pantalla integranda en palanca de control.
+* Cambio de velocidad asistida
+* Instrumentación digital fácil de leer.","Especificaciones técnicas
+* Motor Cat C4.4 (Tier 3)
+* 100 HP
+* Peso operativo 12,700 kg","Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.","Especificaciones técnicas
+* Motor Cummins B5.9
+* 150 HP
+* Peso operativo 14,000 kg","Especificaciones técnicas
+* Motor Cummins B5.9
+* 161 HP
+* Peso operativo 16,000 kg","Especificaciones técnicas
+* Motor Cummins B5.9
+* 174 HP
+* Peso operativo 18,000 kg","Especificaciones técnicas
+* Motor Cummins QSB6.7
+* 200 HP
+* Peso operativo 20,000 kg","Especificaciones técnicas
+* Motor Cummins QSB4.5
+* 145 HP
+* Peso operativo 11,580 kg","Especificaciones técnicas
+* Motor ISUZU 4JJ1
+* 130 HP
+* Peso operativo 12,000 kg","Especificaciones técnicas
+* Motor Cummins QSB6.7
+* 168 HP
+* Peso operativo 16,000 kg","Especificaciones técnicas
+* Motor Cummins QSC8.3
+* 236 HP
+* Peso operativo 22,000 kg","Diseño robusto, excelente acceso a mantenimiento y componentes estandarizados para máxima disponibilidad en campo.","Especificaciones técnicas
+* Motor JCB DieselMAX
+* 125 HP
+* Peso operativo 13,700 kg"
+USP 2,"Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación más alto
+* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)
+* Flexibilidad en el montaje del kit pata de cabra","Rendimiento de compactación
+* Amplitud 2.05/0.90 mm
+* Fuerza centrífuga 260/ kN
+* Carga lineal estática 28 kg/cm","Rendimiento de compactación
+* Amplitud 2.03/0.90 mm
+* Fuerza centrífuga 260/ kN
+* Carga lineal estática 34 kg/cm","Rendimiento de compactación
+* Amplitud 2.0 / 0.9 mm
+* Fuerza centrífuga 275 / 220 kN
+* Carga lineal estática 39.9 kg/cm","Rendimiento de compactación
+* Amplitud 1.9 / 1.0 mm
+* Fuerza centrífuga 343 / 245 kN
+* Carga lineal estática 51.4 kg/cm","Compactación efectiva
+* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.
+* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.","Rendimiento de compactación
+* Amplitud 1.80/0.90 mm
+* Fuerza centrífuga 205/100 kN
+* Carga lineal estática 26 kg/cm","Compactación efectiva
+* Gracias a su peso operativo y potencia, logra una compactación eficiente en menos pasadas.
+* Amplitud dual: Permite seleccionar entre alta y baja amplitud para distintos materiales (granulares vs cohesivos), optimizando el rendimiento.","Rendimiento de compactación
+* Amplitud 2.10/1.05 mm
+* Fuerza centrífuga 340/170 kN
+* Carga lineal estática 49.3 kg/cm","Rendimiento de compactación
+* Carga lineal estática 32 kg/cm","Calidad de compactación
+* Asistente Smart Compact para el ajuste automático
+de la potencia de compactación
+*Alta carga lineal y fuerza centrífuga","Rendimiento de compactación
+* Amplitud 1.90/0.80 mm
+* Fuerza centrífuga 213/90 kN
+* Carga lineal estática 29.6 kg/cm","Rendimiento de compactación
+* Amplitud 2.13/0.95 mm
+* Fuerza centrífuga 328/150 kN
+* Carga lineal estática 38.4 kg/cm","Rendimiento de compactación
+* Amplitud 2.10/0.90 mm
+* Fuerza centrífuga 354/160 kN
+* Carga lineal estática 42.1 kg/cm","Rendimiento de compactación
+* Amplitud 2.00/0.90 mm
+* Fuerza centrífuga 380/190 kN
+* Carga lineal estática 58.3 kg/cm","Mayor carga lineal estática
+Tambor de alto peso y excelente contacto con el suelo para lograr profundidad efectiva de compactación.","Rendimiento de compactación
+* Amplitud 2.10/1.05 mm
+* Fuerza centrífuga 208/100 kN
+* Carga lineal estática 30 kg/cm","Calidad de Compactación
+* Rendimiento adecuado para compactación de capas gruesas y materiales cohesivos.
+* Diseño del tambor que reduce rebotes y mejora la uniformidad.","Rendimiento de compactación
+* Amplitud 1.90/0.95 mm
+* Fuerza centrífuga 230/115 kN","Rendimiento de compactación
+* Amplitud 2.00/0.95 mm
+* Fuerza centrífuga 260/130 kN","Rendimiento de compactación
+* Amplitud 1.86/ mm
+* Carga lineal estática 53.9 kg/cm","Rendimiento de compactación
+* Amplitud 2.00/1.00 mm
+* Fuerza centrífuga 310/155 kN","Rendimiento de compactación
+* Amplitud 1.80/0.90 mm
+* Fuerza centrífuga 190/95 kN","Rendimiento de compactación
+* Amplitud 1.80/0.90 mm
+* Fuerza centrífuga 205/100 kN","Rendimiento de compactación
+* Amplitud 2.0/0.9 mm","Rendimiento de compactación
+* Amplitud 2.1/1.0 mm","Calidad de Compactación
+* Buen rendimiento para suelos compactables en obras viales, rurales o plataformas.
+* Sistema de vibración robusto","Rendimiento de compactación
+* Amplitud 2.00/1.00 mm"
+USP 3,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,Junta de articulación libre de mantenimiento,,,,,"Junta de articulación
+Ofrece un radio de giro estrecho y seguimiento preciso del terreno.",,"Junta de articulación
+Ofrece un radio de giro estrecho y seguimiento preciso del terreno.",,,Articulación pendular de 3 puntos para una estabilidad direccional superior,,,,,Junta de articulación libre de mantenimiento,,"Junta de Articulación
+Articulación oscilante de diseño robusto.",,,,,,,,,-,
+USP 4,"Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad","Trabajo comfortable y seguro
+* Espacio de trabajo amplio y con excelente  visibilidad",,,,,"Control y confort de operación
+* Ofrece visibilidad total del tambor y área de trabajo.
+El DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",,"Control y confort de operación
+* Ofrece visibilidad total del tambor y área de trabajo.
+El DCM utiliza un sensor acelerómetro montado en el tambor del compactador, que mide las vibraciones generadas durante la operación",,,"Control y confort
+* Gran espacio y comodidad de uso
+* Condiciones de trabajo ergonómicamente optimizadas
+gracias a su concepto operativo Easy Drive",,,,,"Plataforma con asiento ajustable, controles a mano, y excelente visibilidad de 360°.
+
+Vibración automática (Auto Vibe): El sistema puede activar/desactivar la vibración de forma automática según la velocidad del rodillo o si está detenido, mejorando el control del proces",,"Control y Confort
+* Cabina opcional con buena visibilidad.
+* Panel de instrumentos digital con indicadores de trabajo.
+* Asiento ajustable, pero menor confort que modelos premium.",,,,,,,,,"Control y Confort
+Cabina abierta o cerrada con controles simples.
+
+Panel analógico, sin diagnóstico digital.
+
+Ideal para operadores con poca experiencia.",
+USP 5,"Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP","Compactación eficiente
+Medición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",,,,,,,,,,"Sistema de asistencia de compactación 
+Interfaces digitales
+* John Deere Operations CenterTM
+* Track Assist & WPT Compacting
+* Smart Compact",,,,,"* Amplitud más alta del mercado
+* MDP exclusivo de CAT: Mide la resistencia al avance del tambor como un indicador directo del nivel de compactación (ventaja clave frente a modelos tradicionales).",,-,,,,,,,,,-,
+USP 6,"Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación","Fácil mantenimiento
+* Todos los componentes dispuestos para un fácil acceso 
+* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",,,,,"Mantenimiento y Servicio
+Diseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",,"Mantenimiento y Servicio
+Diseño de fácil acceso: El capó del motor se abre completamente, permitiendo un acceso rápido a los puntos de mantenimiento diario (filtros, niveles, correas).",,,"Mantenimiento eficiente
+Todos los puntos de mantenimiento, la refrigeración de aceite y de agua y la batería son cómodamente accesibles y están concentrados
+en un lado de la máquina",,,,,"Mantenimiento y Servicio
+Diseño orientado a bajo mantenimiento:
+* Intervalos de mantenimiento extendidos.
+* Reducción de puntos de lubricación gracias al uso de componentes sellados.",,"Mantenimiento y Servicio
+Capó lateral basculante, acceso rápido a motor y componentes hidráulicos.
+
+Módulos eléctricos centralizados.
+
+Motores Weichai o Cummins con buena cobertura de repuestos.",,,,,,,,,"Mantenimiento y Servicio
+* Motor JCB DieselMax altamente confiable, sin electrónica compleja.
+* Capó con apertura completa para acceso rápido.
+* Menor necesidad de técnicos especializados.",
+Profundidad de compactación máx (cm) Grava/Arena,60,60,60,60,,,,,,,,55,,55,,,60,,,,,60,,50,,,,,,,,,55,
+Rendimiento en compactación (m3/h),270 - 540,270 - 540,270 - 540,270 - 540,,,,,,,,220 - 350,,220 - 350,,,250 - 400,,,,,200,,250 - 400,,,,,,,,,200 - 350,
+Consumo de combustible (L/h) Carga 70%,12.4,12.4,12.4,12.4,,,,,,,,13.6,,13.6,,,13.6,,,,,14.5,,13.6,,,,,,,,,13,
+Valor galón Diesel (USD),1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2
+Precio CIF (USD)," $  63,530.18 "," $  68,684.00 "," $  72,948.00 "," $  72,948.00 ",,,,,,,," $  90,000.00 ",," $  90,000.00 ",,," $  91,845.10 ",,,,," $  105,298.85 ",," $  54,786.00 ",,,,,,,,," $  84,076.00 ",
+Mantenimiento preventivo (USD/h),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+Mantenimiento correctivo (USD/h),2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+Tiempo de uso (h),3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000
+TCO (USD)," $  117,170.18 "," $  122,324.00 "," $  126,588.00 "," $  126,588.00 ",,,,,,,," $  160,200.00 ",," $  160,200.00 ",,," $  149,805.10 ",,,,," $  179,548.85 ",," $  124,986.00 ",,,,,,,,," $  151,576.00 ",

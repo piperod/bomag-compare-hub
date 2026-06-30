@@ -16,6 +16,7 @@ export const DISPLAY_CURRENCIES = [
   'THB',
   'VND',
   'MYR',
+  'PHP',
 ] as const;
 export type DisplayCurrency = (typeof DISPLAY_CURRENCIES)[number];
 
@@ -30,6 +31,7 @@ const FALLBACK_RATES_PER_USD: Record<DisplayCurrency, number> = {
   THB: 33.5,
   VND: 25_500,
   MYR: 4.45,
+  PHP: 58,
 };
 
 const LOCALE_BY_CURRENCY: Record<DisplayCurrency, string> = {
@@ -40,6 +42,7 @@ const LOCALE_BY_CURRENCY: Record<DisplayCurrency, string> = {
   THB: 'th-TH',
   VND: 'vi-VN',
   MYR: 'en-MY',
+  PHP: 'en-PH',
 };
 
 const ZERO_DECIMAL: ReadonlySet<DisplayCurrency> = new Set([

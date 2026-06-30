@@ -65,41 +65,9 @@ const summaryFields = [
   { key: 'tco', labelKey: 'tco' },
   // Calculated fields appended later: timeEstimated and costByTime
 ];
+import { getMachineImagePath } from '@/utils/machineImages';
 
-function getImagePath(model: string, line: string) {
-  const base = import.meta.env.BASE_URL;
-  const folder = line === 'SDR' ? 'SDR' : line === 'LTR' ? 'LTR' : line === 'HTR' ? 'HTR' : '';
-  if (!folder) return base + 'placeholder.svg';
-  const images = {
-    SDR: [
-      // Prefer PNGs when available
-      'BW211 D5-SL.png',
-      'ASC110.png',
-      '1107EX.png',
-      'HC110.png',
-      'CA35D-Rhino.png',
-      // JPG fallbacks and additional images
-      '116D.jpg','XS123.jpg','SSR120C-10S.jpg','V110.jpg','CS11GC.jpg','CS12.jpg','CS10GC.jpg','CA25_D.jpg','CA25DRhino.jpg','BW211_D5_SL.jpg','510.jpg'
-    ],
-    LTR: [
-      'RD27.png','CT260.jpg','ARX26.jpg','CC1200.jpg','HD12VV.png','CB2.7GC.jpg','BW120 AD-5.jpg'
-    ],
-    HTR: [
-      'HD90 VV.jpg','CC4200.jpg','CB10.jpg','AV110X.jpg','BW161-AD-4.jpg','BW161AD4.jpg'
-    ]
-  };
-  const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-  const modelNorm = norm(model);
-  // Special case for CA25 D-Rhino
-  if (modelNorm === 'ca25drhino' && images[folder].includes('CA25DRhino.jpg')) {
-    return `${base}images/${folder}/CA25DRhino.jpg`;
-  }
-  const match = images[folder].find(img => norm(img).includes(modelNorm));
-  if (match) return `${base}images/${folder}/${match}`;
-  // BOMAG SDR fallback image when specific model is missing
-  if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
-  return `${base}placeholder.svg`;
-}
+const getImagePath = getMachineImagePath;
 
 function getPriceColor(value: number, min: number, max: number) {
   if (min === max) return '#fde047'; // yellow if all equal
@@ -454,7 +422,7 @@ function Summary({
                         // Default rendering
                         let value = machinesSorted[mIdx][field.key];
                         if (field.multilanguage && value && typeof value === 'object') {
-                          value = pickLocalizedWithFallback(value, language) || '-';
+                          value = pickLocalizedWithFallback(value, language);
                         }
                         if (['dieselPrice', 'price', 'preventiveMaintenance', 'correctiveMaintenance'].includes(field.key) && typeof value === 'number') {
                           value = formatFromUsd(value);
@@ -464,7 +432,13 @@ function Summary({
                         const alignClass = field.key === 'origin'
                           ? 'text-center whitespace-pre-line'
                           : (field.multilanguage ? 'text-left whitespace-pre-line' : 'text-center');
-                        return <td key={mIdx} className={`border border-gray-300 p-2 ${alignClass}`}>{value || '-'}</td>;
+                        const displayValue =
+                          value !== undefined && value !== null && String(value).trim() !== ''
+                            ? value
+                            : field.multilanguage
+                              ? ''
+                              : '-';
+                        return <td key={mIdx} className={`border border-gray-300 p-2 ${alignClass}`}>{displayValue}</td>;
                       })}
                     </tr>
                   );

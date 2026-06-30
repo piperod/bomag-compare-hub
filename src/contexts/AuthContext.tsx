@@ -31,6 +31,7 @@ const USERS: AppUser[] = [
   { username: 'ritesh.palmar', password: '2NZ&Bi9lutBuyk', name: 'Ritesh Palmar' },
   { username: 'luisa.vargas', password: 'i6BdLe3y3PQ^53', name: 'Luisa Vargas', isAdmin: true },
   { username: 'diego.torres', password: 'wUbw9!N#2Px1Fa', name: 'Diego Torres' },
+  { username: 'johannes.schroeder', password: 'PvClKJ1ayg!EsF', name: 'Johannes Schroeder' },
   { username: 'admin', password: 'Bomag2026*', name: 'Admin', isAdmin: true },
 ];
 

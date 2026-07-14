@@ -393,5 +393,19 @@
   "paverFuelWithEcomode": "Effektiver Verbrauch mit ECOMODE (L/h)",
   "paverMagmalifeSavings": "MAGMALIFE-Einsparung vs. Standard-Elektro (Zeitraum)",
   "paverFootnoteMagmalife": "MAGMALIFE: ~50% schneller, ~3,5 L vs. ~10,5 L Setup-Kraftstoff pro Schicht.",
-  "paverFootnoteEcomode": "ECOMODE reduziert Betriebskraftstoff um bis zu 17% (BOMAG Felddaten)."
+  "paverFootnoteEcomode": "ECOMODE reduziert Betriebskraftstoff um bis zu 17% (BOMAG Felddaten).",
+  "paverFinancialModelTitle": "Interaktiver TCO-Vergleich",
+  "paverFinancialModelHint": "Preis, Stunden, Kraftstoff und Wartung anpassen. USP-Schalter aktualisieren Kraftstoff und Verdichterverschleiß gegenüber Wettbewerbern.",
+  "paverScreedWearCategory": "Verdichterverschleiß & Heizung (USP MAGMALIFE)",
+  "paverScreedWearHourly": "Verdichterverschleißteile ({{currency}}/h)",
+  "paverScreedWearPeriodCost": "Verdichterverschleißkosten (Zeitraum)",
+  "paverHeatingTypeLabel": "Heizungsart",
+  "paverElementLifeLabel": "Lebensdauer Heizelemente",
+  "paverWearPlateLifeLabel": "Lebensdauer Verschleißplatte",
+  "paverBaseFuelLabel": "Basisverbrauch (L/h)",
+  "paverEffectiveFuelLabel": "Effektiver Verbrauch mit Sparmodus (L/h)",
+  "paverFuelSourceLabel": "Datenquelle",
+  "paverBomagSavingsPeriod": "BOMAG-Einsparung vs. teuersten Wettbewerber (Zeitraum)",
+  "paverShowReferenceData": "Feld-/Prospektdaten anzeigen",
+  "paverHideReferenceData": "Referenzdaten ausblenden"
 }

@@ -13,9 +13,10 @@ export interface MachineFinancialDefaults {
   tco: number;
 }
 
-const EUR_TO_USD = 1.08;
+export const EUR_TO_USD = 1.08;
 const DEFAULT_OPERATION_HOURS = 3000;
-const WEAR_ANALYSIS_HOURS_PER_YEAR = 2000;
+/** Screed wear analysis assumes ~1,000 operating hours per year (paver product data). */
+export const PAVER_WEAR_HOURS_PER_YEAR = 1000;
 
 /** Parse values like "8,9 l/h" or "10.5 l/h (en ficha oficial)" */
 export function parseLitersPerHour(text: string): number {
@@ -40,19 +41,25 @@ export function parseEuroAmount(text: string): number {
   return Number.isNaN(value) ? 0 : value * EUR_TO_USD;
 }
 
-function parsePaverFuelConsumption(financial: PaverFinancialData): number {
+export function parsePaverFuelConsumption(financial: PaverFinancialData): number {
   const fromAvg = parseLitersPerHour(financial.avgFuelConsumption);
   if (fromAvg > 0) return fromAvg;
   const tenHour = parseFloat(String(financial.fuelConsumption10h).replace(',', '.'));
   if (!Number.isNaN(tenHour) && tenHour > 0) return tenHour / 10;
+  // Estimate from CO₂ when fuel is unpublished: kg CO₂ / 2.6 ≈ liters per 10h shift
+  const co2Match = String(financial.co2Per10hShift).replace(',', '.').match(/([\d.]+)\s*kg/i);
+  if (co2Match) {
+    const co2 = parseFloat(co2Match[1]);
+    if (!Number.isNaN(co2) && co2 > 0) return co2 / 2.6 / 10;
+  }
   return 0;
 }
 
-function parsePaverWearCostPerHour(financial: PaverFinancialData): number {
+/** Hourly USD cost of screed wear parts from 3-year replacement total (@1,000 h/year). */
+export function parsePaverScreedWearPerHour(financial: PaverFinancialData): number {
   const total3Years = parseEuroAmount(financial.totalReplacements3Years);
   if (total3Years <= 0) return 0;
-  const totalHours = 3 * WEAR_ANALYSIS_HOURS_PER_YEAR;
-  return total3Years / totalHours;
+  return total3Years / (3 * PAVER_WEAR_HOURS_PER_YEAR);
 }
 
 function isRollerSpec(machine: ComparableMachine): machine is MachineSpec {
@@ -61,6 +68,10 @@ function isRollerSpec(machine: ComparableMachine): machine is MachineSpec {
 
 function isMillingSpec(machine: ComparableMachine): machine is MillingMachineSpec {
   return 'millingWidth' in machine;
+}
+
+function isBomagBrand(brand: string): boolean {
+  return brand.toUpperCase().includes('BOMAG');
 }
 
 export function getMachineFinancialDefaults(machine: ComparableMachine): MachineFinancialDefaults {
@@ -87,12 +98,13 @@ export function getMachineFinancialDefaults(machine: ComparableMachine): Machine
   }
 
   const paver = machine as PaverMachineSpec;
-  const wearPerHour = parsePaverWearCostPerHour(paver.financial);
+  const bomag = isBomagBrand(paver.brand);
   return {
     price: paver.price ?? 0,
     fuelConsumption: paver.fuelConsumption ?? parsePaverFuelConsumption(paver.financial),
-    preventiveMaintenance: paver.preventiveMaintenance ?? wearPerHour,
-    correctiveMaintenance: paver.correctiveMaintenance ?? 5,
+    // Service maintenance — separate from screed wear (MAGMALIFE USP 8)
+    preventiveMaintenance: paver.preventiveMaintenance ?? (bomag ? 8 : 10),
+    correctiveMaintenance: paver.correctiveMaintenance ?? (bomag ? 4 : 6),
     usageTime: paver.usageTime ?? DEFAULT_OPERATION_HOURS,
     tco: paver.tco ?? 0,
   };

@@ -27,10 +27,10 @@ import {
   getMillingWearMultiplier,
   getPaverCo2PerShiftKg,
   getPaverFuelMultiplier,
+  getPaverScreedWearPerHour,
+  getPaverSetupFuelForMagmalife,
   getPaverSetupHeatingCost,
   getPaverUspDefaults,
-  getPaverWearCostPerHour,
-  PAVER_COMPETITOR_SETUP_FUEL_L,
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 
@@ -502,10 +502,12 @@ const MachineComparison = ({
   const [bms15lEnabled, setBms15lEnabled] = useState<{ [key: string]: boolean }>({});
   const [editableToolWearCost, setEditableToolWearCost] = useState<{ [key: string]: number }>({});
 
-  // Paver USP state (MAGMALIFE, ECOMODE, setup heating)
+  // Paver USP state (MAGMALIFE, ECOMODE, setup heating, screed wear)
   const [ecomodeEnabled, setEcomodeEnabled] = useState<{ [key: string]: boolean }>({});
   const [magmalifeEnabled, setMagmalifeEnabled] = useState<{ [key: string]: boolean }>({});
   const [editableSetupFuel, setEditableSetupFuel] = useState<{ [key: string]: number }>({});
+  const [editableScreedWear, setEditableScreedWear] = useState<{ [key: string]: number }>({});
+  const [showPaverReferenceData, setShowPaverReferenceData] = useState(false);
 
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -711,13 +713,19 @@ const MachineComparison = ({
   const isPaverMachine = (machine: ComparableMachine): machine is PaverMachineSpec =>
     'financial' in machine && 'maxProduction' in machine;
 
-  // Get effective fuel consumption (original or edited, with product-line USP multipliers)
-  const getEffectiveFuelConsumption = (machine: ComparableMachine) => {
+  // Base fuel L/h (editable) — without USP multipliers
+  const getBaseFuelConsumption = (machine: ComparableMachine) => {
     const machineId = getMachineId(machine);
     const originalFuel = getMachineFinancialDefaults(machine).fuelConsumption;
     const editedFuel = editableFuelConsumption[machineId];
-    let fuel = editedFuel !== undefined ? editedFuel : originalFuel;
+    return editedFuel !== undefined ? editedFuel : originalFuel;
+  };
+
+  // Effective fuel L/h including paver fuel-saving mode (ECOMODE / EcoPlus / VarioSpeed)
+  const getEffectiveFuelConsumption = (machine: ComparableMachine) => {
+    let fuel = getBaseFuelConsumption(machine);
     if (selectedLine === 'pavers' && isPaverMachine(machine)) {
+      const machineId = getMachineId(machine);
       const ecomode = ecomodeEnabled[machineId] ?? getPaverUspDefaults(machine).hasEcomode;
       fuel *= getPaverFuelMultiplier(machine, ecomode);
     }
@@ -732,14 +740,10 @@ const MachineComparison = ({
     return editedPrice !== undefined ? editedPrice : originalPrice;
   };
 
-  // Get effective preventive maintenance (original or edited, with USP adjustments)
+  // Preventive maintenance ($/h) — service, not screed wear
   const getEffectivePreventiveMaintenance = (machine: ComparableMachine) => {
     const machineId = getMachineId(machine);
     const editedMaintenance = editablePreventiveMaintenance[machineId];
-    if (selectedLine === 'pavers' && isPaverMachine(machine)) {
-      const magmalife = magmalifeEnabled[machineId] ?? getPaverUspDefaults(machine).hasMagmalife;
-      return getPaverWearCostPerHour(machine, magmalife, editedMaintenance);
-    }
     const originalMaintenance = getMachineFinancialDefaults(machine).preventiveMaintenance;
     const base = editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
     if (selectedLine === 'milling' && isMillingMachine(machine)) {
@@ -760,6 +764,12 @@ const MachineComparison = ({
       return base * getMillingWearMultiplier(machine, bms15l);
     }
     return base;
+  };
+
+  const getEffectiveScreedWear = (machine: PaverMachineSpec) => {
+    const machineId = getMachineId(machine);
+    const magmalife = magmalifeEnabled[machineId] ?? getPaverUspDefaults(machine).hasMagmalife;
+    return getPaverScreedWearPerHour(machine, magmalife, editableScreedWear[machineId]);
   };
 
   // Estimated resale / residual value — single user-entered amount (USD), deducted from TCO
@@ -801,10 +811,8 @@ const MachineComparison = ({
     const machineId = getMachineId(machine);
     const edited = editableSetupFuel[machineId];
     if (edited !== undefined) return edited;
-    const defaults = getPaverUspDefaults(machine);
-    const magmalife = magmalifeEnabled[machineId] ?? defaults.hasMagmalife;
-    if (magmalife && defaults.hasMagmalife) return defaults.setupFuelLiters;
-    return PAVER_COMPETITOR_SETUP_FUEL_L;
+    const magmalife = magmalifeEnabled[machineId] ?? getPaverUspDefaults(machine).hasMagmalife;
+    return getPaverSetupFuelForMagmalife(machine, magmalife);
   };
 
   const computeTcoComponents = (machine: ComparableMachine, hours: number) => {
@@ -816,6 +824,7 @@ const MachineComparison = ({
     const corrective = getEffectiveCorrectiveMaintenance(machine);
     let toolWearCost = 0;
     let setupHeatingCost = 0;
+    let screedWearCost = 0;
     const jointCost = getArticulationJointCost(machine, hours);
 
     if (selectedLine === 'milling' && isMillingMachine(machine)) {
@@ -827,11 +836,20 @@ const MachineComparison = ({
 
     if (selectedLine === 'pavers' && isPaverMachine(machine)) {
       setupHeatingCost = getPaverSetupHeatingCost(hours, getEffectiveSetupFuel(machine), fuelPrice);
+      screedWearCost = getEffectiveScreedWear(machine) * hours;
     }
 
     const fuelCost = fuel * hours * fuelPrice;
     const maintenanceCost = hours * (preventive + corrective);
-    const tco = price + fuelCost + maintenanceCost + jointCost + toolWearCost + setupHeatingCost - remainingValue;
+    const tco =
+      price +
+      fuelCost +
+      maintenanceCost +
+      jointCost +
+      toolWearCost +
+      setupHeatingCost +
+      screedWearCost -
+      remainingValue;
 
     return {
       price,
@@ -842,6 +860,7 @@ const MachineComparison = ({
       maintenanceCost,
       toolWearCost,
       setupHeatingCost,
+      screedWearCost,
       jointCost,
       tco,
       remainingValue,
@@ -1351,80 +1370,95 @@ const MachineComparison = ({
               {showFinancialTab && (
               <TabsContent value="financial" className="mt-4 space-y-8">
                 {selectedLine === 'pavers' && (
-                  <>
-                    {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('paverFinancialFuelSection')}</h4>
-                        <div className="overflow-x-auto">
-                          <CompareTable columnCount={compareSpecCols}>
-                            <thead>
-                              <tr className="bg-bomag-light-gray">
-                                <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
-                                {getSelectedMachineData().map((machine, index) => (
-                                  <th key={index} className="border border-gray-300 p-2 text-center">
-                                    <div className="text-sm font-bold">{machine.brand}</div>
-                                    <div className="text-xs">{machine.model}</div>
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }>).map((row) => (
-                                <tr key={row.key} className="hover:bg-gray-50">
-                                  <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
-                                  {getSelectedMachineData().map((machine, index) => {
-                                    const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
-                                    const strVal = paverText(String(value));
-                                    return (
-                                      <td key={index} className="border border-gray-300 p-2">
-                                        <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
-                                      </td>
-                                    );
-                                  })}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </CompareTable>
-                        </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-700">{t('paverFinancialModelTitle')}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{t('paverFinancialModelHint')}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="text-bomag-blue hover:underline text-sm font-medium"
+                      onClick={() => setShowPaverReferenceData((prev) => !prev)}
+                    >
+                      {showPaverReferenceData ? t('paverHideReferenceData') : t('paverShowReferenceData')}
+                    </button>
+                    {showPaverReferenceData && (
+                      <div className="space-y-6 border border-gray-200 rounded-md p-4 bg-gray-50/50">
+                        {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
+                          <div>
+                            <h5 className="text-md font-semibold text-gray-700 mb-2">{t('paverFinancialFuelSection')}</h5>
+                            <div className="overflow-x-auto">
+                              <CompareTable columnCount={compareSpecCols}>
+                                <thead>
+                                  <tr className="bg-bomag-light-gray">
+                                    <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                                    {getSelectedMachineData().map((machine, index) => (
+                                      <th key={index} className="border border-gray-300 p-2 text-center">
+                                        <div className="text-sm font-bold">{machine.brand}</div>
+                                        <div className="text-xs">{machine.model}</div>
+                                      </th>
+                                    ))}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {(locale.paverFinancialFuelRows as Array<{ key: string; labelKey: string }>).map((row) => (
+                                    <tr key={row.key} className="hover:bg-gray-50">
+                                      <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
+                                      {getSelectedMachineData().map((machine, index) => {
+                                        const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
+                                        const strVal = paverText(String(value));
+                                        return (
+                                          <td key={index} className="border border-gray-300 p-2">
+                                            <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
+                                          </td>
+                                        );
+                                      })}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </CompareTable>
+                            </div>
+                          </div>
+                        ) : null}
+                        {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
+                          <div>
+                            <h5 className="text-md font-semibold text-gray-700 mb-2">{t('paverFinancialWearSection')}</h5>
+                            <div className="overflow-x-auto">
+                              <CompareTable columnCount={compareSpecCols}>
+                                <thead>
+                                  <tr className="bg-bomag-light-gray">
+                                    <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                                    {getSelectedMachineData().map((machine, index) => (
+                                      <th key={index} className="border border-gray-300 p-2 text-center">
+                                        <div className="text-sm font-bold">{machine.brand}</div>
+                                        <div className="text-xs">{machine.model}</div>
+                                      </th>
+                                    ))}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }>).map((row) => (
+                                    <tr key={row.key} className="hover:bg-gray-50">
+                                      <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
+                                      {getSelectedMachineData().map((machine, index) => {
+                                        const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
+                                        const strVal = paverText(String(value));
+                                        return (
+                                          <td key={index} className="border border-gray-300 p-2">
+                                            <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
+                                          </td>
+                                        );
+                                      })}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </CompareTable>
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
-                    ) : null}
-                    {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }> | undefined)?.length ? (
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('paverFinancialWearSection')}</h4>
-                        <div className="overflow-x-auto">
-                          <CompareTable columnCount={compareSpecCols}>
-                            <thead>
-                              <tr className="bg-bomag-light-gray">
-                                <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
-                                {getSelectedMachineData().map((machine, index) => (
-                                  <th key={index} className="border border-gray-300 p-2 text-center">
-                                    <div className="text-sm font-bold">{machine.brand}</div>
-                                    <div className="text-xs">{machine.model}</div>
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {(locale.paverFinancialWearRows as Array<{ key: string; labelKey: string }>).map((row) => (
-                                <tr key={row.key} className="hover:bg-gray-50">
-                                  <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(row.labelKey)}</td>
-                                  {getSelectedMachineData().map((machine, index) => {
-                                    const value = (machine as PaverMachineSpec).financial?.[row.key as keyof PaverMachineSpec['financial']] ?? '-';
-                                    const strVal = paverText(String(value));
-                                    return (
-                                      <td key={index} className="border border-gray-300 p-2">
-                                        <div className="whitespace-pre-line">{formatMultiline(strVal)}</div>
-                                      </td>
-                                    );
-                                  })}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </CompareTable>
-                        </div>
-                      </div>
-                    ) : null}
-                  </>
+                    )}
+                  </div>
                 )}
 
                 {isCompactionLine && (
@@ -1975,136 +2009,9 @@ const MachineComparison = ({
                 )}
 
                 {selectedLine === 'pavers' && (
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('paverPerformanceCalculation')}</h4>
-                    <div className="overflow-x-auto">
-                      <CompareTable columnCount={compareSpecCols}>
-                        <thead>
-                          <tr className="bg-bomag-light-gray">
-                            <th className="border border-gray-300 p-2 text-left font-semibold">{t('parameter')}</th>
-                            {getSelectedMachineData().map((machine, index) => (
-                              <th key={index} className="border border-gray-300 p-2 text-center">
-                                <div className="text-sm font-bold">{machine.brand}</div>
-                                <div className="text-xs">{machine.model}</div>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="hover:bg-green-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">{t('paverMagmalifeQuestion')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const p = machine as PaverMachineSpec;
-                              const machineId = getMachineId(p);
-                              const defaults = getPaverUspDefaults(p);
-                              if (!defaults.hasMagmalife && !/magmalife/i.test(p.screedHeating)) {
-                                return <td key={index} className="border border-gray-300 p-2 text-center text-gray-400">—</td>;
-                              }
-                              const checked = magmalifeEnabled[machineId] ?? defaults.hasMagmalife;
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(v) =>
-                                      setMagmalifeEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))
-                                    }
-                                  />
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-green-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">{t('paverEcomodeQuestion')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const p = machine as PaverMachineSpec;
-                              const machineId = getMachineId(p);
-                              const defaults = getPaverUspDefaults(p);
-                              const hasFuelSaving = defaults.hasEcomode || /ecomode|ecoplus|variospeed/i.test(p.fuelSavingMode);
-                              if (!hasFuelSaving) {
-                                return <td key={index} className="border border-gray-300 p-2 text-center text-gray-400">—</td>;
-                              }
-                              const checked = ecomodeEnabled[machineId] ?? defaults.hasEcomode;
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(v) =>
-                                      setEcomodeEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))
-                                    }
-                                  />
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-orange-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-orange-50">{t('paverSetupFuelPerShift')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const p = machine as PaverMachineSpec;
-                              const machineId = getMachineId(p);
-                              const setupL = getEffectiveSetupFuel(p);
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <Input
-                                    type="number"
-                                    step="0.1"
-                                    className="w-20 h-8 text-center mx-auto"
-                                    value={setupL}
-                                    onChange={(e) => {
-                                      const v = parseFloat(e.target.value);
-                                      setEditableSetupFuel((prev) => ({
-                                        ...prev,
-                                        [machineId]: Number.isNaN(v) ? 0 : v,
-                                      }));
-                                    }}
-                                  />
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-orange-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-orange-50">{t('paverHeatingTime')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const defaults = getPaverUspDefaults(machine as PaverMachineSpec);
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {defaults.heatingMinutes > 0 ? `~${defaults.heatingMinutes} min` : '—'}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-orange-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-orange-50">{t('paverFuelWithEcomode')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const p = machine as PaverMachineSpec;
-                              const machineId = getMachineId(p);
-                              const base = getEffectiveFuelConsumption(p);
-                              const ecomode = ecomodeEnabled[machineId] ?? getPaverUspDefaults(p).hasEcomode;
-                              const effective = base * getPaverFuelMultiplier(p, ecomode);
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {effective > 0 ? `${effective.toFixed(1)} L/h` : '—'}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t('paverCo2PerShift')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const co2 = getPaverCo2PerShiftKg((machine as PaverMachineSpec).financial);
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {co2 != null ? `${co2} kg` : '—'}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        </tbody>
-                      </CompareTable>
-                    </div>
-                    <div className="mt-3 text-xs text-gray-600 italic space-y-1">
-                      <div>{t('paverFootnoteMagmalife')}</div>
-                      <div>{t('paverFootnoteEcomode')}</div>
-                    </div>
+                  <div className="text-xs text-gray-600 italic space-y-1 -mt-2">
+                    <div>{t('paverFootnoteMagmalife')}</div>
+                    <div>{t('paverFootnoteEcomode')}</div>
                   </div>
                 )}
 
@@ -2197,24 +2104,28 @@ const MachineComparison = ({
                           <tr className="hover:bg-orange-50/50">
                             <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">3</td>
                             <td className="border border-gray-300 p-2 font-medium bg-orange-50">
-                              {t('fuelConsumption')} {!isCompactionLine ? null : <span className="text-green-500">***</span>}{' '}
-                              <span className="text-xs text-gray-500">(L/h)</span>
+                              {selectedLine === 'pavers' ? t('paverBaseFuelLabel') : (
+                                <>
+                                  {t('fuelConsumption')} {isCompactionLine ? <span className="text-green-500">***</span> : null}{' '}
+                                  <span className="text-xs text-gray-500">(L/h)</span>
+                                </>
+                              )}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
-                              const currentFuel = getEffectiveFuelConsumption(machine);
+                              const baseFuel = getBaseFuelConsumption(machine);
 
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-blue-50">
                                   {isCompactionLine ? (
-                                    `${currentFuel.toFixed(1)} L/h`
+                                    `${baseFuel.toFixed(1)} L/h`
                                   ) : (
                                     <div className="flex justify-center">
                                       <Input
                                         type="number"
                                         step="0.1"
                                         className="border rounded px-2 py-1 w-20 text-center bg-blue-50"
-                                        value={currentFuel}
+                                        value={baseFuel}
                                         onChange={e => {
                                           const raw = e.target.value;
                                           const v = raw === '' ? NaN : parseFloat(raw);
@@ -2230,6 +2141,66 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+
+                          {selectedLine === 'pavers' && (
+                            <>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-orange-50">{t('paverEcomodeQuestion')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const p = machine as PaverMachineSpec;
+                                  const machineId = getMachineId(p);
+                                  const defaults = getPaverUspDefaults(p);
+                                  if (!defaults.hasFuelSavingMode) {
+                                    return (
+                                      <td key={index} className="border border-gray-300 p-2 text-center text-gray-400 text-xs">
+                                        {p.fuelSavingMode || '—'}
+                                      </td>
+                                    );
+                                  }
+                                  const checked = ecomodeEnabled[machineId] ?? defaults.hasEcomode;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center">
+                                      <div className="flex flex-col items-center gap-1">
+                                        <Checkbox
+                                          checked={checked}
+                                          onCheckedChange={(v) =>
+                                            setEcomodeEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))
+                                          }
+                                        />
+                                        <span className="text-[10px] text-gray-500">{p.fuelSavingMode}</span>
+                                      </div>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-orange-50">{t('paverEffectiveFuelLabel')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const effective = getEffectiveFuelConsumption(machine);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-semibold text-orange-900">
+                                      {effective > 0 ? `${effective.toFixed(1)} L/h` : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-orange-50">{t('paverCo2PerShift')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const co2 = getPaverCo2PerShiftKg((machine as PaverMachineSpec).financial);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center text-sm">
+                                      {co2 != null ? `${co2} kg` : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            </>
+                          )}
+
                           {/* Fuel Price Row */}
                           <tr className="hover:bg-orange-50/50">
                             <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">4</td>
@@ -2268,30 +2239,26 @@ const MachineComparison = ({
                               {t('fuelCostLabel')}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const fuelConsumption = getEffectiveFuelConsumption(machine);
-                              const fuelCost = fuelConsumption * operationTime * fuelPrice;
+                              const parts = computeTcoComponents(machine, operationTime);
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                  {formatFromUsd(fuelCost)}
+                                  {formatFromUsd(parts.fuelCost)}
                                 </td>
                               );
                             })}
                           </tr>
 
-                          {/* Product-line extra costs (milling tool wear / paver setup heating) */}
-                          {(selectedLine === 'milling' || selectedLine === 'pavers') && (
+                          {selectedLine === 'milling' && (
                             <tr className="hover:bg-amber-50/50">
                               <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">5b</td>
                               <td className="border border-gray-300 p-2 font-medium bg-amber-50">
-                                {selectedLine === 'milling' ? t('millingToolWearCost', ccy) : t('paverSetupHeatingCost')}
+                                {t('millingToolWearCost', ccy)}
                               </td>
                               {getSelectedMachineData().map((machine, index) => {
                                 const parts = computeTcoComponents(machine, operationTime);
-                                const extra =
-                                  selectedLine === 'milling' ? parts.toolWearCost : parts.setupHeatingCost;
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                    {formatFromUsd(extra)}
+                                    {formatFromUsd(parts.toolWearCost)}
                                   </td>
                                 );
                               })}
@@ -2309,7 +2276,7 @@ const MachineComparison = ({
                           <tr className="hover:bg-green-50/50">
                             <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-green-50">6</td>
                             <td className="border border-gray-300 p-2 font-semibold bg-green-50">
-                              {selectedLine === 'pavers' ? t('paverWearPartsCost', ccy) : t('preventiveMaintenance', ccy)}
+                              {t('preventiveMaintenance', ccy)}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
@@ -2489,6 +2456,175 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+
+                          {selectedLine === 'pavers' && (
+                            <>
+                              <tr>
+                                <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 font-bold text-sm bg-amber-100 text-amber-950">
+                                  {t('paverScreedWearCategory')}
+                                </td>
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">8a</td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-amber-50">{t('paverMagmalifeQuestion')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const p = machine as PaverMachineSpec;
+                                  const machineId = getMachineId(p);
+                                  const defaults = getPaverUspDefaults(p);
+                                  if (!defaults.hasMagmalife) {
+                                    return (
+                                      <td key={index} className="border border-gray-300 p-2 text-center text-xs text-gray-500">
+                                        {paverText(defaults.heatingType)}
+                                      </td>
+                                    );
+                                  }
+                                  const checked = magmalifeEnabled[machineId] ?? true;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center">
+                                      <Checkbox
+                                        checked={checked}
+                                        onCheckedChange={(v) =>
+                                          setMagmalifeEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))
+                                        }
+                                      />
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('paverHeatingTypeLabel')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const defaults = getPaverUspDefaults(machine as PaverMachineSpec);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center text-xs">
+                                      {paverText(defaults.heatingType)}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('paverHeatingTime')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const p = machine as PaverMachineSpec;
+                                  const machineId = getMachineId(p);
+                                  const defaults = getPaverUspDefaults(p);
+                                  const magmalife = magmalifeEnabled[machineId] ?? defaults.hasMagmalife;
+                                  const mins =
+                                    defaults.hasMagmalife && !magmalife ? 60 : defaults.heatingMinutes;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                      {mins > 0 ? `~${mins} min` : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('paverSetupFuelPerShift')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const p = machine as PaverMachineSpec;
+                                  const machineId = getMachineId(p);
+                                  const setupL = getEffectiveSetupFuel(p);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
+                                      <Input
+                                        type="number"
+                                        step="0.1"
+                                        className="border rounded px-2 py-1 w-20 text-center mx-auto bg-yellow-50"
+                                        value={setupL}
+                                        onChange={(e) => {
+                                          const v = parseFloat(e.target.value);
+                                          setEditableSetupFuel((prev) => ({
+                                            ...prev,
+                                            [machineId]: Number.isNaN(v) ? 0 : v,
+                                          }));
+                                        }}
+                                      />
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('paverSetupHeatingCost')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const parts = computeTcoComponents(machine, operationTime);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                      {formatFromUsd(parts.setupHeatingCost)}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">8b</td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-amber-50">{t('paverScreedWearHourly', ccy)}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const p = machine as PaverMachineSpec;
+                                  const machineId = getMachineId(p);
+                                  const rate = getEffectiveScreedWear(p);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
+                                      <Input
+                                        type="number"
+                                        step="0.1"
+                                        className="border rounded px-2 py-1 w-20 text-center mx-auto bg-yellow-50"
+                                        value={usdToInputNumber(rate, 'hourlyRate')}
+                                        onChange={(e) => {
+                                          const raw = e.target.value;
+                                          const v = raw === '' ? NaN : parseFloat(raw);
+                                          setEditableScreedWear((prev) => ({
+                                            ...prev,
+                                            [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'hourlyRate'),
+                                          }));
+                                        }}
+                                      />
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('paverScreedWearPeriodCost')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const parts = computeTcoComponents(machine, operationTime);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                      {formatFromUsd(parts.screedWearCost)}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td
+                                  colSpan={getSelectedMachineData().length + 2}
+                                  className="border border-gray-300 p-2 bg-amber-50"
+                                >
+                                  {(() => {
+                                    const selected = getSelectedMachineData();
+                                    const bomag = selected.find((m) => m.brand.toUpperCase().includes('BOMAG'));
+                                    if (!bomag || selected.length < 2) return null;
+                                    const bomagTco = computeTcoComponents(bomag, operationTime).tco;
+                                    const competitorTcos = selected
+                                      .filter((m) => !m.brand.toUpperCase().includes('BOMAG'))
+                                      .map((m) => computeTcoComponents(m, operationTime).tco);
+                                    if (!competitorTcos.length) return null;
+                                    const maxCompetitor = Math.max(...competitorTcos);
+                                    const savings = maxCompetitor - bomagTco;
+                                    if (!(savings > 0)) return null;
+                                    return (
+                                      <span className="inline-block rounded-full bg-blue-200 px-3 py-1 text-sm font-bold text-blue-900 tabular-nums">
+                                        {t('paverBomagSavingsPeriod')}: {formatFromUsd(savings)}
+                                      </span>
+                                    );
+                                  })()}
+                                </td>
+                              </tr>
+                            </>
+                          )}
+
                           {/* Category: Resale value — manual estimate */}
                           <tr>
                             <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 bg-purple-100">
@@ -2576,7 +2712,7 @@ const MachineComparison = ({
                             if (hours === 0) return tco0 - getEffectiveRemainingValue(machine);
                             const parts = computeTcoComponents(machine, hours);
                             const base = editableTCO[machineId] !== undefined ? editableTCO[machineId] : parts.price;
-                            return base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost - parts.remainingValue;
+                            return base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost + parts.screedWearCost - parts.remainingValue;
                           });
                           const min = Math.min(...tcos);
                           const max = Math.max(...tcos);
@@ -2592,7 +2728,7 @@ const MachineComparison = ({
                                 if (hours > 0) {
                                   const parts = computeTcoComponents(machine, hours);
                                   const base = editableTCO[machineId] !== undefined ? editableTCO[machineId] : parts.price;
-                                  tco = base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost - parts.remainingValue;
+                                  tco = base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost + parts.screedWearCost - parts.remainingValue;
                                 }
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">

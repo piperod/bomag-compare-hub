@@ -393,5 +393,19 @@
   "paverFuelWithEcomode": "Combustível efetivo com ECOMODE (L/h)",
   "paverMagmalifeSavings": "Poupança MAGMALIFE vs elétrico padrão (período)",
   "paverFootnoteMagmalife": "MAGMALIFE: ~50% mais rápido, ~3,5 L vs ~10,5 L combustível setup por jornada.",
-  "paverFootnoteEcomode": "ECOMODE reduz consumo em operação até 17% (dado de campo BOMAG)."
+  "paverFootnoteEcomode": "ECOMODE reduz consumo em operação até 17% (dado de campo BOMAG).",
+  "paverFinancialModelTitle": "Comparação TCO interativa",
+  "paverFinancialModelHint": "Ajuste preço, horas, combustível e manutenção. Os USP atualizam combustível e desgaste da régua versus concorrentes.",
+  "paverScreedWearCategory": "Desgaste da régua e aquecimento (USP MAGMALIFE)",
+  "paverScreedWearHourly": "Peças de desgaste da régua ({{currency}}/h)",
+  "paverScreedWearPeriodCost": "Custo desgaste da régua (período)",
+  "paverHeatingTypeLabel": "Tipo de aquecimento",
+  "paverElementLifeLabel": "Vida dos elementos de aquecimento",
+  "paverWearPlateLifeLabel": "Vida da placa de desgaste",
+  "paverBaseFuelLabel": "Consumo base (L/h)",
+  "paverEffectiveFuelLabel": "Consumo efetivo com modo economia (L/h)",
+  "paverFuelSourceLabel": "Fonte de dados",
+  "paverBomagSavingsPeriod": "Poupança BOMAG vs concorrente de maior custo (período)",
+  "paverShowReferenceData": "Mostrar dados de referência (campo / ficha)",
+  "paverHideReferenceData": "Ocultar dados de referência"
 }

@@ -1,12 +1,19 @@
 import type { MillingMachineSpec } from '@/data/millingData';
 import type { PaverFinancialData, PaverMachineSpec } from '@/data/paversData';
-import { parseEuroAmount, parseLitersPerHour } from '@/utils/financialFields';
+import {
+  parseEuroAmount,
+  parseLitersPerHour,
+  parsePaverScreedWearPerHour,
+} from '@/utils/financialFields';
 import { parseSpecNumbers } from '@/utils/paverCompetitiveAdvantage';
 
 export const MILLING_BMS15L_WEAR_REDUCTION = 0.2;
 export const PAVER_ECOMODE_FUEL_SAVINGS = 0.17;
 export const PAVER_HOURS_PER_SHIFT = 10;
 export const PAVER_COMPETITOR_SETUP_FUEL_L = 10.5;
+export const PAVER_MAGMALIFE_SETUP_FUEL_L = 3.5;
+/** Competitor screed replacements ~24,000 € / 3 years when MAGMALIFE is off. */
+export const PAVER_COMPETITOR_WEAR_3Y_EUR = '~24.000 €';
 
 export interface MillingProductivityDefaults {
   transportCapacityM3h: number;
@@ -19,16 +26,20 @@ export interface MillingProductivityDefaults {
 export interface PaverUspDefaults {
   hasMagmalife: boolean;
   hasEcomode: boolean;
+  hasFuelSavingMode: boolean;
   setupFuelLiters: number;
   heatingMinutes: number;
-  wearCostPerHour: number;
+  screedWearPerHour: number;
+  competitorScreedWearPerHour: number;
+  heatingType: string;
+  heatingElementLife: string;
+  wearPlateLife: string;
 }
 
 function isBomag(brand: string): boolean {
   return brand.toUpperCase().includes('BOMAG');
 }
 
-/** Parse "92 m³/h" or "0-40 m/min" (returns max of range) */
 export function parseMillingTransportCapacity(value: string): number {
   const nums = parseSpecNumbers(value);
   if (!nums.length) return 0;
@@ -47,7 +58,6 @@ export function parseMillingTurningRadius(value: string): number | null {
   return nums.length ? Math.min(...nums) : null;
 }
 
-/** Parse "9 kg (3,5 L) ✓" or "27 kg (10,5 L)" */
 export function parseSetupFuelLiters(text: string): number {
   if (!text) return PAVER_COMPETITOR_SETUP_FUEL_L;
   const paren = text.match(/\(([\d.,]+)\s*L\)/i);
@@ -60,7 +70,6 @@ export function parseSetupFuelLiters(text: string): number {
   return literCandidate ?? PAVER_COMPETITOR_SETUP_FUEL_L;
 }
 
-/** Parse "~30 min" or "~60 min" */
 export function parseHeatingMinutes(text: string): number {
   if (!text) return 60;
   const nums = parseSpecNumbers(text);
@@ -80,33 +89,38 @@ export function getMillingProductivityDefaults(machine: MillingMachineSpec): Mil
   };
 }
 
-function parsePaverWearCostPerHour(financial: PaverFinancialData): number {
-  const total3Years = parseEuroAmount(financial.totalReplacements3Years);
-  if (total3Years <= 0) return 0;
-  return total3Years / (3 * 2000);
-}
-
 export function getPaverUspDefaults(machine: PaverMachineSpec): PaverUspDefaults {
   const hasMagmalife =
     machine.hasMagmalife ??
     (/magmalife/i.test(machine.screedHeating) || /magmalife/i.test(machine.financial.heatingType));
   const hasEcomode =
     machine.hasEcomode ?? (/ecomode/i.test(machine.fuelSavingMode) && isBomag(machine.brand));
-  const competitorWear = parsePaverWearCostPerHour({
+  const hasFuelSavingMode =
+    hasEcomode || /ecoplus|variospeed|eco-mode|ecomode/i.test(machine.fuelSavingMode);
+  const screedWearPerHour =
+    parsePaverScreedWearPerHour(machine.financial) ||
+    (hasMagmalife
+      ? parsePaverScreedWearPerHour({ ...machine.financial, totalReplacements3Years: '~8.000 €' })
+      : parsePaverScreedWearPerHour({
+          ...machine.financial,
+          totalReplacements3Years: PAVER_COMPETITOR_WEAR_3Y_EUR,
+        }));
+  const competitorScreedWearPerHour = parsePaverScreedWearPerHour({
     ...machine.financial,
-    totalReplacements3Years: '~24.000 €',
+    totalReplacements3Years: PAVER_COMPETITOR_WEAR_3Y_EUR,
   });
 
   return {
     hasMagmalife,
     hasEcomode,
+    hasFuelSavingMode,
     setupFuelLiters: machine.setupFuelLiters ?? parseSetupFuelLiters(machine.financial.co2SetupHeating),
     heatingMinutes: machine.heatingMinutes ?? parseHeatingMinutes(machine.financial.heatingTime),
-    wearCostPerHour:
-      machine.preventiveMaintenance ??
-      (hasMagmalife
-        ? parsePaverWearCostPerHour(machine.financial)
-        : competitorWear || parsePaverWearCostPerHour(machine.financial)),
+    screedWearPerHour,
+    competitorScreedWearPerHour,
+    heatingType: machine.financial.heatingType,
+    heatingElementLife: machine.financial.heatingElementLife,
+    wearPlateLife: machine.financial.wearPlateLife,
   };
 }
 
@@ -129,10 +143,15 @@ export function getPaverFuelMultiplier(
   if (defaults.hasEcomode) return 1 - PAVER_ECOMODE_FUEL_SAVINGS;
   if (/ecoplus/i.test(machine.fuelSavingMode)) return 0.75;
   if (/variospeed/i.test(machine.fuelSavingMode)) return 0.9;
+  if (/eco-mode|eco mode/i.test(machine.fuelSavingMode)) return 0.9;
   return 1;
 }
 
-export function getPaverWearCostPerHour(
+/**
+ * Screed wear parts cost ($/h). With MAGMALIFE uses machine financial total;
+ * without it, uses competitor-level replacement cost (~24k € / 3 years).
+ */
+export function getPaverScreedWearPerHour(
   machine: PaverMachineSpec,
   magmalifeEnabled: boolean,
   editedWear?: number
@@ -140,15 +159,21 @@ export function getPaverWearCostPerHour(
   if (editedWear !== undefined) return editedWear;
   const defaults = getPaverUspDefaults(machine);
   if (magmalifeEnabled && defaults.hasMagmalife) {
-    return parsePaverWearCostPerHour(machine.financial);
+    return defaults.screedWearPerHour;
   }
-  const competitorWear = parsePaverWearCostPerHour({
-    ...machine.financial,
-    totalReplacements3Years: machine.financial.savingsVsBomag3Years
-      ? '~24.000 €'
-      : machine.financial.totalReplacements3Years,
-  });
-  return competitorWear > 0 ? competitorWear : defaults.wearCostPerHour;
+  if (defaults.hasMagmalife && !magmalifeEnabled) {
+    return defaults.competitorScreedWearPerHour;
+  }
+  return defaults.screedWearPerHour || defaults.competitorScreedWearPerHour;
+}
+
+/** @deprecated Use getPaverScreedWearPerHour */
+export function getPaverWearCostPerHour(
+  machine: PaverMachineSpec,
+  magmalifeEnabled: boolean,
+  editedWear?: number
+): number {
+  return getPaverScreedWearPerHour(machine, magmalifeEnabled, editedWear);
 }
 
 export function getMillingJobHours(volumeM3: number, transportCapacityM3h: number): number | null {
@@ -171,3 +196,33 @@ export function getPaverCo2PerShiftKg(financial: PaverFinancialData): number | n
   const nums = parseSpecNumbers(text);
   return nums.length ? nums[0] : null;
 }
+
+export function getPaverFuelSourceLabel(financial: PaverFinancialData): string {
+  return financial.fuelDataSource || '—';
+}
+
+/** Operating fuel L/h from financial block (no USP multiplier). */
+export function getPaverBaseFuelFromFinancial(machine: PaverMachineSpec): number {
+  if (machine.fuelConsumption != null && machine.fuelConsumption > 0) return machine.fuelConsumption;
+  const fromAvg = parseLitersPerHour(machine.financial.avgFuelConsumption);
+  if (fromAvg > 0) return fromAvg;
+  const tenHour = parseFloat(String(machine.financial.fuelConsumption10h).replace(',', '.'));
+  if (!Number.isNaN(tenHour) && tenHour > 0) return tenHour / 10;
+  return 0;
+}
+
+export function getPaverSetupFuelForMagmalife(
+  machine: PaverMachineSpec,
+  magmalifeEnabled: boolean
+): number {
+  const defaults = getPaverUspDefaults(machine);
+  if (magmalifeEnabled && defaults.hasMagmalife) {
+    return defaults.setupFuelLiters || PAVER_MAGMALIFE_SETUP_FUEL_L;
+  }
+  if (defaults.hasMagmalife && !magmalifeEnabled) {
+    return PAVER_COMPETITOR_SETUP_FUEL_L;
+  }
+  return defaults.setupFuelLiters || PAVER_COMPETITOR_SETUP_FUEL_L;
+}
+
+export { parseEuroAmount, parseLitersPerHour, parsePaverScreedWearPerHour };

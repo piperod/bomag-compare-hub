@@ -452,5 +452,19 @@
   "paverFuelWithEcomode": "Effective fuel with ECOMODE (L/h)",
   "paverMagmalifeSavings": "MAGMALIFE savings vs standard electric (period)",
   "paverFootnoteMagmalife": "MAGMALIFE: ~50% faster heating, ~3.5 L vs ~10.5 L setup fuel per shift.",
-  "paverFootnoteEcomode": "ECOMODE reduces operating fuel consumption by up to 17% (field data BOMAG)."
+  "paverFootnoteEcomode": "ECOMODE reduces operating fuel consumption by up to 17% (field data BOMAG).",
+  "paverFinancialModelTitle": "Interactive TCO comparison",
+  "paverFinancialModelHint": "Adjust price, hours, fuel and maintenance. USP toggles update fuel and screed costs dynamically vs competitors.",
+  "paverScreedWearCategory": "Screed wear & heating (USP MAGMALIFE)",
+  "paverScreedWearHourly": "Screed wear parts ({{currency}}/h)",
+  "paverScreedWearPeriodCost": "Screed wear cost (period)",
+  "paverHeatingTypeLabel": "Heating type",
+  "paverElementLifeLabel": "Heating element life",
+  "paverWearPlateLifeLabel": "Wear plate life",
+  "paverBaseFuelLabel": "Base consumption (L/h)",
+  "paverEffectiveFuelLabel": "Effective consumption with fuel-saving mode (L/h)",
+  "paverFuelSourceLabel": "Data source",
+  "paverBomagSavingsPeriod": "BOMAG savings vs highest-cost competitor (period)",
+  "paverShowReferenceData": "Show field / brochure reference data",
+  "paverHideReferenceData": "Hide reference data"
 }

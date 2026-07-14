@@ -427,5 +427,30 @@
   "wrongPassword": "Incorrect username or password. Please try again.",
   "verifying": "Verifying...",
   "loginSubmit": "Sign in",
-  "contactAdmin": "Contact the administrator if you do not have access"
+  "contactAdmin": "Contact the administrator if you do not have access",
+
+  "millingPerformanceCalculation": "Productivity & TCO (USP 1–3)",
+  "millingUsp1Productivity": "USP 1 — Transport capacity (m³/h)",
+  "millingUsp2Maneuverability": "USP 2 — Minimum turning radius (m)",
+  "millingWorkingSpeed": "Working speed (m/min)",
+  "millingVolumeToRemove": "Volume to remove (m³)",
+  "millingJobHours": "Estimated job hours (volume ÷ capacity)",
+  "millingBms15lQuestion": "USP 3 — BMS15L quick-change tool holder (20% less wear)?",
+  "millingToolWearCost": "Tool wear cost ({{currency}}/h)",
+  "millingWearSavings": "BMS15L maintenance savings (period)",
+  "millingFootnoteProductivity": "Based on transport capacity from specs; adjust volume for your project.",
+  "millingFootnoteBms15l": "BMS15L reduces tool wear and maintenance costs by up to 20% (BOMAG BM 1000/20).",
+
+  "paverPerformanceCalculation": "USP-driven operating cost model",
+  "paverMagmalifeQuestion": "USP 1 — MAGMALIFE screed heating (faster setup, lower wear)?",
+  "paverEcomodeQuestion": "USP 3 — ECOMODE active hydraulic regulation (up to 17% fuel savings)?",
+  "paverSetupFuelPerShift": "Setup / heating fuel per shift (L)",
+  "paverHeatingTime": "Approx. heating time (min)",
+  "paverSetupHeatingCost": "Setup & heating fuel cost (period)",
+  "paverWearPartsCost": "USP 8 — Screed wear parts ({{currency}}/h)",
+  "paverCo2PerShift": "USP 9 — CO₂ per 10h shift (kg)",
+  "paverFuelWithEcomode": "Effective fuel with ECOMODE (L/h)",
+  "paverMagmalifeSavings": "MAGMALIFE savings vs standard electric (period)",
+  "paverFootnoteMagmalife": "MAGMALIFE: ~50% faster heating, ~3.5 L vs ~10.5 L setup fuel per shift.",
+  "paverFootnoteEcomode": "ECOMODE reduces operating fuel consumption by up to 17% (field data BOMAG)."
 }

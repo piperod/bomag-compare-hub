@@ -76,6 +76,17 @@ export interface PaverMachineSpec {
   usp8: LocalizedText;
   usp9: LocalizedText;
   financial: PaverFinancialData;
+  /** Interactive financial analysis overrides (USD, L/h, USD/h) — derived from `financial` when omitted */
+  price?: number;
+  fuelConsumption?: number;
+  preventiveMaintenance?: number;
+  correctiveMaintenance?: number;
+  usageTime?: number;
+  tco?: number;
+  hasMagmalife?: boolean;
+  hasEcomode?: boolean;
+  setupFuelLiters?: number;
+  heatingMinutes?: number;
 }
 
 const rawPaversMachines: PaverMachineSpec[] = [

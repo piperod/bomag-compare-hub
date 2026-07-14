@@ -368,5 +368,30 @@
   "wrongPassword": "Falscher Benutzername oder falsches Passwort. Bitte erneut versuchen.",
   "verifying": "Wird geprüft...",
   "loginSubmit": "Anmelden",
-  "contactAdmin": "Wenden Sie sich an den Administrator, wenn Sie keinen Zugang haben"
+  "contactAdmin": "Wenden Sie sich an den Administrator, wenn Sie keinen Zugang haben",
+
+  "millingPerformanceCalculation": "Produktivität & TCO (USP 1–3)",
+  "millingUsp1Productivity": "USP 1 — Transportkapazität (m³/h)",
+  "millingUsp2Maneuverability": "USP 2 — Minimaler Wenderadius (m)",
+  "millingWorkingSpeed": "Arbeitsgeschwindigkeit (m/min)",
+  "millingVolumeToRemove": "Abzutragendes Volumen (m³)",
+  "millingJobHours": "Geschätzte Arbeitsstunden (Volumen ÷ Kapazität)",
+  "millingBms15lQuestion": "USP 3 — BMS15L Schnellwechsel-Werkzeughalter (20% weniger Verschleiß)?",
+  "millingToolWearCost": "Werkzeugverschleißkosten ({{currency}}/h)",
+  "millingWearSavings": "BMS15L Wartungseinsparung (Zeitraum)",
+  "millingFootnoteProductivity": "Basierend auf Transportkapazität aus Datenblatt; Volumen für Ihr Projekt anpassen.",
+  "millingFootnoteBms15l": "BMS15L reduziert Werkzeugverschleiß und Wartungskosten um bis zu 20% (BOMAG BM 1000/20).",
+
+  "paverPerformanceCalculation": "USP-basiertes Betriebskostenmodell",
+  "paverMagmalifeQuestion": "USP 1 — MAGMALIFE Verdichterheizung (schnelleres Setup, geringerer Verschleiß)?",
+  "paverEcomodeQuestion": "USP 3 — ECOMODE aktive Hydraulikregelung (bis 17% Kraftstoffeinsparung)?",
+  "paverSetupFuelPerShift": "Setup-/Heizkraftstoff pro Schicht (L)",
+  "paverHeatingTime": "Ca. Heizzeit (min)",
+  "paverSetupHeatingCost": "Setup- & Heizkraftstoffkosten (Zeitraum)",
+  "paverWearPartsCost": "USP 8 — Verdichterverschleiß ({{currency}}/h)",
+  "paverCo2PerShift": "USP 9 — CO₂ pro 10h-Schicht (kg)",
+  "paverFuelWithEcomode": "Effektiver Verbrauch mit ECOMODE (L/h)",
+  "paverMagmalifeSavings": "MAGMALIFE-Einsparung vs. Standard-Elektro (Zeitraum)",
+  "paverFootnoteMagmalife": "MAGMALIFE: ~50% schneller, ~3,5 L vs. ~10,5 L Setup-Kraftstoff pro Schicht.",
+  "paverFootnoteEcomode": "ECOMODE reduziert Betriebskraftstoff um bis zu 17% (BOMAG Felddaten)."
 }

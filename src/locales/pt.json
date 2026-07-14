@@ -368,5 +368,30 @@
   "wrongPassword": "Usuário ou senha incorretos. Tente novamente.",
   "verifying": "Verificando...",
   "loginSubmit": "Entrar",
-  "contactAdmin": "Contacte o administrador se não tiver acesso"
+  "contactAdmin": "Contacte o administrador se não tiver acesso",
+
+  "millingPerformanceCalculation": "Produtividade e TCO (USP 1–3)",
+  "millingUsp1Productivity": "USP 1 — Capacidade de transporte (m³/h)",
+  "millingUsp2Maneuverability": "USP 2 — Raio de giro mínimo (m)",
+  "millingWorkingSpeed": "Velocidade de trabalho (m/min)",
+  "millingVolumeToRemove": "Volume a fresar (m³)",
+  "millingJobHours": "Horas estimadas do trabalho (volume ÷ capacidade)",
+  "millingBms15lQuestion": "USP 3 — Suporte BMS15L troca rápida (20% menos desgaste)?",
+  "millingToolWearCost": "Custo desgaste ferramentas ({{currency}}/h)",
+  "millingWearSavings": "Poupança manutenção BMS15L (período)",
+  "millingFootnoteProductivity": "Baseado na capacidade de transporte da ficha; ajuste o volume ao seu projeto.",
+  "millingFootnoteBms15l": "BMS15L reduz desgaste de ferramentas e custos de manutenção até 20% (BOMAG BM 1000/20).",
+
+  "paverPerformanceCalculation": "Modelo de custo operacional por USP",
+  "paverMagmalifeQuestion": "USP 1 — Aquecimento MAGMALIFE (setup mais rápido, menor desgaste)?",
+  "paverEcomodeQuestion": "USP 3 — ECOMODE regulação hidráulica ativa (até 17% poupança combustível)?",
+  "paverSetupFuelPerShift": "Combustível setup / aquecimento por jornada (L)",
+  "paverHeatingTime": "Tempo aprox. de aquecimento (min)",
+  "paverSetupHeatingCost": "Custo combustível setup e aquecimento (período)",
+  "paverWearPartsCost": "USP 8 — Desgaste régua ({{currency}}/h)",
+  "paverCo2PerShift": "USP 9 — CO₂ por jornada 10h (kg)",
+  "paverFuelWithEcomode": "Combustível efetivo com ECOMODE (L/h)",
+  "paverMagmalifeSavings": "Poupança MAGMALIFE vs elétrico padrão (período)",
+  "paverFootnoteMagmalife": "MAGMALIFE: ~50% mais rápido, ~3,5 L vs ~10,5 L combustível setup por jornada.",
+  "paverFootnoteEcomode": "ECOMODE reduz consumo em operação até 17% (dado de campo BOMAG)."
 }

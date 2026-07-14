@@ -25,6 +25,20 @@ export interface MillingMachineSpec {
   usp4: { es: string; en: string; de: string; pt: string };
   idealApplication: { es: string; en: string; de: string; pt: string };
   valueProposition: { es: string; en: string; de: string; pt: string };
+  /** Interactive financial analysis defaults (USD, L/h, USD/h) */
+  price?: number;
+  fuelConsumption?: number;
+  preventiveMaintenance?: number;
+  correctiveMaintenance?: number;
+  usageTime?: number;
+  tco?: number;
+  /** USP-driven productivity & TCO variables */
+  transportCapacityM3h?: number;
+  workingSpeedMmin?: number;
+  turningRadiusM?: number;
+  hasBms15l?: boolean;
+  wearReductionPercent?: number;
+  toolWearCostPerHour?: number;
 }
 
 export const millingMachines: MillingMachineSpec[] = [
@@ -90,7 +104,19 @@ export const millingMachines: MillingMachineSpec[] = [
       en: 'Specialist in efficiency, versatility and better TCO.',
       de: 'Spezialist für Effizienz, Vielseitigkeit und besseren TCO.',
       pt: 'Especialista em eficiência, versatilidade e melhor TCO.'
-    }
+    },
+    price: 0,
+    fuelConsumption: 16,
+    preventiveMaintenance: 12,
+    correctiveMaintenance: 8,
+    usageTime: 3000,
+    tco: 0,
+    transportCapacityM3h: 92,
+    workingSpeedMmin: 40,
+    turningRadiusM: 0.38,
+    hasBms15l: true,
+    wearReductionPercent: 20,
+    toolWearCostPerHour: 15
   },
   {
     brand: 'SANY',
@@ -154,7 +180,18 @@ export const millingMachines: MillingMachineSpec[] = [
       en: 'Specialist in power and deep milling.',
       de: 'Spezialist für Leistung und Tiefenfräsen.',
       pt: 'Especialista em potência e fresagem profunda.'
-    }
+    },
+    price: 0,
+    fuelConsumption: 22,
+    preventiveMaintenance: 10,
+    correctiveMaintenance: 10,
+    usageTime: 3000,
+    tco: 0,
+    transportCapacityM3h: 0,
+    workingSpeedMmin: 35,
+    turningRadiusM: 1.2,
+    hasBms15l: false,
+    toolWearCostPerHour: 20
   },
   {
     brand: 'XCMG',
@@ -218,7 +255,18 @@ export const millingMachines: MillingMachineSpec[] = [
       en: 'Competitive alternative balanced in price and performance.',
       de: 'Wettbewerbsfähige Alternative mit ausgewogenem Preis-Leistungs-Verhältnis.',
       pt: 'Alternativa competitiva equilibrada em preço e desempenho.'
-    }
+    },
+    price: 0,
+    fuelConsumption: 18,
+    preventiveMaintenance: 10,
+    correctiveMaintenance: 8,
+    usageTime: 3000,
+    tco: 0,
+    transportCapacityM3h: 84,
+    workingSpeedMmin: 50,
+    turningRadiusM: null,
+    hasBms15l: false,
+    toolWearCostPerHour: 17
   }
 ];
 

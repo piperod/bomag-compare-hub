@@ -368,5 +368,30 @@
   "wrongPassword": "Usuario o contraseña incorrectos. Inténtalo de nuevo.",
   "verifying": "Verificando...",
   "loginSubmit": "Acceder",
-  "contactAdmin": "Contacta al administrador si no tienes acceso"
+  "contactAdmin": "Contacta al administrador si no tienes acceso",
+
+  "millingPerformanceCalculation": "Productividad y TCO (USP 1–3)",
+  "millingUsp1Productivity": "USP 1 — Capacidad de transporte (m³/h)",
+  "millingUsp2Maneuverability": "USP 2 — Radio de giro mínimo (m)",
+  "millingWorkingSpeed": "Velocidad de trabajo (m/min)",
+  "millingVolumeToRemove": "Volumen a fresar (m³)",
+  "millingJobHours": "Horas estimadas del trabajo (volumen ÷ capacidad)",
+  "millingBms15lQuestion": "USP 3 — Porta-herramientas BMS15L (20% menos desgaste)?",
+  "millingToolWearCost": "Costo desgaste herramientas ({{currency}}/h)",
+  "millingWearSavings": "Ahorro mantenimiento BMS15L (período)",
+  "millingFootnoteProductivity": "Basado en capacidad de transporte de ficha; ajuste el volumen a su proyecto.",
+  "millingFootnoteBms15l": "BMS15L reduce desgaste de herramientas y costos de mantenimiento hasta 20% (BOMAG BM 1000/20).",
+
+  "paverPerformanceCalculation": "Modelo de costo operativo por USP",
+  "paverMagmalifeQuestion": "USP 1 — Calentamiento MAGMALIFE (setup más rápido, menor desgaste)?",
+  "paverEcomodeQuestion": "USP 3 — ECOMODE regulación hidráulica activa (hasta 17% ahorro combustible)?",
+  "paverSetupFuelPerShift": "Combustible setup / calentamiento por jornada (L)",
+  "paverHeatingTime": "Tiempo aprox. de calentamiento (min)",
+  "paverSetupHeatingCost": "Costo combustible setup y calentamiento (período)",
+  "paverWearPartsCost": "USP 8 — Desgaste regla ({{currency}}/h)",
+  "paverCo2PerShift": "USP 9 — CO₂ por jornada 10h (kg)",
+  "paverFuelWithEcomode": "Combustible efectivo con ECOMODE (L/h)",
+  "paverMagmalifeSavings": "Ahorro MAGMALIFE vs eléctrico estándar (período)",
+  "paverFootnoteMagmalife": "MAGMALIFE: ~50% más rápido, ~3,5 L vs ~10,5 L combustible setup por jornada.",
+  "paverFootnoteEcomode": "ECOMODE reduce consumo en operación hasta 17% (dato campo BOMAG)."
 }

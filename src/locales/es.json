@@ -407,5 +407,6 @@
   "paverFuelSourceLabel": "Fuente de datos",
   "paverBomagSavingsPeriod": "Ahorro BOMAG vs competidor de mayor costo (período)",
   "paverShowReferenceData": "Mostrar datos de referencia (campo / ficha)",
-  "paverHideReferenceData": "Ocultar datos de referencia"
+  "paverHideReferenceData": "Ocultar datos de referencia",
+  "minutesUnit": "min"
 }

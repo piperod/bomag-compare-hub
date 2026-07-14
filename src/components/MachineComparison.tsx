@@ -506,6 +506,7 @@ const MachineComparison = ({
   const [ecomodeEnabled, setEcomodeEnabled] = useState<{ [key: string]: boolean }>({});
   const [magmalifeEnabled, setMagmalifeEnabled] = useState<{ [key: string]: boolean }>({});
   const [editableSetupFuel, setEditableSetupFuel] = useState<{ [key: string]: number }>({});
+  const [editableHeatingMinutes, setEditableHeatingMinutes] = useState<{ [key: string]: number }>({});
   const [editableScreedWear, setEditableScreedWear] = useState<{ [key: string]: number }>({});
   const [showPaverReferenceData, setShowPaverReferenceData] = useState(false);
 
@@ -813,6 +814,16 @@ const MachineComparison = ({
     if (edited !== undefined) return edited;
     const magmalife = magmalifeEnabled[machineId] ?? getPaverUspDefaults(machine).hasMagmalife;
     return getPaverSetupFuelForMagmalife(machine, magmalife);
+  };
+
+  const getEffectiveHeatingMinutes = (machine: PaverMachineSpec) => {
+    const machineId = getMachineId(machine);
+    const edited = editableHeatingMinutes[machineId];
+    if (edited !== undefined) return edited;
+    const defaults = getPaverUspDefaults(machine);
+    const magmalife = magmalifeEnabled[machineId] ?? defaults.hasMagmalife;
+    if (defaults.hasMagmalife && !magmalife) return 60;
+    return defaults.heatingMinutes || 60;
   };
 
   const computeTcoComponents = (machine: ComparableMachine, hours: number) => {
@@ -2509,13 +2520,26 @@ const MachineComparison = ({
                                 {getSelectedMachineData().map((machine, index) => {
                                   const p = machine as PaverMachineSpec;
                                   const machineId = getMachineId(p);
-                                  const defaults = getPaverUspDefaults(p);
-                                  const magmalife = magmalifeEnabled[machineId] ?? defaults.hasMagmalife;
-                                  const mins =
-                                    defaults.hasMagmalife && !magmalife ? 60 : defaults.heatingMinutes;
+                                  const mins = getEffectiveHeatingMinutes(p);
                                   return (
-                                    <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                      {mins > 0 ? `~${mins} min` : '—'}
+                                    <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
+                                      <div className="flex items-center justify-center gap-1">
+                                        <Input
+                                          type="number"
+                                          step="1"
+                                          min="0"
+                                          className="border rounded px-2 py-1 w-20 text-center bg-yellow-50"
+                                          value={mins}
+                                          onChange={(e) => {
+                                            const v = parseFloat(e.target.value);
+                                            setEditableHeatingMinutes((prev) => ({
+                                              ...prev,
+                                              [machineId]: Number.isNaN(v) ? 0 : v,
+                                            }));
+                                          }}
+                                        />
+                                        <span className="text-xs text-gray-500">{t('minutesUnit')}</span>
+                                      </div>
                                     </td>
                                   );
                                 })}

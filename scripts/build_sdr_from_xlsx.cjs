@@ -531,6 +531,8 @@ function main() {
   const csvColumns = [];
   const jsonItems = [];
 
+  const includedKeys = new Set();
+
   for (const excelRow of excelMachines) {
     const match = findLegacyMatch(excelRow.brand, excelRow.model, legacyCsvByKey, legacyJsonByKey);
     const contentFallback = findLegacyContentFallback(
@@ -542,12 +544,28 @@ function main() {
     const merged = mergeMachine(excelRow, match, contentFallback);
     csvColumns.push(merged.csvCol);
     jsonItems.push(merged.jsonItem);
+    includedKeys.add(normKey(excelRow.brand, excelRow.model));
+  }
+
+  // Keep legacy-only models that are not present in the Excel sheet
+  // (aliases map newer Excel models onto older catalog names; don't drop the originals).
+  let preserved = 0;
+  for (const [key, legacy] of legacyJsonByKey.entries()) {
+    if (includedKeys.has(key)) continue;
+    jsonItems.push({
+      ...legacy,
+      materialNumber: legacy.materialNumber || '',
+    });
+    includedKeys.add(key);
+    preserved += 1;
   }
 
   writeCsv(csvColumns);
   fs.writeFileSync(OUT_JSON, JSON.stringify(jsonItems, null, 2) + '\n', 'utf8');
 
-  console.log(`Processed ${jsonItems.length} SDR machines from ${SHEET_NAME}`);
+  console.log(`Processed ${excelMachines.length} SDR machines from ${SHEET_NAME}`);
+  console.log(`Preserved ${preserved} legacy-only models not in Excel`);
+  console.log(`Total in output: ${jsonItems.length}`);
   console.log(`Wrote ${OUT_CSV}`);
   console.log(`Wrote ${OUT_JSON}`);
 

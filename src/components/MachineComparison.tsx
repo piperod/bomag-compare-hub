@@ -378,10 +378,15 @@ function getPriceColor(value: number, min: number, max: number) {
   }
 }
 
-// Stable machine id independent of search/filter order
+// Stable machine id independent of search/filter order.
+// Include materialNumber so BOMAG variants that share model/engine stay distinct.
 const getMachineId = (machine: MachineSpec | MillingMachineSpec | PaverMachineSpec) => {
   const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
-  return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize((machine as any).engine ?? '')}`;
+  const material = normalize(String((machine as any).materialNumber ?? ''));
+  const engine = normalize(String((machine as any).engine ?? ''));
+  return material
+    ? `${normalize(machine.brand)}__${normalize(machine.model)}__${material}`
+    : `${normalize(machine.brand)}__${normalize(machine.model)}__${engine}`;
 };
 
 const MachineComparison = ({ 
@@ -537,7 +542,8 @@ const MachineComparison = ({
       const filtered = arr.filter(machine => 
         machine.brand.toLowerCase().includes(searchLower) ||
         machine.model.toLowerCase().includes(searchLower) ||
-        machine.engine.toLowerCase().includes(searchLower)
+        machine.engine.toLowerCase().includes(searchLower) ||
+        String((machine as any).materialNumber ?? '').toLowerCase().includes(searchLower)
       );
 
       // Always include already selected machines even if they don't match the search

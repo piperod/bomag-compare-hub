@@ -260,7 +260,11 @@ function Summary({
   // Helper to get machine ID (same as in MachineComparison)
   const getMachineId = (machine: any) => {
     const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
-    return `${normalize(machine.brand)}__${normalize(machine.model)}__${normalize(machine.engine)}`;
+    const material = normalize(String(machine.materialNumber ?? ''));
+    const engine = normalize(String(machine.engine ?? ''));
+    return material
+      ? `${normalize(machine.brand)}__${normalize(machine.model)}__${material}`
+      : `${normalize(machine.brand)}__${normalize(machine.model)}__${engine}`;
   };
 
   // Helper to get the current value (edited or original)

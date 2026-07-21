@@ -2,11 +2,237 @@
   {
     "brand": "BOMAG",
     "model": "BW211 D5-SL",
-    "materialNumber": "58400031",
-    "weight": 10120,
-    "engine": "Cummins 4BT AA 3.9",
-    "compactionWidth": 2.13,
+    "materialNumber": "93500000",
+    "weight": 10630,
+    "engine": "Cummins 4BT 3.9",
+    "compactionWidth": 2.1,
+    "power": 100,
+    "amplitude": "1.80 / 0.95",
+    "staticLinearLoad": 28.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nVisual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction. (Standard)\nBOMAG TERRAMETER\nSystem that measures soil stiffness through drum vibration. Provides real-time reading of the compacted material's modulus of elasticity, enabling precise compaction control and job traceability. Evib - MN/m²",
+      "de": "BOMAG ECONOMIZER\nVisuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden. (Standard)\nBOMAG TERRAMETER\nSystem zur Messung der Bodensteifigkeit durch Trommelvibration. Echtzeit-Anzeige des Elastizitätsmoduls des verdichteten Materials für präzise Verdichtungskontrolle und Nachverfolgbarkeit. Evib - MN/m²",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação. (Padrão)\nBOMAG TERRAMETER\nSistema que mede a rigidez do solo pela vibração do tambor. Oferece leitura em tempo real do módulo de elasticidade do material compactado, facilitando o controle preciso da compactação e a rastreabilidade dos trabalhos. Evib - MN/m²"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Real Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Echtes Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Intuitive Operation\n* One switch for each function\n* Intuitive symbols make operation easy",
+      "de": "Intuitive Bedienung\n* Ein Schalter für jede Funktion\n* Intuitive Symbole erleichtern die Bedienung",
+      "pt": "Operação intuitiva\n* Um interruptor para cada função\n* Símbolos intuitivos facilitam a operação"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Higher compaction performance\n* Maximum amplitudes for deeper compaction effect (Larger amplitude 2.2 mm)\n* Flexibility in sheep's foot kit mounting",
+      "de": "Höhere Verdichtungsleistung\n* Maximale Amplituden für tieferen Verdichtungseffekt (Größere Amplitude 2,2 mm)\n* Flexibilität bei der Montage des Schafsfuß-Kits",
+      "pt": "Maior desempenho de compactação\n* Amplitudes máximas para efeito de compactação mais profundo (Amplitude maior 2,2 mm)\n* Flexibilidade na montagem do kit pé de carneiro"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Maintenance-free articulation joint",
+      "de": "Wartungsfreies Gelenk",
+      "pt": "Junta de articulação livre de manutenção"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Comfortable and safe work\n* Spacious work area with excellent visibility",
+      "de": "Komfortable und sichere Arbeit\n* Großer Arbeitsbereich mit ausgezeichneter Sicht",
+      "pt": "Trabalho confortável e seguro\n* Área de trabalho espaçosa com excelente visibilidade"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Efficient compaction\nReal-time measurement and documentation using: ECONOMIZER, TERRAMETER and BOMAP",
+      "de": "Effiziente Verdichtung\nEchtzeit-Messung und -Dokumentation mit: ECONOMIZER, TERRAMETER und BOMAP",
+      "pt": "Compactação eficiente\nMedição e documentação em tempo real usando: ECONOMIZER, TERRAMETER e BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Easy maintenance\n* All components arranged for easy access\n* Less maintenance on the cooling system due to the high air intake point, less prone to contamination",
+      "de": "Einfache Wartung\n* Alle Komponenten für einfachen Zugang angeordnet\n* Weniger Wartung am Kühlsystem aufgrund des hohen Lufteinlasspunkts, weniger anfällig für Kontamination",
+      "pt": "Manutenção fácil\n* Todos os componentes dispostos para fácil acesso\n* Menos manutenção no sistema de refrigeração devido ao ponto alto de entrada de ar, menos propenso à contaminação"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 11.8,
+    "price": 57592.78,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 109072.78,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 42800,
+        "tco": 109072.78
+      },
+      {
+        "hours": 1500,
+        "price": 50200,
+        "tco": 109072.78
+      },
+      {
+        "hours": 2000,
+        "price": 57600,
+        "tco": 109072.78
+      },
+      {
+        "hours": 2500,
+        "price": 65000,
+        "tco": 109072.78
+      },
+      {
+        "hours": 3000,
+        "price": 72400,
+        "tco": 109072.78
+      }
+    ]
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "93500004",
+    "weight": 10630,
+    "engine": "Cummins 4BTAA 3.9",
+    "compactionWidth": 2.1,
     "power": 110,
+    "amplitude": "1.80 / 0.95",
+    "staticLinearLoad": 28.4,
+    "gradeability": 45,
+    "origin": {
+      "es": "India",
+      "en": "India",
+      "de": "India",
+      "pt": "India"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nVisual system that allows operators to measure compaction progress in real time. Uses an LED scale in the cab to show the achieved compaction level, helping to avoid over- or under-compaction. (Standard)\nBOMAG TERRAMETER\nSystem that measures soil stiffness through drum vibration. Provides real-time reading of the compacted material's modulus of elasticity, enabling precise compaction control and job traceability. Evib - MN/m²",
+      "de": "BOMAG ECONOMIZER\nVisuelles System, das es dem Bediener ermöglicht, den Verdichtungsfortschritt in Echtzeit zu messen. Eine LED-Skala in der Kabine zeigt das erreichte Verdichtungsniveau an und hilft, Über- oder Unterverdichtung zu vermeiden. (Standard)\nBOMAG TERRAMETER\nSystem zur Messung der Bodensteifigkeit durch Trommelvibration. Echtzeit-Anzeige des Elastizitätsmoduls des verdichteten Materials für präzise Verdichtungskontrolle und Nachverfolgbarkeit. Evib - MN/m²",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite aos operadores medir o progresso da compactação em tempo real. Utiliza uma escala de LED na cabine para mostrar o nível de compactação alcançado, ajudando a evitar sobre ou subcompactação. (Padrão)\nBOMAG TERRAMETER\nSistema que mede a rigidez do solo pela vibração do tambor. Oferece leitura em tempo real do módulo de elasticidade do material compactado, facilitando o controle preciso da compactação e a rastreabilidade dos trabalhos. Evib - MN/m²"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Real Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Echtes Evib), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Intuitive Operation\n* One switch for each function\n* Intuitive symbols make operation easy",
+      "de": "Intuitive Bedienung\n* Ein Schalter für jede Funktion\n* Intuitive Symbole erleichtern die Bedienung",
+      "pt": "Operação intuitiva\n* Um interruptor para cada função\n* Símbolos intuitivos facilitam a operação"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Higher compaction performance\n* Maximum amplitudes for deeper compaction effect (Larger amplitude 2.2 mm)\n* Flexibility in sheep's foot kit mounting",
+      "de": "Höhere Verdichtungsleistung\n* Maximale Amplituden für tieferen Verdichtungseffekt (Größere Amplitude 2,2 mm)\n* Flexibilität bei der Montage des Schafsfuß-Kits",
+      "pt": "Maior desempenho de compactação\n* Amplitudes máximas para efeito de compactação mais profundo (Amplitude maior 2,2 mm)\n* Flexibilidade na montagem do kit pé de carneiro"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Maintenance-free articulation joint",
+      "de": "Wartungsfreies Gelenk",
+      "pt": "Junta de articulação livre de manutenção"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Comfortable and safe work\n* Spacious work area with excellent visibility",
+      "de": "Komfortable und sichere Arbeit\n* Großer Arbeitsbereich mit ausgezeichneter Sicht",
+      "pt": "Trabalho confortável e seguro\n* Área de trabalho espaçosa com excelente visibilidade"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Efficient compaction\nReal-time measurement and documentation using: ECONOMIZER, TERRAMETER and BOMAP",
+      "de": "Effiziente Verdichtung\nEchtzeit-Messung und -Dokumentation mit: ECONOMIZER, TERRAMETER und BOMAP",
+      "pt": "Compactação eficiente\nMedição e documentação em tempo real usando: ECONOMIZER, TERRAMETER e BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Easy maintenance\n* All components arranged for easy access\n* Less maintenance on the cooling system due to the high air intake point, less prone to contamination",
+      "de": "Einfache Wartung\n* Alle Komponenten für einfachen Zugang angeordnet\n* Weniger Wartung am Kühlsystem aufgrund des hohen Lufteinlasspunkts, weniger anfällig für Kontamination",
+      "pt": "Manutenção fácil\n* Todos os componentes dispostos para fácil acesso\n* Menos manutenção no sistema de refrigeração devido ao ponto alto de entrada de ar, menos propenso à contaminação"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 11.8,
+    "price": 59374,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 110854,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 44430,
+        "tco": 110854
+      },
+      {
+        "hours": 1500,
+        "price": 51830,
+        "tco": 110854
+      },
+      {
+        "hours": 2000,
+        "price": 59230,
+        "tco": 110854
+      },
+      {
+        "hours": 2500,
+        "price": 66630,
+        "tco": 110854
+      },
+      {
+        "hours": 3000,
+        "price": 74030,
+        "tco": 110854
+      }
+    ]
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "58400031",
+    "weight": 10630,
+    "engine": "Deutz BF4M 2012 C",
+    "compactionWidth": 2.1,
+    "power": 132,
     "amplitude": "1.80 / 0.95",
     "staticLinearLoad": 28.4,
     "gradeability": 45,
@@ -83,17 +309,157 @@
     "preventiveMaintenance": 1,
     "correctiveMaintenance": 2,
     "usageTime": 3000,
-    "tco": 117170.18
+    "tco": 117170.18,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 44980,
+        "tco": 117170.18
+      },
+      {
+        "hours": 1500,
+        "price": 52680,
+        "tco": 117170.18
+      },
+      {
+        "hours": 2000,
+        "price": 60380,
+        "tco": 117170.18
+      },
+      {
+        "hours": 2500,
+        "price": 68080,
+        "tco": 117170.18
+      },
+      {
+        "hours": 3000,
+        "price": 75780,
+        "tco": 117170.18
+      }
+    ]
+  },
+  {
+    "brand": "BOMAG",
+    "model": "BW211 D5-SL",
+    "materialNumber": "58400033",
+    "weight": 10630,
+    "engine": "Deutz BF4M 2012 C",
+    "compactionWidth": 2.13,
+    "power": 132,
+    "amplitude": "1.80 / 0.96",
+    "staticLinearLoad": 26.8,
+    "gradeability": 45,
+    "origin": {
+      "es": "China",
+      "en": "China",
+      "de": "China",
+      "pt": "China"
+    },
+    "compactionAssistant": {
+      "es": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "en": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "de": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2",
+      "pt": "BOMAG ECONOMIZER\nSistema visual que permite a los operadores medir el progreso de la compactación en tiempo real. Utiliza una escala LED en la cabina para mostrar el nivel de compactación alcanzado, ayudando a evitar sobrecompacción o subcompactación. (Estandar)\nBOMAG TERRAMETER\nSistema que mide la rigidez del suelo mediante la vibración del tambor. Ofrece una lectura en tiempo real del módulo de elasticidad del material compactado, lo que facilita el control preciso de la compactación y la trazabilidad de los trabajos. Evib - MN/m2"
+    },
+    "telemetry": {
+      "es": "Telematics",
+      "en": "Telematics",
+      "de": "Telematics",
+      "pt": "Telematics"
+    },
+    "innovations": {
+      "es": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "en": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "de": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC",
+      "pt": "Economizer, TERRAMETER (Evib real), VARIOCONTROL, ECOMODE, TELEMATIC"
+    },
+    "usp": {
+      "es": "",
+      "en": "",
+      "de": "",
+      "pt": ""
+    },
+    "usp1": {
+      "es": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "en": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "de": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación",
+      "pt": "Operación Intuitiva\n* Un switch para cada función\n* Símbolos intuitivos facilitan la operación"
+    },
+    "usp2": {
+      "es": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "en": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "de": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra",
+      "pt": "Rendimiento de compactación más alto\n* Máximas amplitudes para un efecto de compactación más profundo (Larger amplitud 2,2 mm)\n* Flexibilidad en el montaje del kit pata de cabra"
+    },
+    "usp3": {
+      "es": "Junta de articulación libre de mantenimiento",
+      "en": "Junta de articulación libre de mantenimiento",
+      "de": "Junta de articulación libre de mantenimiento",
+      "pt": "Junta de articulación libre de mantenimiento"
+    },
+    "usp4": {
+      "es": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "en": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "de": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad",
+      "pt": "Trabajo comfortable y seguro\n* Espacio de trabajo amplio y con excelente  visibilidad"
+    },
+    "usp5": {
+      "es": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "en": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "de": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP",
+      "pt": "Compactación eficiente\nMedición y documentación en tiempo real usando: ECONOMIZER, TERRAMETER y BOMAP"
+    },
+    "usp6": {
+      "es": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "en": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "de": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación",
+      "pt": "Fácil mantenimiento\n* Todos los componentes dispuestos para un fácil acceso \n* Menos mantenimiento en el sistema de refrigeración debido al el punto alto de entrada de aire, menos propenso a contaminación"
+    },
+    "maxCompactionDepth": 60,
+    "compactionPerformance": "270 - 540",
+    "fuelConsumption": 12.4,
+    "price": 66500,
+    "preventiveMaintenance": 1,
+    "correctiveMaintenance": 2,
+    "usageTime": 3000,
+    "tco": 120140,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 44980,
+        "tco": 120140
+      },
+      {
+        "hours": 1500,
+        "price": 52680,
+        "tco": 120140
+      },
+      {
+        "hours": 2000,
+        "price": 60380,
+        "tco": 120140
+      },
+      {
+        "hours": 2500,
+        "price": 68080,
+        "tco": 120140
+      },
+      {
+        "hours": 3000,
+        "price": 75780,
+        "tco": 120140
+      }
+    ]
   },
   {
     "brand": "BOMAG",
     "model": "BW212 D5-SL",
     "materialNumber": "58400036",
-    "weight": 10980,
-    "engine": "Deutz BF 4M 2012 C",
+    "weight": 11490,
+    "engine": "Deutz BF4M 2012 C",
     "compactionWidth": 2.13,
     "power": 132,
-    "amplitude": "1.80 / 0.95",
+    "amplitude": "1.80 / 0.96",
     "staticLinearLoad": 32.4,
     "gradeability": 45,
     "origin": {
@@ -169,17 +535,44 @@
     "preventiveMaintenance": 1,
     "correctiveMaintenance": 2,
     "usageTime": 3000,
-    "tco": 122324
+    "tco": 122324,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 688700,
+        "tco": 122324
+      },
+      {
+        "hours": 1500,
+        "price": 802660,
+        "tco": 122324
+      },
+      {
+        "hours": 2000,
+        "price": 916620,
+        "tco": 122324
+      },
+      {
+        "hours": 2500,
+        "price": 1030580,
+        "tco": 122324
+      },
+      {
+        "hours": 3000,
+        "price": 1144540,
+        "tco": 122324
+      }
+    ]
   },
   {
     "brand": "BOMAG",
     "model": "BW213 D5-SL",
     "materialNumber": "58400041",
-    "weight": 11810,
-    "engine": "Deutz BF 4M 2012 C",
+    "weight": 12320,
+    "engine": "Deutz BF4M 2012 C",
     "compactionWidth": 2.13,
     "power": 132,
-    "amplitude": "1.90 / 0.96",
+    "amplitude": "1.80 / 0.96",
     "staticLinearLoad": 37.1,
     "gradeability": 45,
     "origin": {
@@ -255,7 +648,34 @@
     "preventiveMaintenance": 1,
     "correctiveMaintenance": 2,
     "usageTime": 3000,
-    "tco": 126588
+    "tco": 126588,
+    "tcoTimeline": [
+      {
+        "hours": 1000,
+        "price": 713802,
+        "tco": 126588
+      },
+      {
+        "hours": 1500,
+        "price": 827762,
+        "tco": 126588
+      },
+      {
+        "hours": 2000,
+        "price": 941722,
+        "tco": 126588
+      },
+      {
+        "hours": 2500,
+        "price": 1055682,
+        "tco": 126588
+      },
+      {
+        "hours": 3000,
+        "price": 1169642,
+        "tco": 126588
+      }
+    ]
   },
   {
     "brand": "BOMAG",

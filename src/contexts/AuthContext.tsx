@@ -32,6 +32,9 @@ const USERS: AppUser[] = [
   { username: 'luisa.vargas', password: 'i6BdLe3y3PQ^53', name: 'Luisa Vargas', isAdmin: true },
   { username: 'diego.torres', password: 'wUbw9!N#2Px1Fa', name: 'Diego Torres' },
   { username: 'johannes.schroeder', password: 'PvClKJ1ayg!EsF', name: 'Johannes Schroeder' },
+  { username: 'carlos.forghieri', password: 'Tr9$vLmQ2!kZa', name: 'Carlos Forghieri' },
+  { username: 'ignacio.barbosa', password: 'Bp4^WqXn8!fRt', name: 'Ignacio Barbosa' },
+  { username: 'vrm.mexico', password: 'Hy7#GtNc3$wEq', name: 'VRM Mexico' },
   { username: 'admin', password: 'Bomag2026*', name: 'Admin', isAdmin: true },
 ];
 

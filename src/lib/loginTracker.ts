@@ -43,7 +43,8 @@ export function trackLogin(event: LoginEvent): void {
     timestamp: event.timestamp,
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     createdAt: new Date().toISOString(),
-  }).catch(() => {
-    // Ignore — tracking must never break auth.
+  }).catch((err) => {
+    // Keep auth working; surface the error for debugging (e.g. missing Rules).
+    console.warn('[loginTracker] Failed to write login event', err);
   });
 }

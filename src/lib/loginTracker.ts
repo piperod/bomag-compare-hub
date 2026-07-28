@@ -29,11 +29,28 @@ function getDb(): Firestore | null {
   return db;
 }
 
-/**
- * Fire-and-forget login audit to Firestore (`loginEvents` collection).
- * Configure VITE_FIREBASE_* at build time. Failures never block login.
- */
-export function trackLogin(event: LoginEvent): void {
+function trackLoginToSheet(event: LoginEvent): void {
+  const url = import.meta.env.VITE_LOGIN_SHEET_WEBHOOK_URL as string | undefined;
+  if (!url) return;
+
+  const payload = JSON.stringify({
+    ...event,
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+  });
+
+  try {
+    void fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: payload,
+    });
+  } catch (err) {
+    console.warn('[loginTracker] Sheet webhook failed', err);
+  }
+}
+
+function trackLoginToFirestore(event: LoginEvent): void {
   const firestore = getDb();
   if (!firestore) return;
 
@@ -43,8 +60,21 @@ export function trackLogin(event: LoginEvent): void {
     timestamp: event.timestamp,
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     createdAt: new Date().toISOString(),
-  }).catch((err) => {
-    // Keep auth working; surface the error for debugging (e.g. missing Rules).
-    console.warn('[loginTracker] Failed to write login event', err);
-  });
+  })
+    .then((ref) => {
+      console.info('[loginTracker] Firestore saved', ref.id);
+    })
+    .catch((err) => {
+      console.warn('[loginTracker] Firestore failed', err);
+    });
+}
+
+/**
+ * Fire-and-forget login audit to Firestore and/or Google Sheets.
+ * Failures never block login.
+ */
+export function trackLogin(event: LoginEvent): void {
+  console.info('[loginTracker] Writing login event', event.username);
+  trackLoginToFirestore(event);
+  trackLoginToSheet(event);
 }

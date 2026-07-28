@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { trackLogin } from '@/lib/loginTracker';
 
 interface AppUser {
   username: string;
@@ -73,6 +74,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const user = { username: match.username, name: match.name, isAdmin: !!match.isAdmin };
       setCurrentUser(user);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ username: match.username }));
+      trackLogin({
+        username: match.username,
+        name: match.name,
+        timestamp: new Date().toISOString(),
+      });
       return true;
     }
     return false;

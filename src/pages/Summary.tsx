@@ -30,6 +30,40 @@ const machineLines = [
   // Add HTR if you have it in data
 ];
 
+/** Same id scheme as MachineComparison / Index localStorage selections */
+const getMachineId = (machine: { brand: string; model: string; materialNumber?: string; engine?: string }) => {
+  const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+  const material = normalize(String(machine.materialNumber ?? ''));
+  const engine = normalize(String(machine.engine ?? ''));
+  return material
+    ? `${normalize(machine.brand)}__${normalize(machine.model)}__${material}`
+    : `${normalize(machine.brand)}__${normalize(machine.model)}__${engine}`;
+};
+
+function loadSelectedMachineIds(line: string): string[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(`selectedMachines:${line}`);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+function indicesForSelectedMachines(
+  machines: Array<{ brand: string; model: string; materialNumber?: string; engine?: string }>,
+  selectedIds: string[]
+): number[] {
+  if (selectedIds.length === 0) return [];
+  const selectedSet = new Set(selectedIds);
+  const indices: number[] = [];
+  machines.forEach((m, i) => {
+    if (selectedSet.has(getMachineId(m))) indices.push(i);
+  });
+  return indices;
+}
+
 const summaryFields = [
   { key: 'brand', labelKey: 'brand' },
   { key: 'model', labelKey: 'model' },
@@ -139,7 +173,16 @@ function Summary({
     });
     return arr;
   }, [machines]);
-  const [visibleMachines, setVisibleMachines] = useState(machinesSorted.map((_, i) => i));
+  const [selectedMachineIds, setSelectedMachineIds] = useState<string[]>(() =>
+    loadSelectedMachineIds('sdr')
+  );
+  const selectedIndices = React.useMemo(
+    () => indicesForSelectedMachines(machinesSorted, selectedMachineIds),
+    [machinesSorted, selectedMachineIds]
+  );
+  const [visibleMachines, setVisibleMachines] = useState<number[]>(() =>
+    indicesForSelectedMachines(machinesSorted, loadSelectedMachineIds('sdr'))
+  );
   const [visibleFields, setVisibleFields] = useState(summaryFields.map((_, i) => i));
   // Add state for editable fields per machine
   const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
@@ -216,7 +259,10 @@ function Summary({
   const [heightM, setHeightM] = useState<string>('');
 
   React.useEffect(() => {
-    setVisibleMachines(machinesSorted.map((_, i) => i));
+    const ids = loadSelectedMachineIds(selectedLine);
+    setSelectedMachineIds(ids);
+    const indices = indicesForSelectedMachines(machinesSorted, ids);
+    setVisibleMachines(indices);
     setVisibleFields(summaryFields.map((_, i) => i));
     // Prefill dieselPrice with 1.2 so the inputs show a value
     const initFields: { [key: number]: { [k: string]: number } } = {};
@@ -226,6 +272,18 @@ function Summary({
     setEditableFields(initFields);
     setEditableTCO({});
   }, [selectedLine, machinesSorted.length]);
+
+  // Keep selection in sync when another tab updates localStorage
+  React.useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key && e.key !== `selectedMachines:${selectedLine}`) return;
+      const ids = loadSelectedMachineIds(selectedLine);
+      setSelectedMachineIds(ids);
+      setVisibleMachines(indicesForSelectedMachines(machinesSorted, ids));
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [selectedLine, machinesSorted]);
 
   React.useEffect(() => {
     const handler = () => {
@@ -242,8 +300,10 @@ function Summary({
     return () => window.removeEventListener('storage', handler);
   }, []);
 
-  // Defensive: filter out indices that are out of bounds
-  const safeVisibleMachines = visibleMachines.filter(i => machinesSorted[i]);
+  // Defensive: filter out indices that are out of bounds; only keep selected machines
+  const safeVisibleMachines = visibleMachines.filter(
+    i => machinesSorted[i] && selectedIndices.includes(i)
+  );
   const summaryTableCols = 1 + safeVisibleMachines.length;
 
   const removeMachine = (idx: number) => {
@@ -253,18 +313,8 @@ function Summary({
     setVisibleFields(v => v.filter(i => i !== idx));
   };
   const restoreAll = () => {
-    setVisibleMachines(machines.map((_, i) => i));
+    setVisibleMachines(selectedIndices);
     setVisibleFields(summaryFields.map((_, i) => i));
-  };
-
-  // Helper to get machine ID (same as in MachineComparison)
-  const getMachineId = (machine: any) => {
-    const normalize = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
-    const material = normalize(String(machine.materialNumber ?? ''));
-    const engine = normalize(String(machine.engine ?? ''));
-    return material
-      ? `${normalize(machine.brand)}__${normalize(machine.model)}__${material}`
-      : `${normalize(machine.brand)}__${normalize(machine.model)}__${engine}`;
   };
 
   // Helper to get the current value (edited or original)
@@ -307,13 +357,19 @@ function Summary({
             <h2 className="text-2xl font-bold">{t('globalSummary')}</h2>
             <button onClick={restoreAll} className="bg-bomag-yellow text-black px-3 py-1 rounded font-semibold shadow hover:bg-bomag-orange/80">{t('restoreAll') || 'Restore All'}</button>
           </div>
-          <Tabs defaultValue={selectedLine} onValueChange={setSelectedLine} className="mb-4">
+          <Tabs value={selectedLine} onValueChange={setSelectedLine} className="mb-4">
             <TabsList>
               {machineLines.map(line => (
                 <TabsTrigger key={line.key} value={line.key}>{line.label}</TabsTrigger>
               ))}
             </TabsList>
           </Tabs>
+          {selectedIndices.length === 0 ? (
+            <div className="rounded-md border border-dashed border-gray-300 bg-gray-50 px-4 py-10 text-center text-sm text-gray-600">
+              <p className="font-medium text-gray-800">{t('summaryNoMachinesSelected')}</p>
+              <p className="mt-2">{t('summarySelectMachinesHint')}</p>
+            </div>
+          ) : (
           <div className="overflow-x-auto">
             <CompareTable columnCount={summaryTableCols} className="text-xs">
               <thead>
@@ -451,6 +507,7 @@ function Summary({
               </tbody>
             </CompareTable>
           </div>
+          )}
         </Card>
         {/* Performance Comparison by Volume Section */}
         {safeVisibleMachines.length > 0 && (

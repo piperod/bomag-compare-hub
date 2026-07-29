@@ -575,9 +575,8 @@ const MachineComparison = ({
     return arr;
   }, [machines, searchTerm, selectedMachines, showOnlySelected]);
 
-  // Reset selected machines and editable states when product line changes
+  // Reset editable / USP state when product line changes (selection is restored from localStorage in Index)
   useEffect(() => {
-    setSelectedMachines([]);
     setEditableTCO({});
     setEditablePrice({});
     setEditablePreventiveMaintenance({});

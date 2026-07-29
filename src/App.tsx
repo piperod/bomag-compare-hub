@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
+import { SelectedMachinesProvider } from "@/contexts/SelectedMachinesContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Summary from "./pages/Summary";
@@ -49,6 +50,7 @@ const App = () => (
       <AuthProvider>
         <LanguageProvider>
         <CurrencyProvider>
+        <SelectedMachinesProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -75,6 +77,7 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+        </SelectedMachinesProvider>
         </CurrencyProvider>
         </LanguageProvider>
       </AuthProvider>

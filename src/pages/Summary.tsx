@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLanguage, LanguageProvider } from '@/contexts/LanguageContext';
 import { pickLocalizedWithFallback } from '@/utils/localizedText';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { useSelectedMachinesForLine } from '@/contexts/SelectedMachinesContext';
 import { sdrMachines, ltrMachines } from '@/data/machineData';
 import React from 'react';
 import { Card } from '@/components/ui/card';
@@ -11,7 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import { CompareTable } from '@/components/CompareTable';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Link } from 'react-router-dom';
 
 interface SummaryProps {
   editableTCO: { [key: string]: number };
@@ -39,17 +41,6 @@ const getMachineId = (machine: { brand: string; model: string; materialNumber?: 
     ? `${normalize(machine.brand)}__${normalize(machine.model)}__${material}`
     : `${normalize(machine.brand)}__${normalize(machine.model)}__${engine}`;
 };
-
-function loadSelectedMachineIds(line: string): string[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(`selectedMachines:${line}`);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed.map(String) : [];
-  } catch {
-    return [];
-  }
-}
 
 function indicesForSelectedMachines(
   machines: Array<{ brand: string; model: string; materialNumber?: string; engine?: string }>,
@@ -173,16 +164,13 @@ function Summary({
     });
     return arr;
   }, [machines]);
-  const [selectedMachineIds, setSelectedMachineIds] = useState<string[]>(() =>
-    loadSelectedMachineIds('sdr')
-  );
+  // Shared with Comparación Detallada (in-memory + localStorage)
+  const selectedMachineIds = useSelectedMachinesForLine(selectedLine);
   const selectedIndices = React.useMemo(
     () => indicesForSelectedMachines(machinesSorted, selectedMachineIds),
     [machinesSorted, selectedMachineIds]
   );
-  const [visibleMachines, setVisibleMachines] = useState<number[]>(() =>
-    indicesForSelectedMachines(machinesSorted, loadSelectedMachineIds('sdr'))
-  );
+  const [visibleMachines, setVisibleMachines] = useState<number[]>(selectedIndices);
   const [visibleFields, setVisibleFields] = useState(summaryFields.map((_, i) => i));
   // Add state for editable fields per machine
   const [editableFields, setEditableFields] = useState<{ [key: number]: { price?: number; preventiveMaintenance?: number; correctiveMaintenance?: number; usageTime?: number } }>({});
@@ -259,10 +247,7 @@ function Summary({
   const [heightM, setHeightM] = useState<string>('');
 
   React.useEffect(() => {
-    const ids = loadSelectedMachineIds(selectedLine);
-    setSelectedMachineIds(ids);
-    const indices = indicesForSelectedMachines(machinesSorted, ids);
-    setVisibleMachines(indices);
+    setVisibleMachines(selectedIndices);
     setVisibleFields(summaryFields.map((_, i) => i));
     // Prefill dieselPrice with 1.2 so the inputs show a value
     const initFields: { [key: number]: { [k: string]: number } } = {};
@@ -271,19 +256,7 @@ function Summary({
     });
     setEditableFields(initFields);
     setEditableTCO({});
-  }, [selectedLine, machinesSorted.length]);
-
-  // Keep selection in sync when another tab updates localStorage
-  React.useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key && e.key !== `selectedMachines:${selectedLine}`) return;
-      const ids = loadSelectedMachineIds(selectedLine);
-      setSelectedMachineIds(ids);
-      setVisibleMachines(indicesForSelectedMachines(machinesSorted, ids));
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, [selectedLine, machinesSorted]);
+  }, [selectedLine, machinesSorted.length, selectedMachineIds.join('|')]);
 
   React.useEffect(() => {
     const handler = () => {
@@ -368,6 +341,9 @@ function Summary({
             <div className="rounded-md border border-dashed border-gray-300 bg-gray-50 px-4 py-10 text-center text-sm text-gray-600">
               <p className="font-medium text-gray-800">{t('summaryNoMachinesSelected')}</p>
               <p className="mt-2">{t('summarySelectMachinesHint')}</p>
+              <Button asChild className="mt-4 bg-bomag-yellow text-black hover:bg-bomag-orange/90">
+                <Link to="/">{t('detailComparison')}</Link>
+              </Button>
             </div>
           ) : (
           <div className="overflow-x-auto">

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSelectedMachines } from '@/contexts/SelectedMachinesContext';
 import Header from '@/components/Header';
 import ProductLineSelector from '@/components/ProductLineSelector';
 import MachineComparison from '@/components/MachineComparison';
@@ -11,7 +12,7 @@ import { Button } from '@/components/ui/button';
 export default function Index() {
   const { t } = useLanguage();
   const [selectedLine, setSelectedLine] = useState<string>('sdr');
-  const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
+  const { selectedMachines, setSelectedMachines } = useSelectedMachines(selectedLine);
   const [editableTCO, setEditableTCO] = useState<{ [key: string]: number }>({});
   const [editablePrice, setEditablePrice] = useState<{ [key: string]: number }>({});
   const [editablePreventiveMaintenance, setEditablePreventiveMaintenance] = useState<{ [key: string]: number }>({});
@@ -19,38 +20,21 @@ export default function Index() {
   const [editableRemainingValue, setEditableRemainingValue] = useState<{ [key: string]: number }>({});
   const [activeTab, setActiveTab] = useState<'comparison'>('comparison');
   const [isPerfCalcOpen, setIsPerfCalcOpen] = useState(false);
-  
-  // Load saved selections per line on line change
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(`selectedMachines:${selectedLine}`);
-      const parsed = raw ? JSON.parse(raw) : [];
-      if (Array.isArray(parsed)) setSelectedMachines(parsed);
-      else setSelectedMachines([]);
-    } catch {
-      setSelectedMachines([]);
-    }
+
+  const handleLineSelect = (line: string) => {
+    setSelectedLine(line);
     setEditableTCO({});
     setEditablePrice({});
     setEditablePreventiveMaintenance({});
     setEditableCorrectiveMaintenance({});
     setEditableRemainingValue({});
-  }, [selectedLine]);
+  };
 
-  // Persist selections per line
-  useEffect(() => {
-    try {
-      localStorage.setItem(`selectedMachines:${selectedLine}`, JSON.stringify(selectedMachines));
-    } catch {}
-  }, [selectedLine, selectedMachines]);
-
-  // No scrolling needed; calculator only available as modal
-  
   return (
       <div className="min-h-screen bg-background">
         <Header />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <ProductLineSelector selectedLine={selectedLine} onLineSelect={setSelectedLine} />
+          <ProductLineSelector selectedLine={selectedLine} onLineSelect={handleLineSelect} />
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
             <div className="flex items-center justify-between mb-6">
               <TabsList className="grid grid-cols-1">

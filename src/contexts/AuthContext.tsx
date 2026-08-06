@@ -36,6 +36,7 @@ const USERS: AppUser[] = [
   { username: 'carlos.forghieri', password: 'Tr9$vLmQ2!kZa', name: 'Carlos Forghieri' },
   { username: 'ignacio.barbosa', password: 'Bp4^WqXn8!fRt', name: 'Ignacio Barbosa' },
   { username: 'vrm.mexico', password: 'Hy7#GtNc3$wEq', name: 'VRM Mexico' },
+  { username: 'juan.porras', password: 'Xn8$RvTq4!wLc7', name: 'Juan David Porras' },
   { username: 'admin', password: 'Bomag2026*', name: 'Admin', isAdmin: true },
 ];
 

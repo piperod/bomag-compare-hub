@@ -1,8 +1,8 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Anyone can append a login event; nobody can read/update/delete from the client.
-    // View logs in Firebase Console → Firestore → loginEvents
+    // Anyone can append a login event. Reads are allowed so admins can export
+    // Excel from the app (this static site has no Firebase Auth).
     match /loginEvents/{eventId} {
       allow create: if request.resource.data.keys().hasAll(['username', 'name', 'timestamp'])
         && request.resource.data.username is string
@@ -10,7 +10,8 @@ service cloud.firestore {
         && request.resource.data.timestamp is string
         && request.resource.data.username.size() > 0
         && request.resource.data.username.size() < 128;
-      allow read, update, delete: if false;
+      allow read: if true;
+      allow update, delete: if false;
     }
   }
 }

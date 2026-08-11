@@ -1,10 +1,17 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, type Firestore } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  type Firestore,
+} from 'firebase/firestore';
 
 export type LoginEvent = {
   username: string;
   name: string;
   timestamp: string;
+  userAgent?: string;
 };
 
 let app: FirebaseApp | null = null;
@@ -77,4 +84,49 @@ export function trackLogin(event: LoginEvent): void {
   console.info('[loginTracker] Writing login event', event.username);
   trackLoginToFirestore(event);
   trackLoginToSheet(event);
+}
+
+export async function fetchLoginEvents(): Promise<LoginEvent[]> {
+  const firestore = getDb();
+  if (!firestore) return [];
+
+  const snap = await getDocs(collection(firestore, 'loginEvents'));
+  const events = snap.docs.map((docSnap) => {
+    const data = docSnap.data();
+    return {
+      username: String(data.username ?? ''),
+      name: String(data.name ?? ''),
+      timestamp: String(data.timestamp || data.createdAt || ''),
+      userAgent: data.userAgent ? String(data.userAgent) : '',
+    };
+  });
+  events.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  return events;
+}
+
+function csvCell(value: string): string {
+  const escaped = value.replace(/"/g, '""');
+  return `"${escaped}"`;
+}
+
+/** UTF-8 CSV that Microsoft Excel / Excel Online opens correctly. */
+export function downloadLoginEventsExcel(events: LoginEvent[]): void {
+  const header = ['timestamp', 'username', 'name', 'userAgent'];
+  const lines = [
+    header.join(','),
+    ...events.map((event) =>
+      [event.timestamp, event.username, event.name, event.userAgent ?? '']
+        .map((cell) => csvCell(cell))
+        .join(',')
+    ),
+  ];
+  const csv = `\uFEFF${lines.join('\r\n')}`;
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const day = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `bomag-logins-${day}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }

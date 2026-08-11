@@ -11,6 +11,7 @@ import { SelectedMachinesProvider } from "@/contexts/SelectedMachinesContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Summary from "./pages/Summary";
+import LoginHistory from "./pages/LoginHistory";
 import NotFound from "./pages/NotFound";
 
 class ErrorBoundary extends React.Component<
@@ -71,6 +72,14 @@ const App = () => (
                     <Summary />
                   </ProtectedRoute>
                 } 
+              />
+              <Route
+                path="/logins"
+                element={
+                  <ProtectedRoute>
+                    <LoginHistory />
+                  </ProtectedRoute>
+                }
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

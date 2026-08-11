@@ -430,6 +430,12 @@
   "verifying": "Verifying...",
   "loginSubmit": "Sign in",
   "contactAdmin": "Contact the administrator if you do not have access",
+  "loginHistory": "Login history",
+  "loginHistoryHint": "Download the file and open it in Excel or OneDrive (Microsoft account). No Power Automate Premium required.",
+  "exportExcel": "Export to Excel",
+  "noLoginEvents": "No login events recorded yet.",
+  "loginWhen": "Date and time",
+  "loginName": "Name",
 
   "millingPerformanceCalculation": "Productivity & TCO (USP 1–3)",
   "millingUsp1Productivity": "USP 1 — Transport capacity (m³/h)",

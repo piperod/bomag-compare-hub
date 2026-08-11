@@ -10,7 +10,7 @@ import { LogOut, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
   const { currency, setCurrency } = useCurrency();
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const location = useLocation();
@@ -25,6 +25,9 @@ const Header = () => {
       <nav className="flex gap-4 items-center flex-wrap justify-end">
         <Link to="/" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/' ? 'bg-white' : ''} text-black`}>{t('detailComparison')}</Link>
         <Link to="/summary" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/summary' ? 'bg-white' : ''} text-black`}>{t('globalSummary')}</Link>
+        {currentUser?.isAdmin && (
+          <Link to="/logins" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/logins' ? 'bg-white' : ''} text-black`}>{t('loginHistory')}</Link>
+        )}
         <Select value={language} onValueChange={(value: Language) => setLanguage(value)}>
           <SelectTrigger className="w-32 bg-white text-black border border-gray-300">
             <SelectValue />

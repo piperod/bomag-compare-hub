@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LoginForm from './LoginForm';
+import CollectEmailDialog from './CollectEmailDialog';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -26,7 +27,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return <LoginForm />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <CollectEmailDialog />
+      {children}
+    </>
+  );
 };
 
 export default ProtectedRoute;

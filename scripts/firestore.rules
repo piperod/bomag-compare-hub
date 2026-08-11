@@ -13,5 +13,16 @@ service cloud.firestore {
       allow read: if true;
       allow update, delete: if false;
     }
+
+    // Email collected after the first password login, used for passwordless sign-in.
+    match /userEmails/{username} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().hasAll(['username', 'email'])
+        && request.resource.data.username == username
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 3
+        && request.resource.data.email.size() < 160;
+      allow delete: if false;
+    }
   }
 }

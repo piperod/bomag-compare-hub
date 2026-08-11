@@ -54,7 +54,7 @@ interface MachineComparisonProps {
 const htrMachines = [
   {
     brand: 'BOMAG',
-    model: 'BW161-AD-4',
+    model: 'BW161 AD-4',
     weight: 9700,
     engine: 'Deutz TCD L04 2V',
     compactionWidth: 1.68,

@@ -80,9 +80,9 @@ function normalizeBrand(brand) {
 
 function normalizeModel(brand, model, engineModel = '') {
   let m = String(model || '').trim();
-  // BOMAG: "BW 211 D-5 SL" -> "BW211 D5-SL"
-  m = m.replace(/^BW\s+(\d+)\s+D-?5\s+(SL|PL)$/i, 'BW$1 D5-$2');
-  m = m.replace(/^BW\s+(\d+)\s+D5\s+(SL|PL)$/i, 'BW$1 D5-$2');
+  // BOMAG: "BW 211 D5-SL" / "BW211 D5-SL" -> "BW211 D-5 SL"
+  m = m.replace(/^BW\s*(\d+)\s+D-?(\d+)\s*-?\s*(SL|PL)$/i, 'BW$1 D-$2 $3');
+  m = m.replace(/^BW\s*(\d+)\s+D(\d+)-(SL|PL)$/i, 'BW$1 D-$2 $3');
   // Dynapac Rhino
   m = m.replace(/^CA25D\s*Rhino$/i, 'CA25 D-Rhino');
   // Caterpillar GC
@@ -95,8 +95,8 @@ function normalizeModel(brand, model, engineModel = '') {
   m = m.replace(/^SD22$/i, 'SR22');
   // Sakai - keep as-is (SV521D)
   // Disambiguate duplicate BOMAG BW213 by engine
-  if (/^BW213 D5-SL$/i.test(m) && /TCD/i.test(engineModel)) {
-    m = 'BW213 D5-SL TCD';
+  if (/^BW213 D-5 SL$/i.test(m) && /TCD/i.test(engineModel)) {
+    m = 'BW213 D-5 SL TCD';
   }
   return m;
 }

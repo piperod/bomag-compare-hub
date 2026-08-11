@@ -1,7 +1,7 @@
 [
   {
     "brand": "BOMAG",
-    "model": "BW211 D5-SL",
+    "model": "BW211 D-5 SL",
     "materialNumber": "93500000",
     "weight": 10630,
     "engine": "Cummins 4BT 3.9",
@@ -114,7 +114,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW211 D5-SL",
+    "model": "BW211 D-5 SL",
     "materialNumber": "93500004",
     "weight": 10630,
     "engine": "Cummins 4BTAA 3.9",
@@ -227,7 +227,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW211 D5-SL",
+    "model": "BW211 D-5 SL",
     "materialNumber": "58400031",
     "weight": 10630,
     "engine": "Deutz BF4M 2012 C",
@@ -340,7 +340,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW211 D5-SL",
+    "model": "BW211 D-5 SL",
     "materialNumber": "58400033",
     "weight": 10630,
     "engine": "Deutz TCD 2012 L04 2V",
@@ -453,7 +453,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW212 D5-SL",
+    "model": "BW212 D-5 SL",
     "materialNumber": "58400036",
     "weight": 11490,
     "engine": "Deutz BF4M 2012 C",
@@ -566,7 +566,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW213 D5-SL",
+    "model": "BW213 D-5 SL",
     "materialNumber": "58400041",
     "weight": 12320,
     "engine": "Deutz BF4M 2012 C",
@@ -679,7 +679,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW213 D5-SL TCD",
+    "model": "BW213 D-5 SL TCD",
     "materialNumber": "58400041",
     "weight": 11960,
     "engine": "Deutz TCD 2021 L04 2V",
@@ -765,7 +765,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW216 D5-SL",
+    "model": "BW216 D-5 SL",
     "weight": 14850,
     "engine": "Deutz TCD 2013 L04",
     "compactionWidth": 2.13,
@@ -848,7 +848,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW219 D5-PL",
+    "model": "BW219 D-5 PL",
     "weight": 19400,
     "engine": "Deutz TCD 2012 L06",
     "compactionWidth": 2.13,
@@ -931,7 +931,7 @@
   },
   {
     "brand": "BOMAG",
-    "model": "BW220 D5-PL",
+    "model": "BW220 D-5 PL",
     "weight": 20100,
     "engine": "Deutz TCD 2012 L06",
     "compactionWidth": 2.13,

@@ -689,7 +689,7 @@ export const sdrMachines: MachineSpec[] = sdrFromCsv as unknown as MachineSpec[]
 export const ltrMachines: MachineSpec[] = [
   {
     brand: "BOMAG",
-    model: "BW120 AD 5",
+    model: "BW120 AD-5",
     weight: 2700,
     engine: "Kubota D1703",
     compactionWidth: 1.2,

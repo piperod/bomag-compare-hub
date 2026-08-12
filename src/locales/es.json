@@ -117,6 +117,7 @@
   "hPerYear": "h/año",
   "depreciationPercent": "% de depreciación",
   "dieselPriceLabel": "Diésel ({{currency}}/L)",
+  "workEfficiency": "Eficiencia de trabajo (%)",
   "footnotePerformance": "Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag para un tipo de suelo grava-arena.",
   "footnoteCompactionLayer": "Estos valores predeterminados corresponden al manual de aplicación de compactación de suelos Bomag. Considere que el máximo espesor sugerido por normativa suele ser 30 cm.",
   "footnoteFuelConsumption": "Los valores sugeridos son tomados de fuentes no oficiales de los fabricantes de los motores. Estos valores corresponden a información encontrada online, considerando una carga de motor del 70%.",

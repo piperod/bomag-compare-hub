@@ -117,6 +117,7 @@
   "hPerYear": "h/year",
   "depreciationPercent": "Depreciation rate (%)",
   "dieselPriceLabel": "Diesel ({{currency}}/L)",
+  "workEfficiency": "Work efficiency (%)",
   "footnotePerformance": "These default values correspond to the BOMAG soil compaction application manual for gravel-sand soil type.",
   "footnoteCompactionLayer": "These default values correspond to the BOMAG soil compaction application manual. Note that the maximum suggested layer thickness by regulation is usually 30 cm.",
   "footnoteFuelConsumption": "Suggested values are from unofficial manufacturer sources. These values correspond to information found online, considering 70% engine load.",

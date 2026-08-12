@@ -1700,7 +1700,7 @@ const MachineComparison = ({
                         <tr className="hover:bg-gray-50">
                           <td className="border border-gray-300 p-2 font-semibold bg-gray-50">
                             <div className="flex items-center justify-center gap-2">
-                              <span>Eficiencia de trabajo (%)</span>
+                              <span>{t('workEfficiency')}</span>
                               <Input
                                 type="number"
                                 className="h-6 w-16 text-center"

@@ -117,6 +117,7 @@
   "hPerYear": "h/ano",
   "depreciationPercent": "Taxa de depreciação (%)",
   "dieselPriceLabel": "Diesel ({{currency}}/L)",
+  "workEfficiency": "Eficiência de trabalho (%)",
   "footnotePerformance": "Estes valores padrão correspondem ao manual de aplicação de compactação de solos BOMAG para solo tipo cascalho-areia.",
   "footnoteCompactionLayer": "Estes valores padrão correspondem ao manual de aplicação de compactação de solos BOMAG. O espessura máxima sugerida por norma costuma ser 30 cm.",
   "footnoteFuelConsumption": "Os valores sugeridos são de fontes não oficiais dos fabricantes dos motores. Estes valores correspondem a informações encontradas online, considerando 70% de carga do motor.",

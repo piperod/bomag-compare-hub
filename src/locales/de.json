@@ -117,6 +117,7 @@
   "hPerYear": "h/Jahr",
   "depreciationPercent": "Abschreibungssatz (%)",
   "dieselPriceLabel": "Diesel ({{currency}}/L)",
+  "workEfficiency": "Arbeitseffizienz (%)",
   "footnotePerformance": "Diese Standardwerte entsprechen dem BOMAG Bodenverdichtungs-Anwendungshandbuch für Kies-Sand-Boden.",
   "footnoteCompactionLayer": "Diese Standardwerte entsprechen dem BOMAG Bodenverdichtungs-Anwendungshandbuch. Der maximal empfohlene Schichtdicke nach Vorschrift beträgt in der Regel 30 cm.",
   "footnoteFuelConsumption": "Die angegebenen Werte stammen aus inoffiziellen Herstellerquellen. Die Werte entsprechen online gefundenen Informationen bei 70% Motorlast.",

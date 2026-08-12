@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLanguage, Language } from '@/contexts/LanguageContext';
+import { useLanguage, Language, LANGUAGE_OPTIONS } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCurrency, DISPLAY_CURRENCIES, type DisplayCurrency } from '@/contexts/CurrencyContext';
 import { Link, useLocation } from 'react-router-dom';
@@ -33,10 +33,9 @@ const Header = () => {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="es">Español</SelectItem>
-            <SelectItem value="en">English</SelectItem>
-            <SelectItem value="de">Deutsch</SelectItem>
-            <SelectItem value="pt">Português</SelectItem>
+            {LANGUAGE_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <div className="relative min-w-[11rem]">

@@ -422,6 +422,7 @@
   "volumeM3": "Volume (m³)",
   "remove": "Remove",
   "loginAccess": "BOMAG Access",
+  "chooseLanguage": "Language / Sprache / Idioma",
   "loginDescription": "Enter your username and password to access the comparison system",
   "loginDescriptionEmail": "Enter your email. We will send a one-time sign-in link (no password).",
   "loginEmail": "Email",

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { LANGUAGE_OPTIONS, useLanguage, type Language } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Lock, Eye, EyeOff, Mail } from 'lucide-react';
 
 const LoginForm: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const [mode, setMode] = useState<'email' | 'password'>('password');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -58,8 +58,30 @@ const LoginForm: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+        <CardHeader className="text-center space-y-4">
+          <div className="rounded-md border border-gray-200 bg-gray-50 p-3 text-left">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {t('chooseLanguage')}
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {LANGUAGE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setLanguage(opt.value as Language)}
+                  className={`rounded-md border px-3 py-2 text-sm font-semibold transition-colors ${
+                    language === opt.value
+                      ? 'border-bomag-yellow bg-bomag-yellow text-black'
+                      : 'border-gray-300 bg-white text-gray-800 hover:bg-gray-100'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
             <Lock className="h-8 w-8 text-blue-600" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">

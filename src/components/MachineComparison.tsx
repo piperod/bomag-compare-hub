@@ -1006,14 +1006,28 @@ const MachineComparison = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center gap-3">
         <h3 className="text-xl font-semibold text-bomag-gray">
           {selectedLine.toUpperCase()} - {t('detailComparison')}
         </h3>
-        <div className="text-sm text-gray-600">
-          {selectedMachines.length} {t('machinesSelectedToCompare')}
+        <div className="flex items-center gap-3">
+          <div className="text-sm text-gray-600">
+            {selectedMachines.length} {t('machinesSelectedToCompare')}
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="border-gray-300 bg-white text-black hover:bg-gray-50"
+            onClick={() => {
+              setSelectedMachines([]);
+              setShowOnlySelected(false);
+            }}
+            disabled={selectedMachines.length === 0}
+          >
+            {t('clearSelection')}
+          </Button>
         </div>
-        <div className="flex items-center gap-2"></div>
       </div>
 
       {/* Search Bar */}

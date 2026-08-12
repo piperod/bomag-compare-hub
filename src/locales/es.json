@@ -75,6 +75,7 @@
   "openBomagPerformanceCalculator": "Abrir calculadora de rendimiento BOMAG",
   "bomagPerformanceCalculator": "Calculadora de Rendimiento BOMAG",
   "machinesSelectedToCompare": "máquinas seleccionadas para comparar",
+  "clearSelection": "Limpiar selección",
   "searchMachinesPlaceholder": "Buscar máquinas por marca, modelo o motor...",
   "onlySelectedMachines": "Solo máquinas seleccionadas",
   "showingMatches": "Mostrando {{count}} máquina(s) que coinciden con \"{{term}}\"",

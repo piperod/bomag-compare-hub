@@ -75,6 +75,7 @@
   "openBomagPerformanceCalculator": "Open BOMAG performance calculator",
   "bomagPerformanceCalculator": "BOMAG Performance Calculator",
   "machinesSelectedToCompare": "machines selected for comparison",
+  "clearSelection": "Clear selection",
   "searchMachinesPlaceholder": "Search machines by brand, model or engine...",
   "onlySelectedMachines": "Only selected machines",
   "showingMatches": "Showing {{count}} machine(s) matching \"{{term}}\"",

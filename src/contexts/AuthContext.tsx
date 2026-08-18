@@ -57,6 +57,7 @@ const USERS: AppUser[] = [
   { username: 'vrm.mexico', password: 'Hy7#GtNc3$wEq', name: 'VRM Mexico' },
   { username: 'juan.porras', password: 'Xn8$RvTq4!wLc7', name: 'Juan David Porras' },
   { username: 'jan.vanbebber', password: 'Qm4#TzKp8!nRc2', name: 'Jan van Bebber' },
+  { username: 'julian.bertram', password: '4KeX&75?9W3bzM', name: 'Julian Bertram' },
   { username: 'admin', password: 'Bomag2026*', name: 'Admin', isAdmin: true },
 ];
 

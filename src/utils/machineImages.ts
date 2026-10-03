@@ -29,6 +29,7 @@ const sdrImageByModel: Record<string, string> = {
   sv621d: 'SV621D.png',
   sv700d: 'SV700D.png',
   sv9001: 'SV900-1.png',
+  xs113: 'XS113.jpg',
   xs113e: 'XS113E.png',
   xs123: 'XS123.jpg',
   xs143j: 'XS143J.png',

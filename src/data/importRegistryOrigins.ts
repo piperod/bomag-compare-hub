@@ -7,6 +7,7 @@
 import type { LocalizedText } from './paversData';
 
 export const IMPORT_REGISTRY_ORIGINS: Record<string, LocalizedText> = {
+  'XCMG|XS113': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 75 uds.
   'LIUGONG|CLG6611E': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 94 uds.
   'SANY|SAP60C-10': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 39 uds. (SAP60C / SAP60C-10)
   'SANY|SSP90C-8': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 12 uds.

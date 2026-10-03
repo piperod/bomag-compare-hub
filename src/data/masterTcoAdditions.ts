@@ -162,6 +162,17 @@ export const sdrMasterAdditions: MachineSpec[] = [
   sdrRow({ model: 'CA2500PD', weight: 11000, engine: 'Cummins F3.8 (V)', compactionWidth: 2.13, power: 134.1, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA4000PD', weight: 13100, engine: 'Cummins QSB4.5 (Stage IIIA/T3)', compactionWidth: 2.13, power: 171.7, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA5500PD', weight: 18000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden, innovations: PADFOOT }),
+  // XCMG XS113: xcmg.com product page
+  sdrRow({
+    brand: 'XCMG', model: 'XS113', weight: 10800, engine: 'Cummins (EU Stage II)', compactionWidth: 2.13, power: 124.7,
+    origin: ORIGIN.china, gradeability: 45,
+    innovations: loc(
+      'Frecuencia 30/35 Hz · Velocidad 0–5,4 / 0–10,8 km/h · Doble tracción hidráulica · Dimensiones 5.940 × 2.300 × 3.150 mm',
+      'Frequency 30/35 Hz · Speed 0–5.4 / 0–10.8 km/h · Full hydraulic dual drive · Dimensions 5,940 × 2,300 × 3,150 mm',
+      'Frequenz 30/35 Hz · Geschwindigkeit 0–5,4 / 0–10,8 km/h · Vollhydraulischer Doppelantrieb · Abmessungen 5.940 × 2.300 × 3.150 mm',
+      'Frequência 30/35 Hz · Velocidade 0–5,4 / 0–10,8 km/h · Tração dupla totalmente hidráulica · Dimensões 5.940 × 2.300 × 3.150 mm'
+    ),
+  }),
   // LiuGong CLG6611E: liugong.com product page (no drum width published, so it is left blank)
   sdrRow({
     brand: 'LIUGONG', model: 'CLG6611E', weight: 11450, engine: 'Cummins 4BTAA3.9-C125 (Stage II)', compactionWidth: 0, power: 124.7,

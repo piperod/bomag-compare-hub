@@ -923,6 +923,7 @@ const MachineComparison = ({
       'CATERPILLAR': 'bg-yellow-400',
       'NEW HOLLAND': 'bg-blue-600',
       'SANY': 'bg-red-500',
+      'LIUGONG': 'bg-amber-600',
       'XCMG': 'bg-orange-500',
       'AMMANN': 'bg-green-600',
       'JCB': 'bg-yellow-600',
@@ -1139,7 +1140,7 @@ const MachineComparison = ({
                   <>
                     <CardSpecRow label={t('weight')} value={`${(machine as MachineSpec).weight.toLocaleString()} kg`} />
                     <CardSpecRow label={t('power')} value={`${(machine as MachineSpec).power} HP`} />
-                    <CardSpecRow label={t('rollingWidth')} value={`${(machine as MachineSpec).compactionWidth} m`} />
+                    <CardSpecRow label={t('rollingWidth')} value={(machine as MachineSpec).compactionWidth ? `${(machine as MachineSpec).compactionWidth} m` : '-'} />
                     <CardSpecRow
                       label={t('numberOfWheels')}
                       value={pickLocalizedWithFallback((machine as MachineSpec).numberOfWheels ?? { es: '-', en: '-', de: '-', pt: '-' }, language) || '-'}
@@ -1149,7 +1150,7 @@ const MachineComparison = ({
                   <>
                     <CardSpecRow label={t('weight')} value={`${(machine as MachineSpec).weight.toLocaleString()} kg`} />
                     <CardSpecRow label={t('power')} value={`${(machine as MachineSpec).power} HP`} />
-                    <CardSpecRow label={t('compactionWidth')} value={`${(machine as MachineSpec).compactionWidth} m`} />
+                    <CardSpecRow label={t('compactionWidth')} value={(machine as MachineSpec).compactionWidth ? `${(machine as MachineSpec).compactionWidth} m` : '-'} />
                     <CardSpecRow label={t('amplitude')} value={formatMultiline(String((machine as MachineSpec).amplitude || '-'))} />
                     <CardSpecRow
                       label={t('telemetry')}
@@ -1302,7 +1303,9 @@ const MachineComparison = ({
                               {spec.label}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const value: any = machine[spec.key as keyof typeof machine];
+                              const rawValue: any = machine[spec.key as keyof typeof machine];
+                              // A width of 0 means "not published" (e.g. datasheets without drum width)
+                              const value: any = spec.key === 'compactionWidth' && rawValue === 0 ? '-' : rawValue;
                               const isObj = typeof value === 'object' && value !== null;
                               const strVal = !isObj ? String(value ?? '-') : '';
                               const isLong = !isObj && (strVal.includes('\n') || strVal.length > 40);

@@ -44,6 +44,7 @@ const WHEEL_ARTICULATION = loc(
 // ---------------------------------------------------------------------------
 
 type SdrRow = {
+  brand?: string;
   model: string;
   weight: number;
   engine: string;
@@ -58,7 +59,7 @@ type SdrRow = {
 };
 
 const sdrRow = (r: SdrRow): MachineSpec => ({
-  brand: 'DYNAPAC',
+  brand: r.brand ?? 'DYNAPAC',
   model: r.model,
   weight: r.weight,
   engine: r.engine,
@@ -161,6 +162,17 @@ export const sdrMasterAdditions: MachineSpec[] = [
   sdrRow({ model: 'CA2500PD', weight: 11000, engine: 'Cummins F3.8 (V)', compactionWidth: 2.13, power: 134.1, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA4000PD', weight: 13100, engine: 'Cummins QSB4.5 (Stage IIIA/T3)', compactionWidth: 2.13, power: 171.7, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA5500PD', weight: 18000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden, innovations: PADFOOT }),
+  // LiuGong CLG6611E: liugong.com product page (no drum width published, so it is left blank)
+  sdrRow({
+    brand: 'LIUGONG', model: 'CLG6611E', weight: 11450, engine: 'Cummins 4BTAA3.9-C125 (Stage II)', compactionWidth: 0, power: 124.7,
+    origin: ORIGIN.china, amplitude: '2,0 / 1,2', staticLinearLoad: 30.9, gradeability: 45,
+    innovations: loc(
+      'Fuerza centrífuga 300/210 kN · Frecuencia 32/34 Hz · Carga en tambor 6.450 kg · Diámetro de tambor 1.555 mm · Velocidad 5,4/8,9 km/h · Radio de giro exterior 6.500 mm · Rodamientos de vibración de más de 5.000 h',
+      'Centrifugal force 300/210 kN · Frequency 32/34 Hz · Mass on drum 6,450 kg · Drum diameter 1,555 mm · Speed 5.4/8.9 km/h · Outer turning radius 6,500 mm · Vibration bearings over 5,000 h',
+      'Zentrifugalkraft 300/210 kN · Frequenz 32/34 Hz · Bandagenlast 6.450 kg · Bandagendurchmesser 1.555 mm · Geschwindigkeit 5,4/8,9 km/h · Wenderadius außen 6.500 mm · Vibrationslager über 5.000 h',
+      'Força centrífuga 300/210 kN · Frequência 32/34 Hz · Carga no tambor 6.450 kg · Diâmetro do tambor 1.555 mm · Velocidade 5,4/8,9 km/h · Raio de giro externo 6.500 mm · Rolamentos de vibração acima de 5.000 h'
+    ),
+  }),
 ];
 
 // ---------------------------------------------------------------------------

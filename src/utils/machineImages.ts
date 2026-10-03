@@ -2,6 +2,7 @@ const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 
 const sdrImageByModel: Record<string, string> = {
   bw211d5sl: 'BW211 D5-SL.png',
+  clg6611e: 'CLG6611E.jpg',
   bw212d5sl: 'BW211 D5-SL.png',
   bw213d5sl: 'BW211 D5-SL.png',
   bw213d5sltcd: 'BW211 D5-SL.png',

@@ -58,7 +58,7 @@ const sdrModelsWithoutImage = new Set([
 ]);
 
 const paverImageByModel: Record<string, string> = {
-  ap655: 'AP655.png',
+  ap655: 'AP655.jpg',
   bf600c3: 'BF600-C-3.png',
   super18003: 'Super-1800-3.jpg',
   super13003: 'Super-1300-3.jpg',

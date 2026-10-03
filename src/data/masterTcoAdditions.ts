@@ -138,24 +138,6 @@ export const sdrMasterAdditions: MachineSpec[] = [
     ),
   }),
   sdrRow({ model: 'CA2500D', weight: 10100, engine: 'Cummins QSF3.8 (IV/T4 final)', compactionWidth: 2.13, power: 119.4, origin: ORIGIN.sweden }),
-  // Completed from the DYNAPAC CA25D Rhino datasheet (dynapac_ca25d_sa-es, 2025-03-07), Cummins QSF3.8 Tier 3 version.
-  sdrRow({
-    model: 'CA25D',
-    weight: 10400,
-    engine: 'Cummins QSF3.8 (IIIA/T3)',
-    compactionWidth: 2.13,
-    power: 130.1,
-    origin: ORIGIN.india,
-    amplitude: '1,8 / 0,9',
-    staticLinearLoad: 26,
-    gradeability: 41,
-    innovations: loc(
-      'Línea regional (vs. CA2500D fabricado en Suecia) · CA25D Rhino · Fuerza centrífuga 250/123 kN · Frecuencia 33 Hz · Oscilación ±9° · Tanque de combustible 280 l · Pendiente 34/41 % (tambor liso) y 52/55 % (pata de cabra) · Motores alternativos: Cummins F3.8 Stage V (150 hp) y Cummins 4BT3.9 Tier 1 (102 hp)',
-      'Regional line (vs. Sweden-made CA2500D) · CA25D Rhino · Centrifugal force 250/123 kN · Frequency 33 Hz · Oscillation ±9° · Fuel tank 280 l · Gradeability 34/41 % (smooth drum) and 52/55 % (padfoot) · Alternative engines: Cummins F3.8 Stage V (150 hp) and Cummins 4BT3.9 Tier 1 (102 hp)',
-      'Regionale Linie (vs. in Schweden gefertigte CA2500D) · CA25D Rhino · Zentrifugalkraft 250/123 kN · Frequenz 33 Hz · Pendelung ±9° · Kraftstofftank 280 l · Steigfähigkeit 34/41 % (Glattbandage) und 52/55 % (Schaffuß) · Alternative Motoren: Cummins F3.8 Stufe V (150 PS) und Cummins 4BT3.9 Tier 1 (102 PS)',
-      'Linha regional (vs. CA2500D fabricado na Suécia) · CA25D Rhino · Força centrífuga 250/123 kN · Frequência 33 Hz · Oscilação ±9° · Tanque de combustível 280 l · Rampa 34/41 % (tambor liso) e 52/55 % (pé de carneiro) · Motores alternativos: Cummins F3.8 Stage V (150 hp) e Cummins 4BT3.9 Tier 1 (102 hp)'
-    ),
-  }),
   // Completed from the DYNAPAC CA3500D datasheet (dynapac_ca3500d_en, 2025-03-10). The master file listed
   // "Cummins QSF3.8 (IV/T4 final)" with 130 hp; the datasheet gives 130 hp for the Cummins QSB4.5 (IIIA/Tier 3)
   // engine, and 135 hp for the alternative Cummins F3.8 (Stage V/T4F).

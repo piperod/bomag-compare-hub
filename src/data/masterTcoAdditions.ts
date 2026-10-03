@@ -138,6 +138,7 @@ export const sdrMasterAdditions: MachineSpec[] = [
     ),
   }),
   sdrRow({ model: 'CA2500D', weight: 10100, engine: 'Cummins QSF3.8 (IV/T4 final)', compactionWidth: 2.13, power: 119.4, origin: ORIGIN.sweden }),
+  // Completed from the DYNAPAC CA25D Rhino datasheet (dynapac_ca25d_sa-es, 2025-03-07), Cummins QSF3.8 Tier 3 version.
   sdrRow({
     model: 'CA25D',
     weight: 10400,
@@ -145,11 +146,14 @@ export const sdrMasterAdditions: MachineSpec[] = [
     compactionWidth: 2.13,
     power: 130.1,
     origin: ORIGIN.india,
+    amplitude: '1,8 / 0,9',
+    staticLinearLoad: 26,
+    gradeability: 41,
     innovations: loc(
-      'Línea regional (vs. CA2500D fabricado en Suecia)',
-      'Regional line (vs. Sweden-made CA2500D)',
-      'Regionale Linie (vs. in Schweden gefertigte CA2500D)',
-      'Linha regional (vs. CA2500D fabricado na Suécia)'
+      'Línea regional (vs. CA2500D fabricado en Suecia) · CA25D Rhino · Fuerza centrífuga 250/123 kN · Frecuencia 33 Hz · Oscilación ±9° · Tanque de combustible 280 l · Pendiente 34/41 % (tambor liso) y 52/55 % (pata de cabra) · Motores alternativos: Cummins F3.8 Stage V (150 hp) y Cummins 4BT3.9 Tier 1 (102 hp)',
+      'Regional line (vs. Sweden-made CA2500D) · CA25D Rhino · Centrifugal force 250/123 kN · Frequency 33 Hz · Oscillation ±9° · Fuel tank 280 l · Gradeability 34/41 % (smooth drum) and 52/55 % (padfoot) · Alternative engines: Cummins F3.8 Stage V (150 hp) and Cummins 4BT3.9 Tier 1 (102 hp)',
+      'Regionale Linie (vs. in Schweden gefertigte CA2500D) · CA25D Rhino · Zentrifugalkraft 250/123 kN · Frequenz 33 Hz · Pendelung ±9° · Kraftstofftank 280 l · Steigfähigkeit 34/41 % (Glattbandage) und 52/55 % (Schaffuß) · Alternative Motoren: Cummins F3.8 Stufe V (150 PS) und Cummins 4BT3.9 Tier 1 (102 PS)',
+      'Linha regional (vs. CA2500D fabricado na Suécia) · CA25D Rhino · Força centrífuga 250/123 kN · Frequência 33 Hz · Oscilação ±9° · Tanque de combustível 280 l · Rampa 34/41 % (tambor liso) e 52/55 % (pé de carneiro) · Motores alternativos: Cummins F3.8 Stage V (150 hp) e Cummins 4BT3.9 Tier 1 (102 hp)'
     ),
   }),
   // Completed from the DYNAPAC CA3500D datasheet (dynapac_ca3500d_en, 2025-03-10). The master file listed
@@ -172,17 +176,6 @@ export const sdrMasterAdditions: MachineSpec[] = [
   sdrRow({ ...CA5000D_SPECS, engine: 'Deutz TCD2012L06 (IIIA/T3)', power: 174 }),
   sdrRow({ ...CA6500D_SPECS, engine: 'Cummins B4.5 (Stage V/T4 final)', power: 199.8 }),
   sdrRow({ ...CA6500D_SPECS, engine: 'Deutz TCD2012L06 (IIIA/T3)', power: 204 }),
-  // Added from the DYNAPAC CA2500D/3.3 datasheet (dynapac_ca2500d33_en, 2022-12-12): Tier 3 version of the CA2500D.
-  sdrRow({
-    model: 'CA2500D/3.3', weight: 10000, engine: 'Cummins QSB3.3 (IIIA/T3)', compactionWidth: 2.13, power: 110, origin: NONE,
-    amplitude: '1,8 / 0,9', staticLinearLoad: 26, gradeability: 51,
-    innovations: loc(
-      'Fuerza centrífuga 205/100 kN · Frecuencia 30 Hz · Oscilación ±9° · Tanque de combustible 190 l · Con cabina 10.200 kg',
-      'Centrifugal force 205/100 kN · Frequency 30 Hz · Oscillation ±9° · Fuel tank 190 l · With cab 10,200 kg',
-      'Zentrifugalkraft 205/100 kN · Frequenz 30 Hz · Pendelung ±9° · Kraftstofftank 190 l · Mit Kabine 10.200 kg',
-      'Força centrífuga 205/100 kN · Frequência 30 Hz · Oscilação ±9° · Tanque de combustível 190 l · Com cabine 10.200 kg'
-    ),
-  }),
   sdrRow({ model: 'CA2500PD', weight: 11000, engine: 'Cummins F3.8 (V)', compactionWidth: 2.13, power: 134.1, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA4000PD', weight: 13100, engine: 'Cummins QSB4.5 (Stage IIIA/T3)', compactionWidth: 2.13, power: 171.7, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA5500PD', weight: 18000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden, innovations: PADFOOT }),
@@ -327,8 +320,8 @@ export const htrMasterAdditions: HtrMachineSpec[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// PTR — Pneumatic Tired Rollers (new product line: DYNAPAC + VOLVO)
-// BOMAG does not manufacture this category.
+// PTR — Pneumatic Tired Rollers (new product line: BOMAG, HAMM, DYNAPAC, VOLVO)
+// BOMAG BW 24/27/28 RH and HAMM HP 180 come from their datasheets; DYNAPAC/VOLVO from the TCO master file.
 // ---------------------------------------------------------------------------
 
 const FIVE_FRONT_FOUR_REAR = loc('5 delanteras, 4 traseras', '5 front, 4 rear', '5 vorne, 4 hinten', '5 dianteiras, 4 traseiras');
@@ -342,6 +335,8 @@ type PtrRow = {
   power: number;
   numberOfWheels: LocalizedText;
   origin?: LocalizedText;
+  gradeability?: number;
+  innovations?: LocalizedText;
 };
 
 const ptrRow = (r: PtrRow): MachineSpec => ({
@@ -353,9 +348,10 @@ const ptrRow = (r: PtrRow): MachineSpec => ({
   power: r.power,
   amplitude: '-',
   staticLinearLoad: 0,
+  ...(r.gradeability ? { gradeability: r.gradeability } : {}),
   origin: r.origin ?? NONE,
   compactionAssistant: NONE,
-  innovations: NONE,
+  innovations: r.innovations ?? NONE,
   usp: EMPTY,
   numberOfWheels: r.numberOfWheels,
   fuelConsumption: 0,
@@ -366,7 +362,48 @@ const ptrRow = (r: PtrRow): MachineSpec => ({
   tco: 0,
 });
 
+const FOUR_FRONT_FOUR_REAR = loc('4 delanteras, 4 traseras', '4 front, 4 rear', '4 vorne, 4 hinten', '4 dianteiras, 4 traseiras');
+
+const bomagRhNotes = (maxKg: string, maxKgEn: string, speed: string, fuel: string, water: string) => loc(
+  `Peso máx. con lastre ${maxKg} kg · Velocidad ${speed} km/h · Tanque de combustible ${fuel} l · Tanque de agua ${water} l · Neumáticos 11,00-20 · Rociado a presión`,
+  `Max. ballasted weight ${maxKgEn} kg · Speed ${speed} km/h · Fuel tank ${fuel} l · Water tank ${water} l · Tyres 11.00-20 · Pressure spraying`,
+  `Max. Gewicht mit Ballast ${maxKg} kg · Geschwindigkeit ${speed} km/h · Kraftstofftank ${fuel} l · Wassertank ${water} l · Reifen 11,00-20 · Druckberieselung`,
+  `Peso máx. com lastro ${maxKg} kg · Velocidade ${speed} km/h · Tanque de combustível ${fuel} l · Tanque de água ${water} l · Pneus 11,00-20 · Aspersão sob pressão`
+);
+
 export const ptrMachines: MachineSpec[] = [
+  // BOMAG datasheets PRS53800010 Sa06 (BW 24 RH / BW 27 RH) and PRS53842010 Sa05 (BW 28 RH)
+  ptrRow({
+    brand: 'BOMAG', model: 'BW 24 RH', weight: 8800, engine: 'Deutz TCD 2012 L04 2V (Stage IIIa/Tier 3)', rollingWidth: 2.04,
+    power: 100.4, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 30,
+    innovations: bomagRhNotes('24.000', '24,000', '0-20', '250', '400'),
+  }),
+  ptrRow({
+    brand: 'BOMAG', model: 'BW 27 RH', weight: 8800, engine: 'Deutz TCD 2012 L04 2V (Stage IIIa/Tier 3)', rollingWidth: 2.04,
+    power: 134.1, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 27,
+    innovations: bomagRhNotes('27.000', '27,000', '0-20', '250', '400'),
+  }),
+  ptrRow({
+    brand: 'BOMAG', model: 'BW 28 RH', weight: 8600, engine: 'Deutz TCD 2012 L04 2V (Stage IIIa/Tier 3)', rollingWidth: 2.05,
+    power: 123, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 27,
+    innovations: loc(
+      'Peso máx. con lastre 28.000 kg · Velocidad 0-19 km/h · Tanque de combustible 200 l · Tanque de agua 340 l · Neumáticos 11,00-20 · BOMAG ECOMODE de serie',
+      'Max. ballasted weight 28,000 kg · Speed 0-19 km/h · Fuel tank 200 l · Water tank 340 l · Tyres 11.00-20 · BOMAG ECOMODE standard',
+      'Max. Gewicht mit Ballast 28.000 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 200 l · Wassertank 340 l · Reifen 11,00-20 · BOMAG ECOMODE serienmäßig',
+      'Peso máx. com lastro 28.000 kg · Velocidade 0-19 km/h · Tanque de combustível 200 l · Tanque de água 340 l · Pneus 11,00-20 · BOMAG ECOMODE de série'
+    ),
+  }),
+  // HAMM HP 180 (H248) datasheet, 2026
+  ptrRow({
+    brand: 'HAMM', model: 'HP 180', weight: 8505, engine: 'Deutz TCD 2012 L04 2V (Tier 3 / MAR-1)', rollingWidth: 2.08,
+    power: 119.3, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 25,
+    innovations: loc(
+      'Peso máx. con lastre 17.170 kg · Velocidad 0-19 km/h · Tanque de combustible 235 l · Tanque de agua 650 l · Neumáticos 11.00-R20 · Pendiente 25/35 % (con/sin lastre) · Modo ECO · HAMMTRONIC',
+      'Max. ballasted weight 17,170 kg · Speed 0-19 km/h · Fuel tank 235 l · Water tank 650 l · Tyres 11.00-R20 · Gradeability 25/35 % (with/without ballast) · ECO mode · HAMMTRONIC',
+      'Max. Gewicht mit Ballast 17.170 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 235 l · Wassertank 650 l · Reifen 11.00-R20 · Steigfähigkeit 25/35 % (mit/ohne Ballast) · ECO-Modus · HAMMTRONIC',
+      'Peso máx. com lastro 17.170 kg · Velocidade 0-19 km/h · Tanque de combustível 235 l · Tanque de água 650 l · Pneus 11.00-R20 · Rampa 25/35 % (com/sem lastro) · Modo ECO · HAMMTRONIC'
+    ),
+  }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP1200', weight: 5550, engine: 'Cummins QSF 2.8 (Stage IIIB/Tier 4 final)', rollingWidth: 1.76, power: 73.8, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP2100', weight: 10400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 1.8, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP2700', weight: 12400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 2.3, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),

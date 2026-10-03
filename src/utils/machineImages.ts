@@ -47,9 +47,8 @@ const sdrImageByModel: Record<string, string> = {
   v110: 'V110.jpg',
   '510': '510.jpg',
   '1107ex': '1107EX.png',
-  ca25d: 'CA25_D.jpg',
+  ca25d: 'CA25D.jpg',
   ca1300d: 'CA1300D.jpg',
-  ca2500d33: 'CA2500D-3.3.jpg',
   ca5000d: 'CA5000D.jpg',
   ca6500d: 'CA6500D.jpg',
 };
@@ -86,6 +85,13 @@ const millingImageByModel: Record<string, string> = {
   w200f: 'W200F.jpg',
 };
 
+const ptrImageByModel: Record<string, string> = {
+  bw24rh: 'BW24-27RH.jpg',
+  bw27rh: 'BW24-27RH.jpg',
+  bw28rh: 'BW28RH.jpg',
+  hp180: 'HP180.jpg',
+};
+
 const ltrImages = [
   'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg',
 ];
@@ -116,6 +122,10 @@ export function getMachineImagePath(model: string, line: string): string {
 
   if (folder === 'Pavers' && paverImageByModel[modelNorm]) {
     return `${base}images/${folder}/${paverImageByModel[modelNorm]}`;
+  }
+
+  if (folder === 'PTR' && ptrImageByModel[modelNorm]) {
+    return `${base}images/${folder}/${ptrImageByModel[modelNorm]}`;
   }
 
   if (folder === 'Milling' && millingImageByModel[modelNorm]) {

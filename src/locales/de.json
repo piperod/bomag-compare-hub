@@ -65,7 +65,7 @@
   "ltrDesc": "Leichte Tandemwalzen für vielseitige Verdichtungsarbeiten",
   "htrDesc": "Schwere Tandemwalzen für die Asphaltverdichtung",
   "ptr": "PTR - Gummiradwalze",
-  "ptrDesc": "Gummiradwalzen für Asphaltendverdichtung und Versiegelung (VOLVO, DYNAPAC)",
+  "ptrDesc": "Gummiradwalzen für Asphaltendverdichtung und Versiegelung",
   "globalSummary": "Globale Übersicht",
   "detailComparison": "Detailvergleich",
   "restoreAll": "Alles wiederherstellen",
@@ -133,7 +133,7 @@
   "basicSpecificationRowsSdr": ["compactionAssistant", "telemetry", "innovations"],
   "basicSpecificationRowsLtr": ["compactionSystem", "waterTankCapacity"],
   "basicSpecificationRowsHtr": ["compactionAssistant", "asphaltManager", "telemetry", "innovations", "vibrationSystems", "maintenanceJoint"],
-  "basicSpecificationRowsPtr": [{"key": "weight", "labelKey": "weight"}, {"key": "engine", "labelKey": "engine"}, {"key": "compactionWidth", "labelKey": "rollingWidth"}, {"key": "power", "labelKey": "power"}, {"key": "numberOfWheels", "labelKey": "numberOfWheels"}, {"key": "origin", "labelKey": "origin"}],
+  "basicSpecificationRowsPtr": [{"key": "weight", "labelKey": "weight"}, {"key": "engine", "labelKey": "engine"}, {"key": "compactionWidth", "labelKey": "rollingWidth"}, {"key": "power", "labelKey": "power"}, {"key": "numberOfWheels", "labelKey": "numberOfWheels"}, {"key": "gradeability", "labelKey": "gradeability"}, {"key": "origin", "labelKey": "origin"}, {"key": "innovations", "labelKey": "innovations"}],
   "rollingWidth": "Walzbreite (m)",
   "numberOfWheels": "Anzahl der Räder",
   "uspRows": [

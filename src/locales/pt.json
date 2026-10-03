@@ -65,7 +65,7 @@
   "ltrDesc": "Rolos tandem leves para trabalhos de compactação versáteis",
   "htrDesc": "Rolos tandem pesados para compactação de asfalto",
   "ptr": "PTR - Rolo Pneumático",
-  "ptrDesc": "Rolos pneumáticos para acabamento e selagem de asfalto (VOLVO, DYNAPAC)",
+  "ptrDesc": "Rolos pneumáticos para acabamento e selagem de asfalto",
   "globalSummary": "Resumo Global",
   "detailComparison": "Comparação Detalhada",
   "restoreAll": "Restaurar Tudo",
@@ -133,7 +133,7 @@
   "basicSpecificationRowsSdr": ["compactionAssistant", "telemetry", "innovations"],
   "basicSpecificationRowsLtr": ["compactionSystem", "waterTankCapacity"],
   "basicSpecificationRowsHtr": ["compactionAssistant", "asphaltManager", "telemetry", "innovations", "vibrationSystems", "maintenanceJoint"],
-  "basicSpecificationRowsPtr": [{"key": "weight", "labelKey": "weight"}, {"key": "engine", "labelKey": "engine"}, {"key": "compactionWidth", "labelKey": "rollingWidth"}, {"key": "power", "labelKey": "power"}, {"key": "numberOfWheels", "labelKey": "numberOfWheels"}, {"key": "origin", "labelKey": "origin"}],
+  "basicSpecificationRowsPtr": [{"key": "weight", "labelKey": "weight"}, {"key": "engine", "labelKey": "engine"}, {"key": "compactionWidth", "labelKey": "rollingWidth"}, {"key": "power", "labelKey": "power"}, {"key": "numberOfWheels", "labelKey": "numberOfWheels"}, {"key": "gradeability", "labelKey": "gradeability"}, {"key": "origin", "labelKey": "origin"}, {"key": "innovations", "labelKey": "innovations"}],
   "rollingWidth": "Largura de rolagem (m)",
   "numberOfWheels": "Número de rodas",
   "uspRows": [

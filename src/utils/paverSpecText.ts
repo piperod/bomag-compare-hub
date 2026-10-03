@@ -798,6 +798,94 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    'Motor diésel 4 cil. refrigerado por líquido',
+    {
+      en: 'Liquid-cooled 4-cyl. diesel engine',
+      de: 'Flüssigkeitsgekühlter 4-Zyl.-Dieselmotor',
+      pt: 'Motor diesel 4 cil. refrigerado a líquido',
+    },
+  ],
+  [
+    'Oscilantes estándar',
+    {
+      en: 'Oscillating (standard)',
+      de: 'Pendelnd (Standard)',
+      pt: 'Oscilantes padrão',
+    },
+  ],
+  [
+    'Puntos de lubricación centralizados',
+    {
+      en: 'Centralized lubrication points',
+      de: 'Zentrale Schmierstellen',
+      pt: 'Pontos de lubrificação centralizados',
+    },
+  ],
+  [
+    'gran pantalla color',
+    {
+      en: 'large colour display',
+      de: 'großes Farbdisplay',
+      pt: 'grande tela colorida',
+    },
+  ],
+  [
+    '(según regla)',
+    {
+      en: '(depending on screed)',
+      de: '(je nach Bohle)',
+      pt: '(conforme a régua)',
+    },
+  ],
+  [
+    '(támper)',
+    {
+      en: '(tamper)',
+      de: '(Tamper)',
+      pt: '(tamper)',
+    },
+  ],
+  [
+    'reversibles',
+    {
+      en: 'reversible',
+      de: 'reversierbar',
+      pt: 'reversíveis',
+    },
+  ],
+  [
+    'hasta ',
+    {
+      en: 'up to ',
+      de: 'bis ',
+      pt: 'até ',
+    },
+  ],
+  [
+    '(equivalente EPA Tier 3 / EU Stage IIIA)',
+    {
+      en: '(equivalent to EPA Tier 3 / EU Stage IIIA)',
+      de: '(entspricht EPA Tier 3 / EU Stufe IIIA)',
+      pt: '(equivalente EPA Tier 3 / EU Stage IIIA)',
+    },
+  ],
+  [
+    'Rodillo de empuje ajustable',
+    {
+      en: 'Adjustable push roller',
+      de: 'Verstellbare Schubrolle',
+      pt: 'Rolo de empurre ajustável',
+    },
+  ],
+  [
+    'Consola simple y deslizante',
+    {
+      en: 'Simple sliding console',
+      de: 'Einfache verschiebbare Konsole',
+      pt: 'Console simples e deslizante',
+    },
+  ],
+  [
     '(con zapata reductora)',
     {
       en: '(with reducing shoe)',

@@ -536,4 +536,21 @@ const basePaversMachines = applyPaverI18n(rawPaversMachines).map((machine) => {
   return sizeCategory && !machine.sizeCategory ? { ...machine, sizeCategory } : machine;
 });
 
-export const paversMachines: PaverMachineSpec[] = mergeByBrand(basePaversMachines, paverMasterAdditions);
+/**
+ * Pavers kept in the data but not shown yet (too little datasheet information).
+ * Remove a `brand|model` entry to show that model again.
+ */
+const HIDDEN_PAVERS = new Set([
+  'DYNAPAC|SD2550C',
+  'DYNAPAC|SD2550CS',
+  'DYNAPAC|F1200C',
+  'DYNAPAC|F80W',
+  'DYNAPAC|F1000W',
+  'VOLVO|P68200 ABG',
+  'VOLVO|ABG9820',
+  'VOLVO|P28200 ABG',
+]);
+
+export const paversMachines: PaverMachineSpec[] = mergeByBrand(basePaversMachines, paverMasterAdditions).filter(
+  (machine) => !HIDDEN_PAVERS.has(`${machine.brand}|${machine.model}`)
+);

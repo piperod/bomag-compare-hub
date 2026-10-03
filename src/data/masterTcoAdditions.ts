@@ -173,6 +173,17 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Frequência 30/35 Hz · Velocidade 0–5,4 / 0–10,8 km/h · Tração dupla totalmente hidráulica · Dimensões 5.940 × 2.300 × 3.150 mm'
     ),
   }),
+  // LiuGong CLG6612E: liugong.com product page, Cummins 6BTAA5.9-C190 version (drum width not published)
+  sdrRow({
+    brand: 'LIUGONG', model: 'CLG6612E', weight: 12200, engine: 'Cummins 6BTAA5.9-C190 (Stage II)', compactionWidth: 0, power: 190,
+    origin: ORIGIN.china, amplitude: '2,0 / 1,2', staticLinearLoad: 34.5, gradeability: 50,
+    innovations: loc(
+      'Fuerza centrífuga 300/220 kN · Frecuencia 30/33 Hz · Carga en tambor 7.200 kg · Diámetro de tambor 1.555 mm · 4 velocidades: 4,2 / 5,6 / 6,8 / 12 km/h · Radio de giro exterior 6.500 mm · Rodamientos de vibración de más de 5.000 h',
+      'Centrifugal force 300/220 kN · Frequency 30/33 Hz · Mass on drum 7,200 kg · Drum diameter 1,555 mm · 4 speeds: 4.2 / 5.6 / 6.8 / 12 km/h · Outer turning radius 6,500 mm · Vibration bearings over 5,000 h',
+      'Zentrifugalkraft 300/220 kN · Frequenz 30/33 Hz · Bandagenlast 7.200 kg · Bandagendurchmesser 1.555 mm · 4 Gänge: 4,2 / 5,6 / 6,8 / 12 km/h · Wenderadius außen 6.500 mm · Vibrationslager über 5.000 h',
+      'Força centrífuga 300/220 kN · Frequência 30/33 Hz · Carga no tambor 7.200 kg · Diâmetro do tambor 1.555 mm · 4 velocidades: 4,2 / 5,6 / 6,8 / 12 km/h · Raio de giro externo 6.500 mm · Rolamentos de vibração acima de 5.000 h'
+    ),
+  }),
   // SEM 512: Specalog 06/2023 (drum width not published)
   sdrRow({
     brand: 'SEM', model: '512', weight: 12000, engine: 'Weichai WP4G (Tier II)', compactionWidth: 0, power: 130,

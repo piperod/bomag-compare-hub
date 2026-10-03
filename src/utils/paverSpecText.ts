@@ -540,6 +540,159 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
       pt: 'N/D',
     },
   ],
+  // Phrases used by models added from the BOMAG TCO master file
+  [
+    'Eléctrica (placas de aluminio MAGMALIFE opcionales)',
+    {
+      en: 'Electric (MAGMALIFE aluminum plates optional)',
+      de: 'Elektrisch (MAGMALIFE-Aluminiumplatten optional)',
+      pt: 'Elétrico (placas de alumínio MAGMALIFE opcionais)',
+    },
+  ],
+  [
+    'MAGMALIFE - placas calefactoras de aluminio fundido (estándar)',
+    {
+      en: 'MAGMALIFE - cast aluminum heating plates (standard)',
+      de: 'MAGMALIFE - Aluminium-Guss-Heizplatten (Standard)',
+      pt: 'MAGMALIFE - placas de aquecimento de alumínio fundido (padrão)',
+    },
+  ],
+  [
+    'Opcional (sensores ultrasónicos o mecánicos de altura y pendiente transversal)',
+    {
+      en: 'Optional (ultrasonic or mechanical height & cross-slope sensing)',
+      de: 'Optional (Ultraschall- oder mechanische Höhen- und Querneigungsabtastung)',
+      pt: 'Opcional (sensores ultrassônicos ou mecânicos de altura e inclinação transversal)',
+    },
+  ],
+  [
+    'Opcional (sensores ultrasónicos de altura y pendiente transversal)',
+    {
+      en: 'Optional (ultrasonic height & cross-slope sensing)',
+      de: 'Optional (Ultraschall-Höhen- und Querneigungsabtastung)',
+      pt: 'Opcional (sensores ultrassônicos de altura e inclinação transversal)',
+    },
+  ],
+  [
+    'Regla V (vibración / tamper + vibración)',
+    {
+      en: 'V-screed (vibration / tamper + vibration)',
+      de: 'V-Bohle (Vibration / Tamper + Vibration)',
+      pt: 'Mesa V (vibração / tamper + vibração)',
+    },
+  ],
+  [
+    '(calefacción a gas o eléctrica)',
+    {
+      en: '(gas or electric heated)',
+      de: '(gas- oder elektrisch beheizt)',
+      pt: '(aquecimento a gás ou elétrico)',
+    },
+  ],
+  [
+    'Regla vibratoria',
+    {
+      en: 'Vibration screed',
+      de: 'Vibrationsbohle',
+      pt: 'Mesa vibratória',
+    },
+  ],
+  [
+    'Regla Volvo Variomatic',
+    {
+      en: 'Volvo Variomatic screed',
+      de: 'Volvo Variomatic Bohle',
+      pt: 'Mesa Volvo Variomatic',
+    },
+  ],
+  [
+    'Regla Vario',
+    {
+      en: 'Vario screed',
+      de: 'Vario-Bohle',
+      pt: 'Mesa Vario',
+    },
+  ],
+  [
+    '(tamper + vibración)',
+    {
+      en: '(tamper + vibration)',
+      de: '(Tamper + Vibration)',
+      pt: '(tamper + vibração)',
+    },
+  ],
+  [
+    'estándar, hasta 9-10 m con extensiones',
+    {
+      en: 'standard, up to 9-10 m with extensions',
+      de: 'Standard, bis 9-10 m mit Verbreiterungen',
+      pt: 'padrão, até 9-10 m com extensões',
+    },
+  ],
+  [
+    'mín. (con patines reductores)',
+    {
+      en: 'min. (with reduction skids)',
+      de: 'min. (mit Reduzierschuhen)',
+      pt: 'mín. (com sapatas redutoras)',
+    },
+  ],
+  [
+    ' mín. - ',
+    {
+      en: ' min. - ',
+      de: ' min. - ',
+      pt: ' mín. - ',
+    },
+  ],
+  [
+    ' máx.',
+    {
+      en: ' max.',
+      de: ' max.',
+      pt: ' máx.',
+    },
+  ],
+  [
+    'cil.)',
+    {
+      en: 'cyl.)',
+      de: 'Zyl.)',
+      pt: 'cil.)',
+    },
+  ],
+  [
+    'EXTRA GRANDE (',
+    {
+      en: 'EXTRA LARGE (',
+      de: 'EXTRA GROSS (',
+      pt: 'EXTRA GRANDE (',
+    },
+  ],
+  [
+    'GRANDE (',
+    {
+      en: 'LARGE (',
+      de: 'GROSS (',
+      pt: 'GRANDE (',
+    },
+  ],
+  [
+    'MEDIANA (',
+    {
+      en: 'MEDIUM (',
+      de: 'MITTEL (',
+      pt: 'MÉDIA (',
+    },
+  ],
+  [
+    'COMPACTA (',
+    {
+      en: 'COMPACT (',
+      de: 'KOMPAKT (',
+      pt: 'COMPACTA (',
+    },
+  ],
   [
     '(con reducciones)',
     {

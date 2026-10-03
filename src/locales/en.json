@@ -64,6 +64,8 @@
   "sdrDesc": "Single drum rollers for soil compaction",
   "ltrDesc": "Light tandem rollers for versatile compaction jobs",
   "htrDesc": "Heavy tandem rollers for asphalt compaction",
+  "ptr": "PTR - Pneumatic Tired Roller",
+  "ptrDesc": "Pneumatic tired rollers for asphalt finishing and sealing (VOLVO, DYNAPAC)",
   "globalSummary": "Global Summary",
   "detailComparison": "Detail Comparison",
   "restoreAll": "Restore All",
@@ -131,6 +133,9 @@
   "basicSpecificationRowsSdr": ["compactionAssistant", "telemetry", "innovations"],
   "basicSpecificationRowsLtr": ["compactionSystem", "waterTankCapacity"],
   "basicSpecificationRowsHtr": ["compactionAssistant", "asphaltManager", "telemetry", "innovations", "vibrationSystems", "maintenanceJoint"],
+  "basicSpecificationRowsPtr": [{"key": "weight", "labelKey": "weight"}, {"key": "engine", "labelKey": "engine"}, {"key": "compactionWidth", "labelKey": "rollingWidth"}, {"key": "power", "labelKey": "power"}, {"key": "numberOfWheels", "labelKey": "numberOfWheels"}, {"key": "origin", "labelKey": "origin"}],
+  "rollingWidth": "Rolling width (m)",
+  "numberOfWheels": "Number of wheels",
   "uspRows": [
     {"key": "usp1", "labelKey": "usp1"},
     {"key": "usp2", "labelKey": "usp2"},
@@ -189,6 +194,7 @@
   "paverFuelSavingMode": "Fuel-saving mode",
   "paverFuelTankCapacity": "Fuel tank (L)",
   "paverMaxProduction": "Maximum output (t/h)",
+  "paverSizeCategory": "Size category",
   "paverPavingSpeed": "Paving speed (m/min)",
   "paverTravelSpeed": "Travel speed (km/h)",
   "paverMaxLayerThickness": "Maximum layer thickness (mm)",
@@ -239,6 +245,7 @@
     {
       "titleKey": "paverSectionPerformance",
       "rows": [
+        {"key": "sizeCategory", "labelKey": "paverSizeCategory"},
         {"key": "maxProduction", "labelKey": "paverMaxProduction"},
         {"key": "pavingSpeed", "labelKey": "paverPavingSpeed"},
         {"key": "travelSpeed", "labelKey": "paverTravelSpeed"},

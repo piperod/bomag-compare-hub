@@ -39,9 +39,12 @@ export interface MachineSpec {
   easyMaintenance?: { es: string; en: string; de: string; pt: string };
   // Add staticTco to MachineSpec
   staticTco?: number;
+  // PTR specific fields
+  numberOfWheels?: { es: string; en: string; de: string; pt: string };
 }
 
 import sdrFromCsv from '@/data/sdrFromCsv.json';
+import { ltrMasterAdditions, mergeByBrand, sdrMasterAdditions } from '@/data/masterTcoAdditions';
 
 /*
 export const sdrMachines: MachineSpec[] = [
@@ -684,9 +687,12 @@ export const sdrMachines: MachineSpec[] = [
 ];
 */
 
-export const sdrMachines: MachineSpec[] = sdrFromCsv as unknown as MachineSpec[];
+export const sdrMachines: MachineSpec[] = mergeByBrand(
+  sdrFromCsv as unknown as MachineSpec[],
+  sdrMasterAdditions
+);
 
-export const ltrMachines: MachineSpec[] = [
+const ltrBaseMachines: MachineSpec[] = [
   {
     brand: "BOMAG",
     model: "BW120 AD-5",
@@ -1045,6 +1051,10 @@ export const ltrMachines: MachineSpec[] = [
     ],
   }
 ];
+
+export const ltrMachines: MachineSpec[] = mergeByBrand(ltrBaseMachines, ltrMasterAdditions);
+
+export { ptrMachines } from '@/data/masterTcoAdditions';
 
 export interface CompactionData {
   weightRange: string;

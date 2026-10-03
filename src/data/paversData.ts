@@ -3,6 +3,7 @@
  * Regenerate: node scripts/generate_pavers_from_xlsx.cjs
  */
 import { applyPaverI18n } from './paversI18n';
+import { mergeByBrand, paverMasterAdditions, paverSizeCategoryByModel } from './masterTcoAdditions';
 
 export interface LocalizedText {
   es: string;
@@ -87,6 +88,8 @@ export interface PaverMachineSpec {
   hasEcomode?: boolean;
   setupFuelLiters?: number;
   heatingMinutes?: number;
+  /** Size category used for search (e.g. "MEDIANA (351-700 t/h)") */
+  sizeCategory?: string;
 }
 
 const rawPaversMachines: PaverMachineSpec[] = [
@@ -528,4 +531,9 @@ const rawPaversMachines: PaverMachineSpec[] = [
   }
 ];
 
-export const paversMachines = applyPaverI18n(rawPaversMachines);
+const basePaversMachines = applyPaverI18n(rawPaversMachines).map((machine) => {
+  const sizeCategory = paverSizeCategoryByModel[`${machine.brand}|${machine.model}`];
+  return sizeCategory && !machine.sizeCategory ? { ...machine, sizeCategory } : machine;
+});
+
+export const paversMachines: PaverMachineSpec[] = mergeByBrand(basePaversMachines, paverMasterAdditions);

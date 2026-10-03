@@ -47,19 +47,39 @@ const sdrImageByModel: Record<string, string> = {
   v110: 'V110.jpg',
   '510': '510.jpg',
   '1107ex': '1107EX.png',
+  ca25d: 'CA25_D.jpg',
 };
+
+/** SDR models from the TCO master file that have no photo yet (avoid showing a BOMAG photo for them). */
+const sdrModelsWithoutImage = new Set([
+  'cs1400', 'cs1400n', 'ct3000', 'ca1300d', 'ca5000d', 'ca6500d', 'ca2500pd', 'ca4000pd', 'ca5500pd',
+]);
 
 const paverImageByModel: Record<string, string> = {
   ap655: 'AP655.png',
   bf600c3: 'BF600-C-3.png',
   super18003: 'Super-1800-3.png',
   sd2500cs: 'SD2500CS.png',
+  bf350c5: 'BF350-C-5.jpg',
+  bf700c3: 'BF700-C-3.jpg',
+  bf700c3l: 'BF700-C-3-L.jpg',
+  bf800c3: 'BF800-C-3.jpg',
 };
+
+/** Paver models from the TCO master file that have no photo yet. */
+const paverModelsWithoutImage = new Set([
+  'f80w', 'f1200c', 'f1800c', 'p28200abg', 'fc1600c', 'p68200abg', 'f1000w', 'f2500ws', 'sd2550cs', 'abg9820',
+]);
 
 const millingImageByModel: Record<string, string> = {
   bm100020: 'BM1000-20.png',
   xm1005h: 'XM1005H.png',
   scm1000c8: 'SCM1000C-8.png',
+  w100r: 'W100-W120-R-Ri.png',
+  w120r: 'W100-W120-R-Ri.png',
+  w100ri: 'W100-W120-R-Ri.png',
+  w120ri: 'W100-W120-R-Ri.png',
+  w200f: 'W200F.png',
 };
 
 const ltrImages = [
@@ -79,6 +99,7 @@ export function getMachineImagePath(model: string, line: string): string {
     : lineNorm === 'htr' ? 'HTR'
     : lineNorm === 'milling' ? 'Milling'
     : lineNorm === 'pavers' ? 'Pavers'
+    : lineNorm === 'ptr' ? 'PTR'
     : '';
 
   if (!folder) return `${base}placeholder.svg`;
@@ -101,6 +122,8 @@ export function getMachineImagePath(model: string, line: string): string {
   const match = folderImages.find((img) => norm(img).includes(modelNorm));
   if (match) return `${base}images/${folder}/${match}`;
 
+  if (folder === 'SDR' && sdrModelsWithoutImage.has(modelNorm)) return `${base}placeholder.svg`;
+  if (folder === 'Pavers' && paverModelsWithoutImage.has(modelNorm)) return `${base}placeholder.svg`;
   if (folder === 'SDR') return `${base}images/${folder}/BW211 D5-SL.png`;
   if (folder === 'Pavers') return `${base}images/${folder}/BF600-C-3.png`;
 

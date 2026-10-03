@@ -20,6 +20,7 @@ export interface LocaleSpec {
   basicSpecificationRowsSdr?: string[];
   basicSpecificationRowsLtr?: string[];
   basicSpecificationRowsHtr?: string[];
+  basicSpecificationRowsPtr?: Array<{ key: string; labelKey: string }>;
   basicSpecificationRowsMilling?: Array<{ key: string; labelKey: string }>;
   paverSpecSections?: Array<{ titleKey: string; rows: Array<{ key: string; labelKey: string }> }>;
   uspRows?: Array<{ key: string; labelKey: string }>;

@@ -758,6 +758,46 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    'Gas o eléctrica',
+    {
+      en: 'Gas or electric',
+      de: 'Gas oder elektrisch',
+      pt: 'Gás ou elétrica',
+    },
+  ],
+  [
+    'Controles convencionales',
+    {
+      en: 'Conventional controls',
+      de: 'Konventionelle Bedienung',
+      pt: 'Controles convencionais',
+    },
+  ],
+  [
+    'control proporcional',
+    {
+      en: 'proportional control',
+      de: 'Proportionalsteuerung',
+      pt: 'controle proporcional',
+    },
+  ],
+  [
+    ', reversibles',
+    {
+      en: ', reversible',
+      de: ', reversierbar',
+      pt: ', reversíveis',
+    },
+  ],
+  [
+    ', ctrl indep.',
+    {
+      en: ', indep. ctrl',
+      de: ', unabh. Steuerung',
+      pt: ', ctrl indep.',
+    },
+  ],
+  [
     '(con zapata reductora)',
     {
       en: '(with reducing shoe)',

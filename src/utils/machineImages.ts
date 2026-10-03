@@ -67,13 +67,15 @@ const paverImageByModel: Record<string, string> = {
   bf700c3l: 'BF700-C-3-L.jpg',
   bf800c3: 'BF800-C-3.jpg',
   fc1600c: 'FC1600C.jpg',
+  f1800c: 'F1800C.jpg',
+  f2500ws: 'F2500WS.jpg',
   sd2550c: 'SD-Series.jpg',
   sd2550cs: 'SD-Series.jpg',
 };
 
 /** Paver models from the TCO master file that have no photo yet. */
 const paverModelsWithoutImage = new Set([
-  'f80w', 'f1200c', 'f1800c', 'p28200abg', 'p68200abg', 'f1000w', 'f2500ws', 'abg9820',
+  'f80w', 'f1200c', 'p28200abg', 'p68200abg', 'f1000w', 'abg9820',
 ]);
 
 const millingImageByModel: Record<string, string> = {

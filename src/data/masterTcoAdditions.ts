@@ -870,10 +870,19 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     hopperCapacity: '5,5 t (~2,3 m3)', screedTypes: 'Regla V (vibración / tamper + vibración)', operatingWeight: '5.800 kg',
   }),
   paverRow({
+    // Dynapac F1800C datasheet 2025-10
     brand: 'DYNAPAC', model: 'F1800C', sizeCategory: 'COMPACTA (≤350 t/h)',
-    engine: 'Deutz TD 2.9 L04 (4 cil.)', engineManufacturer: 'Deutz TD 2.9 L04 (4 cil.)',
-    nominalPower: '54 kW / 72,4 hp', maxProduction: '350 t/h', minWorkingWidth: '1,8 - 4,7 m',
-    hopperCapacity: '10,5 t', screedTypes: 'Regla vibratoria (calefacción a gas o eléctrica)', operatingWeight: '10.500 kg',
+    engine: '54 kW / 72,4 hp', engineManufacturer: 'Deutz TD 2.9 L4 (4 cil.)', emissionStandard: 'Tier 3 (54 kW) / Stage V (55,4 kW)',
+    nominalPower: '54 kW / 72,4 hp', fuelTankCapacity: '86 L', maxProduction: '350 t/h',
+    pavingSpeed: 'Hasta 25 m/min', travelSpeed: '4 km/h', maxLayerThickness: '200 mm',
+    minWorkingWidth: '0,70 m (con zapata reductora) - 4,7 m máx.',
+    baseWidthRetracted: '1,75 m (V3500)', extendedBaseWidth: '3,50 m (V3500)', maxWidthWithExtensions: '4,70 m',
+    hopperCapacity: '10,5 t', augerDiameter: '320 mm', conveyors: '2 - 700 mm, reversibles
+control proporcional',
+    screedTypes: 'V3500 V / VE / TV / TVE', screedHeating: 'Gas o eléctrica',
+    operatingWeight: '10.500 kg (c/regla std.)',
+    transportLength: '4.990 mm', transportWidth: '1.800 mm', transportHeight: '2.920 mm',
+    operationSystem: 'Controles convencionales',
   }),
   paverRow({
     brand: 'VOLVO', model: 'P28200 ABG', sizeCategory: 'COMPACTA (≤350 t/h)',
@@ -965,9 +974,18 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     nominalPower: '162 kW / 217,2 hp', minWorkingWidth: '3,05 - 7,93 m', operatingWeight: '15.150 kg',
   }),
   paverRow({
+    // Dynapac F2500WS datasheet 2025-04
     brand: 'DYNAPAC', model: 'F2500WS', sizeCategory: 'GRANDE (6,1-9 m)',
-    nominalPower: '129 kW / 173,0 hp', minWorkingWidth: '2,55 - 8,8 m',
-    screedTypes: 'Regla Vario V5100/V6000 (calefacción a gas o eléctrica)', operatingWeight: '16.500 kg',
+    engine: '129 kW / 173 hp', engineManufacturer: 'Cummins QSB 6.7-C173', emissionStandard: 'Stage IIIA / Tier 3',
+    nominalPower: '129 kW / 173,0 hp', fuelTankCapacity: '315 L', maxProduction: '650 t/h', maxLayerThickness: '300 mm',
+    minWorkingWidth: '2,05 m (con zapata reductora) - 6,7 m máx.',
+    baseWidthRetracted: '2,55 m (V5100) / 3,0 m (V6000)', extendedBaseWidth: '5,1 m (V5100) / 6,0 m (V6000)',
+    maxWidthWithExtensions: '6,6 m (V5100) / 6,7 m (V6000)',
+    hopperCapacity: '6,0 m3', augerDiameter: '380 mm', conveyors: '2 - 580 mm, ctrl indep.',
+    screedTypes: 'V5100 TV / TVE
+V6000 TV / TVE', screedHeating: 'Gas o eléctrica',
+    operatingWeight: '17.500 kg (c/regla std.)',
+    transportLength: '6.100 mm', transportWidth: '2.550 mm', transportHeight: '3.100 mm',
   }),
   paverRow({
     brand: 'BOMAG', model: 'BF 800 C-3', sizeCategory: 'EXTRA GRANDE (>9 m)',

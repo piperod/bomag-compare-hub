@@ -397,12 +397,52 @@ export const ptrMachines: MachineSpec[] = [
       'Peso máx. com lastro 27.950 kg · Velocidade 0-19 km/h · Tanque de combustível 235 l · Tanque de água 650 l · Pneus 11.00-R20 · Rampa 25/35 % (com/sem lastro) · Modo ECO · HAMMTRONIC'
     ),
   }),
-  ptrRow({ brand: 'DYNAPAC', model: 'CP1200', weight: 5550, engine: 'Cummins QSF 2.8 (Stage IIIB/Tier 4 final)', rollingWidth: 1.76, power: 73.8, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
+  // Dynapac CP1200 datasheet 2025-11 (Stage IIIA / Tier 3 engine version)
+  ptrRow({
+    brand: 'DYNAPAC', model: 'CP1200', weight: 5580, engine: 'Kubota V3307 (Stage IIIA/Tier 3)', rollingWidth: 1.76, power: 74,
+    numberOfWheels: FIVE_FRONT_FOUR_REAR, gradeability: 28, origin: ORIGIN.brazil,
+    innovations: loc(
+      'Peso máx. con lastre 12.100 kg · Peso con cabina 5.850 kg · Velocidad 0-18 km/h · Tanque de combustible 215 l · Tanque de agua 410 l · Neumáticos 7.50-15, 14 lonas · Oscilación de ruedas ±3° · Unidad de mando deslizante y giratoria',
+      'Max. ballasted weight 12,100 kg · Weight with cab 5,850 kg · Speed 0-18 km/h · Fuel tank 215 l · Water tank 410 l · Tyres 7.50-15, 14 ply · Wheel oscillation ±3° · Sliding and swivelling operator unit',
+      'Max. Gewicht mit Ballast 12.100 kg · Gewicht mit Kabine 5.850 kg · Geschwindigkeit 0-18 km/h · Kraftstofftank 215 l · Wassertank 410 l · Reifen 7.50-15, 14 PR · Radpendelung ±3° · Verschieb- und drehbarer Fahrerstand',
+      'Peso máx. com lastro 12.100 kg · Peso com cabine 5.850 kg · Velocidade 0-18 km/h · Tanque de combustível 215 l · Tanque de água 410 l · Pneus 7.50-15, 14 lonas · Oscilação das rodas ±3° · Posto do operador deslizante e giratório'
+    ),
+  }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP2100', weight: 10400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 1.8, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
-  ptrRow({ brand: 'DYNAPAC', model: 'CP2700', weight: 12400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 2.3, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
+  // Dynapac CP2700 datasheet 2020-05 (Stage IIIA / Tier 3 engine version)
+  ptrRow({
+    brand: 'DYNAPAC', model: 'CP2700', weight: 12400, engine: 'Cummins QSB 4.5 (Stage IIIA/Tier 3)', rollingWidth: 2.3, power: 110,
+    numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil,
+    innovations: loc(
+      'Peso con lastre: arena húmeda 19.500 kg · máx. 27.000 kg · Carga por rueda 1.361-3.000 kg · Velocidad 0-20 km/h · Tanque de combustible 210 l · Tanque de agua 415 l · Neumáticos 13/80 R20 · Radio de giro exterior 9.046 mm',
+      'Ballasted weight: wet sand 19,500 kg · max. 27,000 kg · Wheel load 1,361-3,000 kg · Speed 0-20 km/h · Fuel tank 210 l · Water tank 415 l · Tyres 13/80 R20 · Outer turning radius 9,046 mm',
+      'Gewicht mit Ballast: Nasssand 19.500 kg · max. 27.000 kg · Radlast 1.361-3.000 kg · Geschwindigkeit 0-20 km/h · Kraftstofftank 210 l · Wassertank 415 l · Reifen 13/80 R20 · Wenderadius außen 9.046 mm',
+      'Peso com lastro: areia úmida 19.500 kg · máx. 27.000 kg · Carga por roda 1.361-3.000 kg · Velocidade 0-20 km/h · Tanque de combustível 210 l · Tanque de água 415 l · Pneus 13/80 R20 · Raio de giro externo 9.046 mm'
+    ),
+  }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP275', weight: 14000, engine: 'Cummins 4BTAA3.9-C125', rollingWidth: 2.37, power: 124.7, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.china }),
-  ptrRow({ brand: 'VOLVO', model: 'PTR125', weight: 12625, rollingWidth: 1.73, power: 84.5, numberOfWheels: same('4 + 5') }),
-  ptrRow({ brand: 'VOLVO', model: 'PTR220', weight: 24000, rollingWidth: 1.98, power: 99.2, numberOfWheels: same('4 + 5') }),
+  // Volvo PT125R T3 specification sheet VOE 33 B 100 4028 (2009)
+  ptrRow({
+    brand: 'VOLVO', model: 'PTR125', weight: 4326, engine: 'Kubota V3600-T-E3B (Tier 3)', rollingWidth: 1.73, power: 84.5,
+    numberOfWheels: loc('4 delanteras, 5 traseras', '4 front, 5 rear', '4 vorne, 5 hinten', '4 dianteiras, 5 traseiras'), gradeability: 31,
+    innovations: loc(
+      'Peso con lastre: agua 7.708 kg · arena húmeda 11.242 kg · máx. 12.625 kg · Velocidad 0-24,8 km/h · Tanque de combustible 102 l · Tanque de agua 379 l · Neumáticos 7.50-15, 14 lonas · Oscilación ±3°',
+      'Ballasted weight: water 7,708 kg · wet sand 11,242 kg · max. 12,625 kg · Speed 0-24.8 km/h · Fuel tank 102 l · Water tank 379 l · Tyres 7.50-15, 14 ply · Oscillation ±3°',
+      'Gewicht mit Ballast: Wasser 7.708 kg · Nasssand 11.242 kg · max. 12.625 kg · Geschwindigkeit 0-24,8 km/h · Kraftstofftank 102 l · Wassertank 379 l · Reifen 7.50-15, 14 PR · Pendelung ±3°',
+      'Peso com lastro: água 7.708 kg · areia úmida 11.242 kg · máx. 12.625 kg · Velocidade 0-24,8 km/h · Tanque de combustível 102 l · Tanque de água 379 l · Pneus 7.50-15, 14 lonas · Oscilação ±3°'
+    ),
+  }),
+  // Volvo PT220 T3 brochure 20047062_E (2018)
+  ptrRow({
+    brand: 'VOLVO', model: 'PTR220', weight: 10020, engine: 'Volvo D5D A3 (Tier 3 / Bharat Stage III)', rollingWidth: 1.98, power: 135,
+    numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 23,
+    innovations: loc(
+      'Peso máx. con lastre 21.000 kg (24.000 kg con lastre de fábrica) · Velocidad 0-15 km/h · Tanque de combustible 200 l · Tanque de agua 550 l · Neumáticos 11,0-20, 18 PR · Traslape 50 mm · Nivelación isostática delantera',
+      'Max. ballasted weight 21,000 kg (24,000 kg with factory ballast) · Speed 0-15 km/h · Fuel tank 200 l · Water tank 550 l · Tyres 11.0-20, 18 PR · Overlap 50 mm · Isostatic front levelling',
+      'Max. Gewicht mit Ballast 21.000 kg (24.000 kg mit Werksballast) · Geschwindigkeit 0-15 km/h · Kraftstofftank 200 l · Wassertank 550 l · Reifen 11,0-20, 18 PR · Überlappung 50 mm · Isostatische Vorderachse',
+      'Peso máx. com lastro 21.000 kg (24.000 kg com lastro de fábrica) · Velocidade 0-15 km/h · Tanque de combustível 200 l · Tanque de água 550 l · Pneus 11,0-20, 18 PR · Sobreposição 50 mm · Nivelamento isostático dianteiro'
+    ),
+  }),
   ptrRow({ brand: 'VOLVO', model: 'PTR240R', weight: 24000, rollingWidth: 1.99, power: 132.8, numberOfWheels: same('4 + 5') }),
   // Cat CW16: cat.com es_MX product specs (Mexico market, Cat C3.6) + datasheet QEHQ1965-02 (2022)
   ptrRow({

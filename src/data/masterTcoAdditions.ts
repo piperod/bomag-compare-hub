@@ -173,6 +173,61 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Frequência 30/35 Hz · Velocidade 0–5,4 / 0–10,8 km/h · Tração dupla totalmente hidráulica · Dimensões 5.940 × 2.300 × 3.150 mm'
     ),
   }),
+  // SEM 512: Specalog 06/2023 (drum width not published)
+  sdrRow({
+    brand: 'SEM', model: '512', weight: 12000, engine: 'Weichai WP4G (Tier II)', compactionWidth: 0, power: 130,
+    origin: ORIGIN.china, amplitude: '1,80 / 0,90', staticLinearLoad: 22.1, gradeability: 45,
+    innovations: loc(
+      'Carga en tambor 6.900 kg · Diámetro de tambor 1.600 mm · Velocidad 0–5,5 / 0–12 km/h · Tanque de combustible 200 l · Oscilación ±10° · Radio de giro 5.990 mm · Hidráulica de centro cerrado',
+      'Mass on drum 6,900 kg · Drum diameter 1,600 mm · Speed 0–5.5 / 0–12 km/h · Fuel tank 200 l · Oscillation ±10° · Turning radius 5,990 mm · Closed-centre hydraulics',
+      'Bandagenlast 6.900 kg · Bandagendurchmesser 1.600 mm · Geschwindigkeit 0–5,5 / 0–12 km/h · Kraftstofftank 200 l · Pendelung ±10° · Wenderadius 5.990 mm · Closed-Center-Hydraulik',
+      'Carga no tambor 6.900 kg · Diâmetro do tambor 1.600 mm · Velocidade 0–5,5 / 0–12 km/h · Tanque de combustível 200 l · Oscilação ±10° · Raio de giro 5.990 mm · Hidráulica de centro fechado'
+    ),
+  }),
+  // Cat CS11: Specalog (Brazil MAR-1 / Tier 3 engine), steel canopy configuration
+  sdrRow({
+    brand: 'CATERPILLAR', model: 'CS11', weight: 10080, engine: 'Cat C4.4 (MAR-1 / Tier 3)', compactionWidth: 2.134, power: 129.4,
+    origin: ORIGIN.brazil, amplitude: '1,9 / 0,96', staticLinearLoad: 26.7, gradeability: 55,
+    innovations: loc(
+      'Fuerza centrífuga 244/122 kN · Frecuencia 30,5 Hz (variable 23,3–30,5 Hz opcional) · Velocidad máx. 11 km/h · Tanque de combustible 242 l · Con cabina 10.806 kg · Modo económico · Cat Compact (opcional)',
+      'Centrifugal force 244/122 kN · Frequency 30.5 Hz (variable 23.3–30.5 Hz optional) · Max. speed 11 km/h · Fuel tank 242 l · With cab 10,806 kg · Eco mode · Cat Compact (optional)',
+      'Zentrifugalkraft 244/122 kN · Frequenz 30,5 Hz (variabel 23,3–30,5 Hz optional) · Max. Geschwindigkeit 11 km/h · Kraftstofftank 242 l · Mit Kabine 10.806 kg · Eco-Modus · Cat Compact (optional)',
+      'Força centrífuga 244/122 kN · Frequência 30,5 Hz (variável 23,3–30,5 Hz opcional) · Velocidade máx. 11 km/h · Tanque de combustível 242 l · Com cabine 10.806 kg · Modo econômico · Cat Compact (opcional)'
+    ),
+  }),
+  // Ammann ARS 110.1: datasheet EU Stage IIIA / US EPA Tier 3
+  sdrRow({
+    brand: 'AMMANN', model: 'ARS 110.1', weight: 11400, engine: 'Deutz TCD2012 (Stage IIIA / Tier 3)', compactionWidth: 2.13, power: 128.7,
+    origin: ORIGIN.india, amplitude: '1,85 / 0,9', staticLinearLoad: 30.3, gradeability: 50,
+    innovations: loc(
+      'Fuerza centrífuga 275/160 kN · Frecuencia 32/35 Hz · Velocidad 7 km/h (trabajo) / 12 km/h (transporte) · Tanque de combustible 310 l · Con cabina 11.465 kg (máx. 13.317 kg) · Pendiente 50 % con / 40 % sin vibración',
+      'Centrifugal force 275/160 kN · Frequency 32/35 Hz · Speed 7 km/h (working) / 12 km/h (travel) · Fuel tank 310 l · With cab 11,465 kg (max. 13,317 kg) · Gradeability 50 % with / 40 % without vibration',
+      'Zentrifugalkraft 275/160 kN · Frequenz 32/35 Hz · Geschwindigkeit 7 km/h (Arbeit) / 12 km/h (Transport) · Kraftstofftank 310 l · Mit Kabine 11.465 kg (max. 13.317 kg) · Steigfähigkeit 50 % mit / 40 % ohne Vibration',
+      'Força centrífuga 275/160 kN · Frequência 32/35 Hz · Velocidade 7 km/h (trabalho) / 12 km/h (transporte) · Tanque de combustível 310 l · Com cabine 11.465 kg (máx. 13.317 kg) · Rampa 50 % com / 40 % sem vibração'
+    ),
+  }),
+  // SANY SSR200C-8H: datasheet (China III emission level)
+  sdrRow({
+    brand: 'SANY', model: 'SSR200C-8H', weight: 20000, engine: 'Weichai WP6G200E331 (China III)', compactionWidth: 2.13, power: 197.1,
+    origin: ORIGIN.china, amplitude: '2,0 / 1,0', staticLinearLoad: 60.5, gradeability: 55,
+    innovations: loc(
+      'Fuerza centrífuga 380/275 kN · Frecuencia 29/35 Hz · Carga en tambor 12.900 kg · Diámetro de tambor 1.600 mm · Velocidad 0–5,5 km/h · Tanque de combustible 300 l',
+      'Centrifugal force 380/275 kN · Frequency 29/35 Hz · Mass on drum 12,900 kg · Drum diameter 1,600 mm · Speed 0–5.5 km/h · Fuel tank 300 l',
+      'Zentrifugalkraft 380/275 kN · Frequenz 29/35 Hz · Bandagenlast 12.900 kg · Bandagendurchmesser 1.600 mm · Geschwindigkeit 0–5,5 km/h · Kraftstofftank 300 l',
+      'Força centrífuga 380/275 kN · Frequência 29/35 Hz · Carga no tambor 12.900 kg · Diâmetro do tambor 1.600 mm · Velocidade 0–5,5 km/h · Tanque de combustível 300 l'
+    ),
+  }),
+  // Volvo SD110 (Tier 3) brochure 20029116: standard smooth-drum version; static linear load = drum mass / drum width
+  sdrRow({
+    brand: 'VOLVO', model: 'SD110', weight: 11125, engine: 'Volvo D5D A3 (Tier 3 / Stage III)', compactionWidth: 2.134, power: 133,
+    origin: ORIGIN.brazil, amplitude: '1,92 / 1,29', staticLinearLoad: 28.6,
+    innovations: loc(
+      'Fuerza centrífuga 245/165 kN · Frecuencia 30 Hz (variable 0–30 Hz) · Carga en tambor 6.100 kg · Diámetro de tambor 1.500 mm · Velocidad 0–6 / 0–11 km/h · Tanque de combustible 270 l · Diferencial No-Spin',
+      'Centrifugal force 245/165 kN · Frequency 30 Hz (variable 0–30 Hz) · Mass on drum 6,100 kg · Drum diameter 1,500 mm · Speed 0–6 / 0–11 km/h · Fuel tank 270 l · No-Spin differential',
+      'Zentrifugalkraft 245/165 kN · Frequenz 30 Hz (variabel 0–30 Hz) · Bandagenlast 6.100 kg · Bandagendurchmesser 1.500 mm · Geschwindigkeit 0–6 / 0–11 km/h · Kraftstofftank 270 l · No-Spin-Differential',
+      'Força centrífuga 245/165 kN · Frequência 30 Hz (variável 0–30 Hz) · Carga no tambor 6.100 kg · Diâmetro do tambor 1.500 mm · Velocidade 0–6 / 0–11 km/h · Tanque de combustível 270 l · Diferencial No-Spin'
+    ),
+  }),
   // LiuGong CLG6611E: liugong.com product page (no drum width published, so it is left blank)
   sdrRow({
     brand: 'LIUGONG', model: 'CLG6611E', weight: 11450, engine: 'Cummins 4BTAA3.9-C125 (Stage II)', compactionWidth: 0, power: 124.7,

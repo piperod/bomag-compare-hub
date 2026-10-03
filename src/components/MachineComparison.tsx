@@ -924,6 +924,7 @@ const MachineComparison = ({
       'NEW HOLLAND': 'bg-blue-600',
       'SANY': 'bg-red-500',
       'LIUGONG': 'bg-amber-600',
+      'SEM': 'bg-yellow-700',
       'XCMG': 'bg-orange-500',
       'AMMANN': 'bg-green-600',
       'JCB': 'bg-yellow-600',

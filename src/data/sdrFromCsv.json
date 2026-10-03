@@ -1352,7 +1352,7 @@
     "compactionWidth": 2.13,
     "power": 130,
     "amplitude": "1.8/0.9",
-    "staticLinearLoad": 51.4,
+    "staticLinearLoad": 26,
     "gradeability": 41,
     "origin": {
       "es": "Suecia/Brasil",

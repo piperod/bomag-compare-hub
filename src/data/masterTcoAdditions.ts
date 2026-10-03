@@ -131,6 +131,7 @@ type LtrRow = {
   amplitude?: string;
   staticLinearLoad?: number;
   waterTankCapacity?: number;
+  gradeability?: number;
   innovations?: LocalizedText;
   articulated?: boolean;
 };
@@ -144,6 +145,7 @@ const ltrRow = (r: LtrRow): MachineSpec => ({
   power: r.power,
   amplitude: r.amplitude ?? '-',
   staticLinearLoad: r.staticLinearLoad ?? 0,
+  ...(r.gradeability ? { gradeability: r.gradeability } : {}),
   origin: r.origin,
   compactionAssistant: NONE,
   innovations: r.innovations ?? NONE,
@@ -160,7 +162,18 @@ const ltrRow = (r: LtrRow): MachineSpec => ({
 });
 
 export const ltrMasterAdditions: MachineSpec[] = [
-  ltrRow({ brand: 'DYNAPAC', model: 'CC900G', weight: 1250, engine: 'Honda GX630RH QYD', compactionWidth: 0.9, power: 19, origin: ORIGIN.china }),
+  // Completed from the DYNAPAC CC900G datasheet (dynapac_cc900g_en, 2024-05-09).
+  // Static linear load: 6.1 kg/cm front / 7.9 kg/cm rear (rear value shown).
+  ltrRow({
+    brand: 'DYNAPAC', model: 'CC900G', weight: 1250, engine: 'Honda GX630RH QYD', compactionWidth: 0.9, power: 19,
+    origin: ORIGIN.china, amplitude: '0.4', staticLinearLoad: 7.9, waterTankCapacity: 190, gradeability: 35,
+    innovations: loc(
+      'Motor a gasolina de 4 tiempos · Fuerza centrífuga 16,7 kN a 70 Hz · Oscilación vertical ±6° · Tanque de combustible 23 l',
+      '4-stroke gasoline engine · Centrifugal force 16.7 kN at 70 Hz · Vertical oscillation ±6° · Fuel tank 23 l',
+      '4-Takt-Benzinmotor · Zentrifugalkraft 16,7 kN bei 70 Hz · Vertikale Pendelung ±6° · Kraftstofftank 23 l',
+      'Motor a gasolina de 4 tempos · Força centrífuga 16,7 kN a 70 Hz · Oscilação vertical ±6° · Tanque de combustível 23 l'
+    ),
+  }),
   ltrRow({ brand: 'DYNAPAC', model: 'CC1000', weight: 1685, engine: 'Kubota D1105', compactionWidth: 1, power: 24.1, origin: ORIGIN.sweden }),
   ltrRow({ brand: 'DYNAPAC', model: 'CC1200 VI', weight: 2600, engine: 'Kubota D1703-M (IIIA)', compactionWidth: 1.2, power: 34.9, origin: ORIGIN.china }),
   ltrRow({

@@ -75,15 +75,15 @@ const millingImageByModel: Record<string, string> = {
   bm100020: 'BM1000-20.png',
   xm1005h: 'XM1005H.png',
   scm1000c8: 'SCM1000C-8.png',
-  w100r: 'W100-W120-R-Ri.png',
-  w120r: 'W100-W120-R-Ri.png',
-  w100ri: 'W100-W120-R-Ri.png',
-  w120ri: 'W100-W120-R-Ri.png',
-  w200f: 'W200F.png',
+  w100r: 'W100-W120-R-Ri.jpg',
+  w120r: 'W100-W120-R-Ri.jpg',
+  w100ri: 'W100-W120-R-Ri.jpg',
+  w120ri: 'W100-W120-R-Ri.jpg',
+  w200f: 'W200F.jpg',
 };
 
 const ltrImages = [
-  'RD27.png', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg',
+  'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg',
 ];
 
 const htrImages = [

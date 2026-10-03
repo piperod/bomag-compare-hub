@@ -3,6 +3,7 @@
  * Regenerate: node scripts/generate_pavers_from_xlsx.cjs
  */
 import { applyPaverI18n } from './paversI18n';
+import { withImportRegistryOrigin } from './importRegistryOrigins';
 import { mergeByBrand, paverMasterAdditions, paverSizeCategoryByModel } from './masterTcoAdditions';
 
 export interface LocalizedText {
@@ -35,6 +36,8 @@ export interface PaverFinancialData {
 export interface PaverMachineSpec {
   brand: string;
   model: string;
+  /** Country of origin (from the import registry). */
+  origin?: LocalizedText;
   engine: string;
   engineManufacturer: string;
   nominalPower: string;
@@ -551,6 +554,8 @@ const HIDDEN_PAVERS = new Set([
   'VOLVO|P28200 ABG',
 ]);
 
-export const paversMachines: PaverMachineSpec[] = mergeByBrand(basePaversMachines, paverMasterAdditions).filter(
-  (machine) => !HIDDEN_PAVERS.has(`${machine.brand}|${machine.model}`)
+export const paversMachines: PaverMachineSpec[] = withImportRegistryOrigin(
+  mergeByBrand(basePaversMachines, paverMasterAdditions).filter(
+    (machine) => !HIDDEN_PAVERS.has(`${machine.brand}|${machine.model}`)
+  )
 );

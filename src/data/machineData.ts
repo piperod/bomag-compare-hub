@@ -44,7 +44,8 @@ export interface MachineSpec {
 }
 
 import sdrFromCsv from '@/data/sdrFromCsv.json';
-import { ltrMasterAdditions, mergeByBrand, sdrMasterAdditions } from '@/data/masterTcoAdditions';
+import { ltrMasterAdditions, mergeByBrand, ptrMachines as ptrMasterMachines, sdrMasterAdditions } from '@/data/masterTcoAdditions';
+import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
 
 /*
 export const sdrMachines: MachineSpec[] = [
@@ -687,9 +688,8 @@ export const sdrMachines: MachineSpec[] = [
 ];
 */
 
-export const sdrMachines: MachineSpec[] = mergeByBrand(
-  sdrFromCsv as unknown as MachineSpec[],
-  sdrMasterAdditions
+export const sdrMachines: MachineSpec[] = withImportRegistryOrigin(
+  mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions)
 );
 
 const ltrBaseMachines: MachineSpec[] = [
@@ -1052,9 +1052,9 @@ const ltrBaseMachines: MachineSpec[] = [
   }
 ];
 
-export const ltrMachines: MachineSpec[] = mergeByBrand(ltrBaseMachines, ltrMasterAdditions);
+export const ltrMachines: MachineSpec[] = withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions));
 
-export { ptrMachines } from '@/data/masterTcoAdditions';
+export const ptrMachines: MachineSpec[] = withImportRegistryOrigin(ptrMasterMachines);
 
 export interface CompactionData {
   weightRange: string;

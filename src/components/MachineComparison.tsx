@@ -3,6 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { sdrMachines, ltrMachines, ptrMachines, MachineSpec } from '@/data/machineData';
 import { htrMasterAdditions, mergeByBrand } from '@/data/masterTcoAdditions';
+import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
 import { millingMachines, MillingMachineSpec, bm100020PreventiveMaintenance } from '@/data/millingData';
 import { paversMachines, PaverMachineSpec } from '@/data/paversData';
 import { CompareTable } from '@/components/CompareTable';
@@ -341,7 +342,9 @@ const htrBaseMachines = [
 ];
 
 // HTR models added from the BOMAG TCO master file
-const htrMachines = mergeByBrand(htrBaseMachines, htrMasterAdditions as unknown as typeof htrBaseMachines);
+const htrMachines = withImportRegistryOrigin(
+  mergeByBrand(htrBaseMachines, htrMasterAdditions as unknown as typeof htrBaseMachines)
+);
 
 const base = import.meta.env.BASE_URL;
 const getImagePath = getMachineImagePath;
@@ -1224,7 +1227,10 @@ const MachineComparison = ({
                                   <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(spec.labelKey)}</td>
                                   {selectedMachineData.map((machine, index) => {
                                     const value = (machine as PaverMachineSpec)[spec.key as keyof PaverMachineSpec];
-                                    const strVal = paverText(String(value ?? '-'));
+                                    const strVal =
+                                      typeof value === 'object' && value !== null
+                                        ? pickLocalizedWithFallback(value as unknown as Parameters<typeof pickLocalizedWithFallback>[0], language) || '-'
+                                        : paverText(String(value ?? '-'));
                                     const showAdvantage = paverHasCompetitiveAdvantage(
                                       spec.key,
                                       machine as PaverMachineSpec,

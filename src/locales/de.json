@@ -178,7 +178,8 @@
     {"key": "cuttingSystem", "labelKey": "cuttingSystem"},
     {"key": "energyEfficiency", "labelKey": "energyEfficiency"},
     {"key": "idealApplication", "labelKey": "idealApplication"},
-    {"key": "valueProposition", "labelKey": "valueProposition"}
+    {"key": "valueProposition", "labelKey": "valueProposition"},
+    {"key": "origin", "labelKey": "origin"}
   ],
   "millingUspRows": [
     {"key": "usp1", "labelKey": "millingUsp1"},
@@ -233,7 +234,7 @@
   "paverSectionTechnology": "Technologie und Steuerung",
   "paverSpecSections": [
     {"titleKey": "paverSectionEngine", "rows": [{"key": "engineManufacturer", "labelKey": "paverEngineManufacturer"}, {"key": "nominalPower", "labelKey": "paverNominalPower"}, {"key": "emissionStandard", "labelKey": "paverEmissionStandard"}, {"key": "fuelSavingMode", "labelKey": "paverFuelSavingMode"}, {"key": "fuelTankCapacity", "labelKey": "paverFuelTankCapacity"}]},
-    {"titleKey": "paverSectionPerformance", "rows": [{"key": "sizeCategory", "labelKey": "paverSizeCategory"}, {"key": "maxProduction", "labelKey": "paverMaxProduction"}, {"key": "pavingSpeed", "labelKey": "paverPavingSpeed"}, {"key": "travelSpeed", "labelKey": "paverTravelSpeed"}, {"key": "maxLayerThickness", "labelKey": "paverMaxLayerThickness"}]},
+    {"titleKey": "paverSectionPerformance", "rows": [{"key": "sizeCategory", "labelKey": "paverSizeCategory"}, {"key": "origin", "labelKey": "origin"}, {"key": "maxProduction", "labelKey": "paverMaxProduction"}, {"key": "pavingSpeed", "labelKey": "paverPavingSpeed"}, {"key": "travelSpeed", "labelKey": "paverTravelSpeed"}, {"key": "maxLayerThickness", "labelKey": "paverMaxLayerThickness"}]},
     {"titleKey": "paverSectionWidth", "rows": [{"key": "minWorkingWidth", "labelKey": "paverMinWorkingWidth"}, {"key": "baseWidthRetracted", "labelKey": "paverBaseWidthRetracted"}, {"key": "extendedBaseWidth", "labelKey": "paverExtendedBaseWidth"}, {"key": "maxWidthWithExtensions", "labelKey": "paverMaxWidthWithExtensions"}]},
     {"titleKey": "paverSectionHopper", "rows": [{"key": "hopperCapacity", "labelKey": "paverHopperCapacity"}, {"key": "augerDiameter", "labelKey": "paverAugerDiameter"}, {"key": "conveyors", "labelKey": "paverConveyors"}, {"key": "pushRollers", "labelKey": "paverPushRollers"}]},
     {"titleKey": "paverSectionScreed", "rows": [{"key": "screedTypes", "labelKey": "paverScreedTypes"}, {"key": "screedHeating", "labelKey": "paverScreedHeating"}, {"key": "tamperVibrationFreq", "labelKey": "paverTamperVibrationFreq"}, {"key": "quickExtensionSystem", "labelKey": "paverQuickExtensionSystem"}, {"key": "smoothingPlateDepth", "labelKey": "paverSmoothingPlateDepth"}]},

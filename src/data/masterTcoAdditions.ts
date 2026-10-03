@@ -51,6 +51,10 @@ type SdrRow = {
   power: number;
   origin: LocalizedText;
   innovations?: LocalizedText;
+  amplitude?: string;
+  staticLinearLoad?: number;
+  gradeability?: number;
+  compactionAssistant?: LocalizedText;
 };
 
 const sdrRow = (r: SdrRow): MachineSpec => ({
@@ -60,10 +64,11 @@ const sdrRow = (r: SdrRow): MachineSpec => ({
   engine: r.engine,
   compactionWidth: r.compactionWidth,
   power: r.power,
-  amplitude: '-',
-  staticLinearLoad: 0,
+  amplitude: r.amplitude ?? '-',
+  staticLinearLoad: r.staticLinearLoad ?? 0,
+  ...(r.gradeability ? { gradeability: r.gradeability } : {}),
   origin: r.origin,
-  compactionAssistant: NONE,
+  compactionAssistant: r.compactionAssistant ?? NONE,
   telemetry: NONE,
   innovations: r.innovations ?? NONE,
   usp: EMPTY,
@@ -108,7 +113,25 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Linha regional (vs. CA2500D fabricado na Suécia)'
     ),
   }),
-  sdrRow({ model: 'CA3500D', weight: 11900, engine: 'Cummins QSF3.8 (IV/T4 final)', compactionWidth: 2.13, power: 130.1, origin: ORIGIN.sweden }),
+  // Completed from the DYNAPAC CA3500D datasheet (dynapac_ca3500d_en, 2025-03-10). The master file listed
+  // "Cummins QSF3.8 (IV/T4 final)" with 130 hp; the datasheet gives 130 hp for the Cummins QSB4.5 (IIIA/Tier 3)
+  // engine, and 135 hp for the alternative Cummins F3.8 (Stage V/T4F).
+  sdrRow({
+    model: 'CA3500D', weight: 11900, engine: 'Cummins QSB4.5 (IIIA/T3)', compactionWidth: 2.13, power: 130, origin: ORIGIN.sweden,
+    amplitude: '1,9 / 0,9', staticLinearLoad: 36, gradeability: 55,
+    compactionAssistant: loc(
+      'SEISMIC (disponible): ajusta automáticamente la frecuencia de vibración a la frecuencia natural del material',
+      'SEISMIC (available): automatically adjusts the vibration frequency to the natural frequency of the material',
+      'SEISMIC (verfügbar): passt die Vibrationsfrequenz automatisch an die Eigenfrequenz des Materials an',
+      'SEISMIC (disponível): ajusta automaticamente a frequência de vibração à frequência natural do material'
+    ),
+    innovations: loc(
+      'Motor Cummins QSB4.5 Tier 3 (97 kW / 130 hp) u opcional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Fuerza centrífuga 280/170 kN · Frecuencia 31/34 Hz · Oscilación ±9° · Tanque de combustible 255 l · Con cabina 12.100 kg',
+      'Cummins QSB4.5 Tier 3 engine (97 kW / 130 hp) or optional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Centrifugal force 280/170 kN · Frequency 31/34 Hz · Oscillation ±9° · Fuel tank 255 l · With cab 12,100 kg',
+      'Motor Cummins QSB4.5 Tier 3 (97 kW / 130 PS) oder optional Cummins F3.8 Stufe V/T4F (100 kW / 135 PS) · Zentrifugalkraft 280/170 kN · Frequenz 31/34 Hz · Pendelung ±9° · Kraftstofftank 255 l · Mit Kabine 12.100 kg',
+      'Motor Cummins QSB4.5 Tier 3 (97 kW / 130 hp) ou opcional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Força centrífuga 280/170 kN · Frequência 31/34 Hz · Oscilação ±9° · Tanque de combustível 255 l · Com cabine 12.100 kg'
+    ),
+  }),
   sdrRow({ model: 'CA5000D', weight: 16000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden }),
   sdrRow({ model: 'CA6500D', weight: 20700, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden }),
   sdrRow({ model: 'CA2500PD', weight: 11000, engine: 'Cummins F3.8 (V)', compactionWidth: 2.13, power: 134.1, origin: ORIGIN.sweden, innovations: PADFOOT }),

@@ -21,7 +21,7 @@ const sdrImageByModel: Record<string, string> = {
   ca25drhino: 'CA25DRhino.jpg',
   ca35drhino: 'CA35D-Rhino.png',
   ca2500d: 'CA2500D.png',
-  ca3500d: 'CA3500D.png',
+  ca3500d: 'CA3500D.jpg',
   ca4500d: 'CA4500D.png',
   drs120d: 'DRS120D.png',
   sv521d: 'SV521D.png',

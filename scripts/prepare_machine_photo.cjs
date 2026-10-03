@@ -43,9 +43,14 @@ async function prepare(input, output) {
   const box = contentBox(data, info.width, info.height, info.channels);
   const border = Math.round(Math.max(box.width, box.height) * BORDER_RATIO);
 
-  await sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } })
+  // sharp applies resize before extend within one pipeline, so pad first and resize in a second pass
+  const padded = await sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } })
     .extract(box)
     .extend({ top: border, bottom: border, left: border, right: border, background: '#ffffff' })
+    .png()
+    .toBuffer();
+
+  await sharp(padded)
     .resize({ width: MAX_WIDTH, height: MAX_HEIGHT, fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: 92, mozjpeg: true })
     .toFile(output);

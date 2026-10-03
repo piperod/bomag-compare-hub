@@ -758,6 +758,54 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    '(con zapata reductora)',
+    {
+      en: '(with reducing shoe)',
+      de: '(mit Reduzierschuh)',
+      pt: '(com sapata redutora)',
+    },
+  ],
+  [
+    '(c/regla std.)',
+    {
+      en: '(with std. screed)',
+      de: '(mit Std.-Bohle)',
+      pt: '(c/régua padrão)',
+    },
+  ],
+  [
+    '(tractor)',
+    {
+      en: '(tractor)',
+      de: '(Traktor)',
+      pt: '(trator)',
+    },
+  ],
+  [
+    'Eléctrica - generador',
+    {
+      en: 'Electric - generator',
+      de: 'Elektrisch - Generator',
+      pt: 'Elétrica - gerador',
+    },
+  ],
+  [
+    '(vibración)',
+    {
+      en: '(vibration)',
+      de: '(Vibration)',
+      pt: '(vibração)',
+    },
+  ],
+  [
+    'Sistema de nivelación (opcional)',
+    {
+      en: 'Levelling system (optional)',
+      de: 'Nivelliersystem (optional)',
+      pt: 'Sistema de nivelamento (opcional)',
+    },
+  ],
+  [
     '(con zapatas)',
     {
       en: '(with extensions)',

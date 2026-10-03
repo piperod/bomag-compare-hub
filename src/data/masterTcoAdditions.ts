@@ -900,9 +900,19 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     centralizedLubrication: 'Lubricación central (opcional)',
     hasMagmalife: false, hasEcomode: true,
   }),
+  // Dynapac FC1600C datasheet 2017-03
   paverRow({
     brand: 'DYNAPAC', model: 'FC1600C', sizeCategory: 'MEDIANA (351-700 t/h)',
-    nominalPower: '74 kW / 99,2 hp', maxProduction: '600 t/h', minWorkingWidth: '2,6 - 5,5 m', operatingWeight: '8.400 kg',
+    engine: '74 kW / 99 hp', engineManufacturer: 'Cummins QSB 3.3', emissionStandard: 'EPA Tier 3 / EU Stage IIIA',
+    nominalPower: '74 kW / 99,2 hp', fuelTankCapacity: '83 L', maxProduction: '600 t/h',
+    pavingSpeed: '2,5 km/h', travelSpeed: '5 km/h', maxLayerThickness: '150 mm',
+    minWorkingWidth: '0,30 m (con zapata reductora) - 5,5 m máx.',
+    baseWidthRetracted: '2,45 m (VF0816C)', extendedBaseWidth: '4,70 m (VF0816C)', maxWidthWithExtensions: '5,50 m',
+    hopperCapacity: '7,3 t', augerDiameter: '230 mm', conveyors: '2 - 610 mm',
+    screedTypes: 'Dynapac VF0816C (vibración)', screedHeating: 'Eléctrica - generador 16 kW',
+    operatingWeight: '8.400 kg (c/regla std.) / 6.400 kg (tractor)',
+    transportLength: '4.190 mm', transportWidth: '2.590 mm', transportHeight: '1.800 mm',
+    gradeControl: 'Sistema de nivelación (opcional)', telematics: 'FleetLink',
   }),
   paverRow({
     brand: 'VOLVO', model: 'P68200 ABG', sizeCategory: 'MEDIANA (351-700 t/h)',
@@ -979,15 +989,27 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     centralizedLubrication: 'Lubricación central (opcional)',
     hasMagmalife: true, hasEcomode: true, setupFuelLiters: 3.5, heatingMinutes: 30,
   }),
+  // Dynapac SD-Series highway paver portfolio (Stage IIIA engine versions)
   paverRow({
     brand: 'DYNAPAC', model: 'SD2500CS', sizeCategory: 'EXTRA GRANDE (>9 m)',
-    engine: 'Cummins QSB 6.7 series', engineManufacturer: 'Cummins QSB 6.7',
-    nominalPower: '142 kW / 190,4 hp', minWorkingWidth: '2,55 - 10,0 m', operatingWeight: '18.500 kg',
+    engine: '142 kW / 190 hp', engineManufacturer: 'Cummins QSB6.7-C173', emissionStandard: 'EU Stage IIIA / Tier 3',
+    nominalPower: '142 kW / 190,4 hp', fuelTankCapacity: '353 L', maxProduction: '800 t/h', travelSpeed: '4 km/h',
+    minWorkingWidth: '2,55 - 10,0 m', maxWidthWithExtensions: '10,0 m', augerDiameter: '381 mm',
+    operatingWeight: '18.500 kg',
+  }),
+  paverRow({
+    brand: 'DYNAPAC', model: 'SD2550C', sizeCategory: 'EXTRA GRANDE (>9 m)',
+    engine: '164 kW / 220 hp', engineManufacturer: 'Cummins QSB6.7-C220', emissionStandard: 'EU Stage IIIA / Tier 3',
+    nominalPower: '164 kW / 220 hp', fuelTankCapacity: '353 L', maxProduction: '900 t/h', travelSpeed: '4 km/h',
+    minWorkingWidth: '2,55 - 12,0 m', maxWidthWithExtensions: '12,0 m', augerDiameter: '430 mm',
+    operatingWeight: '20.000 kg',
   }),
   paverRow({
     brand: 'DYNAPAC', model: 'SD2550CS', sizeCategory: 'EXTRA GRANDE (>9 m)',
-    engine: 'Cummins QSB 6.7 series', engineManufacturer: 'Cummins QSB 6.7',
-    nominalPower: '194 kW / 260,2 hp', minWorkingWidth: '2,55 - 14,0 m', operatingWeight: '20.000 kg',
+    engine: '194 kW / 260 hp', engineManufacturer: 'Cummins QSB6.7-C260', emissionStandard: 'EU Stage IIIA / Tier 3',
+    nominalPower: '194 kW / 260,2 hp', fuelTankCapacity: '322 L', maxProduction: '1.100 t/h', travelSpeed: '4 km/h',
+    minWorkingWidth: '2,55 - 14,0 m', maxWidthWithExtensions: '14,0 m', augerDiameter: '500 mm',
+    operatingWeight: '20.000 kg',
   }),
   paverRow({
     brand: 'VOLVO', model: 'ABG9820', sizeCategory: 'EXTRA GRANDE (>1.000 t/h)',

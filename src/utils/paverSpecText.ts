@@ -902,6 +902,54 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    '(tractor + regla básica)',
+    {
+      en: '(tractor + basic screed)',
+      de: '(Traktor + Grundbohle)',
+      pt: '(trator + régua básica)',
+    },
+  ],
+  [
+    'Asistente de conducción (cámara)',
+    {
+      en: 'Driver assistance (camera)',
+      de: 'Fahrassistent (Kamera)',
+      pt: 'Assistente de condução (câmera)',
+    },
+  ],
+  [
+    'MOBA analógico (std.)',
+    {
+      en: 'Analogue MOBA (std.)',
+      de: 'Analoges MOBA (Std.)',
+      pt: 'MOBA analógico (padrão)',
+    },
+  ],
+  [
+    '(sobre ruedas)',
+    {
+      en: '(on wheels)',
+      de: '(auf Rädern)',
+      pt: '(sobre rodas)',
+    },
+  ],
+  [
+    '(amplitud ',
+    {
+      en: '(amplitude ',
+      de: '(Amplitude ',
+      pt: '(amplitude ',
+    },
+  ],
+  [
+    'Eléctrica',
+    {
+      en: 'Electric',
+      de: 'Elektrisch',
+      pt: 'Elétrica',
+    },
+  ],
+  [
     '(con zapata reductora)',
     {
       en: '(with reducing shoe)',
@@ -999,11 +1047,14 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   ],
 ];
 
+/** Longest phrases first, so a generic phrase never pre-empts a longer, more specific one. */
+const ORDERED_REPLACEMENTS = [...PHRASE_REPLACEMENTS].sort((a, b) => b[0].length - a[0].length);
+
 export function localizePaverText(text: string, lang: Language): string {
   if (!text || lang === 'es') return text;
 
   let result = text;
-  for (const [phrase, translations] of PHRASE_REPLACEMENTS) {
+  for (const [phrase, translations] of ORDERED_REPLACEMENTS) {
     if (result.includes(phrase)) {
       result = result.split(phrase).join(translations[lang]);
     }

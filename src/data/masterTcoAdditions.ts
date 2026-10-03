@@ -937,6 +937,41 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     operationSystem: 'Consola simple y deslizante', gradeControl: 'Cat Grade Control (opcional)',
     telematics: 'Product Link Elite',
   }),
+  // SANY paver flyers / datasheets (China III emission level, equivalent to EPA Tier 3 / EU Stage IIIA)
+  paverRow({
+    brand: 'SANY', model: 'SAP45C-10', sizeCategory: 'COMPACTA (≤350 t/h)',
+    engine: '97 kW / 130 hp', engineManufacturer: 'Dongfeng Cummins QSB4.5 (4 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
+    nominalPower: '97 kW / 130 hp', maxProduction: '320 t/h', pavingSpeed: 'Hasta 32 m/min', travelSpeed: '3,5 km/h', maxLayerThickness: '250 mm',
+    minWorkingWidth: '1,7 m', baseWidthRetracted: '1,7 m', extendedBaseWidth: '3,1 m', maxWidthWithExtensions: '4,5 m',
+    hopperCapacity: '6 m3', screedHeating: 'Eléctrica', tamperVibrationFreq: 'Vibr. 0–25 Hz (amplitud 4 mm)',
+  }),
+  paverRow({
+    brand: 'SANY', model: 'SAP60C-10T', sizeCategory: 'MEDIANA (351-700 t/h)',
+    engine: '120 kW / 161 hp', engineManufacturer: 'Isuzu 4HK1 (4 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
+    nominalPower: '120 kW / 161 hp', maxProduction: '500 t/h', pavingSpeed: 'Hasta 25 m/min', travelSpeed: '15 km/h (sobre ruedas)', maxLayerThickness: '300 mm',
+    minWorkingWidth: '2,3 m', baseWidthRetracted: '2,3 m', maxWidthWithExtensions: '6,0 m',
+    hopperCapacity: '6 m3', screedHeating: 'Eléctrica', tamperVibrationFreq: 'Vibr. 0–1500 rpm (amplitud 4 mm)',
+    transportLength: '7.090 mm', transportWidth: '2.600 mm', transportHeight: '3.220 mm',
+  }),
+  paverRow({
+    brand: 'SANY', model: 'SAP90C-10S', sizeCategory: 'EXTRA GRANDE (>9 m)',
+    engine: '158 kW / 212 hp', engineManufacturer: 'Cummins QSB6.7 (6 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
+    nominalPower: '158 kW / 212 hp', fuelTankCapacity: '360 L', maxProduction: '900 t/h', pavingSpeed: 'Hasta 24 m/min', travelSpeed: '3 km/h',
+    maxLayerThickness: '350 mm', minWorkingWidth: '3,0 m', baseWidthRetracted: '3,0 m', extendedBaseWidth: '5,7 m', maxWidthWithExtensions: '9,2 m',
+    hopperCapacity: '16 t', augerDiameter: '480 / 400 mm - hasta 105 rpm', conveyors: '2 - hasta 32 m/min, ctrl indep.\nreversibles',
+    screedHeating: 'Eléctrica - generador 35 kW', tamperVibrationFreq: 'Tamper 25 Hz / Vibr. 50 Hz',
+    operatingWeight: '20.500 kg (tractor + regla básica)',
+    transportLength: '7.150 mm', transportWidth: '3.100 mm', transportHeight: '3.200 mm',
+    operationSystem: 'Asistente de conducción (cámara)', gradeControl: 'MOBA analógico (std.)',
+  }),
+  paverRow({
+    brand: 'SANY', model: 'SSP90C-8', sizeCategory: 'EXTRA GRANDE (>9 m)',
+    engine: '180 kW / 241 hp', engineManufacturer: 'SANY D07S3-245E0 (6 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
+    nominalPower: '180 kW / 241 hp', maxProduction: '900 t/h', pavingSpeed: 'Hasta 16 m/min', travelSpeed: '2,4 km/h', maxLayerThickness: '500 mm',
+    minWorkingWidth: '3,0 m', baseWidthRetracted: '3,0 m (SE570)', extendedBaseWidth: '5,7 m (SE570)', maxWidthWithExtensions: '9,2 m',
+    hopperCapacity: '8,5 m3', screedTypes: 'SANY SE570', screedHeating: 'Eléctrica', tamperVibrationFreq: 'Tamper 0–25 Hz / Vibr. 0–50 Hz',
+    transportLength: '7.250 mm', transportWidth: '3.135 mm', transportHeight: '3.330 mm', gradeControl: 'MOBA (control + sensor)',
+  }),
   // VÖGELE datasheets / brochures (Tier 3 / Stage IIIA engine versions)
   paverRow({
     brand: 'VÖGELE', model: 'Super 1300-3', sizeCategory: 'COMPACTA (≤350 t/h)',

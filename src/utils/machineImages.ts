@@ -89,6 +89,10 @@ const ptrImageByModel: Record<string, string> = {
   bw27rh: 'BW24-27RH.jpg',
   bw28rh: 'BW28RH.jpg',
   hp180: 'HP180.jpg',
+  hp280: 'HP280.jpg',
+  cw16: 'CW16.jpg',
+  cw34: 'CW34.jpg',
+  ap240: 'AP240.jpg',
 };
 
 const ltrImages = [

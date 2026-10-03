@@ -386,6 +386,17 @@ export const ptrMachines: MachineSpec[] = [
       'Peso máx. com lastro 17.170 kg · Velocidade 0-19 km/h · Tanque de combustível 235 l · Tanque de água 650 l · Pneus 11.00-R20 · Rampa 25/35 % (com/sem lastro) · Modo ECO · HAMMTRONIC'
     ),
   }),
+  // HAMM HP 280 (H249) datasheet, 2026
+  ptrRow({
+    brand: 'HAMM', model: 'HP 280', weight: 9480, engine: 'Deutz TCD 2012 L04 2V (Tier 3 / MAR-1)', rollingWidth: 2.08,
+    power: 119.3, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 25,
+    innovations: loc(
+      'Peso máx. con lastre 27.950 kg · Velocidad 0-19 km/h · Tanque de combustible 235 l · Tanque de agua 650 l · Neumáticos 11.00-R20 · Pendiente 25/35 % (con/sin lastre) · Modo ECO · HAMMTRONIC',
+      'Max. ballasted weight 27,950 kg · Speed 0-19 km/h · Fuel tank 235 l · Water tank 650 l · Tyres 11.00-R20 · Gradeability 25/35 % (with/without ballast) · ECO mode · HAMMTRONIC',
+      'Max. Gewicht mit Ballast 27.950 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 235 l · Wassertank 650 l · Reifen 11.00-R20 · Steigfähigkeit 25/35 % (mit/ohne Ballast) · ECO-Modus · HAMMTRONIC',
+      'Peso máx. com lastro 27.950 kg · Velocidade 0-19 km/h · Tanque de combustível 235 l · Tanque de água 650 l · Pneus 11.00-R20 · Rampa 25/35 % (com/sem lastro) · Modo ECO · HAMMTRONIC'
+    ),
+  }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP1200', weight: 5550, engine: 'Cummins QSF 2.8 (Stage IIIB/Tier 4 final)', rollingWidth: 1.76, power: 73.8, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP2100', weight: 10400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 1.8, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
   ptrRow({ brand: 'DYNAPAC', model: 'CP2700', weight: 12400, engine: 'Cummins QSF 3.8 (Stage IV/Tier 4 final)', rollingWidth: 2.3, power: 119.4, numberOfWheels: FIVE_FRONT_FOUR_REAR, origin: ORIGIN.brazil }),
@@ -393,6 +404,39 @@ export const ptrMachines: MachineSpec[] = [
   ptrRow({ brand: 'VOLVO', model: 'PTR125', weight: 12625, rollingWidth: 1.73, power: 84.5, numberOfWheels: same('4 + 5') }),
   ptrRow({ brand: 'VOLVO', model: 'PTR220', weight: 24000, rollingWidth: 1.98, power: 99.2, numberOfWheels: same('4 + 5') }),
   ptrRow({ brand: 'VOLVO', model: 'PTR240R', weight: 24000, rollingWidth: 1.99, power: 132.8, numberOfWheels: same('4 + 5') }),
+  // Cat CW16 datasheet QEHQ1965-02 (2022): Tier 3 / Stage IIIA version with Cat C4.4
+  ptrRow({
+    brand: 'CATERPILLAR', model: 'CW16', weight: 5200, engine: 'Cat C4.4 (Tier 3 / Stage IIIA)', rollingWidth: 1.73,
+    power: 100.5, numberOfWheels: loc('9 (opción 11)', '9 (11 optional)', '9 (11 optional)', '9 (opção 11)'),
+    innovations: loc(
+      'Peso con lastre 8.500-15.000 kg · Velocidad 0-19 km/h (2 rangos) · Tanque de combustible 146 l · Tanque de agua 348 l · Neumáticos 7.5x15 · Ancho 2,10 m con 11 ruedas · Eco-mode · Puesto de mando giratorio',
+      'Ballasted weight 8,500-15,000 kg · Speed 0-19 km/h (2 ranges) · Fuel tank 146 l · Water tank 348 l · Tyres 7.5x15 · Width 2.10 m with 11 wheels · Eco-mode · Rotating operator station',
+      'Gewicht mit Ballast 8.500-15.000 kg · Geschwindigkeit 0-19 km/h (2 Bereiche) · Kraftstofftank 146 l · Wassertank 348 l · Reifen 7.5x15 · Breite 2,10 m mit 11 Rädern · Eco-mode · Drehbarer Fahrerstand',
+      'Peso com lastro 8.500-15.000 kg · Velocidade 0-19 km/h (2 faixas) · Tanque de combustível 146 l · Tanque de água 348 l · Pneus 7.5x15 · Largura 2,10 m com 11 rodas · Eco-mode · Posto do operador giratório'
+    ),
+  }),
+  // Cat CW34 datasheet QEHQ3333-01 (2026): Brazil MAR-1 / Tier 3 version
+  ptrRow({
+    brand: 'CATERPILLAR', model: 'CW34', weight: 10000, engine: 'Cat C4.4 (Tier 3 / MAR-1)', rollingWidth: 2.09,
+    power: 129, numberOfWheels: FOUR_FRONT_FOUR_REAR,
+    innovations: loc(
+      'Peso con lastre hasta 27.000 kg · Velocidad 0-19 km/h (3 rangos) · Tanque de combustible 270 l · Tanque de agua 380 l · Neumáticos 13/80 R20 o 11.00-20 · Eco-mode · Oscilación en todas las ruedas · VisionLink',
+      'Ballasted weight up to 27,000 kg · Speed 0-19 km/h (3 ranges) · Fuel tank 270 l · Water tank 380 l · Tyres 13/80 R20 or 11.00-20 · Eco-mode · All-wheel oscillation · VisionLink',
+      'Gewicht mit Ballast bis 27.000 kg · Geschwindigkeit 0-19 km/h (3 Bereiche) · Kraftstofftank 270 l · Wassertank 380 l · Reifen 13/80 R20 oder 11.00-20 · Eco-mode · Pendelung aller Räder · VisionLink',
+      'Peso com lastro até 27.000 kg · Velocidade 0-19 km/h (3 faixas) · Tanque de combustível 270 l · Tanque de água 380 l · Pneus 13/80 R20 ou 11.00-20 · Eco-mode · Oscilação em todas as rodas · VisionLink'
+    ),
+  }),
+  // Ammann AP 240 datasheet MSS-1183-04-EN (Stage IIIA / Tier 3)
+  ptrRow({
+    brand: 'AMMANN', model: 'AP 240', weight: 9690, engine: 'Cummins QSB 3.3-C99 (Stage IIIA/Tier 3)', rollingWidth: 1.99,
+    power: 99, numberOfWheels: FOUR_FRONT_FOUR_REAR, gradeability: 25,
+    innovations: loc(
+      'Peso máx. con lastre 24.000 kg · Velocidad 0-19 km/h · Tanque de combustible 250 l · Tanque de agua 460 l · Neumáticos 11x20" · Inflado central "Air on Run" · Ammann Traction Control · ECOdrop',
+      'Max. ballasted weight 24,000 kg · Speed 0-19 km/h · Fuel tank 250 l · Water tank 460 l · Tyres 11x20" · "Air on Run" central inflation · Ammann Traction Control · ECOdrop',
+      'Max. Gewicht mit Ballast 24.000 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 250 l · Wassertank 460 l · Reifen 11x20" · Zentrale Reifenfüllung "Air on Run" · Ammann Traction Control · ECOdrop',
+      'Peso máx. com lastro 24.000 kg · Velocidade 0-19 km/h · Tanque de combustível 250 l · Tanque de água 460 l · Pneus 11x20" · Calibragem central "Air on Run" · Ammann Traction Control · ECOdrop'
+    ),
+  }),
 ];
 
 // ---------------------------------------------------------------------------

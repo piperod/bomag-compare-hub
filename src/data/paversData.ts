@@ -218,7 +218,7 @@ const rawPaversMachines: PaverMachineSpec[] = [
     "baseWidthRetracted": "2,5 m (S500) / 3,0 m (S600)",
     "extendedBaseWidth": "5,0 m (S500) / 6,0 m (S600)",
     "maxWidthWithExtensions": "8,0 m (S500) / 9,0 m (S600)\n[Quick Coupling]",
-    "hopperCapacity": "11 t",
+    "hopperCapacity": "11 t (7,0 m³)",
     "augerDiameter": "350 mm - 100 rpm",
     "conveyors": "2 - reversibles, ctrl indep.\n64 rpm",
     "pushRollers": "Amortiguados + apoyo hidráulico",

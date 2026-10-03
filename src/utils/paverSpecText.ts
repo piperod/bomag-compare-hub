@@ -542,6 +542,62 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   ],
   // Phrases used by models added from the BOMAG TCO master file
   [
+    'Controlador de nivelación integrado (estándar)\nSensores ultrasónicos o mecánicos (opcional)',
+    {
+      en: 'Integrated leveling controller (standard)\nUltrasonic or mechanical sensors (optional)',
+      de: 'Integrierter Nivellierregler (Standard)\nUltraschall- oder mechanische Sensoren (optional)',
+      pt: 'Controlador de nivelamento integrado (padrão)\nSensores ultrassônicos ou mecânicos (opcional)',
+    },
+  ],
+  [
+    'Asiento SIDEVIEW giratorio/deslizable',
+    {
+      en: 'SIDEVIEW rotating/sliding seat',
+      de: 'SIDEVIEW Dreh-/Schiebesitz',
+      pt: 'Assento SIDEVIEW giratório/deslizante',
+    },
+  ],
+  [
+    '2 - reversibles, ctrl indep.',
+    {
+      en: '2 - reversible, indep. ctrl.',
+      de: '2 - reversibel, unabh. Steuerung',
+      pt: '2 - reversíveis, ctrl. indep.',
+    },
+  ],
+  [
+    'Aspiración de vapores',
+    {
+      en: 'Fume extraction',
+      de: 'Dampfabsaugung',
+      pt: 'Aspiração de vapores',
+    },
+  ],
+  [
+    'Lubricación central',
+    {
+      en: 'Central lubrication',
+      de: 'Zentralschmierung',
+      pt: 'Lubrificação central',
+    },
+  ],
+  [
+    'Con amortiguación',
+    {
+      en: 'Damped',
+      de: 'Gedämpft',
+      pt: 'Com amortecimento',
+    },
+  ],
+  [
+    ' - Espesor ',
+    {
+      en: ' - Thickness ',
+      de: ' - Dicke ',
+      pt: ' - Espessura ',
+    },
+  ],
+  [
     'Eléctrica (placas de aluminio MAGMALIFE opcionales)',
     {
       en: 'Electric (MAGMALIFE aluminum plates optional)',

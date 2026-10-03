@@ -22,6 +22,7 @@ const ORIGIN = {
   india: loc('India', 'India', 'Indien', 'Índia'),
   china: loc('China', 'China', 'China', 'China'),
   usa: loc('EE. UU.', 'USA', 'USA', 'EUA'),
+  germany: loc('Alemania', 'Germany', 'Deutschland', 'Alemanha'),
 };
 
 const STEEL_DRUM = loc('Rodillo de tambor liso', 'Steel drum roller', 'Glattmantelwalze', 'Rolo de tambor liso');
@@ -182,6 +183,17 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Centrifugal force 300/220 kN · Frequency 30/33 Hz · Mass on drum 7,200 kg · Drum diameter 1,555 mm · 4 speeds: 4.2 / 5.6 / 6.8 / 12 km/h · Outer turning radius 6,500 mm · Vibration bearings over 5,000 h',
       'Zentrifugalkraft 300/220 kN · Frequenz 30/33 Hz · Bandagenlast 7.200 kg · Bandagendurchmesser 1.555 mm · 4 Gänge: 4,2 / 5,6 / 6,8 / 12 km/h · Wenderadius außen 6.500 mm · Vibrationslager über 5.000 h',
       'Força centrífuga 300/220 kN · Frequência 30/33 Hz · Carga no tambor 7.200 kg · Diâmetro do tambor 1.555 mm · 4 velocidades: 4,2 / 5,6 / 6,8 / 12 km/h · Raio de giro externo 6.500 mm · Rolamentos de vibração acima de 5.000 h'
+    ),
+  }),
+  // HAMM HC 200 (H257) datasheet, 2026 (Tier 3 / MAR-1)
+  sdrRow({
+    brand: 'HAMM', model: 'HC200', weight: 19105, engine: 'Deutz TCD 2012 L06 2V (Tier 3 / MAR-1)', compactionWidth: 2.14, power: 201.2,
+    origin: ORIGIN.germany, amplitude: '2,20 / 1,25', staticLinearLoad: 62.41, gradeability: 51,
+    innovations: loc(
+      'Fuerza centrífuga 350/250 kN · Frecuencia 27/30 Hz · Peso máx. 22.220 kg · Diámetro de tambor 1.600 mm (espesor 45 mm) · Velocidad 0–11,9 km/h · Pendiente 51/57 % (con/sin vibración) · Tanque de combustible 336 l · Modo ECO · HAMMTRONIC · Traction Control',
+      'Centrifugal force 350/250 kN · Frequency 27/30 Hz · Max. weight 22,220 kg · Drum diameter 1,600 mm (45 mm shell) · Speed 0–11.9 km/h · Gradeability 51/57 % (with/without vibration) · Fuel tank 336 l · ECO mode · HAMMTRONIC · Traction Control',
+      'Zentrifugalkraft 350/250 kN · Frequenz 27/30 Hz · Max. Gewicht 22.220 kg · Bandagendurchmesser 1.600 mm (45 mm Wandstärke) · Geschwindigkeit 0–11,9 km/h · Steigfähigkeit 51/57 % (mit/ohne Vibration) · Kraftstofftank 336 l · ECO-Modus · HAMMTRONIC · Traction Control',
+      'Força centrífuga 350/250 kN · Frequência 27/30 Hz · Peso máx. 22.220 kg · Diâmetro do tambor 1.600 mm (espessura 45 mm) · Velocidade 0–11,9 km/h · Rampa 51/57 % (com/sem vibração) · Tanque de combustível 336 l · Modo ECO · HAMMTRONIC · Traction Control'
     ),
   }),
   // SEM 512: Specalog 06/2023 (drum width not published)

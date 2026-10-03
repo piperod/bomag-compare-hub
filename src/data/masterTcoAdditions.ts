@@ -958,6 +958,14 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     hopperCapacity: '6 m3', screedHeating: 'Eléctrica', tamperVibrationFreq: 'Vibr. 0–25 Hz (amplitud 4 mm)',
   }),
   paverRow({
+    brand: 'SANY', model: 'SAP60C-10', sizeCategory: 'MEDIANA (351-700 t/h)',
+    engine: '119 kW / 160 hp', engineManufacturer: 'DCEC QSB4.5-C160 (4 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
+    nominalPower: '119 kW / 160 hp', maxProduction: '450 t/h', pavingSpeed: 'Hasta 20 m/min', travelSpeed: '3 km/h', maxLayerThickness: '250 mm',
+    minWorkingWidth: '2,0 m', baseWidthRetracted: '2,0 m', extendedBaseWidth: '3,7 m', maxWidthWithExtensions: '6,0 m',
+    hopperCapacity: '6 m3', screedHeating: 'Eléctrica', tamperVibrationFreq: 'Tamper 0–25 Hz / Vibr. 0–40 Hz',
+    transportLength: '6.210 mm', transportWidth: '2.360 mm', transportHeight: '3.080 mm',
+  }),
+  paverRow({
     brand: 'SANY', model: 'SAP60C-10T', sizeCategory: 'MEDIANA (351-700 t/h)',
     engine: '120 kW / 161 hp', engineManufacturer: 'Isuzu 4HK1 (4 cil.)', emissionStandard: 'China III (equivalente EPA Tier 3 / EU Stage IIIA)',
     nominalPower: '120 kW / 161 hp', maxProduction: '500 t/h', pavingSpeed: 'Hasta 25 m/min', travelSpeed: '15 km/h (sobre ruedas)', maxLayerThickness: '300 mm',

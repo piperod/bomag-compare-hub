@@ -63,6 +63,7 @@ const paverImageByModel: Record<string, string> = {
   ap455: 'AP455.jpg',
   ap555: 'AP555.jpg',
   sap45c10: 'SAP45C-10.jpg',
+  sap60c10: 'SAP60C-10.jpg',
   sap60c10t: 'SAP60C-10T.jpg',
   sap90c10s: 'SAP90C-10S.jpg',
   ssp90c8: 'SSP90C-8.jpg',

@@ -406,7 +406,7 @@ export const ptrMachines: MachineSpec[] = [
   ptrRow({ brand: 'VOLVO', model: 'PTR240R', weight: 24000, rollingWidth: 1.99, power: 132.8, numberOfWheels: same('4 + 5') }),
   // Cat CW16: cat.com es_MX product specs (Mexico market, Cat C3.6) + datasheet QEHQ1965-02 (2022)
   ptrRow({
-    brand: 'CATERPILLAR', model: 'CW16', weight: 5200, engine: 'Cat C3.6 (versión México; ficha 2022: C4.4 Tier 3 / Stage IIIA)', rollingWidth: 1.75,
+    brand: 'CATERPILLAR', model: 'CW16', weight: 5200, engine: 'Cat C4.4 (Tier 3 / Stage IIIA)', rollingWidth: 1.75,
     power: 100.5, numberOfWheels: loc('9 (opción 11)', '9 (11 optional)', '9 (11 optional)', '9 (opção 11)'),
     innovations: loc(
       'Peso con lastre máx. 15.000 kg · Velocidad 0-19 km/h · Tanque de combustible 146 l · Tanque de agua 348 l · Ancho 1.754 mm (1.728 mm radial; 2,10 m con 11 ruedas) · Radio de giro interior/exterior 3.761/6.455 mm · Oscilación rueda delantera · Estación de operación giratoria · Transmisión de velocidad variable · Eco-mode',

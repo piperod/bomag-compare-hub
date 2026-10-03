@@ -48,11 +48,15 @@ const sdrImageByModel: Record<string, string> = {
   '510': '510.jpg',
   '1107ex': '1107EX.png',
   ca25d: 'CA25_D.jpg',
+  ca1300d: 'CA1300D.jpg',
+  ca2500d33: 'CA2500D-3.3.jpg',
+  ca5000d: 'CA5000D.jpg',
+  ca6500d: 'CA6500D.jpg',
 };
 
 /** SDR models from the TCO master file that have no photo yet (avoid showing a BOMAG photo for them). */
 const sdrModelsWithoutImage = new Set([
-  'cs1400', 'cs1400n', 'ct3000', 'ca1300d', 'ca5000d', 'ca6500d', 'ca2500pd', 'ca4000pd', 'ca5500pd',
+  'cs1400', 'cs1400n', 'ct3000', 'ca2500pd', 'ca4000pd', 'ca5500pd',
 ]);
 
 const paverImageByModel: Record<string, string> = {

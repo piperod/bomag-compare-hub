@@ -80,6 +80,35 @@ const sdrRow = (r: SdrRow): MachineSpec => ({
   tco: 0,
 });
 
+const SEISMIC_SOIL = loc(
+  'SEISMIC (disponible): ajusta automáticamente la frecuencia de vibración a la frecuencia natural del material',
+  'SEISMIC (available): automatically adjusts the vibration frequency to the natural frequency of the material',
+  'SEISMIC (verfügbar): passt die Vibrationsfrequenz automatisch an die Eigenfrequenz des Materials an',
+  'SEISMIC (disponível): ajusta automaticamente a frequência de vibração à frequência natural do material'
+);
+
+const CA5000D_SPECS = {
+  model: 'CA5000D', weight: 16000, compactionWidth: 2.13, origin: ORIGIN.sweden,
+  amplitude: '2,1 / 0,8', staticLinearLoad: 50, gradeability: 49, compactionAssistant: SEISMIC_SOIL,
+  innovations: loc(
+    'Motor Cummins B4.5 Stage V/T4F (149 kW / 200 hp) o Deutz TCD2012L06 Tier 3 (128 kW / 174 hp) · Fuerza centrífuga 330/140 kN · Frecuencia 29/30 Hz · Oscilación ±9° · Tanque de combustible 255 l · Con cabina 16.200 kg',
+    'Cummins B4.5 Stage V/T4F (149 kW / 200 hp) or Deutz TCD2012L06 Tier 3 (128 kW / 174 hp) engine · Centrifugal force 330/140 kN · Frequency 29/30 Hz · Oscillation ±9° · Fuel tank 255 l · With cab 16,200 kg',
+    'Motor Cummins B4.5 Stufe V/T4F (149 kW / 200 PS) oder Deutz TCD2012L06 Tier 3 (128 kW / 174 PS) · Zentrifugalkraft 330/140 kN · Frequenz 29/30 Hz · Pendelung ±9° · Kraftstofftank 255 l · Mit Kabine 16.200 kg',
+    'Motor Cummins B4.5 Stage V/T4F (149 kW / 200 hp) ou Deutz TCD2012L06 Tier 3 (128 kW / 174 hp) · Força centrífuga 330/140 kN · Frequência 29/30 Hz · Oscilação ±9° · Tanque de combustível 255 l · Com cabine 16.200 kg'
+  ),
+};
+
+const CA6500D_SPECS = {
+  model: 'CA6500D', weight: 20700, compactionWidth: 2.13, origin: ORIGIN.sweden,
+  amplitude: '2,1 / 0,8', staticLinearLoad: 65, gradeability: 45, compactionAssistant: SEISMIC_SOIL,
+  innovations: loc(
+    'Motor Cummins B4.5 Stage V/T4F (149 kW / 200 hp) o Deutz TCD2012L06 Tier 3 (150 kW / 204 hp) · Fuerza centrífuga 360/150 kN · Frecuencia 29/30 Hz · Oscilación ±9° · Tanque de combustible 255 l · Con cabina 20.900 kg',
+    'Cummins B4.5 Stage V/T4F (149 kW / 200 hp) or Deutz TCD2012L06 Tier 3 (150 kW / 204 hp) engine · Centrifugal force 360/150 kN · Frequency 29/30 Hz · Oscillation ±9° · Fuel tank 255 l · With cab 20,900 kg',
+    'Motor Cummins B4.5 Stufe V/T4F (149 kW / 200 PS) oder Deutz TCD2012L06 Tier 3 (150 kW / 204 PS) · Zentrifugalkraft 360/150 kN · Frequenz 29/30 Hz · Pendelung ±9° · Kraftstofftank 255 l · Mit Kabine 20.900 kg',
+    'Motor Cummins B4.5 Stage V/T4F (149 kW / 200 hp) ou Deutz TCD2012L06 Tier 3 (150 kW / 204 hp) · Força centrífuga 360/150 kN · Frequência 29/30 Hz · Oscilação ±9° · Tanque de combustível 255 l · Com cabine 20.900 kg'
+  ),
+};
+
 export const sdrMasterAdditions: MachineSpec[] = [
   sdrRow({ model: 'CS1400', weight: 7400, engine: 'Deutz TD 3.6 L4 IIIB/T4f', compactionWidth: 2.1, power: 73.8, origin: ORIGIN.sweden, innovations: STEEL_DRUM }),
   sdrRow({ model: 'CS1400N', weight: 8390, engine: 'Deutz TD 3.6 L4 IIIB/T4f', compactionWidth: 2.1, power: 73.8, origin: ORIGIN.sweden, innovations: STEEL_DRUM }),
@@ -97,7 +126,17 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Compactador pé de carneiro / apiloador'
     ),
   }),
-  sdrRow({ model: 'CA1300D', weight: 4800, engine: 'Kubota V3307 CR-TE4 (Stage IIIB/Tier 4)', compactionWidth: 0, power: 73.8, origin: ORIGIN.sweden }),
+  // Completed from the DYNAPAC CA1300D datasheet (rce_ca1300d_en, 2021-05-21).
+  sdrRow({
+    model: 'CA1300D', weight: 4800, engine: 'Kubota V3307 CR-TE4 (Stage IIIB/Tier 4)', compactionWidth: 1.37, power: 73.8, origin: ORIGIN.sweden,
+    amplitude: '1,7', staticLinearLoad: 13, gradeability: 55,
+    innovations: loc(
+      'Fuerza centrífuga 89 kN · Frecuencia 35 Hz · Oscilación ±9° · Tanque de combustible 117 l · Peso máx. 5.300 kg',
+      'Centrifugal force 89 kN · Frequency 35 Hz · Oscillation ±9° · Fuel tank 117 l · Max. mass 5,300 kg',
+      'Zentrifugalkraft 89 kN · Frequenz 35 Hz · Pendelung ±9° · Kraftstofftank 117 l · Max. Gewicht 5.300 kg',
+      'Força centrífuga 89 kN · Frequência 35 Hz · Oscilação ±9° · Tanque de combustível 117 l · Peso máx. 5.300 kg'
+    ),
+  }),
   sdrRow({ model: 'CA2500D', weight: 10100, engine: 'Cummins QSF3.8 (IV/T4 final)', compactionWidth: 2.13, power: 119.4, origin: ORIGIN.sweden }),
   sdrRow({
     model: 'CA25D',
@@ -119,12 +158,7 @@ export const sdrMasterAdditions: MachineSpec[] = [
   sdrRow({
     model: 'CA3500D', weight: 11900, engine: 'Cummins QSB4.5 (IIIA/T3)', compactionWidth: 2.13, power: 130, origin: ORIGIN.sweden,
     amplitude: '1,9 / 0,9', staticLinearLoad: 36, gradeability: 55,
-    compactionAssistant: loc(
-      'SEISMIC (disponible): ajusta automáticamente la frecuencia de vibración a la frecuencia natural del material',
-      'SEISMIC (available): automatically adjusts the vibration frequency to the natural frequency of the material',
-      'SEISMIC (verfügbar): passt die Vibrationsfrequenz automatisch an die Eigenfrequenz des Materials an',
-      'SEISMIC (disponível): ajusta automaticamente a frequência de vibração à frequência natural do material'
-    ),
+    compactionAssistant: SEISMIC_SOIL,
     innovations: loc(
       'Motor Cummins QSB4.5 Tier 3 (97 kW / 130 hp) u opcional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Fuerza centrífuga 280/170 kN · Frecuencia 31/34 Hz · Oscilación ±9° · Tanque de combustible 255 l · Con cabina 12.100 kg',
       'Cummins QSB4.5 Tier 3 engine (97 kW / 130 hp) or optional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Centrifugal force 280/170 kN · Frequency 31/34 Hz · Oscillation ±9° · Fuel tank 255 l · With cab 12,100 kg',
@@ -132,8 +166,23 @@ export const sdrMasterAdditions: MachineSpec[] = [
       'Motor Cummins QSB4.5 Tier 3 (97 kW / 130 hp) ou opcional Cummins F3.8 Stage V/T4F (100 kW / 135 hp) · Força centrífuga 280/170 kN · Frequência 31/34 Hz · Oscilação ±9° · Tanque de combustível 255 l · Com cabine 12.100 kg'
     ),
   }),
-  sdrRow({ model: 'CA5000D', weight: 16000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden }),
-  sdrRow({ model: 'CA6500D', weight: 20700, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden }),
+  // CA5000D / CA6500D completed from the DYNAPAC datasheets (dynapac_ca5000d_en 2025-08-06, dynapac_ca6500d_en 2022-12-12).
+  // Both list a Cummins B4.5 Stage V/T4F engine and a Deutz TCD2012L06 Stage IIIA/Tier 3 engine, so each engine is its own row.
+  sdrRow({ ...CA5000D_SPECS, engine: 'Cummins B4.5 (Stage V/T4 final)', power: 199.8 }),
+  sdrRow({ ...CA5000D_SPECS, engine: 'Deutz TCD2012L06 (IIIA/T3)', power: 174 }),
+  sdrRow({ ...CA6500D_SPECS, engine: 'Cummins B4.5 (Stage V/T4 final)', power: 199.8 }),
+  sdrRow({ ...CA6500D_SPECS, engine: 'Deutz TCD2012L06 (IIIA/T3)', power: 204 }),
+  // Added from the DYNAPAC CA2500D/3.3 datasheet (dynapac_ca2500d33_en, 2022-12-12): Tier 3 version of the CA2500D.
+  sdrRow({
+    model: 'CA2500D/3.3', weight: 10000, engine: 'Cummins QSB3.3 (IIIA/T3)', compactionWidth: 2.13, power: 110, origin: NONE,
+    amplitude: '1,8 / 0,9', staticLinearLoad: 26, gradeability: 51,
+    innovations: loc(
+      'Fuerza centrífuga 205/100 kN · Frecuencia 30 Hz · Oscilación ±9° · Tanque de combustible 190 l · Con cabina 10.200 kg',
+      'Centrifugal force 205/100 kN · Frequency 30 Hz · Oscillation ±9° · Fuel tank 190 l · With cab 10,200 kg',
+      'Zentrifugalkraft 205/100 kN · Frequenz 30 Hz · Pendelung ±9° · Kraftstofftank 190 l · Mit Kabine 10.200 kg',
+      'Força centrífuga 205/100 kN · Frequência 30 Hz · Oscilação ±9° · Tanque de combustível 190 l · Com cabine 10.200 kg'
+    ),
+  }),
   sdrRow({ model: 'CA2500PD', weight: 11000, engine: 'Cummins F3.8 (V)', compactionWidth: 2.13, power: 134.1, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA4000PD', weight: 13100, engine: 'Cummins QSB4.5 (Stage IIIA/T3)', compactionWidth: 2.13, power: 171.7, origin: ORIGIN.sweden, innovations: PADFOOT }),
   sdrRow({ model: 'CA5500PD', weight: 18000, engine: 'Cummins B4.5 (Stage V/T4 final)', compactionWidth: 2.13, power: 199.8, origin: ORIGIN.sweden, innovations: PADFOOT }),

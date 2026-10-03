@@ -61,7 +61,7 @@ const paverImageByModel: Record<string, string> = {
   ap655: 'AP655.png',
   bf600c3: 'BF600-C-3.png',
   super18003: 'Super-1800-3.png',
-  sd2500cs: 'SD2500CS.png',
+  sd2500cs: 'SD2500CS.jpg',
   bf350c5: 'BF350-C-5.jpg',
   bf700c3: 'BF700-C-3.jpg',
   bf700c3l: 'BF700-C-3-L.jpg',
@@ -69,8 +69,8 @@ const paverImageByModel: Record<string, string> = {
   fc1600c: 'FC1600C.jpg',
   f1800c: 'F1800C.jpg',
   f2500ws: 'F2500WS.jpg',
-  sd2550c: 'SD-Series.jpg',
-  sd2550cs: 'SD-Series.jpg',
+  sd2550c: 'SD2500CS.jpg',
+  sd2550cs: 'SD2500CS.jpg',
 };
 
 /** Paver models from the TCO master file that have no photo yet. */

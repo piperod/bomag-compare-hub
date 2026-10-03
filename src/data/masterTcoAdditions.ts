@@ -1006,12 +1006,20 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
     hasMagmalife: true, hasEcomode: true, setupFuelLiters: 3.5, heatingMinutes: 30,
   }),
   // Dynapac SD-Series highway paver portfolio (Stage IIIA engine versions)
+  // Completed from the Dynapac SD2500CS datasheet (2026-02, Stage IIIA engine version); hopper volume from the SD2500CS Protac datasheet
   paverRow({
     brand: 'DYNAPAC', model: 'SD2500CS', sizeCategory: 'EXTRA GRANDE (>9 m)',
-    engine: '142 kW / 190 hp', engineManufacturer: 'Cummins QSB6.7-C173', emissionStandard: 'EU Stage IIIA / Tier 3',
-    nominalPower: '142 kW / 190,4 hp', fuelTankCapacity: '353 L', maxProduction: '800 t/h', travelSpeed: '4 km/h',
-    minWorkingWidth: '2,55 - 10,0 m', maxWidthWithExtensions: '10,0 m', augerDiameter: '381 mm',
-    operatingWeight: '18.500 kg',
+    engine: '142 kW / 190 hp', engineManufacturer: 'Cummins QSB 6.7-C190', emissionStandard: 'EU Stage IIIA / Tier 3',
+    nominalPower: '142 kW / 190,4 hp', fuelTankCapacity: '337 L', maxProduction: '800 t/h',
+    pavingSpeed: 'Hasta 28 m/min', travelSpeed: '4 km/h', maxLayerThickness: '310 mm',
+    minWorkingWidth: '2,05 m (con zapata reductora) - 10,0 m máx.', baseWidthRetracted: '2,55 m (V5100) / 3,0 m (V6000/R300)',
+    extendedBaseWidth: '5,1 m (V5100) / 6,0 m (V6000)', maxWidthWithExtensions: '10,0 m',
+    hopperCapacity: '12 t (6 m3)', augerDiameter: '380 mm', conveyors: '2 - 2×655 mm, reversibles\ncontrol proporcional',
+    pushRollers: 'Fijo pivotable (std.)\nHidráulico amortiguado (opc.)',
+    screedTypes: 'V5100 / V6000 TV, TVE, THE\nR300', screedHeating: 'Eléctrica - generador 33 kVA',
+    operatingWeight: '19.000 kg',
+    transportLength: '6.150 mm', transportWidth: '2.550 mm', transportHeight: '3.100 mm',
+    financial: { ...NO_FINANCIAL, avgFuelConsumption: '10,5 l/h', fuelDataSource: 'Ficha técnica oficial', fuelConsumption10h: '105' },
   }),
   paverRow({
     brand: 'DYNAPAC', model: 'SD2550C', sizeCategory: 'EXTRA GRANDE (>9 m)',

@@ -886,6 +886,22 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    'Modo ECO',
+    {
+      en: 'ECO mode',
+      de: 'ECO-Modus',
+      pt: 'Modo ECO',
+    },
+  ],
+  [
+    'kW a ',
+    {
+      en: 'kW at ',
+      de: 'kW bei ',
+      pt: 'kW a ',
+    },
+  ],
+  [
     '(con zapata reductora)',
     {
       en: '(with reducing shoe)',

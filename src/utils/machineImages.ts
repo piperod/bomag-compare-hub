@@ -60,6 +60,7 @@ const sdrModelsWithoutImage = new Set([
 const paverImageByModel: Record<string, string> = {
   ap655: 'AP655.jpg',
   ap455: 'AP455.jpg',
+  ap555: 'AP555.jpg',
   bf600c3: 'BF600-C-3.png',
   super18003: 'Super-1800-3.jpg',
   super13003: 'Super-1300-3.jpg',
@@ -80,7 +81,7 @@ const paverImageByModel: Record<string, string> = {
 
 /** Paver models from the TCO master file that have no photo yet. */
 const paverModelsWithoutImage = new Set([
-  'f80w', 'f1200c', 'ap555', 'p28200abg', 'p68200abg', 'f1000w', 'abg9820',
+  'f80w', 'f1200c', 'p28200abg', 'p68200abg', 'f1000w', 'abg9820',
 ]);
 
 const millingImageByModel: Record<string, string> = {

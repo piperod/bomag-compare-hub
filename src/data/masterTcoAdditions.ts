@@ -404,26 +404,26 @@ export const ptrMachines: MachineSpec[] = [
   ptrRow({ brand: 'VOLVO', model: 'PTR125', weight: 12625, rollingWidth: 1.73, power: 84.5, numberOfWheels: same('4 + 5') }),
   ptrRow({ brand: 'VOLVO', model: 'PTR220', weight: 24000, rollingWidth: 1.98, power: 99.2, numberOfWheels: same('4 + 5') }),
   ptrRow({ brand: 'VOLVO', model: 'PTR240R', weight: 24000, rollingWidth: 1.99, power: 132.8, numberOfWheels: same('4 + 5') }),
-  // Cat CW16 datasheet QEHQ1965-02 (2022): Tier 3 / Stage IIIA version with Cat C4.4
+  // Cat CW16: cat.com es_MX product specs (Mexico market, Cat C3.6) + datasheet QEHQ1965-02 (2022)
   ptrRow({
-    brand: 'CATERPILLAR', model: 'CW16', weight: 5200, engine: 'Cat C4.4 (Tier 3 / Stage IIIA)', rollingWidth: 1.73,
+    brand: 'CATERPILLAR', model: 'CW16', weight: 5200, engine: 'Cat C3.6 (versión México; ficha 2022: C4.4 Tier 3 / Stage IIIA)', rollingWidth: 1.75,
     power: 100.5, numberOfWheels: loc('9 (opción 11)', '9 (11 optional)', '9 (11 optional)', '9 (opção 11)'),
     innovations: loc(
-      'Peso con lastre 8.500-15.000 kg · Velocidad 0-19 km/h (2 rangos) · Tanque de combustible 146 l · Tanque de agua 348 l · Neumáticos 7.5x15 · Ancho 2,10 m con 11 ruedas · Eco-mode · Puesto de mando giratorio',
-      'Ballasted weight 8,500-15,000 kg · Speed 0-19 km/h (2 ranges) · Fuel tank 146 l · Water tank 348 l · Tyres 7.5x15 · Width 2.10 m with 11 wheels · Eco-mode · Rotating operator station',
-      'Gewicht mit Ballast 8.500-15.000 kg · Geschwindigkeit 0-19 km/h (2 Bereiche) · Kraftstofftank 146 l · Wassertank 348 l · Reifen 7.5x15 · Breite 2,10 m mit 11 Rädern · Eco-mode · Drehbarer Fahrerstand',
-      'Peso com lastro 8.500-15.000 kg · Velocidade 0-19 km/h (2 faixas) · Tanque de combustível 146 l · Tanque de água 348 l · Pneus 7.5x15 · Largura 2,10 m com 11 rodas · Eco-mode · Posto do operador giratório'
+      'Peso con lastre máx. 15.000 kg · Velocidad 0-19 km/h · Tanque de combustible 146 l · Tanque de agua 348 l · Ancho 1.754 mm (1.728 mm radial; 2,10 m con 11 ruedas) · Radio de giro interior/exterior 3.761/6.455 mm · Oscilación rueda delantera · Estación de operación giratoria · Transmisión de velocidad variable · Eco-mode',
+      'Max. ballasted weight 15,000 kg · Speed 0-19 km/h · Fuel tank 146 l · Water tank 348 l · Width 1,754 mm (1,728 mm radial; 2.10 m with 11 wheels) · Inner/outer turning radius 3,761/6,455 mm · Front wheel oscillation · Rotating operator station · Variable speed transmission · Eco-mode',
+      'Max. Gewicht mit Ballast 15.000 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 146 l · Wassertank 348 l · Breite 1.754 mm (1.728 mm radial; 2,10 m mit 11 Rädern) · Wenderadius innen/außen 3.761/6.455 mm · Pendelnde Vorderräder · Drehbarer Fahrerstand · Stufenloses Getriebe · Eco-mode',
+      'Peso máx. com lastro 15.000 kg · Velocidade 0-19 km/h · Tanque de combustível 146 l · Tanque de água 348 l · Largura 1.754 mm (1.728 mm radial; 2,10 m com 11 rodas) · Raio de giro interno/externo 3.761/6.455 mm · Oscilação da roda dianteira · Posto do operador giratório · Transmissão de velocidade variável · Eco-mode'
     ),
   }),
-  // Cat CW34 datasheet QEHQ3333-01 (2026): Brazil MAR-1 / Tier 3 version
+  // Cat CW34: datasheet QEHQ3333-01 (2026, Brazil MAR-1 / Tier 3 version) + cat.com es_MX product specs
   ptrRow({
     brand: 'CATERPILLAR', model: 'CW34', weight: 10000, engine: 'Cat C4.4 (Tier 3 / MAR-1)', rollingWidth: 2.09,
     power: 129, numberOfWheels: FOUR_FRONT_FOUR_REAR,
     innovations: loc(
-      'Peso con lastre hasta 27.000 kg · Velocidad 0-19 km/h (3 rangos) · Tanque de combustible 270 l · Tanque de agua 380 l · Neumáticos 13/80 R20 o 11.00-20 · Eco-mode · Oscilación en todas las ruedas · VisionLink',
-      'Ballasted weight up to 27,000 kg · Speed 0-19 km/h (3 ranges) · Fuel tank 270 l · Water tank 380 l · Tyres 13/80 R20 or 11.00-20 · Eco-mode · All-wheel oscillation · VisionLink',
-      'Gewicht mit Ballast bis 27.000 kg · Geschwindigkeit 0-19 km/h (3 Bereiche) · Kraftstofftank 270 l · Wassertank 380 l · Reifen 13/80 R20 oder 11.00-20 · Eco-mode · Pendelung aller Räder · VisionLink',
-      'Peso com lastro até 27.000 kg · Velocidade 0-19 km/h (3 faixas) · Tanque de combustível 270 l · Tanque de água 380 l · Pneus 13/80 R20 ou 11.00-20 · Eco-mode · Oscilação em todas as rodas · VisionLink'
+      'Peso con lastre: agua 13.000 kg · arena húmeda 16.000 kg · máx. 27.000 kg · Carga por rueda 1.250-3.380 kg · Velocidad 0-19 km/h (3 rangos) · Tanque de combustible 270 l · Tanque de agua 380 l · Neumáticos 13/80 R20 · Radio de giro interior/exterior 6,1/8,7 m · Eco-mode · Oscilación en todas las ruedas · VisionLink',
+      'Ballasted weight: water 13,000 kg · wet sand 16,000 kg · max. 27,000 kg · Wheel load 1,250-3,380 kg · Speed 0-19 km/h (3 ranges) · Fuel tank 270 l · Water tank 380 l · Tyres 13/80 R20 · Inner/outer turning radius 6.1/8.7 m · Eco-mode · All-wheel oscillation · VisionLink',
+      'Gewicht mit Ballast: Wasser 13.000 kg · Nasssand 16.000 kg · max. 27.000 kg · Radlast 1.250-3.380 kg · Geschwindigkeit 0-19 km/h (3 Bereiche) · Kraftstofftank 270 l · Wassertank 380 l · Reifen 13/80 R20 · Wenderadius innen/außen 6,1/8,7 m · Eco-mode · Pendelung aller Räder · VisionLink',
+      'Peso com lastro: água 13.000 kg · areia úmida 16.000 kg · máx. 27.000 kg · Carga por roda 1.250-3.380 kg · Velocidade 0-19 km/h (3 faixas) · Tanque de combustível 270 l · Tanque de água 380 l · Pneus 13/80 R20 · Raio de giro interno/externo 6,1/8,7 m · Eco-mode · Oscilação em todas as rodas · VisionLink'
     ),
   }),
   // Ammann AP 240 datasheet MSS-1183-04-EN (Stage IIIA / Tier 3)

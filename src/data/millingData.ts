@@ -295,8 +295,45 @@ const withBomagMillingOrigin = (machine: MillingMachineSpec): MillingMachineSpec
   return match ? { ...machine, origin: match[1] } : machine;
 };
 
+/**
+ * Duplicate entries of the same machine: `drop` is hidden (data kept) and its values fill
+ * only the empty fields of `keep`. SCM1000C-8S is the current version of SCM1000C-8.
+ */
+const MERGED_MILLING: Array<{ keep: string; drop: string }> = [
+  { keep: 'SANY|SCM1000C-8S', drop: 'SANY|SCM1000C-8' },
+];
+
+const millingKey = (m: MillingMachineSpec) => `${m.brand}|${m.model}`;
+
+const isEmptyValue = (value: unknown): boolean => {
+  if (value === undefined || value === null) return true;
+  if (typeof value === 'number') return value === 0;
+  if (typeof value === 'string') return /^\s*(-|—)?\s*$/.test(value);
+  if (typeof value === 'object') return Object.values(value as Record<string, unknown>).every(isEmptyValue);
+  return false;
+};
+
+const mergeDuplicateMilling = (machines: MillingMachineSpec[]): MillingMachineSpec[] => {
+  const byKey = new Map(machines.map((m) => [millingKey(m), m]));
+  const dropped = new Set<string>();
+  const merged = machines.map((machine) => {
+    const rule = MERGED_MILLING.find((r) => r.keep === millingKey(machine));
+    const source = rule && byKey.get(rule.drop);
+    if (!rule || !source) return machine;
+    dropped.add(rule.drop);
+    const filled: Record<string, unknown> = { ...machine };
+    for (const [key, value] of Object.entries(source)) {
+      // USP rows of the kept model come from its own datasheet/flyer (complementUsps), not from the duplicate
+      if (key === 'model' || key === 'brand' || /^usp\d$/.test(key)) continue;
+      if (isEmptyValue(filled[key]) && !isEmptyValue(value)) filled[key] = value;
+    }
+    return filled as unknown as MillingMachineSpec;
+  });
+  return merged.filter((m) => !dropped.has(millingKey(m)));
+};
+
 export const millingMachines: MillingMachineSpec[] = complementUsps('milling', withImportRegistryOrigin(
-  mergeByBrand(baseMillingMachines, millingMasterAdditions).map(withBomagMillingOrigin)
+  mergeDuplicateMilling(mergeByBrand(baseMillingMachines, millingMasterAdditions)).map(withBomagMillingOrigin)
 ));
 
 /** Single row of the preventive maintenance table (BM 1000/20) */

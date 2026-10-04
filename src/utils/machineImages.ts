@@ -149,6 +149,16 @@ const ptrImageByModel: Record<string, string> = {
   spr160c8: 'SPR160C-8.jpg',
 };
 
+/** DYNAPAC CC1000–CC1400 (VI) series share one photo (CC1200 VI). */
+const ltrImageByModel: Record<string, string> = {
+  cc1000: 'CC1000-1400-VI.jpg',
+  cc1000cvi: 'CC1000-1400-VI.jpg',
+  cc1200vi: 'CC1000-1400-VI.jpg',
+  cc1300: 'CC1000-1400-VI.jpg',
+  cc1400vi: 'CC1000-1400-VI.jpg',
+  cc1400cvi: 'CC1000-1400-VI.jpg',
+};
+
 const ltrImages = [
   'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg', 'BW100 AD-5.jpg',
 ];
@@ -183,6 +193,10 @@ export function getMachineImagePath(model: string, line: string): string {
 
   if (folder === 'PTR' && ptrImageByModel[modelNorm]) {
     return `${base}images/${folder}/${ptrImageByModel[modelNorm]}`;
+  }
+
+  if (folder === 'LTR' && ltrImageByModel[modelNorm]) {
+    return `${base}images/${folder}/${ltrImageByModel[modelNorm]}`;
   }
 
   if (folder === 'Milling' && millingImageByModel[modelNorm]) {

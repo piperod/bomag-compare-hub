@@ -327,6 +327,7 @@
   "pmUnit": "Unidade",
   "pmPublicPrice": "Preço público",
   "pmTotalPrice": "Preço total",
+  "pmFinancialHint": "Peças do plano de manutenção BOMAG: ≈ {{value}} por hora (preço de cada linha ÷ seu intervalo, sem mão de obra). Use como referência para a manutenção preventiva da BM 1000/20 na análise.",
 
   "articulationJointTitle": "Articulação",
   "maintenanceFreePill": "Livre de manutenção",

@@ -5,6 +5,8 @@ type NonEsLang = Exclude<Language, 'es'>;
 const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   // Phrases used by models added from the BOMAG TCO master file
   ['(30.330 kg transporte)', { en: '(30,330 kg transport)', de: '(30.330 kg Transport)', pt: '(30.330 kg transporte)' }],
+  ['(29.430 kg transporte)', { en: '(29,430 kg transport)', de: '(29.430 kg Transport)', pt: '(29.430 kg transporte)' }],
+  ['(30.000 kg transporte)', { en: '(30,000 kg transport)', de: '(30.000 kg Transport)', pt: '(30.000 kg transporte)' }],
   [' bruta)', { en: ' gross)', de: ' brutto)', pt: ' bruta)' }],
   ['(radio de fresado)', { en: '(milling radius)', de: '(Fräsradius)', pt: '(raio de fresagem)' }],
   ['(máx., incl. opciones)', { en: '(max, incl. options)', de: '(max., inkl. Optionen)', pt: '(máx., incl. opcionais)' }],

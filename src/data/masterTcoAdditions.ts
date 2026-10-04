@@ -631,6 +631,13 @@ const APP_LARGE_STD = loc(
   'Großflächiges Vollausbau-Fräsen, Standard-Leistungskonfiguration (Tier 3)',
   'Fresagem em grande escala de profundidade total, configuração de potência padrão (Tier 3)'
 );
+const CAT_PM600_APP = loc(
+  'Fresado a gran escala en profundidad total; motor equivalente a Tier 3 (también disponible Tier 4 Final / Stage V)',
+  'Large-scale full-depth milling; Tier 3 equivalent engine (also available as Tier 4 Final / Stage V)',
+  'Großflächiges Vollausbau-Fräsen; Motor entsprechend Tier 3 (auch als Tier 4 Final / Stufe V erhältlich)',
+  'Fresagem em grande escala em profundidade total; motor equivalente a Tier 3 (também disponível Tier 4 Final / Stage V)'
+);
+
 const APP_LARGE_HIGH = loc(
   'Fresado a gran escala en profundidad total, configuración de alta potencia (Tier 3)',
   'Large-scale full-depth milling, high-power configuration (Tier 3)',
@@ -798,25 +805,35 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
     cuttingSystem: cutWithSideProtection('LA18'),
     idealApplication: APP_LARGE_HIGH,
   }),
-  // Cat PM620: cat.com product specifications (Tier 4 Final / Stage V only; no Tier 3 version published)
+  // Cat PM620 / PM622: brochure QSH92684 (5/20). Version for China Stage III / Brazil MAR-1 (equivalent to
+  // US EPA Tier 3 / EU Stage IIIA); the same machines are also sold as Tier 4 Final / Stage V.
   millingRow({
-    brand: 'CATERPILLAR', model: 'PM620', engine: 'Cat C18 (Tier 4 Final / Stage V)', enginePower: '469 kW (474 kW bruta)',
+    brand: 'CATERPILLAR', model: 'PM620', engine: 'Cat C18 (equiv. Tier 3 / Stage IIIA)', enginePower: '470 kW / 630 hp (462,5 kW ISO 14396)',
     millingWidth: '2.010 mm', maxDepth: '0-330 mm', drumDiameter: '-',
-    workingSpeed: '0-100 m/min', travelSpeed: '0-6 km/h', transportCapacity: '-', conveyorBeltWidth: '-', waterTank: '3.400 L',
-    operatingWeight: '31.559 kg (30.330 kg transporte)', minTurningRadius: '2 m',
+    workingSpeed: '0-100 m/min', travelSpeed: '0-5,9 km/h', transportCapacity: '-', conveyorBeltWidth: '-', waterTank: '3.400 L',
+    operatingWeight: '33.330 kg (29.430 kg transporte)', minTurningRadius: '2 m',
     cuttingSystem: loc(
-      'Rotor de 170 puntas (separación 15 mm), 3 velocidades 100/109/118 rpm; Cat Grade and Slope; motor Tier 4 Final / Stage V',
-      '170-tip rotor (15 mm spacing), 3 speeds 100/109/118 rpm; Cat Grade and Slope; Tier 4 Final / Stage V engine',
-      'Rotor mit 170 Meißeln (15 mm Abstand), 3 Drehzahlen 100/109/118 U/min; Cat Grade and Slope; Motor Tier 4 Final / Stufe V',
-      'Rotor de 170 pontas (espaçamento 15 mm), 3 velocidades 100/109/118 rpm; Cat Grade and Slope; motor Tier 4 Final / Stage V'
+      'Rotor System K de 178 puntas (separación 15 mm), 3 velocidades 100/109/118 rpm; Cat GRADE con Grade and Slope',
+      'System K rotor with 178 tips (15 mm spacing), 3 speeds 100/109/118 rpm; Cat GRADE with Grade and Slope',
+      'System-K-Rotor mit 178 Meißeln (15 mm Abstand), 3 Drehzahlen 100/109/118 U/min; Cat GRADE mit Grade and Slope',
+      'Rotor System K de 178 pontas (espaçamento 15 mm), 3 velocidades 100/109/118 rpm; Cat GRADE com Grade and Slope'
     ),
-    idealApplication: loc(
-      'Fresado a gran escala en profundidad total (motor Tier 4 Final / Stage V)',
-      'Large-scale full-depth milling (Tier 4 Final / Stage V engine)',
-      'Großflächiges Vollausbau-Fräsen (Motor Tier 4 Final / Stufe V)',
-      'Fresagem em grande escala em profundidade total (motor Tier 4 Final / Stage V)'
-    ),
+    idealApplication: CAT_PM600_APP,
     fuelConsumption: 0, workingSpeedMmin: 100, turningRadiusM: 2, hasBms15l: false,
+  }),
+  millingRow({
+    brand: 'CATERPILLAR', model: 'PM622', engine: 'Cat C18 (equiv. Tier 3 / Stage IIIA)', enginePower: '470 kW / 630 hp (462,5 kW ISO 14396)',
+    millingWidth: '2.235 mm', maxDepth: '0-330 mm', drumDiameter: '-',
+    workingSpeed: '0-100 m/min', travelSpeed: '0-5,9 km/h', transportCapacity: '-', conveyorBeltWidth: '-', waterTank: '3.400 L',
+    operatingWeight: '33.900 kg (30.000 kg transporte)', minTurningRadius: '1,8 m',
+    cuttingSystem: loc(
+      'Rotor System K de 185 puntas (separación 15 mm), 3 velocidades 100/109/118 rpm; Cat GRADE con Grade and Slope',
+      'System K rotor with 185 tips (15 mm spacing), 3 speeds 100/109/118 rpm; Cat GRADE with Grade and Slope',
+      'System-K-Rotor mit 185 Meißeln (15 mm Abstand), 3 Drehzahlen 100/109/118 U/min; Cat GRADE mit Grade and Slope',
+      'Rotor System K de 185 pontas (espaçamento 15 mm), 3 velocidades 100/109/118 rpm; Cat GRADE com Grade and Slope'
+    ),
+    idealApplication: CAT_PM600_APP,
+    fuelConsumption: 0, workingSpeedMmin: 100, turningRadiusM: 1.8, hasBms15l: false,
   }),
   // WIRTGEN W 100 HR / W 130 HR: brochure-datasheet 2026 (Tier 3 versions; the "i" versions are CN NR Stage 4)
   millingRow({

@@ -554,8 +554,9 @@ const HIDDEN_PAVERS = new Set([
   'VOLVO|P28200 ABG',
 ]);
 
-export const paversMachines: PaverMachineSpec[] = withImportRegistryOrigin(
+import { complementUsps } from './uspComplements';
+export const paversMachines: PaverMachineSpec[] = complementUsps('pavers', withImportRegistryOrigin(
   mergeByBrand(basePaversMachines, paverMasterAdditions).filter(
     (machine) => !HIDDEN_PAVERS.has(`${machine.brand}|${machine.model}`)
   )
-);
+));

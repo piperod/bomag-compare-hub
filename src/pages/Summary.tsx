@@ -71,7 +71,7 @@ const summaryFields = [
   { key: 'compactionAssistant', labelKey: 'compactionAssistant', multilanguage: true },
   { key: 'telemetry', labelKey: 'telemetry', multilanguage: true },
   { key: 'innovations', labelKey: 'innovations', multilanguage: true },
-  { key: 'usp', labelKey: 'usp', multilanguage: true },
+  { key: 'usp', labelKey: 'valueProposition', multilanguage: true },
   { key: 'usp1', labelKey: 'usp1', multilanguage: true },
   { key: 'usp2', labelKey: 'usp2', multilanguage: true },
   { key: 'usp3', labelKey: 'usp3', multilanguage: true },

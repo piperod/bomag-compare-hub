@@ -40,6 +40,7 @@ import {
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 import { complementUsps } from '@/data/uspComplements';
 import { BomagTcoHighlights } from '@/components/BomagTcoHighlights';
+import { formatRangeLabel, getLineRanges, getRangeKey, getRangeValue, UNKNOWN_RANGE } from '@/utils/machineRanges';
 
 interface MachineComparisonProps {
   selectedLine: string;
@@ -538,6 +539,8 @@ const MachineComparison = ({
   const [searchTerm, setSearchTerm] = useState<string>('');
   // Show only selected machines in the grid
   const [showOnlySelected, setShowOnlySelected] = useState<boolean>(false);
+  // Size-class filter for the selection grid (weight for rollers, working width for milling/pavers)
+  const [rangeFilter, setRangeFilter] = useState<string>('all');
 
   // When opening the volume calculator, restrict grid to selected machines
   // When calculator opens in-page, keep only selected visible and scroll into view
@@ -579,25 +582,42 @@ const MachineComparison = ({
       arr = Object.values(byId);
     }
 
+    if (rangeFilter !== 'all') {
+      arr = arr.filter(m => getRangeKey(m, selectedLine) === rangeFilter);
+    }
+
     // When enabled, restrict grid to selected machines only
     if (showOnlySelected) {
       const selectedSet = new Set(selectedMachines);
       arr = arr.filter(m => selectedSet.has(getMachineId(m)));
     }
 
-    // Sort: BOMAG first, then others
+    // Sort: BOMAG first, then others; within each, smallest size class value first
     arr.sort((a, b) => {
       const aScore = a.brand === 'BOMAG' ? 0 : 1;
       const bScore = b.brand === 'BOMAG' ? 0 : 1;
       if (aScore !== bScore) return aScore - bScore;
-      return 0;
+      return (getRangeValue(a, selectedLine) ?? Infinity) - (getRangeValue(b, selectedLine) ?? Infinity);
     });
 
     return arr;
-  }, [machines, searchTerm, selectedMachines, showOnlySelected]);
+  }, [machines, searchTerm, selectedMachines, showOnlySelected, rangeFilter, selectedLine]);
+
+  // Size classes of the line, with the number of machines in each (for the filter chips and group headings)
+  const lineRanges = getLineRanges(selectedLine);
+  const rangeLocale = language === 'en' ? 'en-US' : language;
+  const rangeGroups = React.useMemo(() => {
+    if (!lineRanges) return [];
+    const groups = [
+      ...lineRanges.ranges.map((r) => ({ key: r.key, label: formatRangeLabel(r, lineRanges.unit, rangeLocale) })),
+      { key: UNKNOWN_RANGE, label: t('rangeUnknown') },
+    ];
+    return groups.map((g) => ({ ...g, count: machines.filter((m) => getRangeKey(m, selectedLine) === g.key).length }));
+  }, [lineRanges, machines, selectedLine, rangeLocale, t]);
 
   // Reset editable / USP state when product line changes (selection is restored from localStorage in Index)
   useEffect(() => {
+    setRangeFilter('all');
     setEditableTCO({});
     setEditablePrice({});
     setEditablePreventiveMaintenance({});
@@ -1104,6 +1124,28 @@ const MachineComparison = ({
           />
           <span>{t('onlySelectedMachines')}</span>
         </div>
+        {/* Size-class filter */}
+        {lineRanges && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+            <span className="font-medium text-gray-700">{t(lineRanges.criterionKey)}:</span>
+            {[{ key: 'all', label: t('rangeAll'), count: machines.length }, ...rangeGroups]
+              .filter((g) => g.key === 'all' || g.count > 0)
+              .map((g) => (
+                <button
+                  key={g.key}
+                  type="button"
+                  onClick={() => setRangeFilter(g.key)}
+                  className={`rounded-full border px-3 py-1 transition-colors ${
+                    rangeFilter === g.key
+                      ? 'border-bomag-yellow bg-bomag-yellow font-semibold text-black'
+                      : 'border-gray-300 bg-white text-gray-700 hover:border-bomag-yellow'
+                  }`}
+                >
+                  {g.label} <span className="text-xs text-gray-500">({g.count})</span>
+                </button>
+              ))}
+          </div>
+        )}
         {searchTerm && (
           <div className="mt-2 text-sm text-gray-600">
             {t('showingMatches', { count: machinesSorted.length, term: searchTerm })}
@@ -1113,10 +1155,27 @@ const MachineComparison = ({
 
       {/* Machine Selection Grid */}
       {machinesSorted.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 items-stretch">
-          {machinesSorted.map((machine, index) => (
+        <div className="mb-6 space-y-6">
+        {(lineRanges ? rangeGroups : [{ key: 'all', label: '', count: 0 }])
+          .map((group) => ({
+            ...group,
+            items: lineRanges ? machinesSorted.filter((m) => getRangeKey(m, selectedLine) === group.key) : machinesSorted,
+          }))
+          .filter((group) => group.items.length > 0)
+          .map((group) => (
+        <section key={group.key}>
+          {lineRanges && (
+            <h4 className="mb-3 flex items-baseline gap-2 border-b border-gray-200 pb-1 text-base font-semibold text-gray-700">
+              {group.label}
+              <span className="text-xs font-normal text-gray-500">
+                {t(lineRanges.criterionKey)} · {t('rangeMachineCount', { count: group.items.length })}
+              </span>
+            </h4>
+          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+          {group.items.map((machine) => (
           <Card
-            key={index}
+            key={getMachineId(machine)}
             className={`relative flex h-full flex-col ${selectedMachines.includes(getMachineId(machine)) ? 'border-2 border-yellow-400' : ''}`}
           >
             <CardHeader className="pb-2">
@@ -1191,6 +1250,9 @@ const MachineComparison = ({
             </CardContent>
           </Card>
         ))}
+        </div>
+        </section>
+          ))}
         </div>
       ) : (
         <div className="text-center py-12">

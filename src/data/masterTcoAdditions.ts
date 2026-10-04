@@ -10,7 +10,7 @@
 import type { MachineSpec } from './machineData';
 import type { MillingMachineSpec } from './millingData';
 import type { LocalizedText, PaverFinancialData, PaverMachineSpec } from './paversData';
-import { BM2000_58_USPS, bm35Usps } from './bomagUsps';
+import { BM2000_58_USPS, bm35Usps, bm65Usps } from './bomagUsps';
 
 const loc = (es: string, en: string, de: string, pt: string): LocalizedText => ({ es, en, de, pt });
 const same = (s: string): LocalizedText => ({ es: s, en: s, de: s, pt: s });
@@ -805,6 +805,9 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
   millingRow({
     ...BM_65_COMMON,
     model: 'BM 1500/65',
+    ...bm65Usps('27', '27'),
+    minTurningRadius: '1,7 m',
+    turningRadiusM: 1.7,
     engine: X15_470,
     enginePower: X15_470,
     millingWidth: '1.500 mm',
@@ -815,6 +818,9 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
   millingRow({
     ...BM_65_COMMON,
     model: 'BM 2000/65',
+    ...bm65Usps('27', '27'),
+    minTurningRadius: '1,7 m',
+    turningRadiusM: 1.7,
     engine: X15_470,
     enginePower: X15_470,
     millingWidth: '2.000 mm',
@@ -825,6 +831,9 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
   millingRow({
     ...BM_65_COMMON,
     model: 'BM 2200/65',
+    ...bm65Usps('27,6', '27.6'),
+    minTurningRadius: '1,7 m',
+    turningRadiusM: 1.7,
     engine: X15_470,
     enginePower: X15_470,
     millingWidth: '2.200 mm',

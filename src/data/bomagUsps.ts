@@ -153,3 +153,37 @@ export const BM2000_58_USPS: MillingUsps = {
     'Simply Easy: a fresadora de 2 m mais compacta e leve da sua classe, com visibilidade, facilidade de manutenção e robustez.'
   ),
 };
+
+// Milling — BM 1500/65, BM 2000/65, BM 2200/65: brochure "Serie BM/65" (PRS 107 370, 03/26)
+export const bm65Usps = (weightKg: string, weightKgEn: string): MillingUsps => ({
+  usp1: loc(
+    '640 CV (Stage V / Tier 4f), profundidad 0-350 mm\n* Coordinación de la potencia del motor con la velocidad de fresado; velocidad de avance y de fresado variables\n* Tambores de 6 a 25 mm entre líneas, desde micro-fresado hasta desprendimiento completo\n* BOMAG Easy Cut: regula las columnas traseras al entrar en el corte',
+    '640 hp (Stage V / Tier 4f), 0-350 mm depth\n* Engine power matched to milling speed; variable advance and milling speed\n* Drums with 6 to 25 mm line spacing, from micro-milling to full-depth removal\n* BOMAG Easy Cut: controls the rear columns when entering the cut',
+    '640 PS (Stufe V / Tier 4f), Frästiefe 0-350 mm\n* Motorleistung auf die Fräsgeschwindigkeit abgestimmt; variable Vorschub- und Fräsgeschwindigkeit\n* Fräswalzen mit 6 bis 25 mm Linienabstand, vom Mikrofräsen bis zum Vollausbau\n* BOMAG Easy Cut: regelt die hinteren Hubsäulen beim Einfräsen',
+    '640 cv (Stage V / Tier 4f), profundidade 0-350 mm\n* Potência do motor ajustada à velocidade de fresagem; velocidade de avanço e de fresagem variáveis\n* Tambores de 6 a 25 mm entre linhas, da microfresagem à remoção total\n* BOMAG Easy Cut: regula as colunas traseiras ao entrar no corte'
+  ),
+  usp2: loc(
+    `La máquina más liviana de la clase 650 CV\n* ~${weightKg} t CECE: transporte sin permisos especiales; lastre de fábrica opcional hasta 1.800 kg\n* Radio de giro de 1,7 m (el menor de su clase) y cinta con giro de 130°: rotondas estrechas\n* Cinta plegada 600 mm más corta; placa lateral derecha con altura libre de 500 mm junto a bordillos`,
+    `The lightest machine in the 650 hp class\n* ~${weightKgEn} t CECE: transport without special permits; optional factory ballast up to 1,800 kg\n* 1.7 m turning radius (smallest in its class) and 130° conveyor slewing: tight roundabouts\n* Folded conveyor 600 mm shorter; right side plate with 500 mm clearance along curbs`,
+    `Die leichteste Maschine der 650-PS-Klasse\n* ~${weightKg} t CECE: Transport ohne Sondergenehmigung; optionaler Werksballast bis 1.800 kg\n* Wenderadius 1,7 m (der kleinste seiner Klasse) und 130° Bandschwenkung: enge Kreisverkehre\n* Eingeklapptes Band 600 mm kürzer; rechter Seitenschild mit 500 mm Freiraum an Bordsteinen`,
+    `A máquina mais leve da classe 650 cv\n* ~${weightKg} t CECE: transporte sem licenças especiais; lastro de fábrica opcional até 1.800 kg\n* Raio de giro de 1,7 m (o menor da categoria) e correia com giro de 130°: rotatórias estreitas\n* Correia dobrada 600 mm mais curta; placa lateral direita com altura livre de 500 mm junto a meios-fios`
+  ),
+  usp3: loc(
+    'Portapicas BMS 15 EVO: hasta 50 % más durabilidad que el BMS 15 L\n* Hasta 20 % menos consumo de combustible y desgaste\n* Accionamiento auxiliar opcional con marcha de emergencia: saca la máquina de túneles o aeropuertos si falla el motor principal\n* Doble filtración de agua; filtros, gasóleo y AdBlue accesibles desde el puesto',
+    'BMS 15 EVO tool holders: up to 50 % longer life than BMS 15 L\n* Up to 20 % less fuel consumption and wear\n* Optional auxiliary drive with emergency mode: moves the machine out of tunnels or airports if the main engine fails\n* Dual water filtration; filters, diesel and AdBlue accessible from the operator station',
+    'Meißelhalter BMS 15 EVO: bis zu 50 % längere Lebensdauer als BMS 15 L\n* Bis zu 20 % weniger Kraftstoffverbrauch und Verschleiß\n* Optionaler Hilfsantrieb mit Notfahrfunktion: bringt die Maschine bei Ausfall des Hauptmotors aus Tunneln oder Flughäfen\n* Doppelte Wasserfiltration; Filter, Diesel und AdBlue vom Fahrstand aus erreichbar',
+    'Porta-dentes BMS 15 EVO: até 50 % mais durabilidade que o BMS 15 L\n* Até 20 % menos consumo de combustível e desgaste\n* Acionamento auxiliar opcional com modo de emergência: retira a máquina de túneis ou aeroportos se o motor principal falhar\n* Dupla filtragem de água; filtros, diesel e AdBlue acessíveis a partir do posto'
+  ),
+  usp4: loc(
+    'Puesto totalmente aislado de vibraciones, desplazable hasta 200 mm, con asiento calefactado\n* Dos pantallas de 7" a color, BOMAG Easy Level y Fast Select (cualquier ajuste en máx. 3 pasos)\n* Iluminación de serie de 37.700 lm, la más potente de su clase (+142.750 lm con Advanced Night Package)\n* ION DUST SHIELD (opcional): reduce ≥80 % las partículas finas, sin filtros',
+    'Fully vibration-isolated operator station, sliding up to 200 mm, with heated seat\n* Two 7" color displays, BOMAG Easy Level and Fast Select (any setting in max. 3 steps)\n* 37,700 lm standard lighting, the strongest in its class (+142,750 lm with Advanced Night Package)\n* ION DUST SHIELD (optional): reduces fine particles by ≥80 %, no filters',
+    'Vollständig schwingungsentkoppelter Fahrstand, bis 200 mm verschiebbar, mit beheiztem Sitz\n* Zwei 7"-Farbdisplays, BOMAG Easy Level und Fast Select (jede Einstellung in max. 3 Schritten)\n* 37.700 lm Serienbeleuchtung, die stärkste ihrer Klasse (+142.750 lm mit Advanced Night Package)\n* ION DUST SHIELD (optional): reduziert Feinstaub um ≥80 %, ohne Filter',
+    'Posto totalmente isolado de vibrações, deslizante até 200 mm, com assento aquecido\n* Duas telas coloridas de 7", BOMAG Easy Level e Fast Select (qualquer ajuste em no máx. 3 passos)\n* Iluminação de série de 37.700 lm, a mais potente da categoria (+142.750 lm com Advanced Night Package)\n* ION DUST SHIELD (opcional): reduz ≥80 % das partículas finas, sem filtros'
+  ),
+  valueProposition: loc(
+    'La fresadora más liviana y productiva de la clase 650 CV: maniobrable, sencilla de usar y de bajo costo operativo.',
+    'The lightest and most productive cold planer in the 650 hp class: maneuverable, easy to use and low operating cost.',
+    'Die leichteste und produktivste Fräse der 650-PS-Klasse: wendig, einfach zu bedienen und mit niedrigen Betriebskosten.',
+    'A fresadora mais leve e produtiva da classe 650 cv: manobrável, fácil de usar e de baixo custo operacional.'
+  ),
+});

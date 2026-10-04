@@ -2134,6 +2134,7 @@ const MachineComparison = ({
                                   }}
                                   placeholder="0"
                                 />
+                                <span className="text-xs font-normal text-gray-600">m³</span>
                               </div>
                             </td>
                             {getSelectedMachineData().map((machine, index) => {

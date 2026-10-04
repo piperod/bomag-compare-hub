@@ -4,6 +4,7 @@ type NonEsLang = Exclude<Language, 'es'>;
 
 const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   // Phrases used by models added from the BOMAG TCO master file
+  ['(radio de fresado)', { en: '(milling radius)', de: '(Fräsradius)', pt: '(raio de fresagem)' }],
   ['(máx., incl. opciones)', { en: '(max, incl. options)', de: '(max., inkl. Optionen)', pt: '(máx., incl. opcionais)' }],
   ['(primaria y de descarga)', { en: '(primary and discharge)', de: '(Aufnahme- und Abwurfband)', pt: '(primária e de descarga)' }],
   ['traslado/fresado combinado', { en: 'combined travel/milling', de: 'Fahren/Fräsen kombiniert', pt: 'deslocamento/fresagem combinados' }],

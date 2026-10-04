@@ -798,6 +798,25 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
     cuttingSystem: cutWithSideProtection('LA18'),
     idealApplication: APP_LARGE_HIGH,
   }),
+  // WIRTGEN W 100 HR / W 130 HR: brochure-datasheet 2026 (Tier 3 versions; the "i" versions are CN NR Stage 4)
+  millingRow({
+    brand: 'WIRTGEN', model: 'W 100 HR', engine: 'Deutz TCD 2012 L06 2V', enginePower: '155 kW / 208 HP',
+    millingWidth: '1.000 mm', maxDepth: '0-200 mm', drumDiameter: '860 mm',
+    workingSpeed: '0-30 m/min (1,8 km/h)', travelSpeed: '0-133 m/min (8 km/h)',
+    transportCapacity: '92 m3/h (teórica)', conveyorBeltWidth: '400 mm', waterTank: '700 L',
+    operatingWeight: '13.600 kg (CE)', minTurningRadius: '0,55 m (radio de fresado)',
+    cuttingSystem: cutHt22Tier3('W 100 HR'), idealApplication: APP_RENTAL,
+    fuelConsumption: 17, transportCapacityM3h: 92, workingSpeedMmin: 30, turningRadiusM: 0.55, hasBms15l: false,
+  }),
+  millingRow({
+    brand: 'WIRTGEN', model: 'W 130 HR', engine: 'Deutz TCD 2012 L06 2V', enginePower: '155 kW / 208 HP',
+    millingWidth: '1.300 mm', maxDepth: '0-200 mm', drumDiameter: '860 mm',
+    workingSpeed: '0-30 m/min (1,8 km/h)', travelSpeed: '0-133 m/min (8 km/h)',
+    transportCapacity: '92 m3/h (teórica)', conveyorBeltWidth: '400 mm', waterTank: '700 L',
+    operatingWeight: '14.100 kg (CE)', minTurningRadius: '0,85 m (radio de fresado)',
+    cuttingSystem: cutHt22Tier3('W 130 HR'), idealApplication: APP_RENTAL,
+    fuelConsumption: 17, transportCapacityM3h: 92, workingSpeedMmin: 30, turningRadiusM: 0.85, hasBms15l: false,
+  }),
   millingRow({
     ...WIRTGEN_SMALL_COMMON,
     model: 'W 100 R',

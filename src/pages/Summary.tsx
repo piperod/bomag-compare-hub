@@ -389,7 +389,7 @@ function Summary({
                               : val;
                           return (
                             <td key={mIdx} className="border border-gray-300 p-2 text-center">
-                              <input
+                              <Input
                                 type="number"
                                 className="border rounded px-2 py-1 w-20 text-right"
                                 value={displayNum === undefined || displayNum === null ? '' : displayNum}
@@ -688,7 +688,7 @@ function Summary({
                           return (
                             <td key={idx} className="border border-gray-300 p-2 text-center">
                               {hours === 0 ? (
-                                <input
+                                <Input
                                   type="number"
                                   className="border rounded px-2 py-1 w-24 text-right"
                                   value={tco}

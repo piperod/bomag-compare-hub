@@ -255,7 +255,7 @@ export const TCO_USP_HIGHLIGHTS: Record<TcoLine, TcoUspHighlight[]> = {
   milling: [
     {
       driver: 'wear',
-      title: loc('Portapicas BMS15L / BMS 15 EVO', 'BMS15L / BMS 15 EVO tool holders', 'Meißelhalter BMS15L / BMS 15 EVO', 'Porta-dentes BMS15L / BMS 15 EVO'),
+      title: loc('Portapicas BMS 15', 'BMS 15 tool holders', 'Meißelhalter BMS 15', 'Porta-dentes BMS 15'),
       impact: loc('-20 % desgaste', '-20 % wear', '-20 % Verschleiß', '-20 % desgaste'),
       detail: loc(
         'Hasta 20 % menos desgaste de herramientas; la versión EVO (serie BM/65) dura hasta 50 % más que la BMS15L. Solo 100 Nm de apriete.',

@@ -3109,7 +3109,7 @@ const MachineComparison = ({
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">
                                     {hours === 0 ? (
-                                      <input
+                                      <Input
                                         type="number"
                                         className="border rounded px-2 py-1 w-24 text-right"
                                         value={usdToInputNumber(tco0, 'aggregate')}

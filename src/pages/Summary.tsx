@@ -27,8 +27,9 @@ interface SummaryProps {
 }
 
 const machineLines = [
-  { key: 'sdr', label: 'SDR', machines: sdrMachines },
-  { key: 'ltr', label: 'LTR', machines: ltrMachines },
+  // Models without a photo yet are not shown
+  { key: 'sdr', label: 'SDR', machines: sdrMachines.filter((m) => hasMachinePhoto(m.model, 'sdr')) },
+  { key: 'ltr', label: 'LTR', machines: ltrMachines.filter((m) => hasMachinePhoto(m.model, 'ltr')) },
   // Add HTR if you have it in data
 ];
 
@@ -90,7 +91,7 @@ const summaryFields = [
   { key: 'tco', labelKey: 'tco' },
   // Calculated fields appended later: timeEstimated and costByTime
 ];
-import { getMachineImagePath } from '@/utils/machineImages';
+import { getMachineImagePath, hasMachinePhoto } from '@/utils/machineImages';
 
 const getImagePath = getMachineImagePath;
 

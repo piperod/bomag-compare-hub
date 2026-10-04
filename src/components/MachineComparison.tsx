@@ -22,7 +22,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getMachineImagePath } from '@/utils/machineImages';
+import { getMachineImagePath, hasMachinePhoto } from '@/utils/machineImages';
 import { ComparableMachine, getMachineFinancialDefaults } from '@/utils/financialFields';
 import {
   getMillingJobHours,
@@ -554,7 +554,12 @@ const MachineComparison = ({
     }
   }, [isCalcOpen]);
 
-  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : selectedLine === 'milling' ? millingMachines : selectedLine === 'pavers' ? paversMachines : selectedLine === 'ptr' ? ptrMachines : [];
+  const allLineMachines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : selectedLine === 'milling' ? millingMachines : selectedLine === 'pavers' ? paversMachines : selectedLine === 'ptr' ? ptrMachines : [];
+  // Models without a photo yet stay in the data but are not shown
+  const machines = React.useMemo(
+    () => (allLineMachines as ComparableMachine[]).filter((m) => hasMachinePhoto(m.model, selectedLine)),
+    [allLineMachines, selectedLine]
+  );
   const machinesSorted = React.useMemo(() => {
     let arr = [...machines];
 

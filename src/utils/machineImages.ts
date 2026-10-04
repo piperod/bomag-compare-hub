@@ -113,6 +113,7 @@ const millingImageByModel: Record<string, string> = {
   bm1200352: 'BM1000-1300-35-2.jpg',
   bm1300352: 'BM1000-1300-35-2.jpg',
   bm200058: 'BM2000-58.jpg',
+  bm200068: 'BM2000-68.jpg',
   bm150065: 'BM1500-2200-65.jpg',
   bm200065: 'BM1500-2200-65.jpg',
   bm220065: 'BM1500-2200-65.jpg',

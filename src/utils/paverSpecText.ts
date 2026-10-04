@@ -686,6 +686,30 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
     },
   ],
   [
+    '(con patines reductores)',
+    { en: '(with reduction skids)', de: '(mit Reduzierschuhen)', pt: '(com sapatas redutoras)' },
+  ],
+  [
+    '(según mercado)',
+    { en: '(depending on market)', de: '(je nach Markt)', pt: '(conforme o mercado)' },
+  ],
+  [
+    '(solamente)',
+    { en: '(only)', de: '(nur)', pt: '(somente)' },
+  ],
+  [
+    'Rodillo de empuje giratorio',
+    { en: 'Rotatable push roller', de: 'Drehbare Schubrolle', pt: 'Rolo de empurre giratório' },
+  ],
+  [
+    '2 plataformas de mando (altura hidráulica), 2 joysticks de dirección',
+    {
+      en: '2 operator platforms (hydraulic height), 2 steering joysticks',
+      de: '2 Fahrerstände (hydraulisch höhenverstellbar), 2 Lenk-Joysticks',
+      pt: '2 plataformas de comando (altura hidráulica), 2 joysticks de direção',
+    },
+  ],
+  [
     'mín. (con patines reductores)',
     {
       en: 'min. (with reduction skids)',

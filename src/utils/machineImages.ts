@@ -109,6 +109,8 @@ const millingImageByModel: Record<string, string> = {
   w200f: 'W200F.jpg',
   pm620: 'PM620.jpg',
   pm622: 'PM622.jpg',
+  scm1000c8s: 'SCM1000C-8S.jpg',
+  scm2000c10: 'SCM2000C-10.jpg',
   w100hr: 'W100-W130-HR.jpg',
   w130hr: 'W100-W130-HR.jpg',
 };
@@ -126,6 +128,7 @@ const ptrImageByModel: Record<string, string> = {
   cp2700: 'CP2700.jpg',
   ptr125: 'PTR125.jpg',
   ptr220: 'PTR220.jpg',
+  spr160c8: 'SPR160C-8.jpg',
 };
 
 const ltrImages = [
@@ -133,7 +136,7 @@ const ltrImages = [
 ];
 
 const htrImages = [
-  'HD90 VV.jpg', 'CC4200.jpg', 'CB10.jpg', 'AV110X.jpg', 'BW161-AD-4.jpg', 'BW161AD4.jpg',
+  'HD90 VV.jpg', 'CC4200.jpg', 'CB10.jpg', 'AV110X.jpg', 'BW161-AD-4.jpg', 'BW161AD4.jpg', 'HD90 VO.jpg',
 ];
 
 export function getMachineImagePath(model: string, line: string): string {

@@ -7,6 +7,8 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   ['(30.330 kg transporte)', { en: '(30,330 kg transport)', de: '(30.330 kg Transport)', pt: '(30.330 kg transporte)' }],
   ['(29.430 kg transporte)', { en: '(29,430 kg transport)', de: '(29.430 kg Transport)', pt: '(29.430 kg transporte)' }],
   ['(30.000 kg transporte)', { en: '(30,000 kg transport)', de: '(30.000 kg Transport)', pt: '(30.000 kg transporte)' }],
+  ['(máx.; 14.600 kg transporte)', { en: '(max; 14,600 kg transport)', de: '(max.; 14.600 kg Transport)', pt: '(máx.; 14.600 kg transporte)' }],
+  ['(31.000 kg CE; 28.500 kg transporte)', { en: '(31,000 kg CE; 28,500 kg transport)', de: '(31.000 kg CE; 28.500 kg Transport)', pt: '(31.000 kg CE; 28.500 kg transporte)' }],
   [' bruta)', { en: ' gross)', de: ' brutto)', pt: ' bruta)' }],
   ['(radio de fresado)', { en: '(milling radius)', de: '(Fräsradius)', pt: '(raio de fresagem)' }],
   ['(máx., incl. opciones)', { en: '(max, incl. options)', de: '(max., inkl. Optionen)', pt: '(máx., incl. opcionais)' }],

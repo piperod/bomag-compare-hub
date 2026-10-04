@@ -399,7 +399,36 @@ export const htrMasterAdditions: HtrMachineSpec[] = [
   htrRow({ model: 'CC4200', weight: 10200, engine: 'Water cooled turbo Diesel', compactionWidth: 1.73, power: 110, origin: ORIGIN.brazil }),
   htrRow({ model: 'CC5200', weight: 11300, engine: 'Cummins QSB 4.5 IIIB/T4i', compactionWidth: 1.95, power: 130.1, origin: ORIGIN.china }),
   htrRow({ model: 'CC6200', weight: 12400, engine: 'Cummins QSB 4.5 IIIB/T4i', compactionWidth: 2.13, power: 159.6, origin: ORIGIN.china }),
-  htrRow({ model: 'CC5200C VI', weight: 10310, engine: 'Cummins QSF3.8 IV/T4f', compactionWidth: 1.95, power: 130.1, innovations: COMBINATION_ROLLER }),
+  htrRow({ model: 'CC5200C VI', weight: 10310, engine: 'Cummins QSF3.8 IV/T4f', compactionWidth: 1.95, power: 130.1, innovations: COMBINATION_ROLLER }),  // HAMM HD+ 90 VO (H258): datasheet 2580455 es-ES V12 (UN ECE R96 / Tier 3)
+  {
+    ...htrRow({
+      model: 'HD+ 90 VO', weight: 9520, engine: 'Deutz TCD 2012 L04 2V (UN ECE R96 / Tier 3)', compactionWidth: 1.68, power: 100,
+      origin: ORIGIN.germany,
+      innovations: loc(
+        'Oscilación (tambor trasero), HAMMTRONIC, puesto de mando giratorio y desplazable, desplazamiento de trazada 170 mm',
+        'Oscillation (rear drum), HAMMTRONIC, rotating and sliding operator station, 170 mm crab steering offset',
+        'Oszillation (Hinterbandage), HAMMTRONIC, dreh- und verschiebbarer Fahrerstand, 170 mm Hundegang',
+        'Oscilação (tambor traseiro), HAMMTRONIC, posto de comando giratório e deslizante, deslocamento de trilha 170 mm'
+      ),
+    }),
+    brand: 'HAMM',
+    amplitude: '0,62/0,34 (vibr.) · 1,25 (osc.)',
+    staticLinearLoad: 28.5,
+    gradeability: 40,
+    vibrationSystems: loc(
+      'Delantero vibración 42/50 Hz, 75/60 kN; trasero oscilación 39 Hz, 128 kN, amplitud tangencial 1,25 mm',
+      'Front vibration 42/50 Hz, 75/60 kN; rear oscillation 39 Hz, 128 kN, tangential amplitude 1.25 mm',
+      'Vorne Vibration 42/50 Hz, 75/60 kN; hinten Oszillation 39 Hz, 128 kN, Tangentialamplitude 1,25 mm',
+      'Dianteiro vibração 42/50 Hz, 75/60 kN; traseiro oscilação 39 Hz, 128 kN, amplitude tangencial 1,25 mm'
+    ),
+    maintenanceJoint: loc(
+      'Dirección articulada, ángulo de oscilación ±10°, ángulo de dirección ±30°',
+      'Articulated steering, ±10° oscillation angle, ±30° steering angle',
+      'Knicklenkung, Pendelwinkel ±10°, Lenkwinkel ±30°',
+      'Direção articulada, ângulo de oscilação ±10°, ângulo de direção ±30°'
+    ),
+    compactionAssistant: loc('HCM (HAMM Compactómetro, opcional)', 'HCM (HAMM Compaction Meter, optional)', 'HCM (HAMM Compaction Meter, optional)', 'HCM (HAMM Compactômetro, opcional)'),
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -576,6 +605,17 @@ export const ptrMachines: MachineSpec[] = [
       'Max. ballasted weight 24,000 kg · Speed 0-19 km/h · Fuel tank 250 l · Water tank 460 l · Tyres 11x20" · "Air on Run" central inflation · Ammann Traction Control · ECOdrop',
       'Max. Gewicht mit Ballast 24.000 kg · Geschwindigkeit 0-19 km/h · Kraftstofftank 250 l · Wassertank 460 l · Reifen 11x20" · Zentrale Reifenfüllung "Air on Run" · Ammann Traction Control · ECOdrop',
       'Peso máx. com lastro 24.000 kg · Velocidade 0-19 km/h · Tanque de combustível 250 l · Tanque de água 460 l · Pneus 11x20" · Calibragem central "Air on Run" · Ammann Traction Control · ECOdrop'
+    ),
+  }),
+  // SANY SPR160C-8: datasheet (emission level not stated)
+  ptrRow({
+    brand: 'SANY', model: 'SPR160C-8', weight: 10000, engine: 'Dongfeng Cummins 4BTAA3.9-C125', rollingWidth: 2.085, power: 93,
+    numberOfWheels: loc('-', '-', '-', '-'), gradeability: 25,
+    innovations: loc(
+      'Peso máx. con lastre 16.000 kg · Velocidad 0-7,6 / 0-14 km/h · Tanque de combustible 160 l · Tanque de agua 500 l · Traslape 36 mm · Presión de inflado 200-800 kPa (inflado centralizado y rociado automático de aceite opcionales)',
+      'Max. ballasted weight 16,000 kg · Speed 0-7.6 / 0-14 km/h · Fuel tank 160 l · Water tank 500 l · Overlap 36 mm · Inflation pressure 200-800 kPa (central inflation and automatic oil spraying optional)',
+      'Max. Gewicht mit Ballast 16.000 kg · Geschwindigkeit 0-7,6 / 0-14 km/h · Kraftstofftank 160 l · Wassertank 500 l · Überlappung 36 mm · Reifendruck 200-800 kPa (Reifendruckregelanlage und automatische Ölsprühung optional)',
+      'Peso máx. com lastro 16.000 kg · Velocidade 0-7,6 / 0-14 km/h · Tanque de combustível 160 l · Tanque de água 500 l · Sobreposição 36 mm · Pressão de enchimento 200-800 kPa (enchimento centralizado e aspersão automática de óleo opcionais)'
     ),
   }),
 ];
@@ -834,6 +874,46 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
     ),
     idealApplication: CAT_PM600_APP,
     fuelConsumption: 0, workingSpeedMmin: 100, turningRadiusM: 1.8, hasBms15l: false,
+  }),
+  // SANY SCM1000C-8S: datasheet V20250409 (C8S series; current version of SCM1000C-8)
+  millingRow({
+    brand: 'SANY', model: 'SCM1000C-8S', engine: 'SANY D07', enginePower: '180 kW / 2.200 rpm',
+    millingWidth: '1.000 mm', maxDepth: '0-280 mm', drumDiameter: '930 mm',
+    workingSpeed: '0-35 m/min', travelSpeed: '0-133 m/min (8 km/h)', transportCapacity: '-', conveyorBeltWidth: '500 mm', waterTank: '800 L',
+    operatingWeight: '15.750 kg (máx.; 14.600 kg transporte)', minTurningRadius: '≤1,2 m (radio de fresado)',
+    cuttingSystem: loc(
+      'Tambor de 2ª generación con separación de 18 mm, accionamiento mecánico; nivelación automática SYMC estándar; altura de descarga 4,5 m',
+      '2nd-generation drum with 18 mm tool spacing, mechanical drive; standard SYMC automatic levelling; 4.5 m discharge height',
+      'Fräswalze der 2. Generation mit 18 mm Linienabstand, mechanischer Antrieb; SYMC-Nivellierautomatik serienmäßig; Abwurfhöhe 4,5 m',
+      'Tambor de 2ª geração com espaçamento de 18 mm, acionamento mecânico; nivelamento automático SYMC de série; altura de descarga 4,5 m'
+    ),
+    idealApplication: loc(
+      'Vías urbanas y carreteras: fresado de asfalto, texturizado de concreto y bases estabilizadas',
+      'Urban roads and highways: asphalt milling, concrete texturing and stabilised bases',
+      'Stadtstraßen und Fernstraßen: Asphaltfräsen, Betontexturierung und verfestigte Tragschichten',
+      'Vias urbanas e rodovias: fresagem de asfalto, texturização de concreto e bases estabilizadas'
+    ),
+    fuelConsumption: 0, workingSpeedMmin: 35, turningRadiusM: 1.2, hasBms15l: false,
+  }),
+  // SANY SCM2000C-10: datasheet (China III emission level, equivalent to EPA Tier 3 / EU Stage IIIA)
+  millingRow({
+    brand: 'SANY', model: 'SCM2000C-10', engine: 'Cummins X15 (China III)', enginePower: '503 kW / 2.100 rpm',
+    millingWidth: '2.000 mm', maxDepth: '0-330 mm', drumDiameter: '1.070 mm',
+    workingSpeed: '-', travelSpeed: '0-6 km/h', transportCapacity: '-', conveyorBeltWidth: '850 mm', waterTank: '3.400 L',
+    operatingWeight: '33.000 kg (31.000 kg CE; 28.500 kg transporte)', minTurningRadius: '-',
+    cuttingSystem: loc(
+      'Tambor de 146 puntas con separación de 18 mm (cambio rápido); tambores finos de 6 mm opcionales; cinta hasta 6 m/s, altura de descarga 5 m',
+      '146-tip drum with 18 mm spacing (quick change); optional 6 mm fine milling drums; conveyor up to 6 m/s, 5 m discharge height',
+      'Fräswalze mit 146 Meißeln, 18 mm Linienabstand (Schnellwechsel); optionale 6-mm-Feinfräswalzen; Band bis 6 m/s, Abwurfhöhe 5 m',
+      'Tambor de 146 pontas com espaçamento de 18 mm (troca rápida); tambores finos de 6 mm opcionais; correia até 6 m/s, altura de descarga 5 m'
+    ),
+    idealApplication: loc(
+      'Fresado a gran escala en profundidad total; motor China III (equivalente a Tier 3)',
+      'Large-scale full-depth milling; China III engine (Tier 3 equivalent)',
+      'Großflächiges Vollausbau-Fräsen; Motor China III (entspricht Tier 3)',
+      'Fresagem em grande escala em profundidade total; motor China III (equivalente a Tier 3)'
+    ),
+    fuelConsumption: 0, hasBms15l: false,
   }),
   // WIRTGEN W 100 HR / W 130 HR: brochure-datasheet 2026 (Tier 3 versions; the "i" versions are CN NR Stage 4)
   millingRow({

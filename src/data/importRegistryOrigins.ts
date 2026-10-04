@@ -7,6 +7,10 @@
 import type { LocalizedText } from './paversData';
 
 export const IMPORT_REGISTRY_ORIGINS: Record<string, LocalizedText> = {
+  'HAMM|HD+ 90 VO': { es: 'Alemania', en: 'Germany', de: 'Deutschland', pt: 'Alemanha' }, // ~48 uds.
+  'SANY|SPR160C-8': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 59 uds.
+  'SANY|SCM1000C-8S': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 15 uds.
+  'SANY|SCM2000C-10': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 14 uds. (+20 SCM2000C-10R)
   'CATERPILLAR|PM620': { es: 'Italia', en: 'Italy', de: 'Italien', pt: 'Itália' }, // 22 uds.
   'WIRTGEN|W 100 HR': { es: 'China', en: 'China', de: 'China', pt: 'China' }, // 23 uds. (W100HR)
   'HAMM|HC200': { es: 'Alemania', en: 'Germany', de: 'Deutschland', pt: 'Alemanha' }, // 38 uds.

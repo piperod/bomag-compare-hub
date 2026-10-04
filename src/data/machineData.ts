@@ -690,8 +690,15 @@ export const sdrMachines: MachineSpec[] = [
 ];
 */
 
+/**
+ * SDR models kept in the data but not shown. Remove a `brand|model` entry to show that model again.
+ */
+const HIDDEN_SDR = new Set(['DYNAPAC|CT3000']);
+
 export const sdrMachines: MachineSpec[] = complementUsps('sdr', withImportRegistryOrigin(
-  mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions)
+  mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions).filter(
+    (machine) => !HIDDEN_SDR.has(`${machine.brand}|${machine.model}`)
+  )
 ));
 
 const ltrBaseMachines: MachineSpec[] = [

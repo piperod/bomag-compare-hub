@@ -43,7 +43,7 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
       id: 'milling',
       title: t('milling'),
       description: t('millingDesc'),
-      icon: `${base}images/Milling/BM1000-20.png`,
+      icon: `${base}millingicon.png`,
       alt: 'Milling Machine Icon'
     },
     {

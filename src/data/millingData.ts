@@ -283,10 +283,10 @@ const baseMillingMachines: MillingMachineSpec[] = [
 ];
 
 import { complementUsps } from './uspComplements';
-/** Country of origin of BOMAG milling machines by series (BOMAG LATAM): /35 and /65 from Germany, /20 and /58 from China. */
+/** Country of origin of BOMAG milling machines by series (BOMAG LATAM): /35 and /65 from Germany, /20, /58 and /68 from China. */
 const BOMAG_MILLING_ORIGIN: Array<[RegExp, LocalizedText]> = [
   [/\/(35|65)(-\d+)?$/, { es: 'Alemania', en: 'Germany', de: 'Deutschland', pt: 'Alemanha' }],
-  [/\/(20|58)(-\d+)?$/, { es: 'China', en: 'China', de: 'China', pt: 'China' }],
+  [/\/(20|58|68)(-\d+)?$/, { es: 'China', en: 'China', de: 'China', pt: 'China' }],
 ];
 
 const withBomagMillingOrigin = (machine: MillingMachineSpec): MillingMachineSpec => {

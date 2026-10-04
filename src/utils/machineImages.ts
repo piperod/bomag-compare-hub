@@ -229,3 +229,8 @@ export function getMachineImagePath(model: string, line: string): string {
 
   return `${base}placeholder.svg`;
 }
+
+/** False when the model has no photo yet (only the placeholder); such models are hidden from the selection. */
+export function hasMachinePhoto(model: string, line: string): boolean {
+  return !getMachineImagePath(model, line).endsWith('placeholder.svg');
+}

@@ -3,6 +3,8 @@ const norm = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 const sdrImageByModel: Record<string, string> = {
   bw211d5sl: 'BW211 D5-SL.png',
   ca2500pd: 'CA2500PD.jpg',
+  ca4000pd: 'CA4000PD-CA5500PD.jpg',
+  ca5500pd: 'CA4000PD-CA5500PD.jpg',
   clg6611e: 'CLG6611E.jpg',
   hc200: 'HC200.jpg',
   clg6612e: 'CLG6612E.jpg',
@@ -64,7 +66,7 @@ const sdrImageByModel: Record<string, string> = {
 
 /** SDR models from the TCO master file that have no photo yet (avoid showing a BOMAG photo for them). */
 const sdrModelsWithoutImage = new Set([
-  'cs1400', 'cs1400n', 'ct3000', 'ca4000pd', 'ca5500pd',
+  'cs1400', 'cs1400n', 'ct3000',
 ]);
 
 const paverImageByModel: Record<string, string> = {

@@ -18,10 +18,15 @@ const Header = () => {
 
   return (
     <header className="bg-bomag-yellow flex items-center justify-between px-4 py-2 shadow">
-      <div className="flex items-center gap-4">
+      <Link
+        to="/"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="flex items-center gap-4"
+        title={t('productLines')}
+      >
         <img src={`${base}bomag-logo.png`} alt="BOMAG Logo" className="h-10" />
         <span className="font-oswald text-2xl tracking-widest text-bomag-gray">BOMAG Compare Hub</span>
-      </div>
+      </Link>
       <nav className="flex gap-4 items-center flex-wrap justify-end">
         <Link to="/" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/' ? 'bg-white' : ''} text-black`}>{t('detailComparison')}</Link>
         <Link to="/summary" className={`px-3 py-1 rounded font-semibold ${location.pathname === '/summary' ? 'bg-white' : ''} text-black`}>{t('globalSummary')}</Link>

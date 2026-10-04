@@ -1375,7 +1375,7 @@ const MachineComparison = ({
                     <CompareTable columnCount={compareSpecCols}>
                       <thead>
                         <tr className="bg-bomag-light-gray">
-                          <th className="border border-gray-300 p-2 text-left font-semibold">{selectedLine === 'pavers' ? 'BOMAG' : t('usp')}</th>
+                          <th className="border border-gray-300 p-2 text-left font-semibold">{t('usp')}</th>
                           {getSelectedMachineData().map((machine, index) => (
                             <th key={index} className="border border-gray-300 p-2 text-center">
                               <div className="text-sm font-bold">{machine.brand}</div>

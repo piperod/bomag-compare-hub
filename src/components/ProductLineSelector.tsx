@@ -36,7 +36,7 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
       id: 'ptr',
       title: t('ptr'),
       description: t('ptrDesc'),
-      icon: `${base}ptricon.svg`,
+      icon: `${base}ptricon.png`,
       alt: 'Pneumatic Tired Roller Icon'
     },
     {

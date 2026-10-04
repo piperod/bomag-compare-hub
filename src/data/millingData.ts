@@ -276,9 +276,10 @@ const baseMillingMachines: MillingMachineSpec[] = [
   }
 ];
 
-export const millingMachines: MillingMachineSpec[] = withImportRegistryOrigin(
+import { complementUsps } from './uspComplements';
+export const millingMachines: MillingMachineSpec[] = complementUsps('milling', withImportRegistryOrigin(
   mergeByBrand(baseMillingMachines, millingMasterAdditions)
-);
+));
 
 /** Single row of the preventive maintenance table (BM 1000/20) */
 export interface PreventiveMaintenanceRow {

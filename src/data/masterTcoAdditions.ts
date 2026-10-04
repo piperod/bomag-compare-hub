@@ -403,7 +403,7 @@ export const htrMasterAdditions: HtrMachineSpec[] = [
   htrRow({ model: 'CC5200C VI', weight: 10310, engine: 'Cummins QSF3.8 IV/T4f', compactionWidth: 1.95, power: 130.1, innovations: COMBINATION_ROLLER }),  // HAMM HD+ 90 VO (H258): datasheet 2580455 es-ES V12 (UN ECE R96 / Tier 3)
   {
     ...htrRow({
-      model: 'HD+ 90 VO', weight: 9520, engine: 'Deutz TCD 2012 L04 2V (UN ECE R96 / Tier 3)', compactionWidth: 1.68, power: 100,
+      model: 'HD+ 90 VO', weight: 9520, engine: 'Deutz TCD 2012 L04 2V (UN ECE R96 / Tier 3)', compactionWidth: 1.68, power: 134,
       origin: ORIGIN.germany,
       innovations: loc(
         'Oscilación (tambor trasero), HAMMTRONIC, puesto de mando giratorio y desplazable, desplazamiento de trazada 170 mm',
@@ -610,7 +610,7 @@ export const ptrMachines: MachineSpec[] = [
   }),
   // SANY SPR160C-8: datasheet (emission level not stated)
   ptrRow({
-    brand: 'SANY', model: 'SPR160C-8', weight: 10000, engine: 'Dongfeng Cummins 4BTAA3.9-C125', rollingWidth: 2.085, power: 93,
+    brand: 'SANY', model: 'SPR160C-8', weight: 10000, engine: 'Dongfeng Cummins 4BTAA3.9-C125', rollingWidth: 2.085, power: 124.7,
     numberOfWheels: loc('-', '-', '-', '-'), gradeability: 25,
     innovations: loc(
       'Peso máx. con lastre 16.000 kg · Velocidad 0-7,6 / 0-14 km/h · Tanque de combustible 160 l · Tanque de agua 500 l · Traslape 36 mm · Presión de inflado 200-800 kPa (inflado centralizado y rociado automático de aceite opcionales)',

@@ -44,6 +44,7 @@ export interface MachineSpec {
 }
 
 import { BW120_AD5_USPS } from '@/data/bomagUsps';
+import { complementUsps } from '@/data/uspComplements';
 import sdrFromCsv from '@/data/sdrFromCsv.json';
 import { ltrMasterAdditions, mergeByBrand, ptrMachines as ptrMasterMachines, sdrMasterAdditions } from '@/data/masterTcoAdditions';
 import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
@@ -689,9 +690,9 @@ export const sdrMachines: MachineSpec[] = [
 ];
 */
 
-export const sdrMachines: MachineSpec[] = withImportRegistryOrigin(
+export const sdrMachines: MachineSpec[] = complementUsps('sdr', withImportRegistryOrigin(
   mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions)
-);
+));
 
 const ltrBaseMachines: MachineSpec[] = [
   {
@@ -1054,9 +1055,9 @@ const ltrBaseMachines: MachineSpec[] = [
   }
 ];
 
-export const ltrMachines: MachineSpec[] = withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions));
+export const ltrMachines: MachineSpec[] = complementUsps('ltr', withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions)));
 
-export const ptrMachines: MachineSpec[] = withImportRegistryOrigin(ptrMasterMachines);
+export const ptrMachines: MachineSpec[] = complementUsps('ptr', withImportRegistryOrigin(ptrMasterMachines));
 
 export interface CompactionData {
   weightRange: string;

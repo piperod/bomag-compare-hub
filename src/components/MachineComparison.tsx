@@ -36,6 +36,7 @@ import {
   getPaverUspDefaults,
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
+import { complementUsps } from '@/data/uspComplements';
 import { BomagTcoHighlights } from '@/components/BomagTcoHighlights';
 
 interface MachineComparisonProps {
@@ -345,9 +346,9 @@ const htrBaseMachines = [
 ];
 
 // HTR models added from the BOMAG TCO master file
-const htrMachines = withImportRegistryOrigin(
+const htrMachines = complementUsps('htr', withImportRegistryOrigin(
   mergeByBrand(htrBaseMachines, htrMasterAdditions as unknown as typeof htrBaseMachines)
-);
+));
 
 const base = import.meta.env.BASE_URL;
 const getImagePath = getMachineImagePath;
@@ -433,7 +434,7 @@ const MachineComparison = ({
         { key: 'usp1', labelKey: 'millingUsp1' }, { key: 'usp2', labelKey: 'millingUsp2' }, { key: 'usp3', labelKey: 'millingUsp3' }, { key: 'usp4', labelKey: 'millingUsp4' }
       ])
     : selectedLine === 'ptr'
-    ? []
+    ? ((locale.uspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [])
     : selectedLine === 'pavers'
     ? ((locale.paverUspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [])
     : ((locale.uspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [

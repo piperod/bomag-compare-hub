@@ -43,6 +43,7 @@ export interface MachineSpec {
   numberOfWheels?: { es: string; en: string; de: string; pt: string };
 }
 
+import { BW120_AD5_USPS } from '@/data/bomagUsps';
 import sdrFromCsv from '@/data/sdrFromCsv.json';
 import { ltrMasterAdditions, mergeByBrand, ptrMachines as ptrMasterMachines, sdrMasterAdditions } from '@/data/masterTcoAdditions';
 import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
@@ -696,6 +697,7 @@ const ltrBaseMachines: MachineSpec[] = [
   {
     brand: "BOMAG",
     model: "BW120 AD-5",
+    ...BW120_AD5_USPS,
     weight: 2700,
     engine: "Kubota D1703",
     compactionWidth: 1.2,

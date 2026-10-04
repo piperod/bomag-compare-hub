@@ -10,6 +10,7 @@
 import type { MachineSpec } from './machineData';
 import type { MillingMachineSpec } from './millingData';
 import type { LocalizedText, PaverFinancialData, PaverMachineSpec } from './paversData';
+import { BM2000_58_USPS, bm35Usps } from './bomagUsps';
 
 const loc = (es: string, en: string, de: string, pt: string): LocalizedText => ({ es, en, de, pt });
 const same = (s: string): LocalizedText => ({ es: s, en: s, de: s, pt: s });
@@ -706,7 +707,7 @@ const APP_W200F = loc(
 type MillingRow = Omit<
   MillingMachineSpec,
   'energyEfficiency' | 'usp1' | 'usp2' | 'usp3' | 'usp4' | 'valueProposition'
->;
+> & Partial<Pick<MillingMachineSpec, 'usp1' | 'usp2' | 'usp3' | 'usp4' | 'valueProposition'>>;
 
 const millingRow = (r: MillingRow): MillingMachineSpec => ({
   energyEfficiency: NONE,
@@ -780,18 +781,24 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
   millingRow({
     ...BM_35_COMMON,
     model: 'BM 1000/35-2',
+    ...bm35Usps('19,8', '19.8', '18,5', '18.5'),
+    fuelConsumption: 18.5,
     millingWidth: '1.000 mm',
     operatingWeight: '20.400 kg (CECE) / 24.000 kg (máx., incl. opciones)',
   }),
   millingRow({
     ...BM_35_COMMON,
     model: 'BM 1200/35-2',
+    ...bm35Usps('20,8', '20.8', '18,8', '18.8'),
+    fuelConsumption: 18.8,
     millingWidth: '1.200 mm',
     operatingWeight: '21.400 kg (CECE) / 25.000 kg (máx., incl. opciones)',
   }),
   millingRow({
     ...BM_35_COMMON,
     model: 'BM 1300/35-2',
+    ...bm35Usps('21,3', '21.3', '17,3', '17.3'),
+    fuelConsumption: 17.3,
     millingWidth: '1.300 mm',
     operatingWeight: '21.900 kg (CECE) / 25.500 kg (máx., incl. opciones)',
   }),
@@ -828,6 +835,8 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
   millingRow({
     ...BM_65_COMMON,
     model: 'BM 2000/58',
+    ...BM2000_58_USPS,
+    fuelConsumption: 29,
     engine: '449 kW - Cummins X15',
     enginePower: '449 kW - Cummins X15',
     millingWidth: '2.000 mm',

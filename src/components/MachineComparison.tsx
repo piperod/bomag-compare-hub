@@ -3,6 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { sdrMachines, ltrMachines, ptrMachines, MachineSpec } from '@/data/machineData';
 import { htrMasterAdditions, mergeByBrand } from '@/data/masterTcoAdditions';
+import { BW161_AD4_USPS } from '@/data/bomagUsps';
 import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
 import { millingMachines, MillingMachineSpec, bm100020PreventiveMaintenance } from '@/data/millingData';
 import { paversMachines, PaverMachineSpec } from '@/data/paversData';
@@ -57,6 +58,7 @@ const htrBaseMachines = [
   {
     brand: 'BOMAG',
     model: 'BW161 AD-4',
+    ...BW161_AD4_USPS,
     weight: 9700,
     engine: 'Deutz TCD L04 2V',
     compactionWidth: 1.68,

@@ -10,7 +10,7 @@
 import type { MachineSpec } from './machineData';
 import type { MillingMachineSpec } from './millingData';
 import type { LocalizedText, PaverFinancialData, PaverMachineSpec } from './paversData';
-import { BM2000_58_USPS, bm35Usps, bm65Usps } from './bomagUsps';
+import { BF350_C5_USPS, BM2000_58_USPS, bf600800Usps, bm35Usps, bm65Usps } from './bomagUsps';
 
 const loc = (es: string, en: string, de: string, pt: string): LocalizedText => ({ es, en, de, pt });
 const same = (s: string): LocalizedText => ({ es: s, en: s, de: s, pt: s });
@@ -1146,6 +1146,7 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
   // (PRS89135010 Sa01, PRS89247010 Sa04, PRS88424010 Sa01, PRS89341010 Sa05). Equipment marked ☑ there is standard.
   paverRow({
     brand: 'BOMAG', model: 'BF 350 C-5', sizeCategory: 'MEDIANA (3,6-6 m)',
+    ...BF350_C5_USPS,
     engine: '75 kW / 100 hp', engineManufacturer: 'Deutz TCD 2.9 L04 (4 cil.)', emissionStandard: 'Stage IIIa',
     nominalPower: '75 kW / 100 hp', fuelSavingMode: 'ECOMODE (estándar)', fuelTankCapacity: '110 L',
     pavingSpeed: 'Hasta 32 m/min', travelSpeed: '4,5 km/h', maxLayerThickness: '250 mm',
@@ -1313,6 +1314,7 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
   }),
   paverRow({
     brand: 'BOMAG', model: 'BF 700 C-3', sizeCategory: 'GRANDE (6,1-9 m)',
+    ...bf600800Usps('9,0', '9.0', false),
     engine: '128 kW / 172 hp', engineManufacturer: 'Deutz TCD 2012 L06 (6 cil.)', emissionStandard: 'Stage IIIa / Tier 3',
     nominalPower: '128 kW / 172 hp', fuelSavingMode: 'ECOMODE (estándar)', fuelTankCapacity: '285 L',
     pavingSpeed: 'Hasta 25 m/min', travelSpeed: '4 km/h', maxLayerThickness: '300 mm',
@@ -1333,6 +1335,7 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
   }),
   paverRow({
     brand: 'BOMAG', model: 'BF 700 C-3 L', sizeCategory: 'GRANDE (6,1-9 m)',
+    ...bf600800Usps('9,0', '9.0', false),
     engine: '128 kW / 172 hp', engineManufacturer: 'Deutz TCD 2012 L06 (6 cil.)', emissionStandard: 'Stage IIIa / Tier 3',
     nominalPower: '128 kW / 172 hp', fuelSavingMode: 'ECOMODE (estándar)', fuelTankCapacity: '285 L',
     pavingSpeed: 'Hasta 25 m/min', travelSpeed: '4 km/h', maxLayerThickness: '300 mm',
@@ -1370,6 +1373,7 @@ export const paverMasterAdditions: PaverMachineSpec[] = [
   }),
   paverRow({
     brand: 'BOMAG', model: 'BF 800 C-3', sizeCategory: 'EXTRA GRANDE (>9 m)',
+    ...bf600800Usps('10,0', '10.0', true),
     engine: '135 kW / 181 hp', engineManufacturer: 'Deutz TCD 2012 L06 (6 cil.)', emissionStandard: 'Stage IIIa / Tier 3',
     nominalPower: '135 kW / 181 hp', fuelSavingMode: 'ECOMODE (estándar)', fuelTankCapacity: '285 L',
     pavingSpeed: 'Hasta 25 m/min', travelSpeed: '4 km/h', maxLayerThickness: '300 mm',

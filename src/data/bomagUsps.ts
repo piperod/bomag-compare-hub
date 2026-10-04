@@ -187,3 +187,127 @@ export const bm65Usps = (weightKg: string, weightKgEn: string): MillingUsps => (
     'A fresadora mais leve e produtiva da classe 650 cv: manobrável, fácil de usar e de baixo custo operacional.'
   ),
 });
+
+// Pavers — BOMAG Paver product overview presentation (BF 350-5 and BF 600-800-3 sections)
+type PaverUsps = Record<'usp1' | 'usp2' | 'usp3' | 'usp4' | 'usp5' | 'usp6' | 'usp7' | 'usp8' | 'usp9', LocalizedText>;
+
+const NOT_PUBLISHED_CONSUMPTION = loc(
+  'No publicado en la presentación BOMAG (ECOMODE: ~20 % menos consumo frente a una pavimentadora estándar)',
+  'Not published in the BOMAG presentation (ECOMODE: ~20 % lower consumption than a standard paver)',
+  'In der BOMAG-Präsentation nicht angegeben (ECOMODE: ~20 % weniger Verbrauch als ein Standardfertiger)',
+  'Não publicado na apresentação BOMAG (ECOMODE: ~20 % menos consumo que uma vibroacabadora padrão)'
+);
+const NOT_PUBLISHED_CO2 = loc(
+  'No publicado (se calcula con el consumo medido en obra)',
+  'Not published (calculated from measured jobsite consumption)',
+  'Nicht angegeben (wird aus dem gemessenen Baustellenverbrauch berechnet)',
+  'Não publicado (calculado a partir do consumo medido em obra)'
+);
+const MAGMALIFE_FACTS = {
+  es: 'placas de aluminio fundido - calentamiento hasta 30 % más rápido - vida útil >3.000 h - calor homogéneo',
+  en: 'cast aluminium heating plates - up to 30 % faster heat-up - lifetime >3,000 h - homogeneous heat',
+  de: 'Heizplatten aus Aluminiumguss - bis zu 30 % schnelleres Aufheizen - Lebensdauer >3.000 h - homogene Wärme',
+  pt: 'placas de alumínio fundido - aquecimento até 30 % mais rápido - vida útil >3.000 h - calor homogêneo',
+};
+const ECOMODE_FACTS = (engine: string) => loc(
+  `ECOMODE de 3 etapas + hidráulica load-sensing ("Power on demand") - ~20 % menos combustible y menos ruido - ${engine}`,
+  `3-stage ECOMODE + load-sensing hydraulics ("Power on demand") - ~20 % less fuel and lower noise - ${engine}`,
+  `3-stufiger ECOMODE + Load-Sensing-Hydraulik ("Power on demand") - ~20 % weniger Kraftstoff und weniger Lärm - ${engine}`,
+  `ECOMODE de 3 estágios + hidráulica load-sensing ("Power on demand") - ~20 % menos combustível e menos ruído - ${engine}`
+);
+
+export const BF350_C5_USPS: PaverUsps = {
+  usp1: loc(
+    `MAGMALIFE opcional (de serie: resistencias calefactoras) - ${MAGMALIFE_FACTS.es}`,
+    `MAGMALIFE optional (standard: heating rods) - ${MAGMALIFE_FACTS.en}`,
+    `MAGMALIFE optional (Serie: Heizstäbe) - ${MAGMALIFE_FACTS.de}`,
+    `MAGMALIFE opcional (de série: resistências) - ${MAGMALIFE_FACTS.pt}`
+  ),
+  usp2: NOT_PUBLISHED_CONSUMPTION,
+  usp3: ECOMODE_FACTS('Deutz TCD 2.9, 75 kW'),
+  usp4: loc(
+    'QUICKCOUPLING para un montaje rápido - extensiones mecánicas de 300/500 mm hasta 5,0 m - se transporta con extensiones de 300 mm montadas (2,5 m) sin costo extra',
+    'QUICKCOUPLING for fast set-up - 300/500 mm mechanical extensions up to 5.0 m - transport with 300 mm extensions mounted (2.5 m) at no extra cost',
+    'QUICKCOUPLING für schnelles Rüsten - mechanische Verbreiterungen 300/500 mm bis 5,0 m - Transport mit montierten 300-mm-Verbreiterungen (2,5 m) ohne Mehrkosten',
+    'QUICKCOUPLING para montagem rápida - extensões mecânicas de 300/500 mm até 5,0 m - transporte com extensões de 300 mm montadas (2,5 m) sem custo extra'
+  ),
+  usp5: loc(
+    'Asiento y tablero giratorios y desplazables a izq./der. - techo protege incluso con el asiento afuera - mandos en el apoyabrazos (opcional, versión C) - TruckDock opcional',
+    'Seat and dashboard rotate and swing out left/right - roof protects even with the seat swung out - armrest controls (optional, C version) - TruckDock optional',
+    'Sitz und Bedienpult dreh- und nach links/rechts ausschwenkbar - Dach schützt auch bei ausgeschwenktem Sitz - Armlehnensteuerung (optional, C-Version) - TruckDock optional',
+    'Assento e painel giratórios e deslocáveis para esq./dir. - teto protege mesmo com o assento para fora - comandos no apoio de braço (opcional, versão C) - TruckDock opcional'
+  ),
+  usp6: loc(
+    'Rodillo de empuje oscilante - amortiguación opcional',
+    'Oscillating push roller - shock absorption optional',
+    'Pendelnde Schubrolle - Dämpfung optional',
+    'Rolo de empurre oscilante - amortecimento opcional'
+  ),
+  usp7: loc(
+    'Según el concepto de mando: nivelación "hang-on" (mando central) o controlador integrado (A-PAVE) - sensores opcionales',
+    'Depending on the operating concept: hang-on levelling (central panel) or integrated controller (A-PAVE) - sensors optional',
+    'Je nach Bedienkonzept: Anbau-Nivellierung (Zentralpult) oder integrierter Regler (A-PAVE) - Sensoren optional',
+    'Conforme o conceito de comando: nivelamento "hang-on" (painel central) ou controlador integrado (A-PAVE) - sensores opcionais'
+  ),
+  usp8: loc(
+    'No publicado - placas MAGMALIFE con vida útil >3.000 h (opcional)',
+    'Not published - MAGMALIFE plates with >3,000 h lifetime (optional)',
+    'Nicht angegeben - MAGMALIFE-Platten mit >3.000 h Lebensdauer (optional)',
+    'Não publicado - placas MAGMALIFE com vida útil >3.000 h (opcional)'
+  ),
+  usp9: NOT_PUBLISHED_CO2,
+};
+
+export const bf600800Usps = (maxWidth: string, maxWidthEn: string, pushRollerStd: boolean): PaverUsps => ({
+  usp1: loc(
+    `MAGMALIFE de serie - ${MAGMALIFE_FACTS.es} - regla con precompactación de hasta 95 % con un solo tamper`,
+    `MAGMALIFE as standard - ${MAGMALIFE_FACTS.en} - screed with up to 95 % pre-compaction with a single tamper`,
+    `MAGMALIFE serienmäßig - ${MAGMALIFE_FACTS.de} - Bohle mit bis zu 95 % Vorverdichtung mit nur einem Tamper`,
+    `MAGMALIFE de série - ${MAGMALIFE_FACTS.pt} - mesa com pré-compactação de até 95 % com um único tamper`
+  ),
+  usp2: NOT_PUBLISHED_CONSUMPTION,
+  usp3: loc(
+    'ECOMODE de 3 etapas + hidráulica load-sensing ("Power on demand") - ~20 % menos combustible y menos ruido - bombas dedicadas para traslado, material izq./der. y tamper + vibración',
+    '3-stage ECOMODE + load-sensing hydraulics ("Power on demand") - ~20 % less fuel and lower noise - dedicated pumps for drive, material left/right and tamper + vibration',
+    '3-stufiger ECOMODE + Load-Sensing-Hydraulik ("Power on demand") - ~20 % weniger Kraftstoff und weniger Lärm - eigene Pumpen für Fahrantrieb, Material links/rechts und Tamper + Vibration',
+    'ECOMODE de 3 estágios + hidráulica load-sensing ("Power on demand") - ~20 % menos combustível e menos ruído - bombas dedicadas para tração, material esq./dir. e tamper + vibração'
+  ),
+  usp4: loc(
+    `QUICKCOUPLING - extensiones mecánicas de 250/750/1.250 mm hasta ${maxWidth} m - sistema modular, ampliable después`,
+    `QUICKCOUPLING - 250/750/1,250 mm mechanical extensions up to ${maxWidthEn} m - modular system, upgradeable later`,
+    `QUICKCOUPLING - mechanische Verbreiterungen 250/750/1.250 mm bis ${maxWidth} m - modulares System, später erweiterbar`,
+    `QUICKCOUPLING - extensões mecânicas de 250/750/1.250 mm até ${maxWidth} m - sistema modular, ampliável depois`
+  ),
+  usp5: loc(
+    'Plataforma desplazable a izq./der., asiento y tablero giratorios - mandos en el apoyabrazos (opcional) - panel lateral de regla con pantalla - TruckDock',
+    'Platform slides left/right, rotatable seat and dashboard - armrest controls (optional) - screed side panel with display - TruckDock',
+    'Fahrerstand nach links/rechts verschiebbar, drehbarer Sitz und Bedienpult - Armlehnensteuerung (optional) - Bohlenaußensteuerstand mit Display - TruckDock',
+    'Plataforma deslocável para esq./dir., assento e painel giratórios - comandos no apoio de braço (opcional) - painel lateral da mesa com tela - TruckDock'
+  ),
+  usp6: pushRollerStd
+    ? loc(
+        'Rodillo de empuje oscilante con ajuste hidráulico de serie',
+        'Oscillating push roller with hydraulic adjustment as standard',
+        'Pendelnde Schubrolle mit hydraulischer Verstellung serienmäßig',
+        'Rolo de empurre oscilante com ajuste hidráulico de série'
+      )
+    : loc(
+        'Rodillo de empuje oscilante - ajuste hidráulico opcional',
+        'Oscillating push roller - hydraulic adjustment optional',
+        'Pendelnde Schubrolle - hydraulische Verstellung optional',
+        'Rolo de empurre oscilante - ajuste hidráulico opcional'
+      ),
+  usp7: loc(
+    'Controlador de nivelación integrado en los paneles de la regla ESTÁNDAR - Slope & Crown automático - sensores opcionales',
+    'Levelling controller integrated in the screed panels STANDARD - automatic Slope & Crown - sensors optional',
+    'In die Bohlensteuerstände integrierter Nivellierregler SERIENMÄSSIG - automatisches Slope & Crown - Sensoren optional',
+    'Controlador de nivelamento integrado nos painéis da mesa DE SÉRIE - Slope & Crown automático - sensores opcionais'
+  ),
+  usp8: loc(
+    'No publicado - placas MAGMALIFE con vida útil >3.000 h y planchas de alisado de 400 mm (las más largas del mercado)',
+    'Not published - MAGMALIFE plates with >3,000 h lifetime and 400 mm wear plates (longest in the market)',
+    'Nicht angegeben - MAGMALIFE-Platten mit >3.000 h Lebensdauer und 400 mm Glättbleche (die längsten am Markt)',
+    'Não publicado - placas MAGMALIFE com vida útil >3.000 h e chapas de alisamento de 400 mm (as mais longas do mercado)'
+  ),
+  usp9: NOT_PUBLISHED_CO2,
+});

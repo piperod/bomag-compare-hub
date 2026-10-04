@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" role="img" aria-label="Pneumatic tired roller">
+  <!-- ROPS / cab -->
+  <rect x="44" y="6" width="34" height="4" rx="1.5" fill="#333"/>
+  <rect x="46" y="10" width="3" height="22" fill="#333"/>
+  <rect x="73" y="10" width="3" height="22" fill="#333"/>
+  <rect x="54" y="20" width="12" height="10" rx="2" fill="#555"/>
+  <!-- Chassis -->
+  <path d="M10 34 H110 V52 H10 Z" fill="#F2C200"/>
+  <path d="M84 30 H108 V34 H84 Z" fill="#F2C200"/>
+  <rect x="10" y="44" width="100" height="3" fill="#333" opacity="0.6"/>
+  <!-- Front tire set -->
+  <circle cx="26" cy="60" r="13" fill="#222"/>
+  <circle cx="26" cy="60" r="5" fill="#777"/>
+  <circle cx="40" cy="62" r="11" fill="#2d2d2d"/>
+  <!-- Rear tire set -->
+  <circle cx="82" cy="62" r="11" fill="#2d2d2d"/>
+  <circle cx="96" cy="60" r="13" fill="#222"/>
+  <circle cx="96" cy="60" r="5" fill="#777"/>
+</svg>

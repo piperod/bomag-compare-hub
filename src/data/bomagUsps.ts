@@ -46,6 +46,21 @@ export const BW120_AD5_USPS: CompactionUsps = {
   ),
 };
 
+// LTR — BW 100 AD-5: same datasheet as BW 120 AD-5 (PRS 880 21 010, Sa07); only the model-specific figures change.
+const bw100 = (text: string) =>
+  text
+    .replace(/36\/41 kN/g, '30/34 kN')
+    .replace(/20-45 t\/h/g, '15-40 t/h')
+    .replace(/70-120 t\/h/g, '60-100 t/h')
+    .replace(/2\.450 mm/g, '2.550 mm')
+    .replace(/2,450 mm/g, '2,550 mm');
+export const BW100_AD5_USPS: CompactionUsps = Object.fromEntries(
+  Object.entries(BW120_AD5_USPS).map(([key, value]) => [
+    key,
+    loc(bw100(value.es), bw100(value.en), bw100(value.de), bw100(value.pt)),
+  ])
+) as CompactionUsps;
+
 // HTR — BW 161 AD-4: brochure "Rodillos tándem articulados de más de 5 t" (PRS 103 017, 03/17)
 export const BW161_AD4_USPS: CompactionUsps = {
   usp1: loc(

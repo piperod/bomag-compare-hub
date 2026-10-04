@@ -141,7 +141,7 @@ const ptrImageByModel: Record<string, string> = {
 };
 
 const ltrImages = [
-  'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg',
+  'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg', 'BW100 AD-5.jpg',
 ];
 
 const htrImages = [

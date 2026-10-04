@@ -89,6 +89,8 @@ export interface PaverMachineSpec {
   tco?: number;
   hasMagmalife?: boolean;
   hasEcomode?: boolean;
+  /** Fuel figure measured on jobsites with the fuel-saving mode already active (no extra saving applied). */
+  fuelIsMeasured?: boolean;
   setupFuelLiters?: number;
   heatingMinutes?: number;
   /** Size category used for search (e.g. "MEDIANA (351-700 t/h)") */

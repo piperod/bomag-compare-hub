@@ -35,6 +35,7 @@ import {
   getPaverSetupFuelForMagmalife,
   getPaverSetupHeatingCost,
   getPaverUspDefaults,
+  isPaverFuelMeasured,
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 import { complementUsps } from '@/data/uspComplements';
@@ -2132,6 +2133,8 @@ const MachineComparison = ({
                   <div className="text-xs text-gray-600 italic space-y-1 -mt-2">
                     <div>{t('paverFootnoteMagmalife')}</div>
                     <div>{t('paverFootnoteEcomode')}</div>
+                    <div>{t('paverFootnoteMaintenance')}</div>
+                    <div>{t('paverFootnoteScreedWear')}</div>
                   </div>
                 )}
 
@@ -2259,7 +2262,8 @@ const MachineComparison = ({
                                       />
                                     </div>
                                   )}
-                                  {selectedLine === 'milling' && isMillingMachine(machine) && getMillingCostDefaults(machine).fuelIsMeasured && (
+                                  {((selectedLine === 'milling' && isMillingMachine(machine) && getMillingCostDefaults(machine).fuelIsMeasured) ||
+                                    (selectedLine === 'pavers' && isPaverMachine(machine) && isPaverFuelMeasured(machine))) && (
                                     <div className="text-[10px] text-gray-500 mt-1">{t('millingFuelMeasuredNote')}</div>
                                   )}
                                 </td>
@@ -2350,6 +2354,14 @@ const MachineComparison = ({
                                     return (
                                       <td key={index} className="border border-gray-300 p-2 text-center text-gray-400 text-xs">
                                         {p.fuelSavingMode || '—'}
+                                      </td>
+                                    );
+                                  }
+                                  if (isPaverFuelMeasured(p)) {
+                                    return (
+                                      <td key={index} className="border border-gray-300 p-2 text-center text-xs text-gray-600">
+                                        <div className="font-medium">{p.fuelSavingMode}</div>
+                                        <div className="text-[10px] text-gray-500">{t('millingFuelMeasuredIncluded')}</div>
                                       </td>
                                     );
                                   }

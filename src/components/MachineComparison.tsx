@@ -27,7 +27,8 @@ import { ComparableMachine, getMachineFinancialDefaults } from '@/utils/financia
 import {
   getMillingJobHours,
   getMillingProductivityDefaults,
-  getMillingWearMultiplier,
+  getMillingCostDefaults,
+  getCo2PerShiftKg,
   getPaverCo2PerShiftKg,
   getPaverFuelMultiplier,
   getPaverScreedWearPerHour,
@@ -519,6 +520,10 @@ const MachineComparison = ({
   const [editableTransportCapacity, setEditableTransportCapacity] = useState<{ [key: string]: number }>({});
   const [bms15lEnabled, setBms15lEnabled] = useState<{ [key: string]: boolean }>({});
   const [editableToolWearCost, setEditableToolWearCost] = useState<{ [key: string]: number }>({});
+  const [editableWearReductionPct, setEditableWearReductionPct] = useState<{ [key: string]: number }>({});
+  const [editableFuelSavingPct, setEditableFuelSavingPct] = useState<{ [key: string]: number }>({});
+  const [fuelTechEnabled, setFuelTechEnabled] = useState<{ [key: string]: boolean }>({});
+  const [showMillingReferenceData, setShowMillingReferenceData] = useState(false);
 
   // Paver USP state (MAGMALIFE, ECOMODE, setup heating, screed wear)
   const [ecomodeEnabled, setEcomodeEnabled] = useState<{ [key: string]: boolean }>({});
@@ -750,6 +755,10 @@ const MachineComparison = ({
       const ecomode = ecomodeEnabled[machineId] ?? getPaverUspDefaults(machine).hasEcomode;
       fuel *= getPaverFuelMultiplier(machine, ecomode);
     }
+    if (selectedLine === 'milling' && isMillingMachine(machine)) {
+      const pct = getEffectiveFuelSavingPct(machine);
+      if (pct > 0 && (fuelTechEnabled[getMachineId(machine)] ?? true)) fuel *= 1 - pct / 100;
+    }
     return fuel;
   };
 
@@ -766,12 +775,7 @@ const MachineComparison = ({
     const machineId = getMachineId(machine);
     const editedMaintenance = editablePreventiveMaintenance[machineId];
     const originalMaintenance = getMachineFinancialDefaults(machine).preventiveMaintenance;
-    const base = editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
-    if (selectedLine === 'milling' && isMillingMachine(machine)) {
-      const bms15l = bms15lEnabled[machineId] ?? getMillingProductivityDefaults(machine).hasBms15l;
-      return base * getMillingWearMultiplier(machine, bms15l);
-    }
-    return base;
+    return editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
   };
 
   // Get effective corrective maintenance (original or edited)
@@ -779,12 +783,7 @@ const MachineComparison = ({
     const machineId = getMachineId(machine);
     const originalMaintenance = getMachineFinancialDefaults(machine).correctiveMaintenance;
     const editedMaintenance = editableCorrectiveMaintenance[machineId];
-    const base = editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
-    if (selectedLine === 'milling' && isMillingMachine(machine)) {
-      const bms15l = bms15lEnabled[machineId] ?? getMillingProductivityDefaults(machine).hasBms15l;
-      return base * getMillingWearMultiplier(machine, bms15l);
-    }
-    return base;
+    return editedMaintenance !== undefined ? editedMaintenance : originalMaintenance;
   };
 
   const getEffectiveScreedWear = (machine: PaverMachineSpec) => {
@@ -825,8 +824,30 @@ const MachineComparison = ({
     const machineId = getMachineId(machine);
     const edited = editableToolWearCost[machineId];
     if (edited !== undefined) return edited;
-    return getMillingProductivityDefaults(machine).toolWearCostPerHour;
+    return getMillingCostDefaults(machine).toolWearReferencePerHour;
   };
+
+  // BMS15L / BMS 15 EVO tool wear reduction (%), editable for machines that have it
+  const getEffectiveWearReductionPct = (machine: MillingMachineSpec) => {
+    const machineId = getMachineId(machine);
+    const defaults = getMillingCostDefaults(machine);
+    if (!defaults.hasBms15l) return 0;
+    return editableWearReductionPct[machineId] ?? defaults.wearReductionPercent;
+  };
+
+  // Tool wear cost (USD/h): conventional reference reduced by BMS15L when enabled
+  const getMillingToolWearRate = (machine: MillingMachineSpec) => {
+    const machineId = getMachineId(machine);
+    const bms15l = bms15lEnabled[machineId] ?? getMillingCostDefaults(machine).hasBms15l;
+    const pct = bms15l ? getEffectiveWearReductionPct(machine) : 0;
+    return getEffectiveToolWearCost(machine) * (1 - pct / 100);
+  };
+
+  // Fuel saving (%) of the BOMAG cutting technology, editable for BOMAG machines
+  function getEffectiveFuelSavingPct(machine: MillingMachineSpec) {
+    const machineId = getMachineId(machine);
+    return editableFuelSavingPct[machineId] ?? getMillingCostDefaults(machine).fuelSavingPercent;
+  }
 
   const getEffectiveSetupFuel = (machine: PaverMachineSpec) => {
     const machineId = getMachineId(machine);
@@ -859,10 +880,7 @@ const MachineComparison = ({
     const jointCost = getArticulationJointCost(machine, hours);
 
     if (selectedLine === 'milling' && isMillingMachine(machine)) {
-      const bms15l = bms15lEnabled[machineId] ?? getMillingProductivityDefaults(machine).hasBms15l;
-      const wearMult = getMillingWearMultiplier(machine, bms15l);
-      const toolRate = getEffectiveToolWearCost(machine) * wearMult;
-      toolWearCost = toolRate * hours;
+      toolWearCost = getMillingToolWearRate(machine) * hours;
     }
 
     if (selectedLine === 'pavers' && isPaverMachine(machine)) {
@@ -1927,6 +1945,87 @@ const MachineComparison = ({
                 )}
 
                 {selectedLine === 'milling' && (
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-700">{t('millingFinancialModelTitle')}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{t('millingFinancialModelHint')}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="text-bomag-blue hover:underline text-sm font-medium"
+                      onClick={() => setShowMillingReferenceData((prev) => !prev)}
+                    >
+                      {showMillingReferenceData ? t('paverHideReferenceData') : t('paverShowReferenceData')}
+                    </button>
+                    {showMillingReferenceData && (
+                      <div className="border border-gray-200 rounded-md p-4 bg-gray-50/50">
+                        <h5 className="text-md font-semibold text-gray-700 mb-2">{t('millingRefSection')}</h5>
+                        <div className="overflow-x-auto">
+                          <CompareTable columnCount={compareSpecCols}>
+                            <thead>
+                              <tr className="bg-bomag-light-gray">
+                                <th className="border border-gray-300 p-2 text-left font-semibold">{t('specification')}</th>
+                                {getSelectedMachineData().map((machine, index) => (
+                                  <th key={index} className="border border-gray-300 p-2 text-center">
+                                    <div className="text-sm font-bold">{machine.brand}</div>
+                                    <div className="text-xs">{machine.model}</div>
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                {
+                                  label: t('millingRefFuel'),
+                                  value: (m: MillingMachineSpec) => {
+                                    const fuel = getMachineFinancialDefaults(m).fuelConsumption;
+                                    return fuel > 0 ? `${fuel} L/h` : '—';
+                                  },
+                                },
+                                {
+                                  label: t('millingRefFuelSource'),
+                                  value: (m: MillingMachineSpec) =>
+                                    m.fuelDataSource ? pickLocalizedWithFallback(m.fuelDataSource, language) : '—',
+                                },
+                                {
+                                  label: t('millingRefCuttingSystem'),
+                                  value: (m: MillingMachineSpec) =>
+                                    millingText(pickLocalizedWithFallback(m.cuttingSystem, language) || '—'),
+                                },
+                                {
+                                  label: t('millingRefWearReduction'),
+                                  value: (m: MillingMachineSpec) => {
+                                    const d = getMillingCostDefaults(m);
+                                    return d.hasBms15l ? `-${d.wearReductionPercent} %` : '—';
+                                  },
+                                },
+                                {
+                                  label: t('millingRefFuelSaving'),
+                                  value: (m: MillingMachineSpec) => {
+                                    const d = getMillingCostDefaults(m);
+                                    if (d.fuelSavingPercent > 0) return `-${d.fuelSavingPercent} %`;
+                                    return d.fuelIsMeasured ? t('millingFuelMeasuredIncluded') : '—';
+                                  },
+                                },
+                              ].map((row) => (
+                                <tr key={row.label} className="hover:bg-gray-50">
+                                  <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{row.label}</td>
+                                  {getSelectedMachineData().map((machine, index) => (
+                                    <td key={index} className="border border-gray-300 p-2 text-sm">
+                                      {row.value(machine as MillingMachineSpec)}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </CompareTable>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {selectedLine === 'milling' && (
                   <div>
                     <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('millingPerformanceCalculation')}</h4>
                     <div className="overflow-x-auto">
@@ -2015,56 +2114,6 @@ const MachineComparison = ({
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-sky-50">
                                   {hours != null ? `${hours.toFixed(1)} h` : '—'}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-green-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">{t('millingBms15lQuestion')}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const m = machine as MillingMachineSpec;
-                              const machineId = getMachineId(m);
-                              const defaults = getMillingProductivityDefaults(m);
-                              if (!defaults.hasBms15l) {
-                                return <td key={index} className="border border-gray-300 p-2 text-center text-gray-400">—</td>;
-                              }
-                              const checked = bms15lEnabled[machineId] ?? true;
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center">
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(v) =>
-                                      setBms15lEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))
-                                    }
-                                  />
-                                </td>
-                              );
-                            })}
-                          </tr>
-                          <tr className="hover:bg-green-50/50">
-                            <td className="border border-gray-300 p-2 font-semibold bg-green-50">{t('millingToolWearCost', ccy)}</td>
-                            {getSelectedMachineData().map((machine, index) => {
-                              const m = machine as MillingMachineSpec;
-                              const machineId = getMachineId(m);
-                              const bms15l = bms15lEnabled[machineId] ?? getMillingProductivityDefaults(m).hasBms15l;
-                              const rate = getEffectiveToolWearCost(m) * getMillingWearMultiplier(m, bms15l);
-                              return (
-                                <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
-                                  <Input
-                                    type="number"
-                                    step="0.1"
-                                    className="w-20 h-8 text-center mx-auto bg-yellow-50"
-                                    value={usdToInputNumber(rate, 'hourlyRate')}
-                                    onChange={(e) => {
-                                      const v = parseFloat(e.target.value);
-                                      const base = Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'hourlyRate');
-                                      const mult = getMillingWearMultiplier(m, bms15l);
-                                      setEditableToolWearCost((prev) => ({
-                                        ...prev,
-                                        [machineId]: mult > 0 ? base / mult : base,
-                                      }));
-                                    }}
-                                  />
                                 </td>
                               );
                             })}
@@ -2175,7 +2224,7 @@ const MachineComparison = ({
                           <tr className="hover:bg-orange-50/50">
                             <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50">3</td>
                             <td className="border border-gray-300 p-2 font-medium bg-orange-50">
-                              {selectedLine === 'pavers' ? t('paverBaseFuelLabel') : (
+                              {selectedLine === 'pavers' || selectedLine === 'milling' ? t('paverBaseFuelLabel') : (
                                 <>
                                   {t('fuelConsumption')} {isCompactionLine ? <span className="text-green-500">***</span> : null}{' '}
                                   <span className="text-xs text-gray-500">(L/h)</span>
@@ -2210,10 +2259,83 @@ const MachineComparison = ({
                                       />
                                     </div>
                                   )}
+                                  {selectedLine === 'milling' && isMillingMachine(machine) && getMillingCostDefaults(machine).fuelIsMeasured && (
+                                    <div className="text-[10px] text-gray-500 mt-1">{t('millingFuelMeasuredNote')}</div>
+                                  )}
                                 </td>
                               );
                             })}
                           </tr>
+
+                          {selectedLine === 'milling' && (
+                            <>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-orange-50">{t('millingFuelTechQuestion')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const m = machine as MillingMachineSpec;
+                                  const machineId = getMachineId(m);
+                                  if (!m.brand.toUpperCase().includes('BOMAG')) {
+                                    return <td key={index} className="border border-gray-300 p-2 text-center text-gray-400 text-xs">—</td>;
+                                  }
+                                  const defaults = getMillingCostDefaults(m);
+                                  const checked = fuelTechEnabled[machineId] ?? true;
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center">
+                                      <div className="flex flex-col items-center gap-1">
+                                        <div className="flex items-center gap-1">
+                                          <Checkbox
+                                            checked={checked}
+                                            onCheckedChange={(v) => setFuelTechEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))}
+                                          />
+                                          <Input
+                                            type="number"
+                                            step="1"
+                                            min="0"
+                                            max="50"
+                                            className="border rounded px-1 py-0.5 w-14 h-7 text-center bg-yellow-50"
+                                            value={getEffectiveFuelSavingPct(m)}
+                                            onChange={(e) => {
+                                              const v = parseFloat(e.target.value);
+                                              setEditableFuelSavingPct((prev) => ({ ...prev, [machineId]: Number.isNaN(v) ? 0 : v }));
+                                            }}
+                                          />
+                                          <span className="text-xs text-gray-500">%</span>
+                                        </div>
+                                        {defaults.fuelIsMeasured && (
+                                          <span className="text-[10px] text-gray-500">{t('millingFuelMeasuredIncluded')}</span>
+                                        )}
+                                      </div>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-orange-50">{t('millingEffectiveFuelLabel')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const effective = getEffectiveFuelConsumption(machine);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-semibold text-orange-900">
+                                      {effective > 0 ? `${effective.toFixed(1)} L/h` : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-orange-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-orange-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-orange-50">{t('millingCo2PerShift')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const effective = getEffectiveFuelConsumption(machine);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center text-sm">
+                                      {effective > 0 ? `${Math.round(getCo2PerShiftKg(effective))} kg` : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            </>
+                          )}
 
                           {selectedLine === 'pavers' && (
                             <>
@@ -2321,22 +2443,6 @@ const MachineComparison = ({
                             })}
                           </tr>
 
-                          {selectedLine === 'milling' && (
-                            <tr className="hover:bg-amber-50/50">
-                              <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">5b</td>
-                              <td className="border border-gray-300 p-2 font-medium bg-amber-50">
-                                {t('millingToolWearCost', ccy)}
-                              </td>
-                              {getSelectedMachineData().map((machine, index) => {
-                                const parts = computeTcoComponents(machine, operationTime);
-                                return (
-                                  <td key={index} className="border border-gray-300 p-2 text-center font-medium">
-                                    {formatFromUsd(parts.toolWearCost)}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          )}
 
                           {/* Category: Mantenimiento */}
                           <tr>
@@ -2529,6 +2635,152 @@ const MachineComparison = ({
                               );
                             })}
                           </tr>
+
+                          {selectedLine === 'milling' && (
+                            <>
+                              <tr>
+                                <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 font-bold text-sm bg-amber-100 text-amber-950">
+                                  {t('millingToolWearCategory')}
+                                </td>
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">8a</td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-amber-50">{t('millingBms15lQuestion')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const m = machine as MillingMachineSpec;
+                                  const machineId = getMachineId(m);
+                                  if (!getMillingCostDefaults(m).hasBms15l) {
+                                    return (
+                                      <td key={index} className="border border-gray-300 p-2 text-center text-xs text-gray-500">
+                                        {millingText(pickLocalizedWithFallback(m.cuttingSystem, language) || '—')}
+                                      </td>
+                                    );
+                                  }
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center">
+                                      <Checkbox
+                                        checked={bms15lEnabled[machineId] ?? true}
+                                        onCheckedChange={(v) => setBms15lEnabled((prev) => ({ ...prev, [machineId]: Boolean(v) }))}
+                                      />
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('millingToolWearReference', ccy)}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const m = machine as MillingMachineSpec;
+                                  const machineId = getMachineId(m);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
+                                      <Input
+                                        type="number"
+                                        step="0.1"
+                                        className="border rounded px-2 py-1 w-20 text-center mx-auto bg-yellow-50"
+                                        value={usdToInputNumber(getEffectiveToolWearCost(m), 'hourlyRate')}
+                                        onChange={(e) => {
+                                          const raw = e.target.value;
+                                          const v = raw === '' ? NaN : parseFloat(raw);
+                                          setEditableToolWearCost((prev) => ({
+                                            ...prev,
+                                            [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'hourlyRate'),
+                                          }));
+                                        }}
+                                      />
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('millingWearReductionPct')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const m = machine as MillingMachineSpec;
+                                  const machineId = getMachineId(m);
+                                  if (!getMillingCostDefaults(m).hasBms15l) {
+                                    return <td key={index} className="border border-gray-300 p-2 text-center text-gray-400">—</td>;
+                                  }
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center bg-yellow-50">
+                                      <div className="flex items-center justify-center gap-1">
+                                        <Input
+                                          type="number"
+                                          step="1"
+                                          min="0"
+                                          max="80"
+                                          className="border rounded px-2 py-1 w-16 text-center bg-yellow-50"
+                                          value={getEffectiveWearReductionPct(m)}
+                                          onChange={(e) => {
+                                            const v = parseFloat(e.target.value);
+                                            setEditableWearReductionPct((prev) => ({ ...prev, [machineId]: Number.isNaN(v) ? 0 : v }));
+                                          }}
+                                        />
+                                        <span className="text-xs text-gray-500">%</span>
+                                      </div>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50">8b</td>
+                                <td className="border border-gray-300 p-2 font-semibold bg-amber-50">{t('millingToolWearHourly', ccy)}</td>
+                                {getSelectedMachineData().map((machine, index) => (
+                                  <td key={index} className="border border-gray-300 p-2 text-center font-semibold text-amber-900">
+                                    {formatFromUsd(getMillingToolWearRate(machine as MillingMachineSpec))}
+                                  </td>
+                                ))}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td className="border border-gray-300 p-2 text-center text-xs font-bold text-gray-500 bg-amber-50"></td>
+                                <td className="border border-gray-300 p-2 font-medium bg-amber-50">{t('millingToolWearPeriodCost')}</td>
+                                {getSelectedMachineData().map((machine, index) => {
+                                  const parts = computeTcoComponents(machine, operationTime);
+                                  return (
+                                    <td key={index} className="border border-gray-300 p-2 text-center font-medium">
+                                      {formatFromUsd(parts.toolWearCost)}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr className="hover:bg-amber-50/50">
+                                <td colSpan={getSelectedMachineData().length + 2} className="border border-gray-300 p-2 bg-amber-50">
+                                  {(() => {
+                                    const selected = getSelectedMachineData();
+                                    const bomag = selected.find((m) => m.brand.toUpperCase().includes('BOMAG'));
+                                    const competitors = selected.filter((m) => !m.brand.toUpperCase().includes('BOMAG'));
+                                    if (!bomag || !competitors.length) return null;
+                                    const b = computeTcoComponents(bomag, operationTime);
+                                    const c = competitors
+                                      .map((m) => computeTcoComponents(m, operationTime))
+                                      .reduce((max, cur) => (cur.tco > max.tco ? cur : max));
+                                    const total = c.tco - b.tco;
+                                    const fuelSaving = c.fuelCost - b.fuelCost;
+                                    const toolSaving = c.toolWearCost - b.toolWearCost;
+                                    return (
+                                      <div className="flex flex-wrap items-center gap-2 text-sm">
+                                        {total > 0 && (
+                                          <span className="inline-block rounded-full bg-blue-200 px-3 py-1 font-bold text-blue-900 tabular-nums">
+                                            {t('paverBomagSavingsPeriod')}: {formatFromUsd(total)}
+                                          </span>
+                                        )}
+                                        {fuelSaving > 0 && (
+                                          <span className="inline-block rounded-full bg-orange-100 px-3 py-1 font-medium text-orange-900 tabular-nums">
+                                            {t('millingSavingsFuel')}: {formatFromUsd(fuelSaving)}
+                                          </span>
+                                        )}
+                                        {toolSaving > 0 && (
+                                          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-900 tabular-nums">
+                                            {t('millingSavingsTools')}: {formatFromUsd(toolSaving)}
+                                          </span>
+                                        )}
+                                      </div>
+                                    );
+                                  })()}
+                                </td>
+                              </tr>
+                            </>
+                          )}
 
                           {selectedLine === 'pavers' && (
                             <>

@@ -8,6 +8,11 @@ import {
 import { parseSpecNumbers } from '@/utils/paverCompetitiveAdvantage';
 
 export const MILLING_BMS15L_WEAR_REDUCTION = 0.2;
+/** Reference cost of picks + tool holders with a conventional system (USD/h), editable in the app. */
+export const MILLING_TOOL_WEAR_REFERENCE_USD_H = 18;
+/** kg of CO2 per litre of diesel (BOMAG paver data: 235 kg for 90.5 l). */
+export const DIESEL_CO2_KG_PER_L = 2.6;
+export const HOURS_PER_SHIFT = 10;
 export const PAVER_ECOMODE_FUEL_SAVINGS = 0.17;
 export const PAVER_HOURS_PER_SHIFT = 10;
 export const PAVER_COMPETITOR_SETUP_FUEL_L = 10.5;
@@ -87,6 +92,37 @@ export function getMillingProductivityDefaults(machine: MillingMachineSpec): Mil
     hasBms15l,
     toolWearCostPerHour: machine.toolWearCostPerHour ?? (hasBms15l ? 15 : 18),
   };
+}
+
+export interface MillingCostDefaults {
+  hasBms15l: boolean;
+  /** Tool wear reduction (%) of BMS15L / BMS 15 EVO; 0 for other tool holder systems. */
+  wearReductionPercent: number;
+  /** Picks + tool holders cost per hour with a conventional system (USD/h). */
+  toolWearReferencePerHour: number;
+  /** Fuel saving (%) of the BOMAG cutting technology applied to the base consumption. */
+  fuelSavingPercent: number;
+  fuelIsMeasured: boolean;
+}
+
+export function getMillingCostDefaults(machine: MillingMachineSpec): MillingCostDefaults {
+  const hasBms15l = machine.hasBms15l ?? isBomag(machine.brand);
+  const wearReductionPercent = hasBms15l ? machine.wearReductionPercent ?? MILLING_BMS15L_WEAR_REDUCTION * 100 : 0;
+  // A model-specific rate is the cost with its own tool holder system; convert it back to the conventional reference.
+  const toolWearReferencePerHour = machine.toolWearCostPerHour
+    ? machine.toolWearCostPerHour / (1 - wearReductionPercent / 100)
+    : MILLING_TOOL_WEAR_REFERENCE_USD_H;
+  return {
+    hasBms15l,
+    wearReductionPercent,
+    toolWearReferencePerHour,
+    fuelSavingPercent: isBomag(machine.brand) ? machine.fuelSavingPercent ?? 0 : 0,
+    fuelIsMeasured: machine.fuelIsMeasured ?? false,
+  };
+}
+
+export function getCo2PerShiftKg(fuelLitersPerHour: number): number {
+  return fuelLitersPerHour * HOURS_PER_SHIFT * DIESEL_CO2_KG_PER_L;
 }
 
 export function getPaverUspDefaults(machine: PaverMachineSpec): PaverUspDefaults {

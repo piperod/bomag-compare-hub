@@ -44,6 +44,7 @@ export interface MachineSpec {
 }
 
 import { BW120_AD5_USPS } from '@/data/bomagUsps';
+import { withoutStoredPrices } from '@/utils/storedPrices';
 import { complementUsps } from '@/data/uspComplements';
 import sdrFromCsv from '@/data/sdrFromCsv.json';
 import { ltrMasterAdditions, mergeByBrand, ptrMachines as ptrMasterMachines, sdrMasterAdditions } from '@/data/masterTcoAdditions';
@@ -695,11 +696,11 @@ export const sdrMachines: MachineSpec[] = [
  */
 const HIDDEN_SDR = new Set(['DYNAPAC|CT3000']);
 
-export const sdrMachines: MachineSpec[] = complementUsps('sdr', withImportRegistryOrigin(
+export const sdrMachines: MachineSpec[] = withoutStoredPrices(complementUsps('sdr', withImportRegistryOrigin(
   mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions).filter(
     (machine) => !HIDDEN_SDR.has(`${machine.brand}|${machine.model}`)
   )
-));
+)));
 
 const ltrBaseMachines: MachineSpec[] = [
   {
@@ -1062,9 +1063,9 @@ const ltrBaseMachines: MachineSpec[] = [
   }
 ];
 
-export const ltrMachines: MachineSpec[] = complementUsps('ltr', withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions)));
+export const ltrMachines: MachineSpec[] = withoutStoredPrices(complementUsps('ltr', withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions))));
 
-export const ptrMachines: MachineSpec[] = complementUsps('ptr', withImportRegistryOrigin(ptrMasterMachines));
+export const ptrMachines: MachineSpec[] = withoutStoredPrices(complementUsps('ptr', withImportRegistryOrigin(ptrMasterMachines)));
 
 export interface CompactionData {
   weightRange: string;

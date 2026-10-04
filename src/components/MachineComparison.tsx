@@ -39,6 +39,7 @@ import {
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
 import { complementUsps } from '@/data/uspComplements';
+import { withoutStoredPrices } from '@/utils/storedPrices';
 import { BomagTcoHighlights } from '@/components/BomagTcoHighlights';
 import { formatRangeLabel, getLineRanges, getRangeKey, getRangeValue, UNKNOWN_RANGE } from '@/utils/machineRanges';
 
@@ -349,9 +350,9 @@ const htrBaseMachines = [
 ];
 
 // HTR models added from the BOMAG TCO master file
-const htrMachines = complementUsps('htr', withImportRegistryOrigin(
+const htrMachines = withoutStoredPrices(complementUsps('htr', withImportRegistryOrigin(
   mergeByBrand(htrBaseMachines, htrMasterAdditions as unknown as typeof htrBaseMachines)
-));
+)));
 
 const base = import.meta.env.BASE_URL;
 const getImagePath = getMachineImagePath;

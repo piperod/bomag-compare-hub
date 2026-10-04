@@ -107,6 +107,7 @@ const millingImageByModel: Record<string, string> = {
   w100ri: 'W100-W120-R-Ri.jpg',
   w120ri: 'W100-W120-R-Ri.jpg',
   w200f: 'W200F.jpg',
+  pm620: 'PM620.jpg',
   w100hr: 'W100-W130-HR.jpg',
   w130hr: 'W100-W130-HR.jpg',
 };

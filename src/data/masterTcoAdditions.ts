@@ -798,6 +798,26 @@ export const millingMasterAdditions: MillingMachineSpec[] = [
     cuttingSystem: cutWithSideProtection('LA18'),
     idealApplication: APP_LARGE_HIGH,
   }),
+  // Cat PM620: cat.com product specifications (Tier 4 Final / Stage V only; no Tier 3 version published)
+  millingRow({
+    brand: 'CATERPILLAR', model: 'PM620', engine: 'Cat C18 (Tier 4 Final / Stage V)', enginePower: '469 kW (474 kW bruta)',
+    millingWidth: '2.010 mm', maxDepth: '0-330 mm', drumDiameter: '-',
+    workingSpeed: '0-100 m/min', travelSpeed: '0-6 km/h', transportCapacity: '-', conveyorBeltWidth: '-', waterTank: '3.400 L',
+    operatingWeight: '31.559 kg (30.330 kg transporte)', minTurningRadius: '2 m',
+    cuttingSystem: loc(
+      'Rotor de 170 puntas (separación 15 mm), 3 velocidades 100/109/118 rpm; Cat Grade and Slope; motor Tier 4 Final / Stage V',
+      '170-tip rotor (15 mm spacing), 3 speeds 100/109/118 rpm; Cat Grade and Slope; Tier 4 Final / Stage V engine',
+      'Rotor mit 170 Meißeln (15 mm Abstand), 3 Drehzahlen 100/109/118 U/min; Cat Grade and Slope; Motor Tier 4 Final / Stufe V',
+      'Rotor de 170 pontas (espaçamento 15 mm), 3 velocidades 100/109/118 rpm; Cat Grade and Slope; motor Tier 4 Final / Stage V'
+    ),
+    idealApplication: loc(
+      'Fresado a gran escala en profundidad total (motor Tier 4 Final / Stage V)',
+      'Large-scale full-depth milling (Tier 4 Final / Stage V engine)',
+      'Großflächiges Vollausbau-Fräsen (Motor Tier 4 Final / Stufe V)',
+      'Fresagem em grande escala em profundidade total (motor Tier 4 Final / Stage V)'
+    ),
+    fuelConsumption: 0, workingSpeedMmin: 100, turningRadiusM: 2, hasBms15l: false,
+  }),
   // WIRTGEN W 100 HR / W 130 HR: brochure-datasheet 2026 (Tier 3 versions; the "i" versions are CN NR Stage 4)
   millingRow({
     brand: 'WIRTGEN', model: 'W 100 HR', engine: 'Deutz TCD 2012 L06 2V', enginePower: '155 kW / 208 HP',

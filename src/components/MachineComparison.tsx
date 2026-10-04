@@ -36,6 +36,7 @@ import {
   getPaverUspDefaults,
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
+import { BomagTcoHighlights } from '@/components/BomagTcoHighlights';
 
 interface MachineComparisonProps {
   selectedLine: string;
@@ -1437,6 +1438,7 @@ const MachineComparison = ({
 
               {showFinancialTab && (
               <TabsContent value="financial" className="mt-4 space-y-8">
+                <BomagTcoHighlights line={selectedLine} />
                 {selectedLine === 'pavers' && (
                   <div className="space-y-3">
                     <div>

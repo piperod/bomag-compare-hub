@@ -1121,7 +1121,7 @@ const MachineComparison = ({
           >
             <CardHeader className="pb-2">
               <div className="flex flex-col items-center justify-between">
-                <img src={getImagePath(machine.model, selectedLine)} alt={machine.model} className="w-full h-32 object-contain mb-2" />
+                <img src={getImagePath(machine.model, selectedLine)} alt={machine.model} className="w-full h-32 object-contain mb-2 mix-blend-multiply" />
                 {selectedMachines.includes(getMachineId(machine)) && (
                   <div className="absolute top-2 right-2">
                     <Badge className="bg-bomag-yellow text-black border border-black/10">{t('selected')}</Badge>

@@ -400,6 +400,7 @@
   "useEmailLinkInstead": "Entrar con enlace de correo (sin contraseña)",
   "collectEmailTitle": "Registra tu correo",
   "collectEmailHint": "Hola {{name}}. Guarda tu correo para entrar la próxima vez sin contraseña.",
+  "collectEmailSkip": "Omitir por ahora",
   "saveEmail": "Guardar correo",
   "emailSaveFailed": "No se pudo guardar el correo. Inténtalo de nuevo.",
   "username": "Usuario",

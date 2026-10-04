@@ -400,6 +400,7 @@
   "useEmailLinkInstead": "Mit E-Mail-Link anmelden (kein Passwort)",
   "collectEmailTitle": "E-Mail hinterlegen",
   "collectEmailHint": "Hallo {{name}}. Speichern Sie Ihre E-Mail, um sich beim nächsten Mal ohne Passwort anzumelden.",
+  "collectEmailSkip": "Jetzt überspringen",
   "saveEmail": "E-Mail speichern",
   "emailSaveFailed": "E-Mail konnte nicht gespeichert werden. Bitte erneut versuchen.",
   "username": "Benutzername",

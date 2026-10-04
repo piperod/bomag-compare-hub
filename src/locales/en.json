@@ -461,6 +461,7 @@
   "useEmailLinkInstead": "Sign in with email link (no password)",
   "collectEmailTitle": "Add your email",
   "collectEmailHint": "Hi {{name}}. Save your email so next time you can sign in without a password.",
+  "collectEmailSkip": "Skip for now",
   "saveEmail": "Save email",
   "emailSaveFailed": "Could not save the email. Please try again.",
   "username": "Username",

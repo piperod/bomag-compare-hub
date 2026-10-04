@@ -400,6 +400,7 @@
   "useEmailLinkInstead": "Entrar com link de e-mail (sem senha)",
   "collectEmailTitle": "Cadastre seu e-mail",
   "collectEmailHint": "Olá {{name}}. Salve seu e-mail para entrar da próxima vez sem senha.",
+  "collectEmailSkip": "Pular por agora",
   "saveEmail": "Salvar e-mail",
   "emailSaveFailed": "Não foi possível salvar o e-mail. Tente novamente.",
   "username": "Usuário",

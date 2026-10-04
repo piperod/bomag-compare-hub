@@ -12,8 +12,9 @@ export default function CollectEmailDialog() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
-  if (!currentUser || !needsEmail) return null;
+  if (!currentUser || !needsEmail || dismissed) return null;
 
   const onSave = async () => {
     setError('');
@@ -24,7 +25,7 @@ export default function CollectEmailDialog() {
   };
 
   return (
-    <Dialog open>
+    <Dialog open onOpenChange={(open) => !open && setDismissed(true)}>
       <DialogContent
         className="sm:max-w-md"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -53,6 +54,9 @@ export default function CollectEmailDialog() {
             disabled={saving || !email.trim()}
           >
             {saving ? t('verifying') : t('saveEmail')}
+          </Button>
+          <Button variant="ghost" className="w-full" onClick={() => setDismissed(true)}>
+            {t('collectEmailSkip')}
           </Button>
         </div>
       </DialogContent>

@@ -165,10 +165,13 @@ const ltrImages = [
   'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg', 'BW100 AD-5.jpg',
 ];
 
-/** DYNAPAC CC2200 / CC3300 share one photo (CC2200 VI). */
+/** DYNAPAC CC2200 / CC3300 share one photo (CC2200 VI); CC5200 / CC5200C VI / CC6200 share another. */
 const htrImageByModel: Record<string, string> = {
   cc2200: 'CC2200-CC3300.jpg',
   cc3300: 'CC2200-CC3300.jpg',
+  cc5200: 'CC5200-CC6200.jpg',
+  cc5200cvi: 'CC5200-CC6200.jpg',
+  cc6200: 'CC5200-CC6200.jpg',
 };
 
 const htrImages = [

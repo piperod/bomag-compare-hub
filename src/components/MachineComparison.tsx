@@ -1413,47 +1413,6 @@ const MachineComparison = ({
                 </div>
                 )}
 
-                {/* Preventive maintenance routine and costs (Milling only) */}
-                {selectedLine === 'milling' && (
-                  <div className="mt-8">
-                    <h4 className="text-lg font-semibold text-gray-700 mb-4">{t('preventiveMaintenanceRoutineAndCosts')}</h4>
-                    <div className="mb-4">
-                      <h5 className="text-md font-semibold text-gray-600 mb-3">{t('bm100020')}</h5>
-                      <div className="overflow-x-auto">
-                        <CompareTable columnCount={9}>
-                          <thead>
-                            <tr className="bg-bomag-light-gray">
-                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmRevision')}</th>
-                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmMaintenance')}</th>
-                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmPeriod')}</th>
-                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmDescription')}</th>
-                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmSapCode')}</th>
-                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmQuantityPerMachine')}</th>
-                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmUnit')}</th>
-                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmPublicPrice')}</th>
-                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmTotalPrice')}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {bm100020PreventiveMaintenance.map((row, idx) => (
-                              <tr key={idx} className="hover:bg-gray-50">
-                                <td className="border border-gray-300 p-2 text-left">{row.revision[language] ?? row.revision.en}</td>
-                                <td className="border border-gray-300 p-2 text-left">{row.maintenance[language] ?? row.maintenance.en}</td>
-                                <td className="border border-gray-300 p-2 text-center">{row.period}</td>
-                                <td className="border border-gray-300 p-2 text-left">{row.description[language] ?? row.description.en}</td>
-                                <td className="border border-gray-300 p-2 text-center">{row.sapCode}</td>
-                                <td className="border border-gray-300 p-2 text-center">{row.quantityPerMachine}</td>
-                                <td className="border border-gray-300 p-2 text-center">{row.unit}</td>
-                                <td className="border border-gray-300 p-2 text-right">{row.publicPrice != null ? formatFromUsd(row.publicPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
-                                <td className="border border-gray-300 p-2 text-right">{row.totalPrice != null ? formatFromUsd(row.totalPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </CompareTable>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </TabsContent>
 
               {showFinancialTab && (
@@ -3113,6 +3072,59 @@ const MachineComparison = ({
                     </CompareTable>
                   </div>
                   </div>
+
+                {/* BM 1000/20 preventive maintenance routine and costs: only when the BM 1000/20 is being compared */}
+                {selectedLine === 'milling' && getSelectedMachineData().some((m) => m.brand === 'BOMAG' && m.model === 'BM 1000/20') && (
+                  <div className="mt-8">
+                    <h4 className="text-lg font-semibold text-gray-700 mb-4">{t('preventiveMaintenanceRoutineAndCosts')}</h4>
+                    <div className="mb-4">
+                      <h5 className="text-md font-semibold text-gray-600 mb-1">{t('bm100020')}</h5>
+                      <p className="text-sm text-gray-600 mb-3">
+                        {t('pmFinancialHint', {
+                          value: formatFromUsd(
+                            bm100020PreventiveMaintenance.reduce((sum, row) => {
+                              const interval = parseFloat(String(row.period));
+                              return row.publicPrice != null && interval > 0 ? sum + row.publicPrice / interval : sum;
+                            }, 0),
+                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                          ),
+                        })}
+                      </p>
+                      <div className="overflow-x-auto">
+                        <CompareTable columnCount={9}>
+                          <thead>
+                            <tr className="bg-bomag-light-gray">
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmRevision')}</th>
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmMaintenance')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmPeriod')}</th>
+                              <th className="border border-gray-300 p-2 text-left font-semibold">{t('pmDescription')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmSapCode')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmQuantityPerMachine')}</th>
+                              <th className="border border-gray-300 p-2 text-center font-semibold">{t('pmUnit')}</th>
+                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmPublicPrice')}</th>
+                              <th className="border border-gray-300 p-2 text-right font-semibold">{t('pmTotalPrice')}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {bm100020PreventiveMaintenance.map((row, idx) => (
+                              <tr key={idx} className="hover:bg-gray-50">
+                                <td className="border border-gray-300 p-2 text-left">{row.revision[language] ?? row.revision.en}</td>
+                                <td className="border border-gray-300 p-2 text-left">{row.maintenance[language] ?? row.maintenance.en}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.period}</td>
+                                <td className="border border-gray-300 p-2 text-left">{row.description[language] ?? row.description.en}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.sapCode}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.quantityPerMachine}</td>
+                                <td className="border border-gray-300 p-2 text-center">{row.unit}</td>
+                                <td className="border border-gray-300 p-2 text-right">{row.publicPrice != null ? formatFromUsd(row.publicPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
+                                <td className="border border-gray-300 p-2 text-right">{row.totalPrice != null ? formatFromUsd(row.totalPrice, { minimumFractionDigits: isZeroDecimal ? 0 : 2, maximumFractionDigits: isZeroDecimal ? 0 : 2 }) : '-'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </CompareTable>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 </TabsContent>
               )}
             </Tabs>

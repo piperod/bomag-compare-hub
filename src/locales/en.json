@@ -388,6 +388,7 @@
   "pmUnit": "Unit",
   "pmPublicPrice": "Public price",
   "pmTotalPrice": "Total price",
+  "pmFinancialHint": "BOMAG maintenance plan parts: ≈ {{value}} per hour (each row's price ÷ its interval, excluding labour). Use it as a reference for the BM 1000/20 preventive maintenance in the analysis.",
 
   "articulationJointTitle": "Articulation joint",
   "maintenanceFreePill": "Maintenance-free",

@@ -327,6 +327,7 @@
   "pmUnit": "Einheit",
   "pmPublicPrice": "Listenpreis",
   "pmTotalPrice": "Gesamtpreis",
+  "pmFinancialHint": "Ersatzteile des BOMAG-Wartungsplans: ≈ {{value}} pro Stunde (Preis je Zeile ÷ Intervall, ohne Arbeitszeit). Als Referenz für die vorbeugende Wartung der BM 1000/20 in der Analyse verwenden.",
 
   "articulationJointTitle": "Gelenk",
   "maintenanceFreePill": "Wartungsfrei",

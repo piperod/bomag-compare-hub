@@ -141,6 +141,8 @@ export function getPaverFuelMultiplier(
   if (!ecomodeEnabled) return 1;
   const defaults = getPaverUspDefaults(machine);
   if (defaults.hasEcomode) return 1 - PAVER_ECOMODE_FUEL_SAVINGS;
+  // BOMAG pavers where ECOMODE is optional (not factory default) save the same when it is enabled
+  if (/ecomode/i.test(machine.fuelSavingMode) && isBomag(machine.brand)) return 1 - PAVER_ECOMODE_FUEL_SAVINGS;
   if (/ecoplus/i.test(machine.fuelSavingMode)) return 0.75;
   if (/variospeed/i.test(machine.fuelSavingMode)) return 0.9;
   if (/eco-mode|eco mode/i.test(machine.fuelSavingMode)) return 0.9;

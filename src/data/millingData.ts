@@ -2,9 +2,15 @@
  * Milling machine specifications (cold milling machines).
  * Criteria and USP labels follow the comparison table structure.
  */
+import { mergeByBrand, millingMasterAdditions } from './masterTcoAdditions';
+import { withImportRegistryOrigin } from './importRegistryOrigins';
+import type { LocalizedText } from './paversData';
+
 export interface MillingMachineSpec {
   brand: string;
   model: string;
+  /** Country of origin (from the import registry). */
+  origin?: LocalizedText;
   engine: string; // for getMachineId and display
   millingWidth: string;
   maxDepth: string;
@@ -41,7 +47,7 @@ export interface MillingMachineSpec {
   toolWearCostPerHour?: number;
 }
 
-export const millingMachines: MillingMachineSpec[] = [
+const baseMillingMachines: MillingMachineSpec[] = [
   {
     brand: 'BOMAG',
     model: 'BM 1000/20',
@@ -269,6 +275,10 @@ export const millingMachines: MillingMachineSpec[] = [
     toolWearCostPerHour: 17
   }
 ];
+
+export const millingMachines: MillingMachineSpec[] = withImportRegistryOrigin(
+  mergeByBrand(baseMillingMachines, millingMasterAdditions)
+);
 
 /** Single row of the preventive maintenance table (BM 1000/20) */
 export interface PreventiveMaintenanceRow {

@@ -39,9 +39,14 @@ export interface MachineSpec {
   easyMaintenance?: { es: string; en: string; de: string; pt: string };
   // Add staticTco to MachineSpec
   staticTco?: number;
+  // PTR specific fields
+  numberOfWheels?: { es: string; en: string; de: string; pt: string };
 }
 
+import { BW120_AD5_USPS } from '@/data/bomagUsps';
 import sdrFromCsv from '@/data/sdrFromCsv.json';
+import { ltrMasterAdditions, mergeByBrand, ptrMachines as ptrMasterMachines, sdrMasterAdditions } from '@/data/masterTcoAdditions';
+import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
 
 /*
 export const sdrMachines: MachineSpec[] = [
@@ -684,12 +689,15 @@ export const sdrMachines: MachineSpec[] = [
 ];
 */
 
-export const sdrMachines: MachineSpec[] = sdrFromCsv as unknown as MachineSpec[];
+export const sdrMachines: MachineSpec[] = withImportRegistryOrigin(
+  mergeByBrand(sdrFromCsv as unknown as MachineSpec[], sdrMasterAdditions)
+);
 
-export const ltrMachines: MachineSpec[] = [
+const ltrBaseMachines: MachineSpec[] = [
   {
     brand: "BOMAG",
     model: "BW120 AD-5",
+    ...BW120_AD5_USPS,
     weight: 2700,
     engine: "Kubota D1703",
     compactionWidth: 1.2,
@@ -1045,6 +1053,10 @@ export const ltrMachines: MachineSpec[] = [
     ],
   }
 ];
+
+export const ltrMachines: MachineSpec[] = withImportRegistryOrigin(mergeByBrand(ltrBaseMachines, ltrMasterAdditions));
+
+export const ptrMachines: MachineSpec[] = withImportRegistryOrigin(ptrMasterMachines);
 
 export interface CompactionData {
   weightRange: string;

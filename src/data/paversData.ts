@@ -3,6 +3,8 @@
  * Regenerate: node scripts/generate_pavers_from_xlsx.cjs
  */
 import { applyPaverI18n } from './paversI18n';
+import { withImportRegistryOrigin } from './importRegistryOrigins';
+import { mergeByBrand, paverMasterAdditions, paverSizeCategoryByModel } from './masterTcoAdditions';
 
 export interface LocalizedText {
   es: string;
@@ -34,6 +36,8 @@ export interface PaverFinancialData {
 export interface PaverMachineSpec {
   brand: string;
   model: string;
+  /** Country of origin (from the import registry). */
+  origin?: LocalizedText;
   engine: string;
   engineManufacturer: string;
   nominalPower: string;
@@ -87,15 +91,17 @@ export interface PaverMachineSpec {
   hasEcomode?: boolean;
   setupFuelLiters?: number;
   heatingMinutes?: number;
+  /** Size category used for search (e.g. "MEDIANA (351-700 t/h)") */
+  sizeCategory?: string;
 }
 
 const rawPaversMachines: PaverMachineSpec[] = [
   {
     "brand": "CATERPILLAR",
     "model": "AP655",
-    "engineManufacturer": "Cat C4.4 (4 cil.) / opt C7.1 (6 cil.)",
-    "nominalPower": "129 kW / 173 hp",
-    "emissionStandard": "EPA Tier 4 Final / EU Stage V",
+    "engineManufacturer": "Cat C7.1 (6 cil.)",
+    "nominalPower": "151 kW / 202 hp",
+    "emissionStandard": "EPA Tier 3 / Stage IIIA / MAR-1 (C7.1)\nTier 4 Final / Stage V: C4.4 (129 kW / 173 hp)",
     "fuelSavingMode": "Eco-mode + control auto rpm",
     "fuelTankCapacity": "278 L",
     "maxProduction": "1.300 t/h",
@@ -106,7 +112,7 @@ const rawPaversMachines: PaverMachineSpec[] = [
     "baseWidthRetracted": "2,55 m (SE50) / 3,0 m (SE60)",
     "extendedBaseWidth": "5,0 m (SE50) / 6,0 m (SE60)",
     "maxWidthWithExtensions": "8,0 m (SE50VT)\n10,0 m (SE60VT XW)",
-    "hopperCapacity": "11–12 t",
+    "hopperCapacity": "11–12 t (7,1 m³)",
     "augerDiameter": "406 mm (16\")",
     "conveyors": "2 cintas - sistema 4 bombas",
     "pushRollers": "Ajustables (estándar)",
@@ -116,7 +122,7 @@ const rawPaversMachines: PaverMachineSpec[] = [
     "quickExtensionSystem": "Manual / hidráulica (opcional)",
     "smoothingPlateDepth": "No especificado",
     "operatingWeight": "19.530 kg (c/SE50VT)\n21.052 kg (c/SE60VT XW)",
-    "transportLength": "6.666 mm (c/SE50VT)",
+    "transportLength": "6.600 mm",
     "transportWidth": "2.550–2.762 mm",
     "transportHeight": "3.056 mm",
     "operationSystem": "Pantallas táctiles dobles\nPave Start Assistant",
@@ -124,7 +130,7 @@ const rawPaversMachines: PaverMachineSpec[] = [
     "telematics": "Product Link Elite\n(satélite / celular)",
     "asphaltFumeExtraction": "Sistema ventilación (desviación)",
     "centralizedLubrication": "Acceso remoto puntos clave",
-    "engine": "129 kW / 173 hp",
+    "engine": "151 kW / 202 hp",
     "usp1": {
       "es": "Eléctrico estándar - ~15 min - Vida 1.000–1.500 h - Recambio anual ~8.000 €",
       "en": "Eléctrico estándar - ~15 min - Vida 1.000–1.500 h - Recambio anual ~8.000 €",
@@ -215,7 +221,7 @@ const rawPaversMachines: PaverMachineSpec[] = [
     "baseWidthRetracted": "2,5 m (S500) / 3,0 m (S600)",
     "extendedBaseWidth": "5,0 m (S500) / 6,0 m (S600)",
     "maxWidthWithExtensions": "8,0 m (S500) / 9,0 m (S600)\n[Quick Coupling]",
-    "hopperCapacity": "11 t",
+    "hopperCapacity": "11 t (7,0 m³)",
     "augerDiameter": "350 mm - 100 rpm",
     "conveyors": "2 - reversibles, ctrl indep.\n64 rpm",
     "pushRollers": "Amortiguados + apoyo hidráulico",
@@ -528,4 +534,28 @@ const rawPaversMachines: PaverMachineSpec[] = [
   }
 ];
 
-export const paversMachines = applyPaverI18n(rawPaversMachines);
+const basePaversMachines = applyPaverI18n(rawPaversMachines).map((machine) => {
+  const sizeCategory = paverSizeCategoryByModel[`${machine.brand}|${machine.model}`];
+  return sizeCategory && !machine.sizeCategory ? { ...machine, sizeCategory } : machine;
+});
+
+/**
+ * Pavers kept in the data but not shown yet (too little datasheet information).
+ * Remove a `brand|model` entry to show that model again.
+ */
+const HIDDEN_PAVERS = new Set([
+  'DYNAPAC|SD2550C',
+  'DYNAPAC|SD2550CS',
+  'DYNAPAC|F1200C',
+  'DYNAPAC|F80W',
+  'DYNAPAC|F1000W',
+  'VOLVO|P68200 ABG',
+  'VOLVO|ABG9820',
+  'VOLVO|P28200 ABG',
+]);
+
+export const paversMachines: PaverMachineSpec[] = withImportRegistryOrigin(
+  mergeByBrand(basePaversMachines, paverMasterAdditions).filter(
+    (machine) => !HIDDEN_PAVERS.has(`${machine.brand}|${machine.model}`)
+  )
+);

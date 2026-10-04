@@ -540,12 +540,485 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
       pt: 'N/D',
     },
   ],
+  // Phrases used by models added from the BOMAG TCO master file
+  [
+    'Controlador de nivelación integrado (estándar)\nSensores ultrasónicos o mecánicos (opcional)',
+    {
+      en: 'Integrated leveling controller (standard)\nUltrasonic or mechanical sensors (optional)',
+      de: 'Integrierter Nivellierregler (Standard)\nUltraschall- oder mechanische Sensoren (optional)',
+      pt: 'Controlador de nivelamento integrado (padrão)\nSensores ultrassônicos ou mecânicos (opcional)',
+    },
+  ],
+  [
+    'Asiento SIDEVIEW giratorio/deslizable',
+    {
+      en: 'SIDEVIEW rotating/sliding seat',
+      de: 'SIDEVIEW Dreh-/Schiebesitz',
+      pt: 'Assento SIDEVIEW giratório/deslizante',
+    },
+  ],
+  [
+    '2 - reversibles, ctrl indep.',
+    {
+      en: '2 - reversible, indep. ctrl.',
+      de: '2 - reversibel, unabh. Steuerung',
+      pt: '2 - reversíveis, ctrl. indep.',
+    },
+  ],
+  [
+    'Aspiración de vapores',
+    {
+      en: 'Fume extraction',
+      de: 'Dampfabsaugung',
+      pt: 'Aspiração de vapores',
+    },
+  ],
+  [
+    'Lubricación central',
+    {
+      en: 'Central lubrication',
+      de: 'Zentralschmierung',
+      pt: 'Lubrificação central',
+    },
+  ],
+  [
+    'Con amortiguación',
+    {
+      en: 'Damped',
+      de: 'Gedämpft',
+      pt: 'Com amortecimento',
+    },
+  ],
+  [
+    ' - Espesor ',
+    {
+      en: ' - Thickness ',
+      de: ' - Dicke ',
+      pt: ' - Espessura ',
+    },
+  ],
+  [
+    'Eléctrica (placas de aluminio MAGMALIFE opcionales)',
+    {
+      en: 'Electric (MAGMALIFE aluminum plates optional)',
+      de: 'Elektrisch (MAGMALIFE-Aluminiumplatten optional)',
+      pt: 'Elétrico (placas de alumínio MAGMALIFE opcionais)',
+    },
+  ],
+  [
+    'MAGMALIFE - placas calefactoras de aluminio fundido (estándar)',
+    {
+      en: 'MAGMALIFE - cast aluminum heating plates (standard)',
+      de: 'MAGMALIFE - Aluminium-Guss-Heizplatten (Standard)',
+      pt: 'MAGMALIFE - placas de aquecimento de alumínio fundido (padrão)',
+    },
+  ],
+  [
+    'Opcional (sensores ultrasónicos o mecánicos de altura y pendiente transversal)',
+    {
+      en: 'Optional (ultrasonic or mechanical height & cross-slope sensing)',
+      de: 'Optional (Ultraschall- oder mechanische Höhen- und Querneigungsabtastung)',
+      pt: 'Opcional (sensores ultrassônicos ou mecânicos de altura e inclinação transversal)',
+    },
+  ],
+  [
+    'Opcional (sensores ultrasónicos de altura y pendiente transversal)',
+    {
+      en: 'Optional (ultrasonic height & cross-slope sensing)',
+      de: 'Optional (Ultraschall-Höhen- und Querneigungsabtastung)',
+      pt: 'Opcional (sensores ultrassônicos de altura e inclinação transversal)',
+    },
+  ],
+  [
+    'Regla V (vibración / tamper + vibración)',
+    {
+      en: 'V-screed (vibration / tamper + vibration)',
+      de: 'V-Bohle (Vibration / Tamper + Vibration)',
+      pt: 'Mesa V (vibração / tamper + vibração)',
+    },
+  ],
+  [
+    '(calefacción a gas o eléctrica)',
+    {
+      en: '(gas or electric heated)',
+      de: '(gas- oder elektrisch beheizt)',
+      pt: '(aquecimento a gás ou elétrico)',
+    },
+  ],
+  [
+    'Regla vibratoria',
+    {
+      en: 'Vibration screed',
+      de: 'Vibrationsbohle',
+      pt: 'Mesa vibratória',
+    },
+  ],
+  [
+    'Regla Volvo Variomatic',
+    {
+      en: 'Volvo Variomatic screed',
+      de: 'Volvo Variomatic Bohle',
+      pt: 'Mesa Volvo Variomatic',
+    },
+  ],
+  [
+    'Regla Vario',
+    {
+      en: 'Vario screed',
+      de: 'Vario-Bohle',
+      pt: 'Mesa Vario',
+    },
+  ],
+  [
+    '(tamper + vibración)',
+    {
+      en: '(tamper + vibration)',
+      de: '(Tamper + Vibration)',
+      pt: '(tamper + vibração)',
+    },
+  ],
+  [
+    'estándar, hasta 9-10 m con extensiones',
+    {
+      en: 'standard, up to 9-10 m with extensions',
+      de: 'Standard, bis 9-10 m mit Verbreiterungen',
+      pt: 'padrão, até 9-10 m com extensões',
+    },
+  ],
+  [
+    '(con patines reductores)',
+    { en: '(with reduction skids)', de: '(mit Reduzierschuhen)', pt: '(com sapatas redutoras)' },
+  ],
+  [
+    '(según mercado)',
+    { en: '(depending on market)', de: '(je nach Markt)', pt: '(conforme o mercado)' },
+  ],
+  [
+    '(solamente)',
+    { en: '(only)', de: '(nur)', pt: '(somente)' },
+  ],
+  [
+    'Rodillo de empuje giratorio',
+    { en: 'Rotatable push roller', de: 'Drehbare Schubrolle', pt: 'Rolo de empurre giratório' },
+  ],
+  [
+    '2 plataformas de mando (altura hidráulica), 2 joysticks de dirección',
+    {
+      en: '2 operator platforms (hydraulic height), 2 steering joysticks',
+      de: '2 Fahrerstände (hydraulisch höhenverstellbar), 2 Lenk-Joysticks',
+      pt: '2 plataformas de comando (altura hidráulica), 2 joysticks de direção',
+    },
+  ],
+  [
+    'mín. (con patines reductores)',
+    {
+      en: 'min. (with reduction skids)',
+      de: 'min. (mit Reduzierschuhen)',
+      pt: 'mín. (com sapatas redutoras)',
+    },
+  ],
+  [
+    ' mín. - ',
+    {
+      en: ' min. - ',
+      de: ' min. - ',
+      pt: ' mín. - ',
+    },
+  ],
+  [
+    ' máx.',
+    {
+      en: ' max.',
+      de: ' max.',
+      pt: ' máx.',
+    },
+  ],
+  [
+    'cil.)',
+    {
+      en: 'cyl.)',
+      de: 'Zyl.)',
+      pt: 'cil.)',
+    },
+  ],
+  [
+    'EXTRA GRANDE (',
+    {
+      en: 'EXTRA LARGE (',
+      de: 'EXTRA GROSS (',
+      pt: 'EXTRA GRANDE (',
+    },
+  ],
+  [
+    'GRANDE (',
+    {
+      en: 'LARGE (',
+      de: 'GROSS (',
+      pt: 'GRANDE (',
+    },
+  ],
+  [
+    'MEDIANA (',
+    {
+      en: 'MEDIUM (',
+      de: 'MITTEL (',
+      pt: 'MÉDIA (',
+    },
+  ],
+  [
+    'COMPACTA (',
+    {
+      en: 'COMPACT (',
+      de: 'KOMPAKT (',
+      pt: 'COMPACTA (',
+    },
+  ],
   [
     '(con reducciones)',
     {
       en: '(with reductions)',
       de: '(mit Verbreiterungen)',
       pt: '(com reduções)',
+    },
+  ],
+  [
+    'Gas o eléctrica',
+    {
+      en: 'Gas or electric',
+      de: 'Gas oder elektrisch',
+      pt: 'Gás ou elétrica',
+    },
+  ],
+  [
+    'Controles convencionales',
+    {
+      en: 'Conventional controls',
+      de: 'Konventionelle Bedienung',
+      pt: 'Controles convencionais',
+    },
+  ],
+  [
+    'control proporcional',
+    {
+      en: 'proportional control',
+      de: 'Proportionalsteuerung',
+      pt: 'controle proporcional',
+    },
+  ],
+  [
+    ', reversibles',
+    {
+      en: ', reversible',
+      de: ', reversierbar',
+      pt: ', reversíveis',
+    },
+  ],
+  [
+    ', ctrl indep.',
+    {
+      en: ', indep. ctrl',
+      de: ', unabh. Steuerung',
+      pt: ', ctrl indep.',
+    },
+  ],
+  [
+    'Motor diésel 4 cil. refrigerado por líquido',
+    {
+      en: 'Liquid-cooled 4-cyl. diesel engine',
+      de: 'Flüssigkeitsgekühlter 4-Zyl.-Dieselmotor',
+      pt: 'Motor diesel 4 cil. refrigerado a líquido',
+    },
+  ],
+  [
+    'Oscilantes estándar',
+    {
+      en: 'Oscillating (standard)',
+      de: 'Pendelnd (Standard)',
+      pt: 'Oscilantes padrão',
+    },
+  ],
+  [
+    'Puntos de lubricación centralizados',
+    {
+      en: 'Centralized lubrication points',
+      de: 'Zentrale Schmierstellen',
+      pt: 'Pontos de lubrificação centralizados',
+    },
+  ],
+  [
+    'gran pantalla color',
+    {
+      en: 'large colour display',
+      de: 'großes Farbdisplay',
+      pt: 'grande tela colorida',
+    },
+  ],
+  [
+    '(según regla)',
+    {
+      en: '(depending on screed)',
+      de: '(je nach Bohle)',
+      pt: '(conforme a régua)',
+    },
+  ],
+  [
+    '(támper)',
+    {
+      en: '(tamper)',
+      de: '(Tamper)',
+      pt: '(tamper)',
+    },
+  ],
+  [
+    'reversibles',
+    {
+      en: 'reversible',
+      de: 'reversierbar',
+      pt: 'reversíveis',
+    },
+  ],
+  [
+    'hasta ',
+    {
+      en: 'up to ',
+      de: 'bis ',
+      pt: 'até ',
+    },
+  ],
+  [
+    '(equivalente EPA Tier 3 / EU Stage IIIA)',
+    {
+      en: '(equivalent to EPA Tier 3 / EU Stage IIIA)',
+      de: '(entspricht EPA Tier 3 / EU Stufe IIIA)',
+      pt: '(equivalente EPA Tier 3 / EU Stage IIIA)',
+    },
+  ],
+  [
+    'Rodillo de empuje ajustable',
+    {
+      en: 'Adjustable push roller',
+      de: 'Verstellbare Schubrolle',
+      pt: 'Rolo de empurre ajustável',
+    },
+  ],
+  [
+    'Consola simple y deslizante',
+    {
+      en: 'Simple sliding console',
+      de: 'Einfache verschiebbare Konsole',
+      pt: 'Console simples e deslizante',
+    },
+  ],
+  [
+    'Modo ECO',
+    {
+      en: 'ECO mode',
+      de: 'ECO-Modus',
+      pt: 'Modo ECO',
+    },
+  ],
+  [
+    'kW a ',
+    {
+      en: 'kW at ',
+      de: 'kW bei ',
+      pt: 'kW a ',
+    },
+  ],
+  [
+    '(tractor + regla básica)',
+    {
+      en: '(tractor + basic screed)',
+      de: '(Traktor + Grundbohle)',
+      pt: '(trator + régua básica)',
+    },
+  ],
+  [
+    'Asistente de conducción (cámara)',
+    {
+      en: 'Driver assistance (camera)',
+      de: 'Fahrassistent (Kamera)',
+      pt: 'Assistente de condução (câmera)',
+    },
+  ],
+  [
+    'MOBA analógico (std.)',
+    {
+      en: 'Analogue MOBA (std.)',
+      de: 'Analoges MOBA (Std.)',
+      pt: 'MOBA analógico (padrão)',
+    },
+  ],
+  [
+    '(sobre ruedas)',
+    {
+      en: '(on wheels)',
+      de: '(auf Rädern)',
+      pt: '(sobre rodas)',
+    },
+  ],
+  [
+    '(amplitud ',
+    {
+      en: '(amplitude ',
+      de: '(Amplitude ',
+      pt: '(amplitude ',
+    },
+  ],
+  [
+    'Eléctrica',
+    {
+      en: 'Electric',
+      de: 'Elektrisch',
+      pt: 'Elétrica',
+    },
+  ],
+  [
+    '(con zapata reductora)',
+    {
+      en: '(with reducing shoe)',
+      de: '(mit Reduzierschuh)',
+      pt: '(com sapata redutora)',
+    },
+  ],
+  [
+    '(c/regla std.)',
+    {
+      en: '(with std. screed)',
+      de: '(mit Std.-Bohle)',
+      pt: '(c/régua padrão)',
+    },
+  ],
+  [
+    '(tractor)',
+    {
+      en: '(tractor)',
+      de: '(Traktor)',
+      pt: '(trator)',
+    },
+  ],
+  [
+    'Eléctrica - generador',
+    {
+      en: 'Electric - generator',
+      de: 'Elektrisch - Generator',
+      pt: 'Elétrica - gerador',
+    },
+  ],
+  [
+    '(vibración)',
+    {
+      en: '(vibration)',
+      de: '(Vibration)',
+      pt: '(vibração)',
+    },
+  ],
+  [
+    'Sistema de nivelación (opcional)',
+    {
+      en: 'Levelling system (optional)',
+      de: 'Nivelliersystem (optional)',
+      pt: 'Sistema de nivelamento (opcional)',
     },
   ],
   [
@@ -598,11 +1071,14 @@ const PHRASE_REPLACEMENTS: Array<[string, Record<NonEsLang, string>]> = [
   ],
 ];
 
+/** Longest phrases first, so a generic phrase never pre-empts a longer, more specific one. */
+const ORDERED_REPLACEMENTS = [...PHRASE_REPLACEMENTS].sort((a, b) => b[0].length - a[0].length);
+
 export function localizePaverText(text: string, lang: Language): string {
   if (!text || lang === 'es') return text;
 
   let result = text;
-  for (const [phrase, translations] of PHRASE_REPLACEMENTS) {
+  for (const [phrase, translations] of ORDERED_REPLACEMENTS) {
     if (result.includes(phrase)) {
       result = result.split(phrase).join(translations[lang]);
     }

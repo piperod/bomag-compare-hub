@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
-import { sdrMachines, ltrMachines, MachineSpec } from '@/data/machineData';
+import { sdrMachines, ltrMachines, ptrMachines, MachineSpec } from '@/data/machineData';
+import { htrMasterAdditions, mergeByBrand } from '@/data/masterTcoAdditions';
+import { BW161_AD4_USPS } from '@/data/bomagUsps';
+import { withImportRegistryOrigin } from '@/data/importRegistryOrigins';
 import { millingMachines, MillingMachineSpec, bm100020PreventiveMaintenance } from '@/data/millingData';
 import { paversMachines, PaverMachineSpec } from '@/data/paversData';
 import { CompareTable } from '@/components/CompareTable';
@@ -33,6 +36,7 @@ import {
   getPaverUspDefaults,
 } from '@/utils/productLineFinancial';
 import ArticulationJointCostAnalysis from '@/components/ArticulationJointCostAnalysis';
+import { BomagTcoHighlights } from '@/components/BomagTcoHighlights';
 
 interface MachineComparisonProps {
   selectedLine: string;
@@ -51,10 +55,11 @@ interface MachineComparisonProps {
 }
 
 // HTR machine data (hardcoded, Spanish labels)
-const htrMachines = [
+const htrBaseMachines = [
   {
     brand: 'BOMAG',
     model: 'BW161 AD-4',
+    ...BW161_AD4_USPS,
     weight: 9700,
     engine: 'Deutz TCD L04 2V',
     compactionWidth: 1.68,
@@ -339,6 +344,11 @@ const htrMachines = [
   },
 ];
 
+// HTR models added from the BOMAG TCO master file
+const htrMachines = withImportRegistryOrigin(
+  mergeByBrand(htrBaseMachines, htrMasterAdditions as unknown as typeof htrBaseMachines)
+);
+
 const base = import.meta.env.BASE_URL;
 const getImagePath = getMachineImagePath;
 
@@ -422,6 +432,8 @@ const MachineComparison = ({
     ? ((locale.millingUspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [
         { key: 'usp1', labelKey: 'millingUsp1' }, { key: 'usp2', labelKey: 'millingUsp2' }, { key: 'usp3', labelKey: 'millingUsp3' }, { key: 'usp4', labelKey: 'millingUsp4' }
       ])
+    : selectedLine === 'ptr'
+    ? []
     : selectedLine === 'pavers'
     ? ((locale.paverUspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [])
     : ((locale.uspRows as Array<{ key: string; labelKey: string }> | undefined) ?? [
@@ -532,7 +544,7 @@ const MachineComparison = ({
     }
   }, [isCalcOpen]);
 
-  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : selectedLine === 'milling' ? millingMachines : selectedLine === 'pavers' ? paversMachines : [];
+  const machines = selectedLine === 'sdr' ? sdrMachines : selectedLine === 'ltr' ? ltrMachines : selectedLine === 'htr' ? htrMachines : selectedLine === 'milling' ? millingMachines : selectedLine === 'pavers' ? paversMachines : selectedLine === 'ptr' ? ptrMachines : [];
   const machinesSorted = React.useMemo(() => {
     let arr = [...machines];
 
@@ -543,7 +555,9 @@ const MachineComparison = ({
         machine.brand.toLowerCase().includes(searchLower) ||
         machine.model.toLowerCase().includes(searchLower) ||
         machine.engine.toLowerCase().includes(searchLower) ||
-        String((machine as any).materialNumber ?? '').toLowerCase().includes(searchLower)
+        String((machine as any).materialNumber ?? '').toLowerCase().includes(searchLower) ||
+        String((machine as any).sizeCategory ?? '').toLowerCase().includes(searchLower) ||
+        paverText(String((machine as any).sizeCategory ?? '')).toLowerCase().includes(searchLower)
       );
 
       // Always include already selected machines even if they don't match the search
@@ -912,10 +926,14 @@ const MachineComparison = ({
       'CATERPILLAR': 'bg-yellow-400',
       'NEW HOLLAND': 'bg-blue-600',
       'SANY': 'bg-red-500',
+      'LIUGONG': 'bg-amber-600',
+      'SEM': 'bg-yellow-700',
       'XCMG': 'bg-orange-500',
       'AMMANN': 'bg-green-600',
       'JCB': 'bg-yellow-600',
       'WACKER NEUSON': 'bg-red-600',
+      'VOLVO': 'bg-slate-700',
+      'WIRTGEN': 'bg-gray-700',
       'Vögele': 'bg-indigo-600',
       'Dynapac': 'bg-yellow-500',
       'Caterpillar': 'bg-yellow-400'
@@ -930,6 +948,8 @@ const MachineComparison = ({
       .split('\n')
       .map(line => {
         const trimmed = line.replace(/^\s+|\s+$/g, '');
+        // A lone dash means "no data", not a bullet
+        if (trimmed === '-') return trimmed;
         // Normalize common bullet starters
         const bulletMatch = /^([*•\-]\s*)+/.exec(trimmed);
         if (bulletMatch) {
@@ -1120,11 +1140,21 @@ const MachineComparison = ({
                     <CardSpecRow label={t('paverCardOperatingWeight')} value={formatMultiline(paverText((machine as PaverMachineSpec).operatingWeight))} tall />
                     <CardSpecRow label={t('paverCardMinWorkingWidth')} value={paverText((machine as PaverMachineSpec).minWorkingWidth)} />
                   </>
+                ) : selectedLine === 'ptr' ? (
+                  <>
+                    <CardSpecRow label={t('weight')} value={`${(machine as MachineSpec).weight.toLocaleString()} kg`} />
+                    <CardSpecRow label={t('power')} value={`${(machine as MachineSpec).power} HP`} />
+                    <CardSpecRow label={t('rollingWidth')} value={(machine as MachineSpec).compactionWidth ? `${(machine as MachineSpec).compactionWidth} m` : '-'} />
+                    <CardSpecRow
+                      label={t('numberOfWheels')}
+                      value={pickLocalizedWithFallback((machine as MachineSpec).numberOfWheels ?? { es: '-', en: '-', de: '-', pt: '-' }, language) || '-'}
+                    />
+                  </>
                 ) : (
                   <>
                     <CardSpecRow label={t('weight')} value={`${(machine as MachineSpec).weight.toLocaleString()} kg`} />
                     <CardSpecRow label={t('power')} value={`${(machine as MachineSpec).power} HP`} />
-                    <CardSpecRow label={t('compactionWidth')} value={`${(machine as MachineSpec).compactionWidth} m`} />
+                    <CardSpecRow label={t('compactionWidth')} value={(machine as MachineSpec).compactionWidth ? `${(machine as MachineSpec).compactionWidth} m` : '-'} />
                     <CardSpecRow label={t('amplitude')} value={formatMultiline(String((machine as MachineSpec).amplitude || '-'))} />
                     <CardSpecRow
                       label={t('telemetry')}
@@ -1202,7 +1232,10 @@ const MachineComparison = ({
                                   <td className="border border-gray-300 p-2 font-semibold bg-gray-50">{t(spec.labelKey)}</td>
                                   {selectedMachineData.map((machine, index) => {
                                     const value = (machine as PaverMachineSpec)[spec.key as keyof PaverMachineSpec];
-                                    const strVal = paverText(String(value ?? '-'));
+                                    const strVal =
+                                      typeof value === 'object' && value !== null
+                                        ? pickLocalizedWithFallback(value as unknown as Parameters<typeof pickLocalizedWithFallback>[0], language) || '-'
+                                        : paverText(String(value ?? '-'));
                                     const showAdvantage = paverHasCompetitiveAdvantage(
                                       spec.key,
                                       machine as PaverMachineSpec,
@@ -1251,6 +1284,10 @@ const MachineComparison = ({
                             const rows = (locale.basicSpecificationRowsMilling ?? []) as Array<{ key: string; labelKey: string }>;
                             return rows.map(r => ({ key: r.key, label: t(r.labelKey), unit: '' }));
                           }
+                          if (selectedLine === 'ptr') {
+                            const rows = (locale.basicSpecificationRowsPtr ?? []) as Array<{ key: string; labelKey: string }>;
+                            return rows.map(r => ({ key: r.key, label: t(r.labelKey), unit: '' }));
+                          }
                           const commonRows = (locale.basicSpecificationRowsCommon ?? ['weight', 'engine', 'compactionWidth', 'power', 'amplitude', 'staticLinearLoad', 'origin']) as string[];
                           const getLabel = (key: string) => {
                             if (key === 'waterTankCapacity') return `${t('waterTankCapacity')} (L)`;
@@ -1270,7 +1307,9 @@ const MachineComparison = ({
                               {spec.label}
                             </td>
                             {getSelectedMachineData().map((machine, index) => {
-                              const value: any = machine[spec.key as keyof typeof machine];
+                              const rawValue: any = machine[spec.key as keyof typeof machine];
+                              // A width of 0 means "not published" (e.g. datasheets without drum width)
+                              const value: any = spec.key === 'compactionWidth' && rawValue === 0 ? '-' : rawValue;
                               const isObj = typeof value === 'object' && value !== null;
                               const strVal = !isObj ? String(value ?? '-') : '';
                               const isLong = !isObj && (strVal.includes('\n') || strVal.length > 40);
@@ -1399,6 +1438,7 @@ const MachineComparison = ({
 
               {showFinancialTab && (
               <TabsContent value="financial" className="mt-4 space-y-8">
+                <BomagTcoHighlights line={selectedLine} />
                 {selectedLine === 'pavers' && (
                   <div className="space-y-3">
                     <div>
@@ -2144,10 +2184,12 @@ const MachineComparison = ({
                             {getSelectedMachineData().map((machine, index) => {
                               const machineId = getMachineId(machine);
                               const baseFuel = getBaseFuelConsumption(machine);
+                              // Compaction models without published fuel data (e.g. VOLVO/DYNAPAC from the TCO master) stay editable
+                              const hasCatalogFuel = getMachineFinancialDefaults(machine).fuelConsumption > 0;
 
                               return (
                                 <td key={index} className="border border-gray-300 p-2 text-center font-medium bg-blue-50">
-                                  {isCompactionLine ? (
+                                  {isCompactionLine && hasCatalogFuel ? (
                                     `${baseFuel.toFixed(1)} L/h`
                                   ) : (
                                     <div className="flex justify-center">

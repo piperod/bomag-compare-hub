@@ -45,6 +45,12 @@ export interface MillingMachineSpec {
   hasBms15l?: boolean;
   wearReductionPercent?: number;
   toolWearCostPerHour?: number;
+  /** Fuel saving (%) of the BOMAG cutting technology documented for this model, applied to the base consumption. */
+  fuelSavingPercent?: number;
+  /** True when `fuelConsumption` is a measured jobsite value (savings already included). */
+  fuelIsMeasured?: boolean;
+  /** Where the fuel consumption figure comes from. */
+  fuelDataSource?: LocalizedText;
 }
 
 const baseMillingMachines: MillingMachineSpec[] = [

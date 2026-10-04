@@ -362,7 +362,7 @@
   "articulationJointBenefitsTitle": "Beneficios de la Junta Articulada BOMAG",
   "articulationJointBenefitsAlt": "Tabla de beneficios de la junta articulada BOMAG",
 
-  "maintenanceJointUSPQuestion": "¿El modelo cuenta con junta de articulación libre de mantenimiento?",
+  "maintenanceJointUSPQuestion": "Junta de articulación libre de mantenimiento (BOMAG)",
   "showArticulationVariables": "Ver variables del cálculo de junta de articulación",
   "hideArticulationVariables": "Ocultar variables del cálculo de junta de articulación",
   "yesLabel": "Sí",
@@ -370,8 +370,10 @@
 
   "tcoTimeline": "Línea de tiempo TCO",
   "tcoProgressive": "TCO Progresivo",
+  "tcoProgressivePurchase": "precio de compra",
+  "tcoProgressiveHint": "Costo acumulado por horas de uso con los mismos supuestos del análisis anterior (precio, combustible, mantenimiento, USP y valor de reventa). Para cambiar el precio de compra, edítelo en la fila de precio.",
   "hoursLabel": "Horas",
-  "economizerQuestion": "¿Tiene tecnología Economizer o Terrameter?",
+  "economizerQuestion": "Tecnología Economizer / Terrameter (BOMAG)",
   "economizerMultiplier": "Multiplicador x1.25",
   "calcPerformance": "Calcular Rendimiento",
   "calcSurfaceVolume": "Calcular volumen de superficie",
@@ -458,8 +460,8 @@
   "millingSavingsTools": "Picas y portapicas",
 
   "paverPerformanceCalculation": "Modelo de costo operativo por USP",
-  "paverMagmalifeQuestion": "BOMAG 1 — Calentamiento MAGMALIFE (setup más rápido, menor desgaste)?",
-  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE regulación hidráulica activa (hasta 17% ahorro combustible)?",
+  "paverMagmalifeQuestion": "BOMAG 1 — Calentamiento MAGMALIFE (setup más rápido, menor desgaste)",
+  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE regulación hidráulica activa (hasta 17% ahorro combustible)",
   "paverSetupFuelPerShift": "Combustible setup / calentamiento por jornada (L)",
   "paverHeatingTime": "Tiempo aprox. de calentamiento (min)",
   "paverSetupHeatingCost": "Costo combustible setup y calentamiento (período)",

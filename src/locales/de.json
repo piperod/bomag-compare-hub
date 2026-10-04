@@ -362,7 +362,7 @@
   "articulationJointBenefitsTitle": "Vorteile des BOMAG Gelenks",
   "articulationJointBenefitsAlt": "Tabelle der Vorteile des BOMAG Gelenks",
 
-  "maintenanceJointUSPQuestion": "Hat das ausgewählte Modell das wartungsfreie Gelenk?",
+  "maintenanceJointUSPQuestion": "Wartungsfreies Knickgelenk (BOMAG)",
   "showArticulationVariables": "Variablen der Gelenk-Berechnung anzeigen",
   "hideArticulationVariables": "Variablen der Gelenk-Berechnung ausblenden",
   "yesLabel": "Ja",
@@ -370,8 +370,10 @@
 
   "tcoTimeline": "TCO-Zeitverlauf",
   "tcoProgressive": "Progressiver TCO",
+  "tcoProgressivePurchase": "Kaufpreis",
+  "tcoProgressiveHint": "Kumulierte Kosten nach Betriebsstunden mit denselben Annahmen wie die Analyse oben (Preis, Kraftstoff, Wartung, USPs und Restwert). Den Kaufpreis in der Preiszeile ändern.",
   "hoursLabel": "Stunden",
-  "economizerQuestion": "Verfügt die Maschine über Economizer- oder Terrameter-Technologie?",
+  "economizerQuestion": "Economizer- / Terrameter-Technologie (BOMAG)",
   "economizerMultiplier": "Multiplikator x1,25",
   "calcPerformance": "Leistung berechnen",
   "calcSurfaceVolume": "Oberflächenvolumen berechnen",
@@ -458,8 +460,8 @@
   "millingSavingsTools": "Meißel und Halter",
 
   "paverPerformanceCalculation": "USP-basiertes Betriebskostenmodell",
-  "paverMagmalifeQuestion": "BOMAG 1 — MAGMALIFE Verdichterheizung (schnelleres Setup, geringerer Verschleiß)?",
-  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE aktive Hydraulikregelung (bis 17% Kraftstoffeinsparung)?",
+  "paverMagmalifeQuestion": "BOMAG 1 — MAGMALIFE Verdichterheizung (schnelleres Setup, geringerer Verschleiß)",
+  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE aktive Hydraulikregelung (bis 17% Kraftstoffeinsparung)",
   "paverSetupFuelPerShift": "Setup-/Heizkraftstoff pro Schicht (L)",
   "paverHeatingTime": "Ca. Heizzeit (min)",
   "paverSetupHeatingCost": "Setup- & Heizkraftstoffkosten (Zeitraum)",

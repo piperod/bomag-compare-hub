@@ -362,7 +362,7 @@
   "articulationJointBenefitsTitle": "Benefícios da Junta Articulada BOMAG",
   "articulationJointBenefitsAlt": "Tabela de benefícios da junta articulada BOMAG",
 
-  "maintenanceJointUSPQuestion": "O modelo selecionado possui a junta de articulação livre de manutenção?",
+  "maintenanceJointUSPQuestion": "Junta de articulação livre de manutenção (BOMAG)",
   "showArticulationVariables": "Ver variáveis do cálculo da junta de articulação",
   "hideArticulationVariables": "Ocultar variáveis do cálculo da junta de articulação",
   "yesLabel": "Sim",
@@ -370,8 +370,10 @@
 
   "tcoTimeline": "Linha do tempo TCO",
   "tcoProgressive": "TCO Progressivo",
+  "tcoProgressivePurchase": "preço de compra",
+  "tcoProgressiveHint": "Custo acumulado por horas de uso com os mesmos dados da análise acima (preço, combustível, manutenção, USP e valor de revenda). Para mudar o preço de compra, edite-o na linha de preço.",
   "hoursLabel": "Horas",
-  "economizerQuestion": "A máquina possui tecnologia Economizer ou Terrameter?",
+  "economizerQuestion": "Tecnologia Economizer / Terrameter (BOMAG)",
   "economizerMultiplier": "Multiplicador x1,25",
   "calcPerformance": "Calcular Desempenho",
   "calcSurfaceVolume": "Calcular volume de superfície",
@@ -458,8 +460,8 @@
   "millingSavingsTools": "Dentes e porta-dentes",
 
   "paverPerformanceCalculation": "Modelo de custo operacional por USP",
-  "paverMagmalifeQuestion": "BOMAG 1 — Aquecimento MAGMALIFE (setup mais rápido, menor desgaste)?",
-  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE regulação hidráulica ativa (até 17% poupança combustível)?",
+  "paverMagmalifeQuestion": "BOMAG 1 — Aquecimento MAGMALIFE (setup mais rápido, menor desgaste)",
+  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE regulação hidráulica ativa (até 17% poupança combustível)",
   "paverSetupFuelPerShift": "Combustível setup / aquecimento por jornada (L)",
   "paverHeatingTime": "Tempo aprox. de aquecimento (min)",
   "paverSetupHeatingCost": "Custo combustível setup e aquecimento (período)",

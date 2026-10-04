@@ -165,6 +165,12 @@ const ltrImages = [
   'RD27.png', 'CC900G.jpg', 'CT260.jpg', 'ARX26.jpg', 'CC1200.jpg', 'HD12VV.png', 'CB2.7GC.jpg', 'BW120 AD-5.jpg', 'BW100 AD-5.jpg',
 ];
 
+/** DYNAPAC CC2200 / CC3300 share one photo (CC2200 VI). */
+const htrImageByModel: Record<string, string> = {
+  cc2200: 'CC2200-CC3300.jpg',
+  cc3300: 'CC2200-CC3300.jpg',
+};
+
 const htrImages = [
   'HD90 VV.jpg', 'CC4200.jpg', 'CB10.jpg', 'AV110X.jpg', 'BW161-AD-4.jpg', 'BW161AD4.jpg', 'HD90 VO.jpg',
 ];
@@ -199,6 +205,10 @@ export function getMachineImagePath(model: string, line: string): string {
 
   if (folder === 'LTR' && ltrImageByModel[modelNorm]) {
     return `${base}images/${folder}/${ltrImageByModel[modelNorm]}`;
+  }
+
+  if (folder === 'HTR' && htrImageByModel[modelNorm]) {
+    return `${base}images/${folder}/${htrImageByModel[modelNorm]}`;
   }
 
   if (folder === 'Milling' && millingImageByModel[modelNorm]) {

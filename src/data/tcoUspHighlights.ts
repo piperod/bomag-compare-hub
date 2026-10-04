@@ -89,7 +89,7 @@ export const TCO_USP_HIGHLIGHTS: Record<TcoLine, TcoUspHighlight[]> = {
         'Automatische Leerlaufabschaltung: weniger Kraftstoff und Motorstunden, was auch den Wiederverkaufswert verbessert.',
         'Desligamento automático em marcha lenta: menos combustível e menos horas de motor, o que também melhora o valor de revenda.'
       ),
-      models: 'BW 120 AD-5',
+      models: 'BW 100 AD-5 · BW 120 AD-5',
       inModel: false,
       source: 'Ficha técnica BW 100/120 AD-5',
     },
@@ -103,7 +103,7 @@ export const TCO_USP_HIGHLIGHTS: Record<TcoLine, TcoUspHighlight[]> = {
         'Zentrifugalkraft 36/41 kN: von 20-45 t/h (2-4 cm Schichten) bis 70-120 t/h (10-12 cm Schichten) Asphalt.',
         'Força centrífuga 36/41 kN: de 20-45 t/h (camadas de 2-4 cm) a 70-120 t/h (camadas de 10-12 cm) de asfalto.'
       ),
-      models: 'BW 120 AD-5',
+      models: 'BW 100 AD-5 · BW 120 AD-5',
       inModel: false,
       source: 'Ficha técnica BW 100/120 AD-5',
     },
@@ -117,7 +117,7 @@ export const TCO_USP_HIGHLIGHTS: Record<TcoLine, TcoUspHighlight[]> = {
         'Verbundwerkstoff-Haube mit direktem Motorzugang, 2 vorgespannte Abstreifer je Bandage und Frostschutz-Ansaugung.',
         'Capô de material compósito com acesso direto ao motor, 2 raspadores pré-tensionados por tambor e aspiração de anticongelante.'
       ),
-      models: 'BW 120 AD-5',
+      models: 'BW 100 AD-5 · BW 120 AD-5',
       inModel: false,
       source: 'Ficha técnica BW 100/120 AD-5',
     },
@@ -131,7 +131,7 @@ export const TCO_USP_HIGHLIGHTS: Record<TcoLine, TcoUspHighlight[]> = {
         'ECONOMIZER mit Asphalttemperatur und GPS-Dokumentation (optional): nur so viel verdichten wie nötig.',
         'ECONOMIZER com temperatura do asfalto e documentação GPS (opcionais): compactar só o necessário.'
       ),
-      models: 'BW 120 AD-5',
+      models: 'BW 100 AD-5 · BW 120 AD-5',
       inModel: false,
       source: 'Ficha técnica BW 100/120 AD-5',
     },

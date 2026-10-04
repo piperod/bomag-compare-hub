@@ -170,11 +170,20 @@ export function getMillingWearMultiplier(
   return 1 - pct / 100;
 }
 
+/** True when the paver fuel figure was measured on jobsites (the fuel-saving mode is already in it). */
+export function isPaverFuelMeasured(machine: PaverMachineSpec): boolean {
+  if (machine.fuelIsMeasured != null) return machine.fuelIsMeasured;
+  const text = `${machine.financial?.avgFuelConsumption ?? ''} ${machine.financial?.fuelDataSource ?? ''}`;
+  return /medid|medici|measured|gemessen|campo/i.test(text);
+}
+
 export function getPaverFuelMultiplier(
   machine: PaverMachineSpec,
   ecomodeEnabled: boolean
 ): number {
   if (!ecomodeEnabled) return 1;
+  // A measured consumption already reflects the fuel-saving mode; applying it again would double count.
+  if (isPaverFuelMeasured(machine)) return 1;
   const defaults = getPaverUspDefaults(machine);
   if (defaults.hasEcomode) return 1 - PAVER_ECOMODE_FUEL_SAVINGS;
   // BOMAG pavers where ECOMODE is optional (not factory default) save the same when it is enabled

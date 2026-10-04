@@ -10,7 +10,7 @@
 import type { MachineSpec } from './machineData';
 import type { MillingMachineSpec } from './millingData';
 import type { LocalizedText, PaverFinancialData, PaverMachineSpec } from './paversData';
-import { BF350_C5_USPS, BM2000_58_USPS, bf600800Usps, bm35Usps, bm65Usps } from './bomagUsps';
+import { BF350_C5_USPS, BW100_AD5_USPS, BM2000_58_USPS, bf600800Usps, bm35Usps, bm65Usps } from './bomagUsps';
 
 const loc = (es: string, en: string, de: string, pt: string): LocalizedText => ({ es, en, de, pt });
 const same = (s: string): LocalizedText => ({ es: s, en: s, de: s, pt: s });
@@ -311,6 +311,29 @@ const ltrRow = (r: LtrRow): MachineSpec => ({
 });
 
 export const ltrMasterAdditions: MachineSpec[] = [
+  // BOMAG BW 100 AD-5 — datasheet "BW 100 AD-5, BW 120 AD-5" (PRS 880 21 010, Sa07).
+  // Origin as the BW 120 AD-5 (same family and datasheet); not in the import registry.
+  {
+    ...ltrRow({
+      brand: 'BOMAG', model: 'BW100 AD-5', weight: 2500, engine: 'Kubota D1703 (Stage IIIa / Tier 3)', compactionWidth: 1.0,
+      power: 32.6, origin: loc('Alemania / China', 'Germany / China', 'Deutschland / China', 'Alemanha / China'),
+      amplitude: '0.5', staticLinearLoad: 12.5, waterTankCapacity: 205, gradeability: 40,
+      innovations: loc(
+        'Fuerza centrífuga 30/34 kN a 63/67 Hz · Radio interior de giro 2.550 mm · Peso de operación máx. 3.500 kg · Tanque de combustible 35 l',
+        'Centrifugal force 30/34 kN at 63/67 Hz · Inner turning radius 2,550 mm · Max. operating weight 3,500 kg · Fuel tank 35 l',
+        'Zentrifugalkraft 30/34 kN bei 63/67 Hz · Innerer Wenderadius 2.550 mm · Max. Betriebsgewicht 3.500 kg · Kraftstofftank 35 l',
+        'Força centrífuga 30/34 kN a 63/67 Hz · Raio interno de giro 2.550 mm · Peso operacional máx. 3.500 kg · Tanque de combustível 35 l'
+      ),
+      articulated: true,
+    }),
+    ...BW100_AD5_USPS,
+    compactionAssistant: loc(
+      'ECONOMIZER con indicación de temperatura del asfalto (opcional)',
+      'ECONOMIZER with asphalt temperature display (optional)',
+      'ECONOMIZER mit Asphalttemperaturanzeige (optional)',
+      'ECONOMIZER com indicação de temperatura do asfalto (opcional)'
+    ),
+  },
   // Completed from the DYNAPAC CC900G datasheet (dynapac_cc900g_en, 2024-05-09).
   // Static linear load: 6.1 kg/cm front / 7.9 kg/cm rear (rear value shown).
   ltrRow({

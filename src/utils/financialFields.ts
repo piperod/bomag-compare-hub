@@ -70,10 +70,6 @@ function isMillingSpec(machine: ComparableMachine): machine is MillingMachineSpe
   return 'millingWidth' in machine;
 }
 
-function isBomagBrand(brand: string): boolean {
-  return brand.toUpperCase().includes('BOMAG');
-}
-
 export function getMachineFinancialDefaults(machine: ComparableMachine): MachineFinancialDefaults {
   if (isRollerSpec(machine)) {
     return {
@@ -98,13 +94,13 @@ export function getMachineFinancialDefaults(machine: ComparableMachine): Machine
   }
 
   const paver = machine as PaverMachineSpec;
-  const bomag = isBomagBrand(paver.brand);
   return {
     price: paver.price ?? 0,
     fuelConsumption: paver.fuelConsumption ?? parsePaverFuelConsumption(paver.financial),
-    // Service maintenance — separate from screed wear (MAGMALIFE USP 8)
-    preventiveMaintenance: paver.preventiveMaintenance ?? (bomag ? 8 : 10),
-    correctiveMaintenance: paver.correctiveMaintenance ?? (bomag ? 4 : 6),
+    // Service maintenance — separate from screed wear (MAGMALIFE USP 8). Same default for every brand
+    // (no published source shows a difference); BOMAG's wear advantage is modelled in the screed wear row.
+    preventiveMaintenance: paver.preventiveMaintenance ?? 10,
+    correctiveMaintenance: paver.correctiveMaintenance ?? 6,
     usageTime: paver.usageTime ?? DEFAULT_OPERATION_HOURS,
     tco: paver.tco ?? 0,
   };

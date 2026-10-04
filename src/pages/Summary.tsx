@@ -355,7 +355,7 @@ function Summary({
                     <th key={idx} className="border border-gray-300 p-2 text-center relative">
                       <button onClick={() => removeMachine(idx)} className="absolute top-1 right-1 text-lg text-gray-400 hover:text-red-500 font-bold z-20" title={t('remove')}>×</button>
                       <div className="flex flex-col items-center">
-                        <img src={getImagePath(machinesSorted[idx].model, machinesSorted[idx].line || selectedLine.toUpperCase())} alt={machinesSorted[idx].model} className="h-16 object-contain mb-1" />
+                        <img src={getImagePath(machinesSorted[idx].model, machinesSorted[idx].line || selectedLine.toUpperCase())} alt={machinesSorted[idx].model} className="h-16 object-contain mb-1 mix-blend-multiply" />
                         <div className="font-bold">{machinesSorted[idx].brand}</div>
                         <div className="text-xs">{machinesSorted[idx].model}</div>
                       </div>

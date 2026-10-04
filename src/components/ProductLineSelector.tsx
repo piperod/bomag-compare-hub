@@ -50,7 +50,7 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
       id: 'pavers',
       title: t('pavers'),
       description: t('paversDesc'),
-      icon: `${base}images/Pavers/BF600-C-3.png`,
+      icon: `${base}pavericon.png`,
       alt: 'Paver Icon'
     }
   ];
@@ -70,7 +70,17 @@ const ProductLineSelector = ({ selectedLine, onLineSelect }: ProductLineSelector
             onClick={() => onLineSelect(line.id)}
           >
             <CardHeader className="text-center">
-              <img src={line.icon} alt={line.alt} className="w-auto h-16 max-w-[80px] mx-auto mb-2 object-contain" />
+              <div className="h-24 mb-2 flex items-end justify-center">
+                <img
+                  src={line.icon}
+                  alt={line.alt}
+                  className={`w-auto object-contain ${
+                    line.id === 'milling' || line.id === 'pavers'
+                      ? 'max-h-24 max-w-[200px]'
+                      : 'max-h-[72px] max-w-[120px]'
+                  }`}
+                />
+              </div>
               <CardTitle className="text-bomag-gray">{line.title}</CardTitle>
             </CardHeader>
             <CardContent>

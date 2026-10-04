@@ -283,8 +283,20 @@ const baseMillingMachines: MillingMachineSpec[] = [
 ];
 
 import { complementUsps } from './uspComplements';
+/** Country of origin of BOMAG milling machines by series (BOMAG LATAM): /35 and /65 from Germany, /20 and /58 from China. */
+const BOMAG_MILLING_ORIGIN: Array<[RegExp, LocalizedText]> = [
+  [/\/(35|65)(-\d+)?$/, { es: 'Alemania', en: 'Germany', de: 'Deutschland', pt: 'Alemanha' }],
+  [/\/(20|58)(-\d+)?$/, { es: 'China', en: 'China', de: 'China', pt: 'China' }],
+];
+
+const withBomagMillingOrigin = (machine: MillingMachineSpec): MillingMachineSpec => {
+  if (machine.brand !== 'BOMAG') return machine;
+  const match = BOMAG_MILLING_ORIGIN.find(([pattern]) => pattern.test(machine.model.trim()));
+  return match ? { ...machine, origin: match[1] } : machine;
+};
+
 export const millingMachines: MillingMachineSpec[] = complementUsps('milling', withImportRegistryOrigin(
-  mergeByBrand(baseMillingMachines, millingMasterAdditions)
+  mergeByBrand(baseMillingMachines, millingMasterAdditions).map(withBomagMillingOrigin)
 ));
 
 /** Single row of the preventive maintenance table (BM 1000/20) */

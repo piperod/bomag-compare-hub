@@ -58,7 +58,7 @@ const USERS: AppUser[] = [
   { username: 'juan.porras', password: 'Xn8$RvTq4!wLc7', name: 'Juan David Porras' },
   { username: 'jan.vanbebber', password: 'Qm4#TzKp8!nRc2', name: 'Jan van Bebber' },
   { username: 'julian.bertram', password: '4KeX&75?9W3bzM', name: 'Julian Bertram' },
-  { username: 'admin', password: 'Bomag2026*', name: 'Admin', isAdmin: true },
+  { username: 'admin', password: 'Admin2026*', name: 'Admin', isAdmin: true },
 ];
 
 const STORAGE_KEY = 'bomag-auth-user';

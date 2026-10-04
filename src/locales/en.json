@@ -423,7 +423,7 @@
   "articulationJointBenefitsTitle": "Benefits of the BOMAG Articulated Joint",
   "articulationJointBenefitsAlt": "BOMAG articulated joint benefits table",
 
-  "maintenanceJointUSPQuestion": "Does the selected model have the maintenance-free articulation joint?",
+  "maintenanceJointUSPQuestion": "Maintenance-free articulation joint (BOMAG)",
   "showArticulationVariables": "Show articulation joint calculation variables",
   "hideArticulationVariables": "Hide articulation joint calculation variables",
   "yesLabel": "Yes",
@@ -431,8 +431,10 @@
 
   "tcoTimeline": "TCO Timeline",
   "tcoProgressive": "Progressive TCO",
+  "tcoProgressivePurchase": "purchase price",
+  "tcoProgressiveHint": "Cumulative cost by operating hours using the same inputs as the analysis above (price, fuel, maintenance, USPs and resale value). To change the purchase price, edit it in the price row.",
   "hoursLabel": "Hours",
-  "economizerQuestion": "Does the machine have Economizer or Terrameter technology?",
+  "economizerQuestion": "Economizer / Terrameter technology (BOMAG)",
   "economizerMultiplier": "Multiplier x1.25",
   "calcPerformance": "Calculate Performance",
   "calcSurfaceVolume": "Calculate surface volume",
@@ -519,8 +521,8 @@
   "millingSavingsTools": "Picks and tool holders",
 
   "paverPerformanceCalculation": "USP-driven operating cost model",
-  "paverMagmalifeQuestion": "BOMAG 1 — MAGMALIFE screed heating (faster setup, lower wear)?",
-  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE active hydraulic regulation (up to 17% fuel savings)?",
+  "paverMagmalifeQuestion": "BOMAG 1 — MAGMALIFE screed heating (faster setup, lower wear)",
+  "paverEcomodeQuestion": "BOMAG 3 — ECOMODE active hydraulic regulation (up to 17% fuel savings)",
   "paverSetupFuelPerShift": "Setup / heating fuel per shift (L)",
   "paverHeatingTime": "Approx. heating time (min)",
   "paverSetupHeatingCost": "Setup & heating fuel cost (period)",

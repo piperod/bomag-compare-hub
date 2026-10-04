@@ -3064,7 +3064,8 @@ const MachineComparison = ({
 
                   {/* TCO Timeline Section */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('tcoProgressive')}</h4>
+                    <h4 className="text-lg font-semibold text-gray-700">{t('tcoProgressive')}</h4>
+                    <p className="text-sm text-gray-600 mt-1 mb-3">{t('tcoProgressiveHint')}</p>
                     <div className="overflow-x-auto">
                       <CompareTable columnCount={compareSpecCols}>
                         <thead>
@@ -3080,53 +3081,26 @@ const MachineComparison = ({
                         </thead>
                       <tbody>
                         {[0, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000].map(hours => {
-                          const tcos = getSelectedMachineData().map((machine) => {
-                            const machineId = getMachineId(machine);
-                            const tco0 = editableTCO[machineId] !== undefined
-                              ? editableTCO[machineId]
-                              : getEffectivePrice(machine);
-                            if (hours === 0) return tco0 - getEffectiveRemainingValue(machine);
-                            const parts = computeTcoComponents(machine, hours);
-                            const base = editableTCO[machineId] !== undefined ? editableTCO[machineId] : parts.price;
-                            return base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost + parts.screedWearCost - parts.remainingValue;
-                          });
+                          // Pure output of the financial model above: same price, fuel, maintenance and USP inputs
+                          const tcos = getSelectedMachineData().map((machine) =>
+                            hours === 0 ? getEffectivePrice(machine) : computeTcoComponents(machine, hours).tco
+                          );
                           const min = Math.min(...tcos);
                           const max = Math.max(...tcos);
                           return (
                             <tr key={hours} className="hover:bg-gray-50">
-                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">{hours}</td>
+                              <td className="border border-gray-300 p-2 font-medium bg-gray-50">
+                                {hours === 0 ? `0 · ${t('tcoProgressivePurchase')}` : hours}
+                              </td>
                               {getSelectedMachineData().map((machine, index) => {
-                                const machineId = getMachineId(machine);
-                                const tco0 = editableTCO[machineId] !== undefined
-                                  ? editableTCO[machineId]
-                                  : getEffectivePrice(machine);
-                                let tco = tco0 - getEffectiveRemainingValue(machine);
-                                if (hours > 0) {
-                                  const parts = computeTcoComponents(machine, hours);
-                                  const base = editableTCO[machineId] !== undefined ? editableTCO[machineId] : parts.price;
-                                  tco = base + parts.fuelCost + parts.maintenanceCost + parts.jointCost + parts.toolWearCost + parts.setupHeatingCost + parts.screedWearCost - parts.remainingValue;
-                                }
+                                const tco = tcos[index];
                                 return (
                                   <td key={index} className="border border-gray-300 p-2 text-center">
                                     {hours === 0 ? (
-                                      <Input
-                                        type="number"
-                                        className="border rounded px-2 py-1 w-24 text-right"
-                                        value={usdToInputNumber(tco0, 'aggregate')}
-                                        onChange={e => {
-                                          const raw = e.target.value;
-                                          const v = raw === '' ? NaN : parseFloat(raw);
-                                          setEditableTCO(prev => ({
-                                            ...prev,
-                                            [machineId]: Number.isNaN(v) ? 0 : inputNumberToUsd(v, 'aggregate'),
-                                          }));
-                                        }}
-                                      />
+                                      <span className="text-sm text-gray-700">{tco > 0 ? formatFromUsd(tco) : '—'}</span>
                                     ) : (
-                                      <div>
-                                        <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
-                                          TCO: {formatFromUsd(tco)}
-                                        </div>
+                                      <div style={{ background: getPriceColor(tco, min, max), borderRadius: 4, padding: '2px 4px', display: 'inline-block' }}>
+                                        TCO: {formatFromUsd(tco)}
                                       </div>
                                     )}
                                   </td>
